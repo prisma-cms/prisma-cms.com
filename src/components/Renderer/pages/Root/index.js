@@ -25,6 +25,7 @@ import AcceptTechnologyLesson from './components/society/technologies/AcceptTech
 import TechnologyLessonUser from './components/society/technologies/TechnologyLessonUser';
 import FreeCodeCamp from './components/FreeCodeCamp/FreeCodeCamp';
 import CodeChallenge from './components/FreeCodeCamp/CodeChallenge';
+import CallRequestButtons from './components/webrtc/CallRequestButtons';
 
 
 export const CustomComponents = [
@@ -51,6 +52,7 @@ export const CustomComponents = [
   TechnologyLessonUser,
   FreeCodeCamp,
   CodeChallenge,
+  CallRequestButtons,
 ];
 
 
