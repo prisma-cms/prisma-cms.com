@@ -12,6 +12,9 @@ a:hover {
 .DraftEditor-editorContainer {
   line-height: 1.6;
 }
+table {
+  width: 100%;
+}
 table.prisma-cms {
   border-collapse: collapse;
 }
