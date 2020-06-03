@@ -332,8 +332,8 @@ class CoreModule extends PrismaModule {
       "UserCreateInput",
       "UserUpdateInput",
 
-      "ResourceCreateInput",
-      "ResourceUpdateInput",
+      // "ResourceCreateInput",
+      // "ResourceUpdateInput",
 
       // "UserCreateOneWithoutResourcesInput",
       // "NotificationTypeUpdateManyWithoutUsersInput",
@@ -497,196 +497,23 @@ class CoreModule extends PrismaModule {
 
         ...Query
       },
-      Mutation,
+      Mutation: {
+        createProjectProcessor,
+        createTemplateProcessor,
+        createCodeChallengeBlockProcessor,
+        updateCodeChallengeBlockProcessor,
+        createCodeChallengeProcessor,
+        updateCodeChallengeProcessor,
+        ...Mutation
+      },
       User,
       ...other
     } = resolvers;
 
 
-    const {
-      signin,
-      signup,
-      // createResourceProcessor,
-      updateUserProcessor,
-      createBlogProcessor,
-      updateBlogProcessor,
-      createTopicProcessor,
-      updateTopicProcessor,
-      createCommentProcessor,
-      updateCommentProcessor,
-      singleUpload,
-      multipleUpload,
-      // startImportProcessor,
-      createResetPasswordProcessor,
-      resetPasswordProcessor,
-      createProjectProcessor,
-      updateProjectProcessor,
-      createTaskProcessor,
-      updateTaskProcessor,
-      createTaskReactionProcessor,
-      deleteTaskReaction,
-      createTimerProcessor,
-      updateTimerProcessor,
-
-      // ethUnlockPersonalAccount,
-      createEthTransactionProcessor,
-      createEthAccountProcessor,
-      ethSigninOrSignup,
-      ethConnectAuthAccount,
-      ethRecoverPersonalSignature,
-
-      createChatRoomProcessor,
-      updateChatRoomProcessor,
-      createChatMessageProcessor,
-      updateChatMessageProcessor,
-      deleteNotice,
-      deleteManyNotices,
-      markAsReadedChatMessage,
-      inviteChatRoomProcessor,
-      leaveChatRoom,
-      joinChatRoom,
-      createCallRequestProcessor,
-      updateCallRequest,
-      createTemplateProcessor,
-      updateTemplateProcessor,
-      deleteTemplate,
-      createTestProcessor,
-      updateTestProcessor,
-      deleteTest,
-      deleteManyTests,
-
-      /**
-       * mc.js
-       */
-      login,
-      createSettings,
-      updateSettings,
-      createWorld,
-      createPlayer,
-      updateWorld,
-      updatePlayer,
-      // updateBlock,
-      deleteWorld,
-      runCommand,
-      // requestChunks,
-      /**
-       * Eof mc.js
-       */
-
-      createTechnologyProcessor,
-      updateTechnologyProcessor,
-      createUserTechnologyProcessor,
-      updateUserTechnologyProcessor,
-      createCareerProcessor,
-      updateCareerProcessor,
-      createTechnologyLessonProcessor,
-      updateTechnologyLessonProcessor,
-
-      createTechnologyLessonCommentProcessor,
-      updateTechnologyLessonCommentProcessor,
-      createTechnologyLessonUserProcessor,
-      updateTechnologyLessonUserProcessor,
-
-      createGalleryProcessor,
-      updateGalleryProcessor,
-      deleteGallery,
-      // createGalleryFileProcessor,
-      // updateGalleryFileProcessor,
-      // deleteGalleryFile,
-      fccImportChallengs,
-    } = Mutation;
-
-
     let AllowedMutations = {
-      signin,
-      signup,
-      // createResourceProcessor,
-      updateUserProcessor,
-      createBlogProcessor,
-      updateBlogProcessor,
-      createTopicProcessor,
-      updateTopicProcessor,
-      createCommentProcessor,
-      updateCommentProcessor,
-      singleUpload,
-      multipleUpload,
-      // startImportProcessor,
-      createResetPasswordProcessor,
-      resetPasswordProcessor,
+      ...Mutation,
       createProjectProcessor,
-      updateProjectProcessor,
-      createTaskProcessor,
-      updateTaskProcessor,
-      createTaskReactionProcessor,
-      deleteTaskReaction,
-      createTimerProcessor,
-      updateTimerProcessor,
-
-      // ethUnlockPersonalAccount,
-      createEthTransactionProcessor,
-      createEthAccountProcessor,
-      ethSigninOrSignup,
-      ethConnectAuthAccount,
-      ethRecoverPersonalSignature,
-
-      createChatRoomProcessor,
-      updateChatRoomProcessor,
-      createChatMessageProcessor,
-      updateChatMessageProcessor,
-      deleteNotice,
-      deleteManyNotices,
-      markAsReadedChatMessage,
-      inviteChatRoomProcessor,
-      leaveChatRoom,
-      joinChatRoom,
-      createCallRequestProcessor,
-      updateCallRequest,
-      updateTemplateProcessor,
-      deleteTemplate,
-      createTestProcessor,
-      updateTestProcessor,
-      deleteTest,
-      deleteManyTests,
-      /**
-       * mc.js
-       */
-      login,
-      createSettings,
-      updateSettings,
-      createWorld,
-      createPlayer,
-      updateWorld,
-      updatePlayer,
-      // updateBlock,
-      deleteWorld,
-      runCommand,
-      // requestChunks,
-      /**
-       * Eof mc.js
-       */
-
-      createTechnologyProcessor,
-      updateTechnologyProcessor,
-      createUserTechnologyProcessor,
-      updateUserTechnologyProcessor,
-      createCareerProcessor,
-      updateCareerProcessor,
-      createTechnologyLessonProcessor,
-      updateTechnologyLessonProcessor,
-
-      createTechnologyLessonCommentProcessor,
-      updateTechnologyLessonCommentProcessor,
-      createTechnologyLessonUserProcessor,
-      updateTechnologyLessonUserProcessor,
-
-      createGalleryProcessor,
-      updateGalleryProcessor,
-      deleteGallery,
-      // createGalleryFileProcessor,
-      // updateGalleryFileProcessor,
-      // deleteGalleryFile,
-      fccImportChallengs,
-
       createTemplateProcessor: async (source, args, ctx, info) => {
 
         // console.log("createTemplateProcessor args", args);

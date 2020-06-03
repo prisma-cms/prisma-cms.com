@@ -1,6 +1,6 @@
 {
   "name": "@prisma-cms/prisma-cms.com",
-  "version": "4.2.4",
+  "version": "4.3.0",
   "description": "Opensource framework CMS powered by GraphQL, Prisma, MySQL, React & Apollo GraphQL",
   "private": false,
   "scripts": {
