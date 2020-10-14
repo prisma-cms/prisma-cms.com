@@ -1,4 +1,3 @@
-
 input CommentCreateInput {
   # name: String!
   # longtitle: String

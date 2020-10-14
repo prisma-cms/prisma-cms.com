@@ -1,80 +1,53 @@
-
-import PrismaModule from "@prisma-cms/prisma-module";
-import PrismaProcessor from "@prisma-cms/prisma-processor";
+import PrismaModule from '@prisma-cms/prisma-module'
+import PrismaProcessor from '@prisma-cms/prisma-processor'
 // import chalk from "chalk";
 
-
 export class CommentProcessor extends PrismaProcessor {
-
   constructor(props) {
+    super(props)
 
-    super(props);
+    this.objectType = 'Comment'
 
-    this.objectType = "Comment";
-
-    this.private = true;
-    this.ownable = true;
+    this.private = true
+    this.ownable = true
   }
 
-
   async create(method, args, info) {
-
     if (args.data) {
-
-      let {
-        TechnologyLesson,
-        ...data
-      } = args.data;
-
+      let { TechnologyLesson, ...data } = args.data
 
       // console.log("args.data", JSON.stringify(args.data, true, 2));
 
       if (TechnologyLesson !== undefined) {
-
-        const {
-          connect,
-        } = TechnologyLesson || {}
+        const { connect } = TechnologyLesson || {}
 
         if (!connect) {
-          throw new Error("Не указан урок");
+          throw new Error('Не указан урок')
         }
-
       }
-
 
       Object.assign(data, {
         TechnologyLesson,
-      });
+      })
 
-
-      args.data = data;
-
+      args.data = data
     }
 
-    return super.create(method, args, info);
+    return super.create(method, args, info)
   }
-
 
   async update(method, args, info) {
-
     if (args.data) {
+      let { ...data } = args.data
 
-      let {
-        ...data
-      } = args.data;
-
-      args.data = data;
-
+      args.data = data
     }
 
-    return super.update(method, args, info);
+    return super.update(method, args, info)
   }
 
-
   async mutate(method, args, info) {
-
     if (args.data) {
-
       let {
         components,
 
@@ -84,107 +57,78 @@ export class CommentProcessor extends PrismaProcessor {
         contentText,
 
         ...data
-      } = args.data;
-
-
+      } = args.data
 
       if (components !== undefined) {
-
-        const contentText = this.reduceComponents(components, "");
+        const contentText = this.reduceComponents(components, '')
 
         // console.log("contentText", contentText);
 
         Object.assign(data, {
           contentText: contentText ? contentText : null,
-        });
-
+        })
       }
-
-
 
       Object.assign(data, {
         components,
-      });
+      })
 
-      args.data = data;
-
+      args.data = data
 
       // console.log(chalk.green("data"), JSON.stringify(data, true, 2));
-
     }
 
     // console.log("hasErrors", this.hasErrors());
 
     // return false;
 
-    return super.mutate(method, args);
+    return super.mutate(method, args)
   }
-
-
 
   async delete(method, args, info) {
-
-    return super.delete(method, args);
+    return super.delete(method, args)
   }
 
-
-  reduceComponents(components, text = "") {
-
-    return this.ctx.reduceContentComponents(components, text);
+  reduceComponents(components, text = '') {
+    return this.ctx.reduceContentComponents(components, text)
   }
-
 }
 
-
 export default class CommentModule extends PrismaModule {
-
   constructor(props = {}) {
+    super(props)
 
-    super(props);
-
-    this.mergeModules([
-    ]);
-
+    this.mergeModules([])
   }
-
 
   getProcessor(ctx) {
-    return new (this.getProcessorClass())(ctx);
+    return new (this.getProcessorClass())(ctx)
   }
-
 
   getProcessorClass() {
-    return CommentProcessor;
+    return CommentProcessor
   }
 
-
   getResolvers() {
-
     const {
-      Query: {
-        ...Query
-      },
-      Subscription: {
-        ...Subscription
-      },
-      Mutation: {
-        ...Mutation
-      },
+      Query: { ...Query },
+      Subscription: { ...Subscription },
+      Mutation: { ...Mutation },
       ...other
-    } = super.getResolvers();
+    } = super.getResolvers()
 
     return {
       ...other,
       Query: {
         ...Query,
         comment: (source, args, ctx, info) => {
-          return ctx.db.query.comment(args, info);
+          return ctx.db.query.comment(args, info)
         },
         comments: (source, args, ctx, info) => {
-          return ctx.db.query.comments(args, info);
+          return ctx.db.query.comments(args, info)
         },
         commentsConnection: (source, args, ctx, info) => {
-          return ctx.db.query.commentsConnection(args, info);
+          return ctx.db.query.commentsConnection(args, info)
         },
       },
       Mutation: {
@@ -199,46 +143,50 @@ export default class CommentModule extends PrismaModule {
         //   return this.getProcessor(ctx).delete("Comment", args, info);
         // },
         createTechnologyLessonCommentProcessor: (source, args, ctx, info) => {
-
-          const {
-            TechnologyLesson = {},
-          } = args.data;
+          const { TechnologyLesson = {} } = args.data
 
           Object.assign(args.data, {
             TechnologyLesson,
-          });
+          })
 
-          return this.getProcessor(ctx).createWithResponse("Comment", args, info);
+          return this.getProcessor(ctx).createWithResponse(
+            'Comment',
+            args,
+            info
+          )
         },
         updateTechnologyLessonCommentProcessor: (source, args, ctx, info) => {
-          return this.getProcessor(ctx).updateWithResponse("Comment", args, info);
+          return this.getProcessor(ctx).updateWithResponse(
+            'Comment',
+            args,
+            info
+          )
         },
       },
       Subscription: {
         ...Subscription,
         comment: {
           subscribe: async (parent, args, ctx, info) => {
-
-            return ctx.db.subscription.comment({}, info);
+            return ctx.db.subscription.comment({}, info)
           },
         },
       },
       CommentResponse: {
         data: (source, args, ctx, info) => {
+          const { id } = source.data || {}
 
-          const {
-            id,
-          } = source.data || {};
-
-          return id ? ctx.db.query.comment({
-            where: {
-              id,
-            },
-          }, info) : null;
+          return id
+            ? ctx.db.query.comment(
+                {
+                  where: {
+                    id,
+                  },
+                },
+                info
+              )
+            : null
         },
       },
     }
-
   }
-
 }

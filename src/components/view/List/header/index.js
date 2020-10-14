@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
 
 class Header extends Component {
   render() {
-    return (
-      <div>
-        Header
-      </div>
-    );
+    return <div>Header</div>
   }
 }
- 
 
-export default Header;
+export default Header

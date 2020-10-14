@@ -1,44 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 
-import EditorComponent from "@prisma-cms/front-editor/lib/components/App/components/";
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
 
 // import Icon from "material-ui-icons/SettingsOverscan";
 
-import CustomCreateUserPage from "../../../../../../UsersPage/UserPage/Create";
+import CustomCreateUserPage from '../../../../../../UsersPage/UserPage/Create'
 
 class CreateUserPage extends EditorComponent {
-
   // static defaultProps = {
   //   ...EditorComponent.defaultProps,
   //   marginTop: 10,
   //   marginBottom: 10,
   // }
 
-  static Name = "CreateUserPage"
+  static Name = 'CreateUserPage'
 
   renderPanelView() {
+    const { classes } = this.getEditorContext()
 
-    const {
-      classes,
-    } = this.getEditorContext();
-
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      {/* <Icon />  */}
-      Create User page
-    </div>);
+    return super.renderPanelView(
+      <div className={classes.panelButton}>
+        {/* <Icon />  */}
+        Create User page
+      </div>
+    )
   }
-
 
   renderChildren() {
-
-    return <CustomCreateUserPage
-    />;
+    return <CustomCreateUserPage />
   }
-
-
 }
 
-export default CreateUserPage;
+export default CreateUserPage

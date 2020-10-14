@@ -1,310 +1,268 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Context from "@prisma-cms/context";
-
-import { Button } from 'material-ui';
-import { withStyles } from 'material-ui';
+import { Button } from 'material-ui'
+import { withStyles } from 'material-ui'
 
 // import { FrontEditor } from "@prisma-cms/front";
-import FrontEditor from "@prisma-cms/front-editor/lib/components/App";
-import TemplatePage from "@prisma-cms/front-editor/lib/dev/Renderer/pages/Templates/Template";
+import FrontEditor from '@prisma-cms/front-editor/lib/components/App'
+import TemplatePage from '@prisma-cms/front-editor/lib/dev/Renderer/pages/Templates/Template'
 
-import gql from 'graphql-tag';
-import TopicsConnection from './Topics';
-import TopicLink from './Topics/TopicLink';
+import gql from 'graphql-tag'
+import TopicsConnection from './Topics'
+import TopicLink from './Topics/TopicLink'
 
-import PrismaCmsComponent from "@prisma-cms/component";
-import TemplateLink from './Templates/TemplateLink';
-import Template from './Templates/Template';
+import PrismaCmsComponent from '@prisma-cms/component'
+import TemplateLink from './Templates/TemplateLink'
+import Template from './Templates/Template'
 
 export const styles = {
   root: {
-    "&.inEditMode": {
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
+    '&.inEditMode': {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
 
-      "& $editorWrapper": {
-        display: "flex",
-        flexDirection: "column",
+      '& $editorWrapper': {
+        display: 'flex',
+        flexDirection: 'column',
         flex: 1,
         // border: "1px solid red",
-        overflow: "auto",
+        overflow: 'auto',
       },
     },
   },
-  editorWrapper: {
-  },
+  editorWrapper: {},
 }
-
 
 export const locales = {
   ru: {
     values: {
-      "Try another templates": "Посмотрите другие шаблоны",
-      "Edit this template": "Редактировать этот шаблон",
+      'Try another templates': 'Посмотрите другие шаблоны',
+      'Edit this template': 'Редактировать этот шаблон',
     },
   },
 }
 
-
 class FrontEditorPage extends PrismaCmsComponent {
-
   // static contextType = Context;
 
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
     classes: PropTypes.object.isRequired,
-  };
-
+  }
 
   static defaultProps = {
     ...PrismaCmsComponent.defaultProps,
-    CustomComponents: [
-      TemplateLink,
-      TopicsConnection,
-      TopicLink,
-      Template,
-    ],
+    CustomComponents: [TemplateLink, TopicsConnection, TopicLink, Template],
     locales,
   }
 
-
   constructor(props) {
-
     super(props)
 
     this.state = {
       ...this.state,
       inEditMode: false,
     }
-
   }
 
   async saveTemplate(props) {
-
-
-
     const {
-      query: {
-        createTemplateProcessor,
-      },
-    } = this.context;
+      query: { createTemplateProcessor },
+    } = this.context
 
-    let mutation = gql(createTemplateProcessor);
+    const mutation = gql(createTemplateProcessor)
 
     return this.mutate({
       mutation,
       ...props,
-    });
-
+    })
   }
 
-
   render() {
-
     const {
       // FrontEditor,
       Grid,
       uri,
-      Link,
-    } = this.context;
+    } = this.context
 
-    const {
-      components,
-      inEditMode,
-    } = this.state;
+    const { inEditMode } = this.state
 
-    const {
-      classes,
-      CustomComponents,
-    } = this.props;
+    const { classes, CustomComponents } = this.props
 
-
-    const {
-      templateId,
-    } = uri.query(true);
-
-
+    const { templateId } = uri.query(true)
 
     // return "SDfsdf";
 
-    const templatesList = <FrontEditor
-      inEditMode={false}
-      debug={false}
-      CustomComponents={CustomComponents}
-      data={{
-        object: {
-          "name": "Connector",
-          "props": {
-            "orderBy": "createdAt_DESC",
-            "skip": null,
-            "first": 12,
-            "last": null,
-            "query": "templatesConnection",
-            "filtersname": "templatesFilters",
-            "pagevariable": "templatesPage"
-          },
-          "components": [
-            {
-              "name": "Grid",
-              "props": {
-                "container": true,
-                "spacing": 8,
-                alignItems: "center",
-              },
-              "components": [
-                {
-                  "name": "Grid",
-                  "props": {
-                    "item": true,
-                    "xs": 12,
-                  },
-                  "components": [
-                    {
-                      "name": "Typography",
-                      "props": {
-                        "text": this.lexicon("Try another templates"),
-                        "variant": "title",
-                        "color": "primary"
+    const templatesList = (
+      <FrontEditor
+        inEditMode={false}
+        debug={false}
+        CustomComponents={CustomComponents}
+        data={{
+          object: {
+            name: 'Connector',
+            props: {
+              orderBy: 'createdAt_DESC',
+              skip: null,
+              first: 12,
+              last: null,
+              query: 'templatesConnection',
+              filtersname: 'templatesFilters',
+              pagevariable: 'templatesPage',
+            },
+            components: [
+              {
+                name: 'Grid',
+                props: {
+                  container: true,
+                  spacing: 8,
+                  alignItems: 'center',
+                },
+                components: [
+                  {
+                    name: 'Grid',
+                    props: {
+                      item: true,
+                      xs: 12,
+                    },
+                    components: [
+                      {
+                        name: 'Typography',
+                        props: {
+                          text: this.lexicon('Try another templates'),
+                          variant: 'title',
+                          color: 'primary',
+                        },
+                        components: [],
                       },
-                      "components": []
-                    }
-                  ],
-                },
-                {
-                  "name": "Grid",
-                  "props": {
-                    "item": true,
-                    "xs": 12
+                    ],
                   },
-                  "components": [
-                    {
-                      "name": "ListView",
-                      "components": [
-                        {
-                          "name": "Grid",
-                          "props": {
-                            "item": true,
-                            // xs: true,
-                          },
-                          "components": [
-                            {
-                              "name": "Grid",
-                              "props": {
-                                "container": true,
-                                "alignItems": "center",
-                                spacing: 8,
-                              },
-                              "components": [
-                                {
-                                  "name": "Grid",
-                                  "props": {
-                                    "item": true,
-                                    "xs": 12,
-                                    "sm": true
-                                  },
-                                  "components": [
-                                    {
-                                      "name": "CreatedBy",
-                                      "props": {},
-                                      "components": []
-                                    }
-                                  ]
-                                },
-                                {
-                                  "name": "Grid",
-                                  "props": {
-                                    "item": true
-                                  },
-                                  "components": [
-                                    {
-                                      "name": "TemplateLink",
-                                      "props": {},
-                                      components: [
-                                        {
-                                          "name": "Typography",
-                                          "props": {
-                                            "variant": "subheading",
-                                            "color": "primary",
-                                            "text": "",
-                                          },
-                                          "components": [
-                                            {
-                                              "name": "NamedField",
-                                              "props": {
-                                                "name": "name"
-                                              },
-                                              "components": []
-                                            }
-                                          ],
-                                        },
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
+                  {
+                    name: 'Grid',
+                    props: {
+                      item: true,
+                      xs: 12,
+                    },
+                    components: [
+                      {
+                        name: 'ListView',
+                        components: [
+                          {
+                            name: 'Grid',
+                            props: {
+                              item: true,
+                              // xs: true,
                             },
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "name": "Grid",
-                  "props": {
-                    "item": true,
-                    "xs": 12
+                            components: [
+                              {
+                                name: 'Grid',
+                                props: {
+                                  container: true,
+                                  alignItems: 'center',
+                                  spacing: 8,
+                                },
+                                components: [
+                                  {
+                                    name: 'Grid',
+                                    props: {
+                                      item: true,
+                                      xs: 12,
+                                      sm: true,
+                                    },
+                                    components: [
+                                      {
+                                        name: 'CreatedBy',
+                                        props: {},
+                                        components: [],
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    name: 'Grid',
+                                    props: {
+                                      item: true,
+                                    },
+                                    components: [
+                                      {
+                                        name: 'TemplateLink',
+                                        props: {},
+                                        components: [
+                                          {
+                                            name: 'Typography',
+                                            props: {
+                                              variant: 'subheading',
+                                              color: 'primary',
+                                              text: '',
+                                            },
+                                            components: [
+                                              {
+                                                name: 'NamedField',
+                                                props: {
+                                                  name: 'name',
+                                                },
+                                                components: [],
+                                              },
+                                            ],
+                                          },
+                                        ],
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   },
-                  "components": [
-                    {
-                      "name": "Pagination"
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "first": 12
-        },
-      }}
-    />
+                  {
+                    name: 'Grid',
+                    props: {
+                      item: true,
+                      xs: 12,
+                    },
+                    components: [
+                      {
+                        name: 'Pagination',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+            first: 12,
+          },
+        }}
+      />
+    )
 
-    let toolbar = <Grid
-      container
-      spacing={8}
-    >
-      <Grid
-        item
-        xs={12}
-      >
-        {templatesList}
-      </Grid>
+    const toolbar = (
+      <Grid container spacing={8}>
+        <Grid item xs={12}>
+          {templatesList}
+        </Grid>
 
-      {!templateId || true ?
-        <Grid
-          item
-          xs={12}
-        >
+        <Grid item xs={12}>
           <Button
             size="small"
             // color="action"
             variant="raised"
-            onClick={event => {
+            onClick={() => {
               this.setState({
                 inEditMode: !inEditMode,
               })
             }}
           >
-            {!inEditMode ? this.lexicon("Edit this template") : this.lexicon("Cancel")}
+            {!inEditMode
+              ? this.lexicon('Edit this template')
+              : this.lexicon('Cancel')}
           </Button>
-        </Grid> :
-        null
-      }
+        </Grid>
 
-      {/* <Grid
+        {/* <Grid
         item
         xs={12}
       >
@@ -314,51 +272,48 @@ class FrontEditorPage extends PrismaCmsComponent {
           Создать свой шаблон
         </Link>
       </Grid> */}
+      </Grid>
+    )
 
-    </Grid>
-
-
-    let editor;
+    let editor
 
     if (templateId) {
-
-      editor = <TemplatePage
-        inEditMode={inEditMode}
-        where={{
-          id: templateId,
-        }}
-        CustomComponents={CustomComponents}
-      />
-
-    }
-    else {
-
+      editor = (
+        <TemplatePage
+          inEditMode={inEditMode}
+          where={{
+            id: templateId,
+          }}
+          CustomComponents={CustomComponents}
+        />
+      )
+    } else {
       const object = {
-        name: "Page",
-        "components": [
+        name: 'Page',
+        components: [
           {
-            "name": "Section",
-            "components": [
+            name: 'Section',
+            components: [
               {
-                "name": "Grid",
-                "container": true,
-                "components": [
+                name: 'Grid',
+                container: true,
+                components: [
                   {
-                    "name": "Grid",
+                    name: 'Grid',
                     props: {
-                      "xs": 12,
-                      "item": true,
+                      xs: 12,
+                      item: true,
                     },
-                    "components": [
+                    components: [
                       {
-                        "name": "Typography",
+                        name: 'Typography',
                         props: {
-                          "variant": "title",
-                          "text": "Здесь все можно редактировать",
-                          "color": "secondary"
+                          variant: 'title',
+                          text: 'Здесь все можно редактировать',
+                          color: 'secondary',
                         },
-                      }
-                    ]
+                      },
+                    ],
                   },
                   // {
                   //   "name": "Grid",
@@ -377,245 +332,234 @@ class FrontEditorPage extends PrismaCmsComponent {
                   //     }
                   //   ]
                   // }
-                ]
+                ],
               },
             ],
-
           },
           {
-            "name": "Section",
-            "components": [
+            name: 'Section',
+            components: [
               {
-                "name": "TopicsConnection",
+                name: 'TopicsConnection',
                 props: {
-                  "first": 4,
-                  "query": "resourcesConnection",
-                  "where": {
-                    "type": "Topic"
+                  first: 4,
+                  query: 'resourcesConnection',
+                  where: {
+                    type: 'Topic',
                   },
-                  "orderBy": "createdAt_DESC",
-                  "pagevariable": "topicsPage",
-                  "filtersname": "topicsFilters"
+                  orderBy: 'createdAt_DESC',
+                  pagevariable: 'topicsPage',
+                  filtersname: 'topicsFilters',
                 },
-                "components": [
+                components: [
                   {
-                    "name": "Typography",
+                    name: 'Typography',
                     props: {
-                      "text": "Последние топики",
-                      "displayType": "div",
-                      "display": "block",
-                      "variant": "subheading",
-                      "color": "primary"
+                      text: 'Последние топики',
+                      displayType: 'div',
+                      display: 'block',
+                      variant: 'subheading',
+                      color: 'primary',
                     },
                   },
                   {
-                    "name": "Filters",
+                    name: 'Filters',
                   },
                   {
-                    "name": "ListView",
-                    "components": [
+                    name: 'ListView',
+                    components: [
                       {
-                        "name": "Grid",
+                        name: 'Grid',
                         props: {
-                          "item": true,
-                          "xs": 12,
+                          item: true,
+                          xs: 12,
                         },
-                        "components": [
+                        components: [
                           {
-                            "name": "Section",
-                            "components": [
+                            name: 'Section',
+                            components: [
                               {
-                                "name": "Grid",
+                                name: 'Grid',
                                 props: {
-                                  "container": true,
-                                  "alignItems": "center",
-                                  "spacing": 8,
+                                  container: true,
+                                  alignItems: 'center',
+                                  spacing: 8,
                                 },
-                                "components": [
+                                components: [
                                   {
-                                    "name": "Grid",
+                                    name: 'Grid',
                                     props: {
-                                      "item": true,
-                                      "xs": 12,
-                                      "md": 3,
+                                      item: true,
+                                      xs: 12,
+                                      md: 3,
                                     },
-                                    "components": [
+                                    components: [
                                       {
-                                        "name": "Typography",
+                                        name: 'Typography',
                                         props: {
-                                          "text": "Название:",
-                                          "variant": "caption"
+                                          text: 'Название:',
+                                          variant: 'caption',
                                         },
-                                      }
-                                    ]
+                                      },
+                                    ],
                                   },
                                   {
-                                    "name": "Grid",
+                                    name: 'Grid',
                                     props: {
-                                      "xs": true,
-                                      "item": true,
+                                      xs: true,
+                                      item: true,
                                     },
-                                    "components": [
+                                    components: [
                                       {
-                                        "name": "TopicLink"
-                                      }
-                                    ]
-                                  }
-                                ]
+                                        name: 'TopicLink',
+                                      },
+                                    ],
+                                  },
+                                ],
                               },
                               {
-                                "name": "Grid",
+                                name: 'Grid',
                                 props: {
-                                  "container": true,
-                                  "alignItems": "center",
-                                  "spacing": 8,
+                                  container: true,
+                                  alignItems: 'center',
+                                  spacing: 8,
                                 },
-                                "components": [
+                                components: [
                                   {
-                                    "name": "Grid",
+                                    name: 'Grid',
                                     props: {
-                                      "item": true,
-                                      "xs": 12,
-                                      "md": 3,
+                                      item: true,
+                                      xs: 12,
+                                      md: 3,
                                     },
-                                    "components": [
+                                    components: [
                                       {
-                                        "name": "Typography",
+                                        name: 'Typography',
                                         props: {
-                                          "text": "Дата создания:",
-                                          "variant": "caption"
+                                          text: 'Дата создания:',
+                                          variant: 'caption',
                                         },
-                                      }
-                                    ]
+                                      },
+                                    ],
                                   },
                                   {
-                                    "name": "Grid",
+                                    name: 'Grid',
                                     props: {
-                                      "xs": true,
-                                      "item": true,
+                                      xs: true,
+                                      item: true,
                                     },
-                                    "components": [
+                                    components: [
                                       {
-                                        "name": "NamedField",
+                                        name: 'NamedField',
                                         props: {
-                                          "name": "createdAt"
+                                          name: 'createdAt',
                                         },
-                                      }
-                                    ]
-                                  }
-                                ]
+                                      },
+                                    ],
+                                  },
+                                ],
                               },
                               {
-                                "name": "Grid",
+                                name: 'Grid',
                                 props: {
-                                  "container": true,
-                                  "alignItems": "center",
-                                  "spacing": 8,
+                                  container: true,
+                                  alignItems: 'center',
+                                  spacing: 8,
                                 },
-                                "components": [
+                                components: [
                                   {
-                                    "name": "Grid",
+                                    name: 'Grid',
                                     props: {
-                                      "item": true,
-                                      "xs": 12,
-                                      "md": 3,
+                                      item: true,
+                                      xs: 12,
+                                      md: 3,
                                     },
-                                    "components": [
+                                    components: [
                                       {
-                                        "name": "Typography",
+                                        name: 'Typography',
                                         props: {
-                                          "text": "Кем написан:",
-                                          "variant": "caption"
+                                          text: 'Кем написан:',
+                                          variant: 'caption',
                                         },
-                                      }
-                                    ]
+                                      },
+                                    ],
                                   },
                                   {
-                                    "name": "Grid",
+                                    name: 'Grid',
                                     props: {
-                                      "xs": true,
-                                      "item": true,
+                                      xs: true,
+                                      item: true,
                                     },
-                                    "components": [
+                                    components: [
                                       {
-                                        "name": "CreatedBy"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                                        name: 'CreatedBy',
+                                      },
+                                    ],
+                                  },
+                                ],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                    ],
                   },
                   {
-                    "name": "Pagination"
-                  }
+                    name: 'Pagination',
+                  },
                 ],
-              }
-            ]
+              },
+            ],
           },
           {
-            "name": "Section",
-            "components": [
+            name: 'Section',
+            components: [
               {
-                "name": "Typography",
+                name: 'Typography',
                 props: {
-                  "text": "Все пользователи",
-                  "displayType": "div",
-                  "display": "block",
-                  "variant": "subheading",
-                  "color": "primary"
+                  text: 'Все пользователи',
+                  displayType: 'div',
+                  display: 'block',
+                  variant: 'subheading',
+                  color: 'primary',
                 },
               },
               {
-                "name": "UsersGrid",
+                name: 'UsersGrid',
                 props: {
-                  "first": 10
+                  first: 10,
                 },
-              }
-            ]
-          }
-        ]
-      };
-
-      editor = <FrontEditor
-        inEditMode={inEditMode}
-        CustomComponents={CustomComponents}
-        debug={false}
-        data={{
-          object,
-        }}
-        mutate={(data) => this.saveTemplate(data)}
-        _dirty={object}
-        onSave={result => {
-
-          const {
-            response,
-          } = result.data || {};
-
-          const {
-            id,
-          } = response && response.data || {}
-
-          if (id) {
-
-            const {
-              router: {
-                history,
               },
-            } = this.context;
+            ],
+          },
+        ],
+      }
 
-            history.push(`/?templateId=${id}`);
+      editor = (
+        <FrontEditor
+          inEditMode={inEditMode}
+          CustomComponents={CustomComponents}
+          debug={false}
+          data={{
+            object,
+          }}
+          mutate={(data) => this.saveTemplate(data)}
+          _dirty={object}
+          onSave={(result) => {
+            const { response } = result.data || {}
 
-          }
+            const { id } = (response && response.data) || {}
 
-        }}
-      />
+            if (id) {
+              const {
+                router: { history },
+              } = this.context
 
-
+              history.push(`/?templateId=${id}`)
+            }
+          }}
+        />
+      )
 
       // editor = <FrontEditor
       //   inEditMode={false}
@@ -672,29 +616,16 @@ class FrontEditorPage extends PrismaCmsComponent {
       // //   props: {},
       // // }}
       // />
-
     }
 
-
-
     return super.render(
-      <div
-        className={[classes.root, inEditMode ? "inEditMode" : ""].join(" ")}
-      >
-
+      <div className={[classes.root, inEditMode ? 'inEditMode' : ''].join(' ')}>
         {toolbar}
 
-        <div
-          className={classes.editorWrapper}
-        >
-          {editor}
-        </div>
+        <div className={classes.editorWrapper}>{editor}</div>
       </div>
-    );
+    )
   }
 }
 
-
-export default withStyles(styles)(props => <FrontEditorPage
-  {...props}
-/>);
+export default withStyles(styles)((props) => <FrontEditorPage {...props} />)

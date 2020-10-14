@@ -1,5 +1,5 @@
-# The default project name is the basename of the project directory. 
-# You can set a custom project name by using the -p command line option 
+# The default project name is the basename of the project directory.
+# You can set a custom project name by using the -p command line option
 # or the COMPOSE_PROJECT_NAME environment variable.
 # Example: docker-compose -p projectName up -d
 
@@ -9,7 +9,7 @@ services:
     image: prismagraphql/prisma:1.15.3
     restart: always
     ports:
-    - "4466:4466"
+      - '4466:4466'
     environment:
       PRISMA_CONFIG: |
         port: 4466
@@ -30,7 +30,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: prisma
     volumes:
-      # Can set another path 
+      # Can set another path
       - mysql:/var/lib/mysql
     networks:
       default:

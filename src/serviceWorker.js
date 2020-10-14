@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -12,50 +13,49 @@
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
-  // [::1] is the IPv6 localhost address.
-  window.location.hostname === '[::1]' ||
-  // 127.0.0.1/8 is considered localhost for IPv4.
-  window.location.hostname.match(
-    /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-  )
-);
+    // [::1] is the IPv6 localhost address.
+    window.location.hostname === '[::1]' ||
+    // 127.0.0.1/8 is considered localhost for IPv4.
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    )
+)
 
 export function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
-    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
+    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href)
     if (publicUrl.origin !== window.location.origin) {
       // Our service worker won't work if PUBLIC_URL is on a different origin
       // from what our page is served on. This might happen if a CDN is used to
       // serve assets; see https://github.com/facebook/create-react-app/issues/2374
-      return;
+      return
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl, config);
+        checkValidServiceWorker(swUrl, config)
 
         // Add some additional logging to localhost, pointing developers to the
         // service worker/PWA documentation.
         navigator.serviceWorker.ready.then(() => {
           console.log(
             'This web app is being served cache-first by a service ' +
-            'worker. To learn more, visit http://bit.ly/CRA-PWA'
-          );
-        });
+              'worker. To learn more, visit http://bit.ly/CRA-PWA'
+          )
+        })
       } else {
         // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config);
+        registerValidSW(swUrl, config)
       }
-    });
+    })
   }
 }
 
-function registerValidSW(swUrl, config) {
-
+function registerValidSW() {
   // navigator.serviceWorker
   //   .register(swUrl)
   //   .then(registration => {
@@ -99,106 +99,97 @@ function registerValidSW(swUrl, config) {
   //   });
 
   navigator.serviceWorker
-    .register("push.worker.js")
-    .then(registration => {
-      console.log("registered push.worker.js", registration);
+    .register('push.worker.js')
+    .then((registration) => {
+      console.log('registered push.worker.js', registration)
 
       function urlB64ToUint8Array(base64String) {
-        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const padding = '='.repeat((4 - (base64String.length % 4)) % 4)
         const base64 = (base64String + padding)
+          // eslint-disable-next-line no-useless-escape
           .replace(/\-/g, '+')
-          .replace(/_/g, '/');
+          .replace(/_/g, '/')
 
-        const rawData = window.atob(base64);
-        const outputArray = new Uint8Array(rawData.length);
+        const rawData = window.atob(base64)
+        const outputArray = new Uint8Array(rawData.length)
 
         for (let i = 0; i < rawData.length; ++i) {
-          outputArray[i] = rawData.charCodeAt(i);
+          outputArray[i] = rawData.charCodeAt(i)
         }
-        return outputArray;
+        return outputArray
       }
-
 
       function subscribeUser() {
+        const applicationServerPublicKey =
+          'BDDjn9yst9WhHLgEYbhFjP8HNXwLXhW6tdlr37gjedk_2Gbnzdq9NrlMLDuQIMw25ZM3VTiSaepr0JLAvMDmTlU'
 
-        const applicationServerPublicKey = "BDDjn9yst9WhHLgEYbhFjP8HNXwLXhW6tdlr37gjedk_2Gbnzdq9NrlMLDuQIMw25ZM3VTiSaepr0JLAvMDmTlU";
-
-        const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
-        registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: applicationServerKey
-        })
-          .then(function (subscription) {
-            console.log('User is subscribed.');
-
-            // updateSubscriptionOnServer(subscription);
-
-            // isSubscribed = true;
-
-            // updateBtn();
+        const applicationServerKey = urlB64ToUint8Array(
+          applicationServerPublicKey
+        )
+        registration.pushManager
+          .subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: applicationServerKey,
           })
           .catch(function (err) {
-            console.log('Failed to subscribe the user: ', err);
+            console.log('Failed to subscribe the user: ', err)
             // updateBtn();
-          });
+          })
       }
 
-      console.log("subscribeUser", subscribeUser);
+      console.log('subscribeUser', subscribeUser)
 
-      registration.pushManager.getSubscription()
-        .then(function (subscription) {
-          const isSubscribed = !(subscription === null);
+      registration.pushManager.getSubscription().then(function (subscription) {
+        const isSubscribed = !(subscription === null)
 
-          // updateSubscriptionOnServer(subscription);
+        // updateSubscriptionOnServer(subscription);
 
-          if (isSubscribed) {
-            console.log('User IS subscribed.');
-          } else {
-            console.log('User is NOT subscribed.');
-          }
+        if (isSubscribed) {
+          console.log('User IS subscribed.')
+        } else {
+          console.log('User is NOT subscribed.')
+        }
 
-          // updateBtn();
-        });
-
+        // updateBtn();
+      })
     })
-    .catch(error => {
-      console.error('Error during service push.worker.js registration:', error);
-    });
-
+    .catch((error) => {
+      console.error('Error during service push.worker.js registration:', error)
+    })
 }
 
 function checkValidServiceWorker(swUrl, config) {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl)
-    .then(response => {
+    .then((response) => {
       // Ensure service worker exists, and that we really are getting a JS file.
-      const contentType = response.headers.get('content-type');
+      const contentType = response.headers.get('content-type')
       if (
         response.status === 404 ||
         (contentType != null && contentType.indexOf('javascript') === -1)
       ) {
         // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then(registration => {
+        navigator.serviceWorker.ready.then((registration) => {
           registration.unregister().then(() => {
-            window.location.reload();
-          });
-        });
+            window.location.reload()
+          })
+        })
       } else {
         // Service worker found. Proceed as normal.
-        registerValidSW(swUrl, config);
+        registerValidSW(swUrl, config)
       }
     })
     .catch(() => {
       console.log(
         'No internet connection found. App is running in offline mode.'
-      );
-    });
+      )
+    })
 }
 
 export function unregister() {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.unregister()
+    })
   }
 }

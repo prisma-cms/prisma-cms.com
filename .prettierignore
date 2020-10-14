@@ -1,0 +1,12 @@
+node_modules
+.next
+yarn.lock
+package-lock.json
+public
+coverage
+dist
+generated
+src/node_modules
+/src/server
+/src/ssr
+/src/schema

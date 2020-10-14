@@ -1,96 +1,59 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
 
+import { Typography } from 'material-ui'
 
-import { Typography } from 'material-ui';
+import Grid from '../../../ui/Grid'
+import Pagination from '../../../ui/Pagination'
 
-import Grid from "../../../ui/Grid"
-import Pagination from "../../../ui/Pagination"
-
-import TasksList from "./List";
+import TasksList from './List'
 
 class TasksView extends Component {
-
-  static propTypes = {
-
-  };
+  static propTypes = {}
 
   render() {
-
-
-    const {
-      page,
-    } = this.props;
-
-
+    const { page } = this.props
 
     const {
       objectsConnection,
       loading,
-      variables: {
-        first: limit,
-      },
-    } = this.props.data;
+      variables: { first: limit },
+    } = this.props.data
 
+    const { edges, aggregate } = objectsConnection || {}
 
-    const {
-      edges,
-      aggregate,
-    } = objectsConnection || {};
-
-    const {
-      count = 0,
-    } = aggregate || {};
+    const { count = 0 } = aggregate || {}
 
     if (!edges || !edges.length) {
-
       if (loading) {
-        return null;
+        return null
+      } else {
+        return <Typography>Данные не были получены</Typography>
       }
-      else {
-        return <Typography>
-          Данные не были получены
-        </Typography>
-      }
-
     }
 
+    const tasks = edges.map((n) => n.node)
 
-    let tasks = edges.map(n => n.node);
+    const content = (
+      <Grid container spacing={0}>
+        {edges && edges.length ? (
+          <Grid item xs={12}>
+            <TasksList tasks={tasks} />
 
+            <Pagination
+              limit={limit}
+              total={count}
+              page={page || 1}
+              style={{
+                marginTop: 20,
+              }}
+            />
+          </Grid>
+        ) : null}
+      </Grid>
+    )
 
-    let content = <Grid
-      container
-      spacing={0}
-    >
-
-      {edges && edges.length ? <Grid
-        item
-        xs={12}
-
-      >
-
-        <TasksList
-          tasks={tasks}
-        />
-
-        <Pagination
-          limit={limit}
-          total={count}
-          page={page || 1}
-          style={{
-            marginTop: 20,
-          }}
-        />
-      </Grid> : null
-      }
-
-    </Grid>
-
-
-    return (content);
+    return content
   }
 }
 
-
-export default TasksView;
+export default TasksView

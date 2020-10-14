@@ -1,7 +1,4 @@
-
-
 type Mutation {
-  
   # signup(
   #   data: UserCreateInput!
   # ): AuthPayload!
@@ -36,46 +33,33 @@ type Mutation {
   #   files: [Upload!]!
   # ): [File!]
 
-
-  createBlogProcessor(
-    data: BlogCreateInput!
-  ): ResourceResponse!
+  createBlogProcessor(data: BlogCreateInput!): ResourceResponse!
 
   updateBlogProcessor(
     data: BlogUpdateInput!
     where: ResourceWhereUniqueInput!
   ): ResourceResponse!
 
-
-  createTopicProcessor(
-    data: TopicCreateInput!
-  ): ResourceResponse!
+  createTopicProcessor(data: TopicCreateInput!): ResourceResponse!
 
   updateTopicProcessor(
     data: TopicUpdateInput!
     where: ResourceWhereUniqueInput!
   ): ResourceResponse!
 
-
-  createCommentProcessor(
-    data: CommentCreateInput!
-  ): ResourceResponse!
+  createCommentProcessor(data: CommentCreateInput!): ResourceResponse!
 
   updateCommentProcessor(
     data: CommentUpdateInput!
     where: ResourceWhereUniqueInput!
   ): ResourceResponse!
 
-
-  createTestProcessor(
-    data: TestCreateInput!
-  ): TestResponse!
+  createTestProcessor(data: TestCreateInput!): TestResponse!
 
   updateTestProcessor(
     data: TestUpdateInput!
     where: TestWhereUniqueInput!
   ): TestResponse!
-  
 
   startImportProcessor(
     sourceDbConfig: ImportDbConfig!
@@ -86,12 +70,10 @@ type Mutation {
   #   where: UserWhereUniqueInput!
   # ): Boolean!
 
-
-  """Signin or Signup via Ethereum"""
-  ethSigninOrSignup(
-    data: EthRecoverPersonalSignatureDataInput!
-  ): AuthPayload!
-
+  """
+  Signin or Signup via Ethereum
+  """
+  ethSigninOrSignup(data: EthRecoverPersonalSignatureDataInput!): AuthPayload!
 
   ethConnectAuthAccount(
     data: EthRecoverPersonalSignatureDataInput!

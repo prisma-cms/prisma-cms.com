@@ -1,126 +1,93 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
-import { compose, graphql } from 'react-apollo';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import gql from 'graphql-tag'
+import { compose, graphql } from '@apollo/client'
 
-import Typography from "material-ui/Typography";
-
-import { Grid, CheckBox } from "@modxclub/ui";
+import { Grid, CheckBox } from '@modxclub/ui'
 
 const notificationsQuery = gql`
   query {
-    objects: notificationTypes{
+    objects: notificationTypes {
       id
       name
       comment
     }
   }
-`;
+`
 
 class UserNotificationTypes extends Component {
-
   static propTypes = {
     user: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired,
     inEditMode: PropTypes.bool.isRequired,
     mutate: PropTypes.func.isRequired,
-  };
+  }
 
   static contextTypes = {
     user: PropTypes.object,
   }
 
   render() {
+    const { data, user } = this.props
 
-    const {
-      data,
-      user,
-      inEditMode,
-    } = this.props;
-
-    const {
-      user: currentUser,
-    } = this.context;
+    const { user: currentUser } = this.context
 
     if (!user || !currentUser || user.id !== currentUser.id) {
-      return null;
+      return null
     }
 
-    const {
-      loading,
-      objects,
-    } = data;
+    const { objects } = data
 
     if (!objects || !objects.length) {
-      return null;
+      return null
     }
 
-    const {
-      NotificationTypes,
-    } = user;
-
-
+    const { NotificationTypes } = user
 
     let output = null
 
-    output = objects.map(n => {
+    output = objects.map((n) => {
+      const { id, name, comment } = n
 
-      const {
-        id,
-        name,
-        comment,
-      } = n;
+      return (
+        <Grid key={id} item xs={12}>
+          <CheckBox
+            checked={
+              NotificationTypes &&
+              NotificationTypes.findIndex((n) => n.id === id) !== -1
+            }
+            label={comment || name}
+            // disabled={!inEditMode}
+            onChange={async (event) => {
+              const { checked } = event.target
 
-      return <Grid
-        key={id}
-        item
-        xs={12}
-      >
+              const { mutate } = this.props
 
-        <CheckBox
-          checked={NotificationTypes && NotificationTypes.findIndex(n => n.id === id) !== -1}
-          label={comment || name}
-          // disabled={!inEditMode}
-          onChange={async event => {
+              const action = checked ? 'connect' : 'disconnect'
 
-            const {
-              checked,
-            } = event.target;
-
-
-
-            const {
-              mutate,
-            } = this.props;
-
-            const action = checked ? "connect" : "disconnect";
-
-            await mutate({
-              variables: {
-                data: {
-                  NotificationTypes: {
-                    [action]: {
-                      id,
+              await mutate({
+                variables: {
+                  data: {
+                    NotificationTypes: {
+                      [action]: {
+                        id,
+                      },
                     },
                   },
                 },
-              },
-            });
-
-          }}
-        />
-      </Grid>
-
+              })
+            }}
+          />
+        </Grid>
+      )
     })
 
-    return <Grid
-      container
-      spacing={8}
-    >
-      {output}
-    </Grid>;
+    return (
+      <Grid container spacing={8}>
+        {output}
+      </Grid>
+    )
   }
 }
 
-
-export default compose(graphql(notificationsQuery))(UserNotificationTypes);
+export default compose(graphql(notificationsQuery))(UserNotificationTypes)

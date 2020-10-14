@@ -1,27 +1,16 @@
+import React, { Component } from 'react'
 
-import React, {
-  Component,
-} from 'react';
+import Context from '@prisma-cms/context'
 
-
-import Context from '@prisma-cms/context';
-
-import * as UI from "@modxclub/ui"
+import * as UI from '@modxclub/ui'
 
 class ContextProvider extends Component {
-
-  static contextType = Context;
-
+  static contextType = Context
 
   render() {
+    const { children } = this.props
 
-    const {
-      children,
-    } = this.props;
-
-    let {
-      query,
-    } = this.context;
+    const { query } = this.context
 
     Object.assign(this.context, {
       query: {
@@ -32,20 +21,16 @@ class ContextProvider extends Component {
       //   ...this.prepareQuery(),
       // }) : query,
       ...UI,
-    });
+    })
 
-    return <Context.Provider
-      value={this.context}
-    >
-      {children || null}
-    </Context.Provider>;
-
+    return (
+      <Context.Provider value={this.context}>
+        {children || null}
+      </Context.Provider>
+    )
   }
 
-
   prepareQuery() {
-
-
     return {
       ...this.prepareUserQuery(),
       ...this.prepareResourcesQuery(),
@@ -53,15 +38,10 @@ class ContextProvider extends Component {
       ...this.prepareTimerQuery(),
       ...this.prepareProjectQuery(),
     }
-
   }
 
-
   prepareUserQuery() {
-    const {
-      queryFragments,
-    } = this.context;
-
+    const { queryFragments } = this.context
 
     const {
       UserNoNestingFragment,
@@ -71,8 +51,7 @@ class ContextProvider extends Component {
       ProjectMemberNoNestingFragment,
       ResourceNoNestingFragment,
       BatchPayloadNoNestingFragment,
-    } = queryFragments;
-
+    } = queryFragments
 
     const userFragment = `
       fragment user on User {
@@ -106,8 +85,7 @@ class ContextProvider extends Component {
       ${ProjectNoNestingFragment}
       ${ProjectMemberNoNestingFragment}
       ${ResourceNoNestingFragment}
-    `;
-
+    `
 
     const usersConnection = `
       query usersConnection (
@@ -140,8 +118,7 @@ class ContextProvider extends Component {
       }
 
       ${userFragment}
-    `;
-
+    `
 
     const users = `
       query users (
@@ -167,8 +144,7 @@ class ContextProvider extends Component {
       }
 
       ${userFragment}
-    `;
-
+    `
 
     const user = `
       query user (
@@ -182,8 +158,7 @@ class ContextProvider extends Component {
       }
 
       ${userFragment}
-    `;
-
+    `
 
     const createUserProcessor = `
       mutation createUserProcessor(
@@ -205,8 +180,7 @@ class ContextProvider extends Component {
       }
 
       ${userFragment}
-    `;
-
+    `
 
     const updateUserProcessor = `
       mutation updateUserProcessor(
@@ -230,8 +204,7 @@ class ContextProvider extends Component {
       }
 
       ${userFragment}
-    `;
-
+    `
 
     const deleteUser = `
       mutation deleteUser (
@@ -244,8 +217,7 @@ class ContextProvider extends Component {
         }
       }
       ${UserNoNestingFragment}
-    `;
-
+    `
 
     const deleteManyUsers = `
       mutation deleteManyUsers (
@@ -258,8 +230,7 @@ class ContextProvider extends Component {
         }
       }
       ${BatchPayloadNoNestingFragment}
-    `;
-
+    `
 
     return {
       usersConnection,
@@ -272,16 +243,10 @@ class ContextProvider extends Component {
     }
   }
 
-
   prepareResourcesQuery() {
-
     const {
-      queryFragments: {
-        ResourceNoNestingFragment,
-        UserNoNestingFragment,
-      },
-    } = this.context;
-
+      queryFragments: { ResourceNoNestingFragment, UserNoNestingFragment },
+    } = this.context
 
     const blogFragment = `
       fragment blog on Resource{
@@ -292,7 +257,7 @@ class ContextProvider extends Component {
       }
       ${ResourceNoNestingFragment}
       ${UserNoNestingFragment}
-    `;
+    `
 
     const createBlogProcessor = `
       mutation createBlogProcessor(
@@ -314,7 +279,7 @@ class ContextProvider extends Component {
       }
 
       ${blogFragment}
-    `;
+    `
 
     const updateBlogProcessor = `
       mutation updateBlogProcessor(
@@ -338,8 +303,7 @@ class ContextProvider extends Component {
       }
 
       ${blogFragment}
-    `;
-
+    `
 
     return {
       createBlogProcessor,
@@ -347,14 +311,8 @@ class ContextProvider extends Component {
     }
   }
 
-
   prepareTaskQuery() {
-
-
-    const {
-      queryFragments,
-    } = this.context;
-
+    const { queryFragments } = this.context
 
     const {
       TaskNoNestingFragment,
@@ -363,8 +321,7 @@ class ContextProvider extends Component {
       TimerNoNestingFragment,
       ProjectNoNestingFragment,
       ProjectTaskNoNestingFragment,
-    } = queryFragments;
-
+    } = queryFragments
 
     const TaskFragment = `
       fragment Task on Task{
@@ -419,7 +376,6 @@ class ContextProvider extends Component {
       ${ProjectTaskNoNestingFragment}
     `
 
-
     const tasksConnection = `
       query tasksConnection (
         $where: TaskWhereInput
@@ -451,8 +407,7 @@ class ContextProvider extends Component {
       }
 
       ${TaskFragment}
-    `;
-
+    `
 
     const tasks = `
       query tasks (
@@ -478,8 +433,7 @@ class ContextProvider extends Component {
       }
 
       ${TaskFragment}
-    `;
-
+    `
 
     const task = `
       query task (
@@ -493,8 +447,7 @@ class ContextProvider extends Component {
       }
 
       ${TaskFragment}
-    `;
-
+    `
 
     const createTaskProcessor = `
       mutation createTaskProcessor(
@@ -516,8 +469,7 @@ class ContextProvider extends Component {
       }
 
       ${TaskFragment}
-    `;
-
+    `
 
     const updateTaskProcessor = `
       mutation updateTaskProcessor(
@@ -541,8 +493,7 @@ class ContextProvider extends Component {
       }
 
       ${TaskFragment}
-    `;
-
+    `
 
     const taskStatusEnum = `
       query {
@@ -555,7 +506,7 @@ class ContextProvider extends Component {
           }
         }
       }
-    `;
+    `
 
     return {
       tasksConnection,
@@ -565,17 +516,10 @@ class ContextProvider extends Component {
       updateTaskProcessor,
       taskStatusEnum,
     }
-
   }
 
-
   prepareTimerQuery() {
-
-
-    const {
-      queryFragments,
-    } = this.context;
-
+    const { queryFragments } = this.context
 
     const {
       TimerNoNestingFragment,
@@ -584,7 +528,7 @@ class ContextProvider extends Component {
       ProjectNoNestingFragment,
       ResourceNoNestingFragment,
       ProjectTaskNoNestingFragment,
-    } = queryFragments;
+    } = queryFragments
 
     const TimerFragment = `
       fragment Timer on Timer{
@@ -654,8 +598,7 @@ class ContextProvider extends Component {
       }
 
       ${TimerFragment}
-    `;
-
+    `
 
     const timers = `
       query timers (
@@ -681,8 +624,7 @@ class ContextProvider extends Component {
       }
 
       ${TimerFragment}
-    `;
-
+    `
 
     const timer = `
       query timer (
@@ -696,8 +638,7 @@ class ContextProvider extends Component {
       }
 
       ${TimerFragment}
-    `;
-
+    `
 
     const createTimerProcessor = `
       mutation createTimerProcessor(
@@ -719,8 +660,7 @@ class ContextProvider extends Component {
       }
 
       ${TimerFragment}
-    `;
-
+    `
 
     const updateTimerProcessor = `
       mutation updateTimerProcessor(
@@ -744,9 +684,7 @@ class ContextProvider extends Component {
       }
 
       ${TimerFragment}
-    `;
-
-
+    `
 
     return {
       timersConnection,
@@ -755,17 +693,10 @@ class ContextProvider extends Component {
       createTimerProcessor,
       updateTimerProcessor,
     }
-
   }
 
-
   prepareProjectQuery() {
-
-
-    const {
-      queryFragments,
-    } = this.context;
-
+    const { queryFragments } = this.context
 
     const {
       ProjectNoNestingFragment,
@@ -773,8 +704,7 @@ class ContextProvider extends Component {
       TaskNoNestingFragment,
       TimerNoNestingFragment,
       ProjectTaskNoNestingFragment,
-    } = queryFragments;
-
+    } = queryFragments
 
     const ProjectFragment = `fragment Project on Project {
       ...ProjectNoNesting
@@ -830,8 +760,7 @@ class ContextProvider extends Component {
       ${TaskNoNestingFragment}
       ${TimerNoNestingFragment}
       ${ProjectTaskNoNestingFragment}
-    `;
-
+    `
 
     const projectsConnection = `
       query projectsConnection (
@@ -864,8 +793,7 @@ class ContextProvider extends Component {
       }
 
       ${ProjectFragment}
-    `;
-
+    `
 
     const projects = `
       query projects (
@@ -891,8 +819,7 @@ class ContextProvider extends Component {
       }
 
       ${ProjectFragment}
-    `;
-
+    `
 
     const project = `
       query project (
@@ -906,8 +833,7 @@ class ContextProvider extends Component {
       }
 
       ${ProjectFragment}
-    `;
-
+    `
 
     const createProjectProcessor = `
       mutation createProjectProcessor(
@@ -929,8 +855,7 @@ class ContextProvider extends Component {
       }
 
       ${ProjectFragment}
-    `;
-
+    `
 
     const updateProjectProcessor = `
       mutation updateProjectProcessor(
@@ -954,9 +879,7 @@ class ContextProvider extends Component {
       }
 
       ${ProjectFragment}
-    `;
-
-
+    `
 
     return {
       projectsConnection,
@@ -965,9 +888,7 @@ class ContextProvider extends Component {
       createProjectProcessor,
       updateProjectProcessor,
     }
-
   }
-
 }
 
-export default ContextProvider;
+export default ContextProvider

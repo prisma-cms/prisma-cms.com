@@ -1,9 +1,7 @@
-
-
 // import { Component } from "react";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 // import {App as PrismaApp} from "@prisma-cms/front";
 
@@ -31,6 +29,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 // }
 
-import App from "./components/App";
+import App from './components/App'
 
-export default App;
+export default App

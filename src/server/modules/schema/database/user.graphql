@@ -1,9 +1,11 @@
-
 type User {
   oldID: Int @unique
   LettersCreated: [Letter!]! @relation(name: "LettersCreatedBy")
   sudo: Boolean @default(value: false)
 
-  """Used for authorization"""
-  EthAccountAuthed: EthAccount @relation(name: "UserEthAccountAuthed" link: INLINE)
+  """
+  Used for authorization
+  """
+  EthAccountAuthed: EthAccount
+    @relation(name: "UserEthAccountAuthed", link: INLINE)
 }

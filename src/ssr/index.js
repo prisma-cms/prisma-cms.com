@@ -1,131 +1,127 @@
+/* eslint-disable @typescript-eslint/camelcase */
 /* eslint consistent-return:0 */
 
 // const path = require('path');
 
-const basepath = process.cwd();
+const basepath = process.cwd()
 
-const fs = require("fs");
+const fs = require('fs')
 
 require('@babel/register')({
   extensions: ['.js'],
-  "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react"
-  ],
-  "plugins": [
-    "transform-es2015-modules-commonjs",
-    "@babel/plugin-proposal-class-properties"
+  presets: ['@babel/preset-env', '@babel/preset-react'],
+  plugins: [
+    'transform-es2015-modules-commonjs',
+    '@babel/plugin-proposal-class-properties',
   ],
 
-  ignore: [function (filename) {
+  ignore: [
+    function (filename) {
+      return filename.indexOf(basepath + `/node_modules/`) === 0
+    },
+  ],
+})
+;[
+  '.css',
+  '.less',
+  '.sass',
+  '.scss',
+  '.ttf',
+  '.woff',
+  '.woff2',
+  '.svg',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+].forEach((ext) => (require.extensions[ext] = () => {}))
 
-    return filename.indexOf(basepath + `/node_modules/`) === 0;
-  }],
+require('@babel/polyfill')
 
-});
+const SSRmiddlewareClass = require('./SSR/modxclub')
 
-['.css', '.less', '.sass', '.scss', '.ttf', '.woff', '.woff2', '.svg', '.png', '.jpg', '.jpeg', '.gif'].forEach((ext) => require.extensions[ext] = () => { });
+const apolloCaches = {}
 
-require('@babel/polyfill');
+const { API_ENDPOINT = 'http://localhost:4000' } = process.env
 
-let SSRmiddlewareClass = require('./SSR/modxclub');
-
-const apolloCaches = {
-
-};
-
-const {
-  API_ENDPOINT = 'http://localhost:4000',
-} = process.env;
-
-let SSRmiddleware = new SSRmiddlewareClass({
+const SSRmiddleware = new SSRmiddlewareClass({
   apolloCaches,
-  rootSelector: "#root",
+  rootSelector: '#root',
   API_ENDPOINT,
-}).middleware;
+}).middleware
 
-const ws = require('ws');
+const ws = require('ws')
 
-global.WebSocket = ws;
+global.WebSocket = ws
 
-const express = require('express');
+const express = require('express')
 
-const argv = require('minimist')(process.argv.slice(2));
-const app = express();
+const argv = require('minimist')(process.argv.slice(2))
+const app = express()
 
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 
-const cwd = process.cwd();
+const cwd = process.cwd()
 
+const setupProxy = require('../setupProxy')
 
-const setupProxy = require("../setupProxy");
+setupProxy(app)
 
-setupProxy(app);
+app.use(
+  bodyParser.urlencoded({
+    // to support URL-encoded bodies
+    extended: true,
+  })
+)
+app.use(bodyParser.json()) // to support JSON-encoded bodies
 
-
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
-app.use(bodyParser.json());       // to support JSON-encoded bodies
-
-
-app.get("/static/js/voyager.worker.js", (req, res, next) => {
-  res.sendFile(`${cwd}/node_modules/@prisma-cms/graphql-voyager/dist/voyager.worker.js`);
-});
+app.get('/static/js/voyager.worker.js', (req, res) => {
+  res.sendFile(
+    `${cwd}/node_modules/@prisma-cms/graphql-voyager/dist/voyager.worker.js`
+  )
+})
 
 /**
  * Process static files
  */
-app.get("**", (req, res, next) => {
+app.get('**', (req, res, next) => {
+  const { pathname } = req._parsedUrl
 
-  const {
-    pathname,
-  } = req._parsedUrl;
-
-  if (pathname && pathname !== "/") {
-
-    const path = `${cwd}/build${pathname}`;
+  if (pathname && pathname !== '/') {
+    const path = `${cwd}/build${pathname}`
 
     if (fs.existsSync(path)) {
       // Do something
-      return res.sendFile(path);
+      return res.sendFile(path)
     }
-
   }
 
-  next();
-});
+  next()
+})
 
-app.get('/__apollo-state__/:state_id', async (req, res, next) => {
+app.get('/__apollo-state__/:state_id', async (req, res) => {
+  const { state_id } = req.params
 
-  const {
-    state_id,
-  } = req.params;
-
-
-  const state = apolloCaches[state_id];
+  const state = apolloCaches[state_id]
 
   if (state) {
+    delete apolloCaches[state_id]
 
-    delete apolloCaches[state_id];
-
-    res.status(200);
-    res.contentType(`application/json`);
-    res.setHeader("Cache-Control", "no-cache");
-    res.send(state);
+    res.status(200)
+    res.contentType(`application/json`)
+    res.setHeader('Cache-Control', 'no-cache')
+    res.send(state)
+  } else {
+    res.status(404).send('File not found')
   }
-  else {
-    res.status(404).send('File not found');
-  }
+})
 
-});
-
-app.use(express.static(cwd + '/shared')); //Serves resources from public folder
+app.use(express.static(cwd + '/shared')) //Serves resources from public folder
 
 app.get('**', (req, res, next) => {
-
-  return SSRmiddleware(req, res, next);
-});
+  return SSRmiddleware(req, res, next)
+})
 
 // app.get('/', express.static(cwd + '/build')); //Serves resources from build folder
 // app.use('/static', express.static(cwd + '/build/static')); //Serves resources from build folder
@@ -135,19 +131,14 @@ app.get('**', (req, res, next) => {
 // app.get('/manifest.json', express.static(cwd + '/build')); //Serves resources from build folder
 // app.get('/service-worker.js', express.static(cwd + '/build')); //Serves resources from build folder
 
-
-
-
 // get the intended port number, use port 3000 if not provided
-const port = argv.port || process.env.PORT || 3000;
+const port = argv.port || process.env.PORT || 3000
 
 // Start your app.
 app.listen(port, (err) => {
   if (err) {
     // return logger.error(err.message);
-    console.error(err);
+    console.error(err)
   }
   // logger.appStarted(port);
-
-});
-
+})

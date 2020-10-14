@@ -1,32 +1,27 @@
+import prismaGenerateSchema from '@prisma-cms/prisma-schema'
 
-import prismaGenerateSchema from "@prisma-cms/prisma-schema";
+import CoreModule from '../../modules'
 
-import CoreModule from "../../modules";
- 
-
-import path from 'path';
-import chalk from "chalk";
- 
+import path from 'path'
+import chalk from 'chalk'
 
 export const generateSchema = function (schemaType) {
-
-  let result;
+  let result
 
   try {
+    const moduleURL = new URL(import.meta.url)
+    const basedir = path.join(
+      path.dirname(moduleURL.pathname),
+      '/../../../',
+      'schema/'
+    )
 
-    const moduleURL = new URL(import.meta.url);
-    const basedir = path.join(path.dirname(moduleURL.pathname), "/../../../", "schema/")
-
-
-    result = prismaGenerateSchema(schemaType, new CoreModule(), basedir);
+    result = prismaGenerateSchema(schemaType, new CoreModule(), basedir)
+  } catch (error) {
+    console.error(chalk.red('generateSchema Error'), error)
   }
-  catch (error) {
 
-    console.error(chalk.red("generateSchema Error"), error);
-  }
-
-  return result;
-
+  return result
 }
 
-export default generateSchema;
+export default generateSchema

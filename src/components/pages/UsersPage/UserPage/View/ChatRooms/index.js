@@ -1,115 +1,81 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
-import {
-  ChatRooms,
-  NewMessage,
-} from "@prisma-cms/society";
+import { ChatRooms, NewMessage } from '@prisma-cms/society'
 
-import Context from "@prisma-cms/context";
-import { Typography } from 'material-ui';
-import { withStyles } from 'material-ui';
+import Context from '@prisma-cms/context'
+import { Typography } from 'material-ui'
+import { withStyles } from 'material-ui'
 
-const styles = theme => {
-
+const styles = () => {
   return {
     message: {
-      padding: "0px !important",
+      padding: '0px !important',
     },
   }
 }
 
-
 class ChatRoomsByUser extends Component {
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     currentUser: PropTypes.object,
-  };
+  }
 
-  static contextType = Context;
+  static contextType = Context
 
   render() {
+    const { user, currentUser, classes } = this.props
 
-    const {
-      user,
-      currentUser,
-      classes,
-    } = this.props;
-
-
-    const {
-      id: userId,
-      username,
-      fullname,
-    } = user || {};
+    const { id: userId, username, fullname } = user || {}
 
     if (!userId) {
-      return null;
+      return null
     }
 
-    const {
-      id: currentUserId,
-    } = currentUser || {};
+    const { id: currentUserId } = currentUser || {}
 
-    let sendMessage;
+    let sendMessage
 
-    if (!currentUserId || (currentUserId !== userId)) {
+    if (!currentUserId || currentUserId !== userId) {
+      sendMessage = (
+        <div>
+          <Typography variant="subheading">
+            Отправить пользователю приватное сообщение
+          </Typography>
 
-      sendMessage = <div>
+          <NewMessage
+            cacheKey={`newMessage_${userId}`}
+            data={{
+              Room: {
+                to: userId,
+              },
+            }}
+            onSave={(result) => {
+              const { response } = (result && result.data) || {}
 
-        <Typography
-          variant="subheading"
-        >
-          Отправить пользователю приватное сообщение
-        </Typography>
+              const { Room } = (response && response.data) || {}
 
-        <NewMessage
-          cacheKey={`newMessage_${userId}`}
-          data={{
-            Room: {
-              to: userId,
-            },
-          }}
-          onSave={result => {
+              const { id: rootId } = Room
 
+              if (rootId) {
+                const {
+                  router: { history },
+                } = this.context
 
-
-            const {
-              response,
-            } = result && result.data || {};
-
-            const {
-              Room,
-            } = response && response.data || {};
-
-            const {
-              id: rootId,
-            } = Room;
-
-            if (rootId) {
-              const {
-                router: {
-                  history,
-                },
-              } = this.context;
-
-              history.push(`/chat-rooms/${rootId}`);
-            }
-
-          }}
-          classes={{
-            root: classes.message,
-          }}
-        />
-      </div>
-
+                history.push(`/chat-rooms/${rootId}`)
+              }
+            }}
+            classes={{
+              root: classes.message,
+            }}
+          />
+        </div>
+      )
     }
 
     return (
       <Fragment>
-
         {sendMessage}
 
         <ChatRooms
@@ -120,13 +86,9 @@ class ChatRoomsByUser extends Component {
           }}
           title={`Чат-комнаты с пользоваелем ${fullname || username}`}
         />
-
       </Fragment>
-    );
+    )
   }
 }
 
-
-export default withStyles(styles)(props => <ChatRoomsByUser
-  {...props}
-/>);
+export default withStyles(styles)((props) => <ChatRoomsByUser {...props} />)

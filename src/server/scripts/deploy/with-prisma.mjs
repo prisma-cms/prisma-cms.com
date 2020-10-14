@@ -1,15 +1,9 @@
+import { deploy } from './'
 
-import {
-  deploy,
-} from "./";
-
-import { generateSchema } from "./schema"
-
+import { generateSchema } from './schema'
 
 try {
   deploy(generateSchema)
+} catch (error) {
+  console.error('error', error)
 }
-catch (error) {
-  console.error("error", error);
-};
-

@@ -1,36 +1,23 @@
+import '../../styles/less/styles.css'
 
-import "../../styles/less/styles.css";
+import { App as PrismaApp } from '@prisma-cms/front'
 
-import { Component } from "react";
+import Renderer from '../Renderer'
 
-import { App as PrismaApp } from "@prisma-cms/front";
+import * as queryFragments from '../../schema/generated/api.fragments'
 
-import Renderer from "../Renderer";
+import { createMuiTheme } from 'material-ui/styles'
 
-import * as queryFragments from "../../schema/generated/api.fragments";
+import pink from 'material-ui/colors/pink'
+import { darken } from 'material-ui/styles/colorManipulator'
+import blue from 'material-ui/colors/blue'
 
+import 'moment/locale/ru'
 
-import { createMuiTheme } from 'material-ui/styles';
-
-import pink from 'material-ui/colors/pink';
-import { darken } from 'material-ui/styles/colorManipulator';
-import blue from 'material-ui/colors/blue';
-
-import "moment/locale/ru";
-
-export {
-  Renderer,
-  queryFragments,
-}
+export { Renderer, queryFragments }
 
 export const getTheme = function (uiTheme) {
-
-  const {
-    direction,
-    paletteType,
-    typography,
-    ...other
-  } = uiTheme;
+  const { direction, paletteType, typography, ...other } = uiTheme
 
   const theme = createMuiTheme({
     direction,
@@ -53,27 +40,26 @@ export const getTheme = function (uiTheme) {
     },
     typography: {
       // fontFamily: "'Open Sans', sans-serif,Tahoma, Helvetica",
-      fontFamily: "Roboto, sans-serif,Tahoma, Helvetica",
+      fontFamily: 'Roboto, sans-serif,Tahoma, Helvetica',
       fontSize: 14,
       display1: {
-        color: "#222",
+        color: '#222',
         fontSize: 30,
       },
       ...typography,
     },
     ...other,
-  });
+  })
 
   // Expose the theme as a global variable so people can play with it.
   if (process.browser) {
-    global.theme = theme;
+    global.theme = theme
   }
 
-  return theme;
+  return theme
 }
 
 export default class ModxclubApp extends PrismaApp {
-
   static defaultProps = {
     ...PrismaApp.defaultProps,
     Renderer,
@@ -85,17 +71,11 @@ export default class ModxclubApp extends PrismaApp {
     },
   }
 
-
-
   getTheme() {
-
-    const {
-      themeOptions,
-    } = this.state;
+    const { themeOptions } = this.state
 
     return getTheme({
       ...themeOptions,
-    });
+    })
   }
-
 }

@@ -1,34 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 
-import Page from "../../../../layout";
+import Page from '../../../../layout'
 
-import {
-  CreateChatRoom,
-} from "@prisma-cms/society";
-
+import { CreateChatRoom } from '@prisma-cms/society'
 
 class CreateChatRoomPage extends Page {
-
-
   setPageMeta() {
-
     return super.setPageMeta({
-      title: "Создать новую чат-комнату",
-    });
-
+      title: 'Создать новую чат-комнату',
+    })
   }
 
-
   render() {
-
-    return super.render(
-      <CreateChatRoom
-        {...this.props}
-      />
-    );
+    return super.render(<CreateChatRoom {...this.props} />)
   }
 }
 
-
-export default CreateChatRoomPage;
+export default CreateChatRoomPage

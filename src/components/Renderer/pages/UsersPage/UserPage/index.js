@@ -1,29 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 
-import UserPageProto from "@prisma-cms/front/lib/components/pages/UsersPage/UserPage";
+import UserPageProto from '@prisma-cms/front/lib/components/pages/UsersPage/UserPage'
 
+import View from './View'
 
-import View from "./View";
-
-import Page from "../../layout";
-
+import Page from '../../layout'
 
 class UserPage extends Page {
-
   static defaultProps = {
     ...Page.defaultProps,
     View,
   }
 
   render() {
-
-    return super.render(<UserPageProto
-      {...this.props}
-    />);
+    return super.render(<UserPageProto {...this.props} />)
   }
-
 }
 
-
-export default UserPage;
+export default UserPage

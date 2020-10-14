@@ -1,16 +1,14 @@
+import React from 'react'
 
-import React from "react";
+import gql from 'graphql-tag'
 
-import gql from "graphql-tag";
-
-import { graphql, compose } from "react-apollo";
-
+// TODO: react-apollo does not export those any more
+import { graphql, compose } from 'react-apollo'
 
 import {
   ResourceNoNestingFragment,
   UserNoNestingFragment,
-} from "../../../schema/generated/api.fragments";
-
+} from '../../../schema/generated/api.fragments'
 
 export const topicFragment = `
   fragment topicFragment on Resource{
@@ -49,15 +47,13 @@ export const topicFragment = `
   ${UserNoNestingFragment}
 `
 
-
 export const topicsListFragment = `
   fragment topicsListFragment on Resource{
     ...topicFragment
   }
 
   ${topicFragment}
-`;
-
+`
 
 export const topicsFullFragment = `
   fragment topicsFullFragment on Resource{
@@ -66,29 +62,27 @@ export const topicsFullFragment = `
   }
 
   ${topicFragment}
-`;
-
+`
 
 export const topicsConnectionQuery = gql`
-
   query topicsConnection(
-    $first:Int!
-    $skip:Int
-    $where:  ResourceWhereInput
-    $orderBy:  ResourceOrderByInput!
-    $getCommentsText:Boolean = false
-  ){
+    $first: Int!
+    $skip: Int
+    $where: ResourceWhereInput
+    $orderBy: ResourceOrderByInput!
+    $getCommentsText: Boolean = false
+  ) {
     objectsConnection: resourcesConnection(
       orderBy: $orderBy
       first: $first
       skip: $skip
       where: $where
-    ){
-      aggregate{
+    ) {
+      aggregate {
         count
       }
-      edges{
-        node{
+      edges {
+        node {
           ...topicsListFragment
         }
       }
@@ -96,114 +90,76 @@ export const topicsConnectionQuery = gql`
   }
 
   ${topicsListFragment}
-
-`;
-
+`
 
 export const topicQuery = gql`
-
   query topic(
     $where: ResourceWhereUniqueInput!
-    $getCommentsText:Boolean = true
-  ){
-    object: resource(
-      where: $where
-    ){ 
+    $getCommentsText: Boolean = true
+  ) {
+    object: resource(where: $where) {
       ...topicsFullFragment
     }
   }
 
   ${topicsFullFragment}
-
-`;
-
+`
 
 export const createTopicProcessor = gql`
- 
-
   mutation createTopicProcessor(
-    $data:TopicCreateInput!
-    $getCommentsText:Boolean = true
-  ){
-    response: createTopicProcessor(
-      data: $data
-    ){
+    $data: TopicCreateInput!
+    $getCommentsText: Boolean = true
+  ) {
+    response: createTopicProcessor(data: $data) {
       success
       message
-      errors{
+      errors {
         key
         message
       }
-      data{
+      data {
         ...topicsFullFragment
       }
     }
   }
 
   ${topicsFullFragment}
-
-`;
-
+`
 
 export const updateTopicProcessor = gql`
- 
-
   mutation updateTopicProcessor(
     $data: TopicUpdateInput!
     $where: ResourceWhereUniqueInput!
-    $getCommentsText:Boolean = true
-  ){
-    response: updateTopicProcessor(
-      data: $data
-      where: $where
-    ){
+    $getCommentsText: Boolean = true
+  ) {
+    response: updateTopicProcessor(data: $data, where: $where) {
       success
       message
-      errors{
+      errors {
         key
         message
       }
-      data{
+      data {
         ...topicsFullFragment
       }
     }
   }
 
   ${topicsFullFragment}
+`
 
-`;
+const TopicsQuery = graphql(topicsConnectionQuery)
 
+export const TopicsConnector = TopicsQuery((props) => {
+  const { View, ...other } = props
 
+  return <View {...other} />
+})
 
+const TopicQuery = compose(graphql(topicQuery), graphql(updateTopicProcessor))
 
-const TopicsQuery = graphql(topicsConnectionQuery);
+export const TopicConnector = TopicQuery((props) => {
+  const { View, ...other } = props
 
-export const TopicsConnector = TopicsQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-const TopicQuery = compose(graphql(topicQuery), graphql(updateTopicProcessor));
-
-
-export const TopicConnector = TopicQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
+  return <View {...other} />
+})

@@ -1,8 +1,11 @@
-
 type EthAccount {
-  """Проект, в котором этот кошелек используется"""
+  """
+  Проект, в котором этот кошелек используется
+  """
   Project: Project @relation(name: "ProjectEthAccounts")
 
-  """Все публикации, созданные к этому кошельку"""
+  """
+  Все публикации, созданные к этому кошельку
+  """
   Resources: [Resource!]! @relation(name: "EthAccountResources")
 }

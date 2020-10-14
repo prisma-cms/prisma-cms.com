@@ -1,46 +1,47 @@
-
-
 type Mutation {
- 
-  createTechnologyProcessor(
-    data: TechnologyCreateInput!
-  ): TechnologyResponse!
+  createTechnologyProcessor(data: TechnologyCreateInput!): TechnologyResponse!
 
   updateTechnologyProcessor(
     data: TechnologyUpdateInput!
     where: TechnologyWhereUniqueInput!
   ): TechnologyResponse!
-
 }
 
-
-type TechnologyResponse{
+type TechnologyResponse {
   success: Boolean!
   message: String
   errors: [Error!]!
   data: Technology
 }
 
-
-
 enum UserTechnologyStatus {
-
-  """Планирую изучать"""
+  """
+  Планирую изучать
+  """
   PlanToStudy
 
-  """Отказался изучать"""
+  """
+  Отказался изучать
+  """
   RefusedToStudy
 
-  """Изучаю"""
+  """
+  Изучаю
+  """
   Study
 
-  """Иногда использую"""
+  """
+  Иногда использую
+  """
   RarelyUse
 
-  """Активно использую"""
+  """
+  Активно использую
+  """
   ActiveUse
 
-  """Больше не использую"""
+  """
+  Больше не использую
+  """
   NoLongerUse
-
 }

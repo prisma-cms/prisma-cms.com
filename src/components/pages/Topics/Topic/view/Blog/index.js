@@ -1,20 +1,14 @@
-
-
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Link } from 'react-router-dom';
+import PrismaCmsComponent from '@prisma-cms/component'
+import { graphql } from '@apollo/client'
+import gql from 'graphql-tag'
 
-
-import PrismaCmsComponent from "@prisma-cms/component";
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-
-import View from "./View";
-import { Typography } from 'material-ui';
+import View from './View'
+import { Typography } from 'material-ui'
 
 export default class TopicBlog extends PrismaCmsComponent {
-
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
     View: PropTypes.func.isRequired,
@@ -30,91 +24,67 @@ export default class TopicBlog extends PrismaCmsComponent {
     first: 20,
   }
 
-
   componentWillMount() {
-
     const {
-      query: {
-        resources,
-      },
-    } = this.context;
+      query: { resources },
+    } = this.context
 
-    const {
-      View,
-    } = this.props;
+    const { View } = this.props
 
-    this.Renderer = graphql(gql(resources))(View);
+    this.Renderer = graphql(gql(resources))(View)
 
-    super.componentWillMount && super.componentWillMount();
-
+    super.componentWillMount && super.componentWillMount()
   }
 
   render() {
+    const { Renderer } = this
 
-    const {
-      Renderer,
-    } = this;
+    const { BlogLink } = this.context
 
-    const {
-      BlogLink,
-    } = this.context;
-
-    const {
-      updateObject,
-      Topic,
-      inEditMode,
-    } = this.props;
+    const { updateObject, Topic, inEditMode } = this.props
 
     if (!Topic) {
-      return null;
+      return null
     }
 
-    const {
-      Blog,
-      blogID,
-    } = Topic;
+    const { Blog, blogID } = Topic
 
-    const {
-      id: blogId,
-    } = Blog || {};
+    const { id: blogId } = Blog || {}
 
-    let value = blogID || blogId || undefined;
+    const value = blogID || blogId || undefined
 
-    const filters = this.getFilters();
+    const filters = this.getFilters()
 
-    let content = null;
+    let content = null
 
     if (inEditMode && !Blog) {
+      content = (
+        <Renderer
+          value={value}
+          getFilters={() => this.getFilters()}
+          setFilters={(filters) => this.setFilters(filters)}
+          updateObject={updateObject}
+          where={{
+            ...filters,
+            type: 'Blog',
+          }}
+          orderBy="name_ASC"
+          // onChange={(event, value) => {
 
-      content = <Renderer
-        value={value}
-        getFilters={() => this.getFilters()}
-        setFilters={(filters) => this.setFilters(filters)}
-        updateObject={updateObject}
-        where={{
-          ...filters,
-          type: "Blog",
-        }}
-        orderBy="name_ASC"
-      // onChange={(event, value) => {
-
-      //   this.setFilters({
-      //     name_contains: value && value.trim() || undefined,
-      //   })
-      // }}
-      />;
-
-    }
-    else if (Blog) {
-      content = <Typography>
-        В блоге <BlogLink
-          object={Blog}
+          //   this.setFilters({
+          //     name_contains: value && value.trim() || undefined,
+          //   })
+          // }}
         />
-      </Typography>
+      )
+    } else if (Blog) {
+      content = (
+        <Typography>
+          В блоге <BlogLink object={Blog} />
+        </Typography>
+      )
     }
 
-    return content;
+    return content
   }
-
 }
-

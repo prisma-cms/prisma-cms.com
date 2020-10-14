@@ -1,12 +1,11 @@
-
 """
-  Карьера
+Карьера
 """
 type Career {
   id: ID! @unique
 
   """
-    Например, Программист
+  Например, Программист
   """
   name: String
   description: String
@@ -14,21 +13,19 @@ type Career {
   updatedAt: DateTime!
 
   """
-    Дата начала карьеры
+  Дата начала карьеры
   """
   start_date: DateTime
 
   """
-    Специалист
+  Специалист
   """
   CreatedBy: User @relation(name: "CareerUser")
 }
 
-
 type User {
-
   """
-    Карьера пользователя
+  Карьера пользователя
   """
   Career: Career @relation(name: "CareerUser")
 }

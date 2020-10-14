@@ -1,9 +1,15 @@
-
 type User implements Node {
-  worlds(where: WorldWhereInput, orderBy: WorldOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [World!]
+  worlds(
+    where: WorldWhereInput
+    orderBy: WorldOrderByInput
+    skip: Int
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): [World!]
   settings(where: SettingsWhereInput): Settings
 }
-
 
 input PlayerCreateInput {
   worldId: ID!

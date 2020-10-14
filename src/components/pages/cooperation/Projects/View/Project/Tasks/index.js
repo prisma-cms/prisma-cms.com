@@ -1,60 +1,47 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Task from "./Task";
-import { Typography } from 'material-ui';
-import { Link } from '@modxclub/ui';
+import Task from './Task'
+import { Typography } from 'material-ui'
 
 class TasksList extends Component {
-
   static propTypes = {
     tasks: PropTypes.array.isRequired,
     tasksLimit: PropTypes.number,
   }
 
   render() {
+    const { tasks, tasksLimit } = this.props
 
-    const {
-      tasks,
-      tasksLimit,
-    } = this.props;
-
-    let output = null;
+    let output = null
 
     if (!tasks) {
-      return null;
+      return null
     }
 
     if (tasks.length) {
       output = tasks.map((n, index) => {
-
         if (tasksLimit > 0 && tasksLimit < index + 1) {
-          return;
+          return
         }
 
-        const {
-          id,
-        } = n;
+        const { id } = n
 
-        return <Task
-          key={id}
-          data={{
-            object: n,
-          }}
-        />
-      });
-    }
-    else {
-      output = <Typography
-        color="textSecondary"
-      >
-        Нет задач
-      </Typography>
+        return (
+          <Task
+            key={id}
+            data={{
+              object: n,
+            }}
+          />
+        )
+      })
+    } else {
+      output = <Typography color="textSecondary">Нет задач</Typography>
     }
 
-    return output;
+    return output
   }
 }
 
-
-export default TasksList;
+export default TasksList

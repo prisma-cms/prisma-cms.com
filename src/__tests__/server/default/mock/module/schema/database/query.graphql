@@ -1,5 +1,0 @@
-
-
-type Query {
-  testUsers: [TestUser!]
-}

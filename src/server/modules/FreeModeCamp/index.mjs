@@ -1,73 +1,51 @@
-
-import PrismaModule from "@prisma-cms/prisma-module";
+import PrismaModule from '@prisma-cms/prisma-module'
 
 // import { MongoClient, ObjectID } from 'mongodb';
-import MongoClient from 'mongodb';
+import MongoClient from 'mongodb'
 
-import CodeChallengeBlockModule from './CodeChallengeBlock';
-import CodeChallengeModule from './CodeChallenge';
+import CodeChallengeBlockModule from './CodeChallengeBlock'
+import CodeChallengeModule from './CodeChallenge'
 
 export default class FreeModeCampModule extends PrismaModule {
-
   constructor(props = {}) {
+    super(props)
 
-    super(props);
-
-    this.mergeModules([
-      CodeChallengeBlockModule,
-      CodeChallengeModule,
-    ]);
-
+    this.mergeModules([CodeChallengeBlockModule, CodeChallengeModule])
   }
 
-
   async fccImportChallengs(source, args, ctx, info) {
+    const { MONGODB_URL, currentUser, db } = ctx
 
-    const {
-      MONGODB_URL,
-      currentUser,
-      db,
-    } = ctx;
-
-    const {
-      sudo,
-    } = currentUser || {};
+    const { sudo } = currentUser || {}
 
     if (!sudo) {
-      throw new Error('Access denied');
+      throw new Error('Access denied')
     }
 
     return new Promise((resolve, reject) => {
+      let result = null
 
-      let result = null;
+      MongoClient.connect(
+        `${MONGODB_URL}/freecodecamp`,
+        {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        },
+        (err, client) => {
+          if (err) {
+            return reject(err)
+          }
 
-      MongoClient.connect(`${MONGODB_URL}/freecodecamp`, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }, (
-        err,
-        client
-      ) => {
+          // console.log('client', client);
 
-        if (err) {
+          const mongo_db = client.db('freecodecamp')
+          const challengeCollection = mongo_db.collection('challenge')
 
-          return reject(err);
-        }
+          // console.log('challengeCollection', challengeCollection);
 
-        // console.log('client', client);
-
-
-        const mongo_db = client.db('freecodecamp');
-        const challengeCollection = mongo_db.collection('challenge');
-
-        // console.log('challengeCollection', challengeCollection);
-
-        challengeCollection.find({})
-          .toArray(async (err, docs) => {
-
+          challengeCollection.find({}).toArray(async (err, docs) => {
             if (err) {
-
-              return reject(err);
+              return reject(err)
             }
 
             // let challengeTypes = []
@@ -78,7 +56,6 @@ export default class FreeModeCampModule extends PrismaModule {
 
             // const insert = docs.splice(0, 100).map((n, index) => {
             const challenges = docs.map((n, index) => {
-
               const {
                 _id,
                 title: name,
@@ -92,26 +69,26 @@ export default class FreeModeCampModule extends PrismaModule {
                 challengeOrder,
                 challengeOrder: rank,
                 ...other
-              } = n;
+              } = n
 
-              const id = _id.toString();
+              const id = _id.toString()
 
-              const externalKey = id;
+              const externalKey = id
 
-              if (superBlocks.findIndex(n => n.name === superBlock) === -1) {
+              if (superBlocks.findIndex((n) => n.name === superBlock) === -1) {
                 superBlocks.push({
                   name: superBlock,
                   externalKey: superBlock,
                   rank: superOrder,
                   CreatedBy: {
                     connect: {
-                      username: "Fi1osof",
+                      username: 'Fi1osof',
                     },
                   },
-                });
+                })
               }
-              
-              if (blocks.findIndex(n => n.name === block) === -1) {
+
+              if (blocks.findIndex((n) => n.name === block) === -1) {
                 blocks.push({
                   name: block,
                   externalKey: block,
@@ -121,7 +98,7 @@ export default class FreeModeCampModule extends PrismaModule {
                       externalKey: superBlock,
                     },
                   },
-                });
+                })
               }
 
               return {
@@ -137,7 +114,7 @@ export default class FreeModeCampModule extends PrismaModule {
                 template: (template && template.trim()) || null,
                 CreatedBy: {
                   connect: {
-                    username: "Fi1osof",
+                    username: 'Fi1osof',
                   },
                 },
                 Block: {
@@ -145,10 +122,8 @@ export default class FreeModeCampModule extends PrismaModule {
                     externalKey: block,
                   },
                 },
-              };
-
-            });
-
+              }
+            })
 
             // return resolve({ superBlocks });
 
@@ -162,17 +137,15 @@ export default class FreeModeCampModule extends PrismaModule {
              * Insert SuperBlocks
              */
 
-            await this.importBlocks(db, superBlocks);
+            await this.importBlocks(db, superBlocks)
 
             /**
              * Insert Blocks
              */
 
-            await this.importBlocks(db, blocks);
-
+            await this.importBlocks(db, blocks)
 
             // return resolve({ superBlocks });
-
 
             // return resolve({
             //   doc: docs.pop(),
@@ -184,59 +157,55 @@ export default class FreeModeCampModule extends PrismaModule {
              * Insert challenges
              */
             // await Promise.all(challenges.splice(0, 3).map((data, index) => {
-            await Promise.all(challenges.map((data, index) => {
+            await Promise.all(
+              challenges.map((data, index) => {
+                const { externalKey } = data
 
-              const {
-                externalKey,
-              } = data;
-
-              return new Promise(async (resolve, reject) => {
-
-                await db.query.codeChallenge({
-                  where: {
-                    id: externalKey,
-                  },
-                })
-                  .then(async exists => {
-
-                    if (exists) {
-
-                      return resolve(exists);
-                    }
-
-                    await db.mutation.createCodeChallenge({
-                      data,
+                return new Promise(async (resolve, reject) => {
+                  await db.query
+                    .codeChallenge({
+                      where: {
+                        id: externalKey,
+                      },
                     })
-                      .then(r => {
+                    .then(async (exists) => {
+                      if (exists) {
+                        return resolve(exists)
+                      }
 
-                        // console.log('Insert result', r);
+                      await db.mutation
+                        .createCodeChallenge({
+                          data,
+                        })
+                        .then((r) => {
+                          // console.log('Insert result', r);
 
-                        return resolve(r);
-                      })
-                      .catch(error => {
+                          return resolve(r)
+                        })
+                        .catch((error) => {
+                          // reject
+                          console.error(
+                            `Index ${index} error`,
+                            error,
+                            JSON.stringify(data, true, 2)
+                          )
 
-                        // reject
-                        console.error(`Index ${index} error`, error, JSON.stringify(data, true, 2));
-
-                        reject(error);
-                      });
-
-
-                  })
-                  .catch(reject);
-
-              });
-
-            }))
-              .then(value => {
-
+                          reject(error)
+                        })
+                    })
+                    .catch(reject)
+                })
+              })
+            ).then(
+              (value) => {
                 // console.log('result2', value);
 
-                return value;
-              }, error => {
-
-                reject(error);
-              });
+                return value
+              },
+              (error) => {
+                reject(error)
+              }
+            )
 
             // await Promise.all(insert)
             //   .then(value => {
@@ -251,8 +220,7 @@ export default class FreeModeCampModule extends PrismaModule {
             //     reject(error);
             //   });
 
-
-            const doc = docs.pop();
+            const doc = docs.pop()
 
             // console.log('doc', JSON.stringify(doc, true, 2))
             // callback(docs);
@@ -262,86 +230,70 @@ export default class FreeModeCampModule extends PrismaModule {
               superBlocks,
               blocks,
               doc,
-            };
-
-            resolve(result);
-
-          });
-      });
-
-    });
-  }
-
-
-  async importBlocks(db, blocks) {
-
-    return Promise.all(blocks.map((data, index) => {
-
-      return new Promise(async (resolve, reject) => {
-
-        const {
-          externalKey,
-        } = data;
-
-        await db.query.codeChallengeBlock({
-          where: {
-            externalKey,
-          },
-        })
-          .then(async exists => {
-
-            if (exists) {
-
-              return resolve(exists);
             }
 
-            await db.mutation.createCodeChallengeBlock({
-              data,
-            })
-              .then(r => {
-
-                // console.log('Insert result', r);
-
-                return resolve(r);
-              })
-              .catch(error => {
-
-                // reject
-                console.error(`Block ${index} error`, error, JSON.stringify(data, true, 2));
-
-                reject(error);
-              });
-
-
+            resolve(result)
           })
-          .catch(reject);
-
-      });
-
-
-    }))
-      .then(value => value, error => {
-
-        console.error('Blocks error', error);
-      });
-
+        }
+      )
+    })
   }
 
+  async importBlocks(db, blocks) {
+    return Promise.all(
+      blocks.map((data, index) => {
+        return new Promise(async (resolve, reject) => {
+          const { externalKey } = data
+
+          await db.query
+            .codeChallengeBlock({
+              where: {
+                externalKey,
+              },
+            })
+            .then(async (exists) => {
+              if (exists) {
+                return resolve(exists)
+              }
+
+              await db.mutation
+                .createCodeChallengeBlock({
+                  data,
+                })
+                .then((r) => {
+                  // console.log('Insert result', r);
+
+                  return resolve(r)
+                })
+                .catch((error) => {
+                  // reject
+                  console.error(
+                    `Block ${index} error`,
+                    error,
+                    JSON.stringify(data, true, 2)
+                  )
+
+                  reject(error)
+                })
+            })
+            .catch(reject)
+        })
+      })
+    ).then(
+      (value) => value,
+      (error) => {
+        console.error('Blocks error', error)
+      }
+    )
+  }
 
   getResolvers() {
-
     const {
-      Query: {
-        ...Query
-      },
-      Subscription: {
-        ...Subscription
-      },
-      Mutation: {
-        ...Mutation
-      },
+      Query: { ...Query },
+      Subscription: { ...Subscription },
+      Mutation: { ...Mutation },
       ...other
-    } = super.getResolvers();
+    } = super.getResolvers()
 
     return {
       ...other,
@@ -356,7 +308,5 @@ export default class FreeModeCampModule extends PrismaModule {
         ...Subscription,
       },
     }
-
   }
-
 }

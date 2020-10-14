@@ -1,16 +1,17 @@
-
 type Comment {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
 
-  """Контент"""
+  """
+  Контент
+  """
   components: Json
 
-  """Текстовое содержимое сообщения"""
+  """
+  Текстовое содержимое сообщения
+  """
   contentText: String
 
   CreatedBy: User
 }
-
-

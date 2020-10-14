@@ -1,59 +1,41 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/';
-import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/ListView';
-import Button from 'material-ui/Button';
-import gql from 'graphql-tag';
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
+import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/ListView'
+import Button from 'material-ui/Button'
+import gql from 'graphql-tag'
 
 export class AcceptTechnologyLesson extends EditorComponent {
-
-  static Name = 'AcceptTechnologyLesson';
+  static Name = 'AcceptTechnologyLesson'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
   }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
+    const { classes } = this.getEditorContext()
 
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        AcceptTechnologyLesson
-      </div>
-    );
+      content || (
+        <div className={classes.panelButton}>AcceptTechnologyLesson</div>
+      )
+    )
   }
-
 
   getRootElement() {
-
-    return super.getRootElement();
+    return super.getRootElement()
   }
-
 
   canBeParent(parent) {
-
-    return super.canBeParent(parent);
+    return super.canBeParent(parent)
   }
-
 
   canBeChild(child) {
-
-    return super.canBeChild(child);
+    return super.canBeChild(child)
   }
 
-
   renderChildren() {
-
-    const {
-      user: currentUser,
-    } = this.context;
+    const { user: currentUser } = this.context
 
     // const {
     // } = this.getEditorContext();
@@ -62,11 +44,7 @@ export class AcceptTechnologyLesson extends EditorComponent {
     //   ...other
     // } = this.getComponentProps(this);
 
-
-    const {
-      loading,
-    } = this.state;
-
+    const { loading } = this.state
 
     const query = `
       mutation create (
@@ -97,111 +75,87 @@ export class AcceptTechnologyLesson extends EditorComponent {
       fragment user on User @prismaCmsFragmentAllFields {
         id
       }
-    `;
-
+    `
 
     // const children = super.renderChildren();
 
-    const {
-      id: currentUserId,
-    } = currentUser || {};
+    const { id: currentUserId } = currentUser || {}
 
-    return <ObjectContext.Consumer
-      key="AcceptTechnologyLesson"
-    >
+    return (
+      <ObjectContext.Consumer key="AcceptTechnologyLesson">
+        {(objectContext) => {
+          const { object } = objectContext
 
-      {objectContext => {
+          const { id: lessonId, Users, CreatedBy, __typename } = object || {}
 
-        const {
-          object,
-        } = objectContext;
+          if (!lessonId) {
+            return null
+          }
 
-        const {
-          id: lessonId,
-          Users,
-          CreatedBy,
-          __typename,
-        } = object || {};
-
-
-        if (!lessonId) {
-          return null;
-        }
-
-        let output = null;
-        let userLesson = null;
-
-        /**
-          Поиск в списке пользователей урока
-         */
-        if (__typename === "TechnologyLesson") {
-
-          userLesson = currentUserId && Users ? Users.find(n => n && n.CreatedBy && n.CreatedBy.id === currentUserId) : null;
-        }
-
-        /**
-        В конкретной связке Урок-Пользователь
-         */
-        else if (__typename === "TechnologyLessonUser") {
-
-          userLesson = currentUserId && CreatedBy && CreatedBy.id === currentUserId ? object : null;
+          let output = null
+          let userLesson = null
 
           /**
+          Поиск в списке пользователей урока
+         */
+          if (__typename === 'TechnologyLesson') {
+            userLesson =
+              currentUserId && Users
+                ? Users.find(
+                    (n) => n && n.CreatedBy && n.CreatedBy.id === currentUserId
+                  )
+                : null
+          } else if (__typename === 'TechnologyLessonUser') {
+            /**
+        В конкретной связке Урок-Пользователь
+         */
+            userLesson =
+              currentUserId && CreatedBy && CreatedBy.id === currentUserId
+                ? object
+                : null
+
+            /**
             Если эта связка не принадлежит текущему пользователю, то возвращаем пусто
            */
-          if (!userLesson) {
-
-            return null;
+            if (!userLesson) {
+              return null
+            }
+          } else {
+            return null
           }
-        }
 
-        else {
+          // console.log("userLesson", userLesson);
 
-          return null;
-        }
+          // return children;
 
-
-
-
-        // console.log("userLesson", userLesson);
-
-        // return children;
-
-
-        if (!userLesson) {
-
-          output = <Button
-            variant="raised"
-            size="small"
-            disabled={loading ? true : false}
-            onClick={event => {
-
-              this.mutate({
-                mutation: gql(query),
-                variables: {
-                  data: {
-                    Lesson: {
-                      connect: {
-                        id: lessonId,
+          if (!userLesson) {
+            output = (
+              <Button
+                variant="raised"
+                size="small"
+                disabled={loading ? true : false}
+                onClick={() => {
+                  this.mutate({
+                    mutation: gql(query),
+                    variables: {
+                      data: {
+                        Lesson: {
+                          connect: {
+                            id: lessonId,
+                          },
+                        },
                       },
                     },
-                  },
-                },
-              });
-            }}
-          >
-            Принять урок
-          </Button>
+                  })
+                }}
+              >
+                Принять урок
+              </Button>
+            )
+          } else {
+            const { id: userLessonId, status } = userLesson
 
-        }
-        else {
-
-          const {
-            id: userLessonId,
-            status,
-          } = userLesson;
-
-          const mutation = gql(`
+            const mutation = gql(`
             mutation updateTechnologyLessonUserProcessor (
               $data: TechnologyLessonUserUpdateInput!
               $where: TechnologyLessonUserWhereUniqueInput!
@@ -222,53 +176,47 @@ export class AcceptTechnologyLesson extends EditorComponent {
                 }
               }
             }
-            `);
+            `)
 
-          switch (status) {
+            switch (status) {
+              case 'Accepted':
+                output = (
+                  <Button
+                    variant="raised"
+                    size="small"
+                    color="primary"
+                    disabled={loading ? true : false}
+                    onClick={() => {
+                      this.mutate({
+                        mutation,
+                        variables: {
+                          data: {
+                            status: 'Completed',
+                          },
+                          where: {
+                            id: userLessonId,
+                          },
+                        },
+                      })
+                    }}
+                  >
+                    Завершить
+                  </Button>
+                )
+                break
 
-            case "Accepted":
+              case 'Completed':
+                break
 
-              output = <Button
-                variant="raised"
-                size="small"
-                color="primary"
-                disabled={loading ? true : false}
-                onClick={event => {
-
-                  this.mutate({
-                    mutation,
-                    variables: {
-                      data: {
-                        status: "Completed",
-                      },
-                      where: {
-                        id: userLessonId,
-                      },
-                    },
-                  });
-                }}
-              >
-                Завершить
-              </Button>
-              break;
-
-            case "Completed":
-
-              break;
-
-            default: ;
+              default:
+            }
           }
 
-
-        }
-
-        return output;
-
-      }}
-
-    </ObjectContext.Consumer>
+          return output
+        }}
+      </ObjectContext.Consumer>
+    )
   }
-
 }
 
-export default AcceptTechnologyLesson;
+export default AcceptTechnologyLesson

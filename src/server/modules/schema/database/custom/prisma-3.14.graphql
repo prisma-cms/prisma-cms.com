@@ -1,10 +1,9 @@
-
 type User {
   settings: Settings @relation(name: "UserMiJsSettings")
 }
 
 type Settings {
-  User: User! @relation(name: "UserMiJsSettings" link: INLINE)
+  User: User! @relation(name: "UserMiJsSettings", link: INLINE)
 }
 
 type Player {

@@ -1,7 +1,7 @@
-import React, { Component, Suspense } from 'react';
+import React, { Component, Suspense } from 'react'
 // import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Loader from './Loader/Loader';
+import PropTypes from 'prop-types'
+import Loader from './Loader/Loader'
 // import { connect } from 'react-redux';
 // import { createSelector } from 'reselect';
 
@@ -21,7 +21,6 @@ import Loader from './Loader/Loader';
 //   return 'Test User';
 // };
 
-
 // const MonacoEditor = React.lazy(() => import('react-monaco-editor'));
 
 const propTypes = {
@@ -36,8 +35,8 @@ const propTypes = {
   setAccessibilityMode: PropTypes.func.isRequired,
   setEditorFocusability: PropTypes.func,
   theme: PropTypes.string,
-  updateFile: PropTypes.func.isRequired
-};
+  updateFile: PropTypes.func.isRequired,
+}
 
 // const mapStateToProps = createSelector(
 //   canFocusEditorSelector,
@@ -62,41 +61,41 @@ const modeMap = {
   css: 'css',
   html: 'html',
   js: 'javascript',
-  jsx: 'javascript'
-};
+  jsx: 'javascript',
+}
 
-var monacoThemesDefined = false;
-const defineMonacoThemes = monaco => {
+let monacoThemesDefined = false
+const defineMonacoThemes = (monaco) => {
   if (monacoThemesDefined) {
-    return;
+    return
   }
-  monacoThemesDefined = true;
-  const yellowColor = 'FFFF00';
-  const lightBlueColor = '9CDCFE';
-  const darkBlueColor = '00107E';
+  monacoThemesDefined = true
+  const yellowColor = 'FFFF00'
+  const lightBlueColor = '9CDCFE'
+  const darkBlueColor = '00107E'
   monaco.editor.defineTheme('vs-dark-custom', {
     base: 'vs-dark',
     inherit: true,
     colors: {
-      'editor.background': '#2a2a40'
+      'editor.background': '#2a2a40',
     },
     rules: [
       { token: 'delimiter.js', foreground: lightBlueColor },
       { token: 'delimiter.parenthesis.js', foreground: yellowColor },
       { token: 'delimiter.array.js', foreground: yellowColor },
-      { token: 'delimiter.bracket.js', foreground: yellowColor }
-    ]
-  });
+      { token: 'delimiter.bracket.js', foreground: yellowColor },
+    ],
+  })
   monaco.editor.defineTheme('vs-custom', {
     base: 'vs',
     inherit: true,
-    rules: [{ token: 'identifier.js', foreground: darkBlueColor }]
-  });
-};
+    rules: [{ token: 'identifier.js', foreground: darkBlueColor }],
+  })
+}
 
 class Editor extends Component {
   constructor(...props) {
-    super(...props);
+    super(...props)
 
     this.options = {
       fontSize: '18px',
@@ -106,7 +105,7 @@ class Editor extends Component {
       hideCursorInOverviewRuler: true,
       renderIndentGuides: false,
       minimap: {
-        enabled: false
+        enabled: false,
       },
       selectOnLineNumbers: true,
       wordWrap: 'on',
@@ -115,68 +114,67 @@ class Editor extends Component {
         vertical: 'visible',
         verticalHasArrows: false,
         useShadows: false,
-        verticalScrollbarSize: 5
-      }
-    };
+        verticalScrollbarSize: 5,
+      },
+    }
 
-    this._editor = null;
-    this.focusOnEditor = this.focusOnEditor.bind(this);
+    this._editor = null
+    this.focusOnEditor = this.focusOnEditor.bind(this)
   }
 
-  editorWillMount = monaco => {
-    defineMonacoThemes(monaco);
-  };
+  editorWillMount = (monaco) => {
+    defineMonacoThemes(monaco)
+  }
 
   editorDidMount = (editor, monaco) => {
-
     // console.log('editorDidMount', editor, monaco);
 
     // console.log('editorDidMount this.props', this.props);
 
-    this._editor = editor;
+    this._editor = editor
     this._editor.updateOptions({
-      accessibilitySupport: this.props.inAccessibilityMode ? 'on' : 'auto'
-    });
+      accessibilitySupport: this.props.inAccessibilityMode ? 'on' : 'auto',
+    })
     // Users who are using screen readers should not have to move focus from
     // the editor to the description every time they open a challenge.
     if (this.props.canFocus && !this.props.inAccessibilityMode) {
-      this._editor.focus();
-    } else this.focusOnHotkeys();
+      this._editor.focus()
+    } else this.focusOnHotkeys()
     this._editor.addAction({
       id: 'execute-challenge',
       label: 'Run tests',
       keybindings: [
         /* eslint-disable no-bitwise */
-        monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter)
+        monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter),
       ],
-      run: this.props.executeChallenge
-    });
+      run: this.props.executeChallenge,
+    })
     this._editor.addAction({
       id: 'leave-editor',
       label: 'Leave editor',
       keybindings: [monaco.KeyCode.Escape],
       run: () => {
-        this.focusOnHotkeys();
-        this.props.setEditorFocusability(false);
-      }
-    });
+        this.focusOnHotkeys()
+        this.props.setEditorFocusability(false)
+      },
+    })
     this._editor.addAction({
       id: 'toggle-accessibility',
       label: 'Toggle Accessibility Mode',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.F1],
       run: () => {
-        const currentAccessibility = this.props.inAccessibilityMode;
+        const currentAccessibility = this.props.inAccessibilityMode
         // The store needs to be updated first, as onDidChangeConfiguration is
         // called before updateOptions returns
-        this.props.setAccessibilityMode(!currentAccessibility);
+        this.props.setAccessibilityMode(!currentAccessibility)
         this._editor.updateOptions({
-          accessibilitySupport: currentAccessibility ? 'auto' : 'on'
-        });
-      }
-    });
+          accessibilitySupport: currentAccessibility ? 'auto' : 'on',
+        })
+      },
+    })
     this._editor.onDidFocusEditorWidget(() =>
       this.props.setEditorFocusability(true)
-    );
+    )
     // This is to persist changes caused by the accessibility tooltip.
     // Unfortunately it relies on Monaco's implementation details
     this._editor.onDidChangeConfiguration(() => {
@@ -184,46 +182,43 @@ class Editor extends Component {
         this._editor.getConfiguration().accessibilitySupport === 2 &&
         !this.props.inAccessibilityMode
       ) {
-        this.props.setAccessibilityMode(true);
+        this.props.setAccessibilityMode(true)
       }
-    });
-  };
+    })
+  }
 
   focusOnHotkeys() {
     if (this.props.containerRef.current) {
-      this.props.containerRef.current.focus();
+      this.props.containerRef.current.focus()
     }
   }
 
   focusOnEditor() {
-    this._editor.focus();
+    this._editor.focus()
   }
 
-  onChange = editorValue => {
-    const { updateFile, fileKey } = this.props;
-    updateFile({ key: fileKey, editorValue });
-  };
+  onChange = (editorValue) => {
+    const { updateFile, fileKey } = this.props
+    updateFile({ key: fileKey, editorValue })
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props.dimensions !== prevProps.dimensions && this._editor) {
-      this._editor.layout();
+      this._editor.layout()
     }
   }
 
   render() {
-
-    const {
-      window,
-    } = global;
+    const { window } = global
 
     if (!window) {
-      return null;
+      return null
     }
 
-    const MonacoEditor = require('react-monaco-editor').default;
+    const MonacoEditor = require('react-monaco-editor').default
 
-    const { contents, ext, theme, fileKey } = this.props;
-    const editorTheme = theme === 'night' ? 'vs-dark-custom' : 'vs-custom';
+    const { contents, ext, theme, fileKey } = this.props
+    const editorTheme = theme === 'night' ? 'vs-dark-custom' : 'vs-custom'
     return (
       <Suspense fallback={<Loader timeout={600} />}>
         <MonacoEditor
@@ -237,12 +232,12 @@ class Editor extends Component {
           value={contents}
         />
       </Suspense>
-    );
+    )
   }
 }
 
-Editor.displayName = 'Editor';
-Editor.propTypes = propTypes;
+Editor.displayName = 'Editor'
+Editor.propTypes = propTypes
 
 // NOTE: withRef gets replaced by forwardRef in react-redux 6,
 // https://github.com/reduxjs/react-redux/releases/tag/v6.0.0
@@ -253,4 +248,4 @@ Editor.propTypes = propTypes;
 //   { withRef: true }
 // )(Editor);
 
-export default Editor;
+export default Editor

@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 // import { previewMounted } from '../redux';
 
-import './preview.css';
+import './preview.css'
 
-const mainId = 'fcc-main-frame';
-
+const mainId = 'fcc-main-frame'
 
 class Preview extends Component {
-
   static propTypes = {
     className: PropTypes.string,
     disableIframe: PropTypes.bool,
     // previewMounted: PropTypes.func.isRequired
-  };
+  }
 
   constructor(...props) {
-    super(...props);
+    super(...props)
 
     this.state = {
-      iframeStatus: props.disableIframe
-    };
+      iframeStatus: props.disableIframe,
+    }
   }
 
   // componentDidMount() {
@@ -31,22 +29,22 @@ class Preview extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.disableIframe !== prevProps.disableIframe) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ iframeStatus: !this.state.iframeStatus });
+      this.setState({ iframeStatus: !this.state.iframeStatus })
     }
   }
 
   render() {
-    const iframeToggle = this.state.iframeStatus ? 'disable' : 'enable';
+    const iframeToggle = this.state.iframeStatus ? 'disable' : 'enable'
     return (
       <div className={`challenge-preview ${iframeToggle}-iframe`}>
         <iframe
           className={'challenge-preview-frame'}
           id={mainId}
-          title='Challenge Preview'
+          title="Challenge Preview"
         />
       </div>
-    );
+    )
   }
 }
 
-export default Preview;
+export default Preview

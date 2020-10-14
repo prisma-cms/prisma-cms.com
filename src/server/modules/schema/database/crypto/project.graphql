@@ -1,4 +1,6 @@
-type Project{
-  """Этериум-адреса, относящиеся к этому проекту"""
+type Project {
+  """
+  Этериум-адреса, относящиеся к этому проекту
+  """
   EthAccounts: [EthAccount!]! @relation(name: "ProjectEthAccounts")
 }

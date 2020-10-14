@@ -1,29 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 
-import {
-  TaskList,
-} from "@prisma-cms/react-timeline-gantt";
-import { withStyles } from 'material-ui';
+import { TaskList } from '@prisma-cms/react-timeline-gantt'
+import { withStyles } from 'material-ui'
 
 // import Row from "./Row";
 
-import TaskView from "../../../../Tasks/View/Task";
+import TaskView from '../../../../Tasks/View/Task'
 
-import {
-  Task as TaskQuery,
-  createTaskProcessor,
-  updateTaskProcessor,
-} from "../../../query";
-import { compose, graphql } from 'react-apollo';
+import { updateTaskProcessor } from '../../../query'
+import { compose, graphql } from '@apollo/client'
 
-
-const styles = {
-}
-
+const styles = {}
 
 class TaskListCustom extends TaskList {
-
   // static propTypes = {
 
   // };
@@ -36,14 +25,12 @@ class TaskListCustom extends TaskList {
   //   );
   // }
 
-
   // renderTaskRow(data) {
 
   //   const {
   //     mutate,
   //     selectedItem,
   //   } = this.props;
-
 
   //   let rows = data.map(n => {
 
@@ -61,51 +48,39 @@ class TaskListCustom extends TaskList {
 
   //   });
 
-
   //   return rows;
   // }
 
-
-  renderTaskRow(data) {
-
-    let output = null;
-
-
+  renderTaskRow() {
+    let output = null
 
     // return null;
 
-    const {
-      selectedItem,
-      mutate,
-    } = this.props;
-
+    const { selectedItem, mutate } = this.props
 
     if (selectedItem) {
       // output = <Row
-      output = <TaskView
-        data={{
-          object: selectedItem,
-        }}
-        mutate={mutate}
-      />
+      output = (
+        <TaskView
+          data={{
+            object: selectedItem,
+          }}
+          mutate={mutate}
+        />
+      )
     }
 
-
-    return output;
+    return output
   }
 }
 
-
 // export default withStyles(styles)(props => <TaskListCustom {...props}/>);
 
-
 export default compose(
-
   // graphql(createTaskProcessor, {
   //   name: "createTask",
   // }),
   graphql(updateTaskProcessor, {
     // name: "updateTask",
-  }),
-
-)(withStyles(styles)(props => <TaskListCustom {...props}/>));
+  })
+)(withStyles(styles)((props) => <TaskListCustom {...props} />))

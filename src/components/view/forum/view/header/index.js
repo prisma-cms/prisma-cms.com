@@ -1,18 +1,11 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
 
 class Header extends Component {
   render() {
-    return (
-      <thead>
-        
-      </thead>
-    );
+    return <thead></thead>
   }
 }
 
-Header.propTypes = {
+Header.propTypes = {}
 
-};
-
-export default Header;
+export default Header

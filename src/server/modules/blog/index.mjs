@@ -1,32 +1,22 @@
-
-
 // import PrismaModule from "@prisma-cms/prisma-module";
 
-import ResourceModule, {
-  // UserPayload,
-} from "@prisma-cms/resource-module";
+import ResourceModule from '@prisma-cms/resource-module' // UserPayload,
 
-import MergeSchema from 'merge-graphql-schemas';
+import MergeSchema from 'merge-graphql-schemas'
 
-import path from 'path';
+import path from 'path'
 
-const moduleURL = new URL(import.meta.url);
+const moduleURL = new URL(import.meta.url)
 
-const __dirname = path.dirname(moduleURL.pathname);
+const __dirname = path.dirname(moduleURL.pathname)
 
-const { fileLoader, mergeTypes } = MergeSchema;
-
+const { fileLoader, mergeTypes } = MergeSchema
 
 // export class ModxclubBlogProcessor extends UserPayload{
 
-   
-
 // }
 
-
 class ModxclubBlogModule extends ResourceModule {
-
-
   // constructor() {
 
   //   super();
@@ -37,22 +27,15 @@ class ModxclubBlogModule extends ResourceModule {
 
   // }
 
-  getSchema(){
-
-    return;
+  getSchema() {
+    return
   }
 
   getApiSchema(types = []) {
-
-    return;
-
+    return
   }
 
-
-
   getResolvers() {
-
-
     // let resolvers = super.getResolvers();
 
     // const {
@@ -62,8 +45,6 @@ class ModxclubBlogModule extends ResourceModule {
     //   },
     //   ...other
     // } = resolvers;
-
- 
 
     // return {
     //   Mutation: {
@@ -77,11 +58,7 @@ class ModxclubBlogModule extends ResourceModule {
     // };
 
     return {}
-
   }
-
-
 }
 
-
-export default ModxclubBlogModule;
+export default ModxclubBlogModule

@@ -1,70 +1,43 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
-import { graphql, compose } from 'react-apollo';
+import { graphql } from '@apollo/client'
 
-import Context from "@prisma-cms/context";
+import Context from '@prisma-cms/context'
 
-import { TopicPage } from '../';
+import { TopicPage } from '../'
 
-import {
-  createTopicProcessor,
-} from "../../query";
+import { createTopicProcessor } from '../../query'
 
 export class TopicCreatePage extends TopicPage {
-
-
-
-
-  setPageMeta(meta) {
-
+  setPageMeta() {
     return super.setPageMeta({
-      title: "Добавить топик",
-    });
+      title: 'Добавить топик',
+    })
   }
-
 
   onSave = (result) => {
-
-
-
     if (result && result.data) {
+      const { history } = this.props
+
+      const { location } = history
 
       const {
-        history,
-      } = this.props;
-
-
-      const {
-        location,
-      } = history;
-
-      const {
-        response: {
-          data: object,
-        },
+        response: { data: object },
       } = result.data || {}
 
-      const {
-        uri,
-      } = object || {};
+      const { uri } = object || {}
 
       if (uri && location.pathname !== uri) {
-
-        history.replace(uri);
+        history.replace(uri)
       }
-
     }
-
   }
-
 
   // componentWillMount() {
 
   //   const {
   //     View,
   //   } = this.props;
-
 
   //   const Renderer = compose(
   //     graphql(createTopic, {
@@ -83,7 +56,6 @@ export class TopicCreatePage extends TopicPage {
 
   // }
 
-
   // render() {
 
   //   const {
@@ -91,12 +63,10 @@ export class TopicCreatePage extends TopicPage {
   //     ...other
   //   } = this.props;
 
-
   //   const {
   //     Renderer,
   //     data,
   //   } = this.state;
-
 
   //   const {
   //     location: {
@@ -107,7 +77,6 @@ export class TopicCreatePage extends TopicPage {
   //       },
   //     },
   //   } = this.context;
-
 
   //   return <Renderer
   //     data={data}
@@ -123,46 +92,33 @@ export class TopicCreatePage extends TopicPage {
   //   />
 
   // }
-
 }
 
-
-
-
 export class CreatePage extends Component {
-
-
-  static contextType = Context;
+  static contextType = Context
 
   render() {
+    const { user: currentUser, uri } = this.context
 
-    const {
-      user: currentUser,
-      uri,
-    } = this.context;
+    const { blogID } = uri.query(true)
 
-
-    const {
-      blogID,
-    } = uri.query(true);
-
-
-    return <TopicCreatePage
-      {...this.props}
-      data={{
-        object: {
-          CreatedBy: currentUser,
-        },
-      }}
-      _dirty={{
-        name: "",
-        topic_tags: [],
-        content: [],
-        blogID,
-      }}
-    />;
-
+    return (
+      <TopicCreatePage
+        {...this.props}
+        data={{
+          object: {
+            CreatedBy: currentUser,
+          },
+        }}
+        _dirty={{
+          name: '',
+          topic_tags: [],
+          content: [],
+          blogID,
+        }}
+      />
+    )
   }
 }
 
-export default graphql(createTopicProcessor)(CreatePage);
+export default graphql(createTopicProcessor)(CreatePage)

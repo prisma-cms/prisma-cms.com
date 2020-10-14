@@ -1,5 +1,5 @@
 """
-  Технология. Например, React, Javascript, MODX
+Технология. Например, React, Javascript, MODX
 """
 type Technology {
   id: ID! @unique
@@ -8,17 +8,23 @@ type Technology {
   name: String
 
   """
-    Описание
+  Описание
   """
   components: Json
 
-  """Текстовое содержимое сообщения"""
+  """
+  Текстовое содержимое сообщения
+  """
   contentText: String
 
-  """Ссылка на официальный сайт"""
+  """
+  Ссылка на официальный сайт
+  """
   site_url: String
   CreatedBy: User
 
-  """Пользователи, использующие данную технологию"""
+  """
+  Пользователи, использующие данную технологию
+  """
   UserTechnologies: [UserTechnology!]!
 }

@@ -1,25 +1,21 @@
-
-type Mutation{
+type Mutation {
   startImportProcessor(
     sourceDbConfig: ImportDbConfig!
     targetDbConfig: ImportDbConfig!
   ): ImportResponse!
 }
 
-
 type Error {
   key: String!
   message: String!
 }
 
-
-type ImportResponse{
+type ImportResponse {
   success: Boolean!
   message: String
   errors: [Error!]!
   data: Import
 }
-
 
 input ImportDbConfig {
   host: String = "localhost"

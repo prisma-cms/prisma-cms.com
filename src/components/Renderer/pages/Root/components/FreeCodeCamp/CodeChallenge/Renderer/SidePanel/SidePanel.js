@@ -1,16 +1,12 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react'
 
 class SidePanel extends PureComponent {
-
-  static propTypes = {
-
-  };
+  static propTypes = {}
 
   render() {
     return (
-      <div className='instructions-panel' role='complementary' tabIndex='-1'>
-      SidePanel
+      <div className="instructions-panel" role="complementary" tabIndex="-1">
+        SidePanel
         {/* <div>
           <ChallengeTitle isCompleted={isChallengeCompleted}>
             {title}
@@ -24,9 +20,8 @@ class SidePanel extends PureComponent {
         {showToolPanel && <ToolPanel guideUrl={guideUrl} videoUrl={videoUrl} />}
         <TestSuite tests={tests} /> */}
       </div>
-    );
+    )
   }
 }
 
-
-export default SidePanel;
+export default SidePanel

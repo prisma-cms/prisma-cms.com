@@ -1,4 +1,3 @@
-
 type Resource {
   id: ID! @unique
   oldID: Int @unique
@@ -9,9 +8,12 @@ type Resource {
   Project: Project @relation(name: "ProjectResource")
   Team: Team @relation(name: "TeamResource")
 
-  """Будет удалено"""
+  """
+  Будет удалено
+  """
   class_key: String
-  """Будет удалено"""
+  """
+  Будет удалено
+  """
   template: Int
-
 }

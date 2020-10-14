@@ -1,4 +1,3 @@
-
 enum ImportStatus {
   Created
   Started
@@ -12,7 +11,7 @@ type Import {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  status: ImportStatus! @default (value: Created)
-  Logs: [Log!]! @relation (name: "ImportLogs")
+  status: ImportStatus! @default(value: Created)
+  Logs: [Log!]! @relation(name: "ImportLogs")
   CreatedBy: User @relation(name: "UserImports")
 }

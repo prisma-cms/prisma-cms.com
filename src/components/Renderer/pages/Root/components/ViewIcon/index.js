@@ -1,12 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/';
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
 
-import View from "material-ui-icons/RemoveRedEye";
+import View from 'material-ui-icons/RemoveRedEye'
 
 export class ViewIcon extends EditorComponent {
-
-  static Name = 'ViewIcon';
+  static Name = 'ViewIcon'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
@@ -16,42 +15,26 @@ export class ViewIcon extends EditorComponent {
     },
   }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
+    const { classes } = this.getEditorContext()
 
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        ViewIcon
-      </div>
-    );
+      content || <div className={classes.panelButton}>ViewIcon</div>
+    )
   }
-
 
   getRootElement() {
-
-    return View;
+    return View
   }
-
 
   canBeParent(parent) {
-
-    return super.canBeParent(parent);
+    return super.canBeParent(parent)
   }
 
-
-  canBeChild(child) {
-
+  canBeChild() {
     // return super.canBeChild(child);
-    return false;
+    return false
   }
-
 
   // renderChildren() {
 
@@ -67,7 +50,6 @@ export class ViewIcon extends EditorComponent {
 
   //   return super.renderChildren();
   // }
-
 }
 
-export default ViewIcon;
+export default ViewIcon

@@ -1,0 +1,11 @@
+**/node_modules/*
+**/out/*
+**/.next/*
+**/dist/*
+**/coverage/*
+**/public/*
+generated
+/src/node_modules
+/src/server
+/src/ssr
+/src/schema

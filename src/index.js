@@ -1,15 +1,11 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 
+import PrismaCms, { loader } from '@prisma-cms/front'
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as serviceWorker from './serviceWorker'
 
-import PrismaCms, { loader } from "@prisma-cms/front";
-
-import * as serviceWorker from './serviceWorker';
-
-import App, {
-  // queryFragments,
-} from "./App";
+import App from './App' // queryFragments,
 
 import {
   UserNoNestingFragment,
@@ -17,16 +13,14 @@ import {
   ProjectTaskNoNestingFragment,
   TaskNoNestingFragment,
   ProjectNoNestingFragment,
-} from "./schema/generated/api.fragments";
+} from './schema/generated/api.fragments'
 
-const node = document.getElementById('root');
+const node = document.getElementById('root')
 
 if (node) {
-
-  loader({})
-    .then(() => {
-
-      ReactDOM.render(<PrismaCms
+  loader({}).then(() => {
+    ReactDOM.render(
+      <PrismaCms
         App={App}
         apolloOptions={{
           // endpoint: "https://api.prisma-cms.com/",
@@ -64,15 +58,14 @@ if (node) {
           ${ProjectNoNestingFragment}
           `,
         }}
-      // queryFragments={queryFragments}
-      />, node);
+        // queryFragments={queryFragments}
+      />,
+      node
+    )
 
-      // If you want your app to work offline and load faster, you can change
-      // unregister() to register() below. Note this comes with some pitfalls.
-      // Learn more about service workers: https://bit.ly/CRA-PWA
-      serviceWorker.unregister();
-
-    })
-
+    // If you want your app to work offline and load faster, you can change
+    // unregister() to register() below. Note this comes with some pitfalls.
+    // Learn more about service workers: https://bit.ly/CRA-PWA
+    serviceWorker.unregister()
+  })
 }
-

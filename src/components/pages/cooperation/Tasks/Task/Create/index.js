@@ -1,71 +1,52 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
 
 // import {
 //   TaskPage,
 // } from "../";
 
-import {
-  TaskPage,
-} from "@prisma-cms/cooperation/lib/components/pages/Tasks/Task";
+import { TaskPage } from '@prisma-cms/cooperation/lib/components/pages/Tasks/Task'
 
 class CreateTaskPage extends Component {
-
-
   onSave(result) {
-
-
     if (result) {
+      const { data: object } = (result.data && result.data.response) || {}
 
-      const {
-        data: object,
-      } = result.data && result.data.response || {}
-
-
-      const {
-        id,
-      } = object || {};
+      const { id } = object || {}
 
       if (id) {
+        const { history } = this.props
 
-        const {
-          history,
-        } = this.props;
-
-        history.push(`/tasks/${id}/`);
+        history.push(`/tasks/${id}/`)
       }
-
     }
-
   }
 
-
   render() {
-
     const {
       match: {
-        params: {
-          projectId,
-        },
+        params: { projectId },
       },
-    } = this.props;
+    } = this.props
 
-    return <TaskPage
-      data={{
-        object: {}
-      }}
-      _dirty={{
-        name: "",
-        Project: projectId ? {
-          connect: {
-            id: projectId,
-          },
-        } : undefined,
-      }}
-      onSave={result => this.onSave(result)}
-    />
+    return (
+      <TaskPage
+        data={{
+          object: {},
+        }}
+        _dirty={{
+          name: '',
+          Project: projectId
+            ? {
+                connect: {
+                  id: projectId,
+                },
+              }
+            : undefined,
+        }}
+        onSave={(result) => this.onSave(result)}
+      />
+    )
   }
 }
 
-
-export default CreateTaskPage;
+export default CreateTaskPage

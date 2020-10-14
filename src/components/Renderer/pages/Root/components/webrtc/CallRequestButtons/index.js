@@ -1,59 +1,39 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/';
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
 
-import {
-  CallRequestButtons as WebRtcCallRequestButtons,
-} from '@prisma-cms/webrtc';
+import { CallRequestButtons as WebRtcCallRequestButtons } from '@prisma-cms/webrtc'
 
 export class CallRequestButtons extends EditorComponent {
-
-  static Name = 'CallRequestButtons';
+  static Name = 'CallRequestButtons'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
     hide_wrapper_in_default_mode: true,
   }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
+    const { classes } = this.getEditorContext()
 
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        CallRequestButtons
-      </div>
-    );
+      content || <div className={classes.panelButton}>CallRequestButtons</div>
+    )
   }
-
 
   getRootElement() {
-
-    return super.getRootElement();
+    return super.getRootElement()
   }
-
 
   canBeParent(parent) {
-
-    return super.canBeParent(parent);
+    return super.canBeParent(parent)
   }
 
-
-  canBeChild(child) {
-
+  canBeChild() {
     // return super.canBeChild(child);
-    return false;
+    return false
   }
-
 
   renderChildren() {
-
     // const {
     // } = this.context;
 
@@ -66,11 +46,8 @@ export class CallRequestButtons extends EditorComponent {
 
     // return super.renderChildren();
 
-    return <WebRtcCallRequestButtons
-      key="CallRequestButtons"
-    />
+    return <WebRtcCallRequestButtons key="CallRequestButtons" />
   }
-
 }
 
-export default CallRequestButtons;
+export default CallRequestButtons

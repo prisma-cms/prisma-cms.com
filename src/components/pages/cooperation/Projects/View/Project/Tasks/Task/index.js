@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 
 import {
   TaskView as CooperatorTaskView,
@@ -9,80 +8,51 @@ import {
   // createTimerProcessor,
   // updateTimerProcessor,
   processors,
-} from "../../../../../Tasks/View/Task";
+} from '../../../../../Tasks/View/Task'
 
-import { withStyles } from 'material-ui';
-import { Grid } from '@modxclub/ui';
-// import { graphql, compose } from 'react-apollo';
+import { withStyles } from 'material-ui'
+import { Grid } from '@modxclub/ui'
+// import { graphql, compose } from '@apollo/client';
 
 class TaskView extends CooperatorTaskView {
-
   // static propTypes = {
   //   item: PropTypes.object.isRequired,
   // };
 
-
   renderHeader() {
-
-    return null;
+    return null
   }
 
-
-
   renderDefaultView() {
+    const object = this.getObjectWithMutations()
 
-    const object = this.getObjectWithMutations();
+    const inEditMode = this.isInEditMode()
 
-    const inEditMode = this.isInEditMode();
-
-    let output;
+    let output
 
     if (inEditMode) {
       output = this.getTextField({
-        name: "name",
-        label: "Название задачи",
-      });
-    }
-    else {
-
-      output = <TaskLink
-        object={object}
-      />;
+        name: 'name',
+        label: 'Название задачи',
+      })
+    } else {
+      output = <TaskLink object={object} />
     }
 
-    return <Grid
-      container
-      spacing={8}
-      alignItems="center"
-    >
-      <Grid
-        item
-        xs={inEditMode}
-      >
+    return (
+      <Grid container spacing={8} alignItems="center">
+        <Grid item xs={inEditMode}>
+          {output}
+        </Grid>
 
-        {output}
+        <Grid item>{this.getButtons()}</Grid>
+
+        <Grid item>{this.renderActiveTimers()}</Grid>
       </Grid>
-
-      <Grid
-        item
-      >
-        {this.getButtons()}
-      </Grid>
-
-      <Grid
-        item
-      >
-        {this.renderActiveTimers()}
-      </Grid>
-
-
-    </Grid>
-
+    )
   }
-
 }
 
-
-export default processors(withStyles(styles)(props => <TaskView 
-  {...props}
-/>));
+export default processors(
+  withStyles(styles)((props) => <TaskView {...props} />)
+)

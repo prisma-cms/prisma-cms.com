@@ -1,12 +1,8 @@
+const XMLWriter = require('xml-writer')
 
-
-var XMLWriter = require('xml-writer');
-
-import SSR from "../";
+import SSR from '../'
 
 export class ModxclubSSR extends SSR {
-
-
   /**
    * Рендеринк карты сайта.
    * Отдельные разделы с постраничностью:
@@ -15,133 +11,101 @@ export class ModxclubSSR extends SSR {
    * 3. Теги
    */
   async renderSitemap(req, res, uri) {
-
-    let {
-      section,
-    } = uri.query(true);
-
+    const { section } = uri.query(true)
 
     switch (section) {
+      case 'main':
+        return this.renderMainSitemap(req, res, uri)
 
+      case 'users':
+        return this.renderUsersSitemap(req, res, uri)
 
-      case "main":
+      case 'resources':
+        return this.renderResourcesSitemap(req, res, uri)
 
-        return this.renderMainSitemap(req, res, uri);
-        break;
-
-      case "users":
-
-        return this.renderUsersSitemap(req, res, uri);
-        break;
-
-      case "resources":
-
-        return this.renderResourcesSitemap(req, res, uri);
-        break;
-
-      case "tags":
-
-        return this.renderTagsSitemap(req, res, uri);
-        break;
+      case 'tags':
+        return this.renderTagsSitemap(req, res, uri)
 
       default:
-        return this.renderRootSitemap(req, res, uri);
-
+        return this.renderRootSitemap(req, res, uri)
     }
-
-
-
   }
 
-
   renderRootSitemap(req, res, uri) {
-
     const cleanUri = uri.clone().query(null)
     // .hostname("mamba.zone");
 
     /**
      * Выводим ссылки на разделы
      */
-    const xml = new XMLWriter();
+    const xml = new XMLWriter()
 
     xml.startDocument('1.0', 'UTF-8')
 
-    xml.startElement("sitemapindex")
-      .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-    ;
-
-
+    xml
+      .startElement('sitemapindex')
+      .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
     /**
      * Формируем ссылки на разделы
      */
     const mainUri = cleanUri.clone().query({
-      section: "main",
-    });
+      section: 'main',
+    })
 
     const usersUri = cleanUri.clone().query({
-      section: "users",
-    });
+      section: 'users',
+    })
 
     const resourcesUri = cleanUri.clone().query({
-      section: "resources",
-    });
+      section: 'resources',
+    })
 
     const tagsUri = cleanUri.clone().query({
-      section: "tags",
-    });
+      section: 'tags',
+    })
 
-    xml.startElement("sitemap")
-      .writeElement("loc", mainUri.toString())
-      .endElement();
+    xml
+      .startElement('sitemap')
+      .writeElement('loc', mainUri.toString())
+      .endElement()
 
-    xml.startElement("sitemap")
-      .writeElement("loc", usersUri.toString())
-      .endElement();
+    xml
+      .startElement('sitemap')
+      .writeElement('loc', usersUri.toString())
+      .endElement()
 
-    xml.startElement("sitemap")
-      .writeElement("loc", resourcesUri.toString())
-      .endElement();
+    xml
+      .startElement('sitemap')
+      .writeElement('loc', resourcesUri.toString())
+      .endElement()
 
-    xml.startElement("sitemap")
-      .writeElement("loc", tagsUri.toString())
-      .endElement();
+    xml
+      .startElement('sitemap')
+      .writeElement('loc', tagsUri.toString())
+      .endElement()
 
+    xml.endDocument()
 
-    xml.endDocument();
-
-
-
-    res.charset = 'utf-8';
+    res.charset = 'utf-8'
 
     res.writeHead(200, {
       'Content-Type': 'application/xml',
+    })
 
-    });
-
-    res.end(xml.toString());
-
+    res.end(xml.toString())
   }
-
 
   /**
    * Основные страницы
    */
   async renderMainSitemap(req, res, uri) {
-
-
-
-    const xml = new XMLWriter();
+    const xml = new XMLWriter()
 
     xml.startDocument('1.0', 'UTF-8')
 
-
-
-    xml.startElement("urlset")
-      .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-    ;
-
-
-
+    xml
+      .startElement('urlset')
+      .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
     this.addSitemapDocument(xml, uri, {
       url: `/`,
       priority: 1,
@@ -157,40 +121,30 @@ export class ModxclubSSR extends SSR {
       priority: 0.5,
     })
 
+    xml.endDocument()
 
-
-    xml.endDocument();
-
-
-
-    res.charset = 'utf-8';
+    res.charset = 'utf-8'
 
     res.writeHead(200, {
       'Content-Type': 'application/xml',
+    })
 
-    });
+    res.end(xml.toString())
 
-    res.end(xml.toString());
-
-
-    return;
+    return
   }
 
   /**
    * Пользователи
    */
   async renderUsersSitemap(req, res, uri) {
+    const api = this.getApi()
 
-    const api = this.getApi();
+    let { page } = uri.query(true)
 
-    let {
-      page,
-    } = uri.query(true);
+    page = (page && parseInt(page)) || undefined
 
-    page = page && parseInt(page) || undefined;
-
-    let limit = 1000;
-
+    const limit = 1000
 
     const usersSchema = `
       {
@@ -205,17 +159,20 @@ export class ModxclubSSR extends SSR {
           }
         }
       }
-    `;
+    `
 
-    let usersResult = await api.query.usersConnection({
-      first: limit,
-      skip: page > 1 ? (page - 1) * limit : undefined,
-      where: {
-        active: true,
-        deleted: false,
+    const usersResult = await api.query.usersConnection(
+      {
+        first: limit,
+        skip: page > 1 ? (page - 1) * limit : undefined,
+        where: {
+          active: true,
+          deleted: false,
+        },
+        orderBy: 'updatedAt_DESC',
       },
-      orderBy: "updatedAt_DESC",
-    }, usersSchema)
+      usersSchema
+    )
     // .catch(error => {
     //   res.status(500);
     //   res.end(error.message);
@@ -223,12 +180,9 @@ export class ModxclubSSR extends SSR {
     // });
 
     const {
-      aggregate: {
-        count: total,
-      },
+      aggregate: { count: total },
       edges: usersEdges,
-    } = usersResult;
-
+    } = usersResult
 
     const users = usersEdges.map(({ node }) => node)
 
@@ -237,100 +191,75 @@ export class ModxclubSSR extends SSR {
      */
     // let total = totalUsers;
 
-    let pages = Math.ceil(total / limit);
+    const pages = Math.ceil(total / limit)
 
-
-    const xml = new XMLWriter();
+    const xml = new XMLWriter()
 
     xml.startDocument('1.0', 'UTF-8')
 
-
-
     if (page) {
-
-      xml.startElement("urlset")
-        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-      ;
-
-
-      users.map(user => {
-
-        const {
-          username,
-          updatedAt,
-        } = user;
+      xml
+        .startElement('urlset')
+        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
+      users.map((user) => {
+        const { username, updatedAt } = user
 
         this.addSitemapDocument(xml, uri, {
           url: `/profile/${username}/`,
           updatedAt,
           priority: 0.8,
         })
+      })
+    } else {
+      xml
+        .startElement('sitemapindex')
+        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
 
-      });
-
-    }
-    else {
-
-      xml.startElement('sitemapindex')
-        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-
-      let i = 0;
+      let i = 0
 
       while (pages > i) {
-        i++;
+        i++
 
         const pageUri = uri.clone().query({
-          section: "users",
+          section: 'users',
           page: i,
         })
 
-        xml.startElement("sitemap")
-          .writeElement("loc", pageUri.toString())
-          .endElement();
+        xml
+          .startElement('sitemap')
+          .writeElement('loc', pageUri.toString())
+          .endElement()
       }
-
     }
 
+    xml.endDocument()
 
-    xml.endDocument();
-
-
-    res.charset = 'utf-8';
+    res.charset = 'utf-8'
 
     res.writeHead(200, {
       'Content-Type': 'application/xml',
+    })
 
-    });
+    res.end(xml.toString())
 
-    res.end(xml.toString());
-
-
-    return;
-
+    return
   }
-
 
   /**
    * Ресурсы
    */
   async renderResourcesSitemap(req, res, uri) {
+    const api = this.getApi()
 
-
-    const api = this.getApi();
-    
-    let {
-      page,
-    } = uri.query(true);
+    let { page } = uri.query(true)
 
     uri = uri.query({
-      section: "resources",
-    });
+      section: 'resources',
+    })
 
+    page = (page && parseInt(page)) || undefined
 
-    page = page && parseInt(page) || undefined;
-
-    let limit = 1000;
-
+    const limit = 1000
 
     const schema = `
       {
@@ -345,18 +274,21 @@ export class ModxclubSSR extends SSR {
           }
         }
       }
-    `;
+    `
 
-    let objectsResult = await api.query.resourcesConnection({
-      first: limit,
-      skip: page > 1 ? (page - 1) * limit : undefined,
-      where: {
-        published: true,
-        searchable: true,
-        deleted: false,
+    const objectsResult = await api.query.resourcesConnection(
+      {
+        first: limit,
+        skip: page > 1 ? (page - 1) * limit : undefined,
+        where: {
+          published: true,
+          searchable: true,
+          deleted: false,
+        },
+        orderBy: 'updatedAt_DESC',
       },
-      orderBy: "updatedAt_DESC",
-    }, schema)
+      schema
+    )
     // .catch(error => {
     //   res.status(500);
     //   res.end(error.message);
@@ -364,110 +296,80 @@ export class ModxclubSSR extends SSR {
     // });
 
     const {
-      aggregate: {
-        count: total,
-      },
+      aggregate: { count: total },
       edges: edges,
-    } = objectsResult;
-
+    } = objectsResult
 
     const objects = edges.map(({ node }) => node)
 
+    const pages = Math.ceil(total / limit)
 
-    let pages = Math.ceil(total / limit);
-
-
-    const xml = new XMLWriter();
+    const xml = new XMLWriter()
 
     xml.startDocument('1.0', 'UTF-8')
 
-
-
     if (page) {
-
-      xml.startElement("urlset")
-        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-      ;
-
-
-
-      objects.map(n => {
-
-        const {
-          uri: url,
-          updatedAt,
-        } = n;
+      xml
+        .startElement('urlset')
+        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
+      objects.map((n) => {
+        const { uri: url, updatedAt } = n
 
         this.addSitemapDocument(xml, uri, {
           url,
           updatedAt,
           priority: 0.9,
         })
+      })
+    } else {
+      xml
+        .startElement('sitemapindex')
+        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
 
-      });
-
-    }
-    else {
-
-      xml.startElement('sitemapindex')
-        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-
-      let i = 0;
+      let i = 0
 
       while (pages > i) {
-        i++;
+        i++
 
         const pageUri = uri.clone().addQuery({
           page: i,
         })
 
-
-        xml.startElement("sitemap")
-          .writeElement("loc", pageUri.toString())
-          .endElement();
+        xml
+          .startElement('sitemap')
+          .writeElement('loc', pageUri.toString())
+          .endElement()
       }
-
     }
 
+    xml.endDocument()
 
-    xml.endDocument();
-
-
-    res.charset = 'utf-8';
+    res.charset = 'utf-8'
 
     res.writeHead(200, {
       'Content-Type': 'application/xml',
+    })
 
-    });
+    res.end(xml.toString())
 
-    res.end(xml.toString());
-
-
-    return;
-
+    return
   }
 
   /**
    * Теги
    */
   async renderTagsSitemap(req, res, uri) {
+    const api = this.getApi()
 
-
-    const api = this.getApi();
-    
-    let {
-      page,
-    } = uri.query(true);
+    let { page } = uri.query(true)
 
     uri = uri.query({
-      section: "tags",
-    });
+      section: 'tags',
+    })
 
+    page = (page && parseInt(page)) || undefined
 
-    page = page && parseInt(page) || undefined;
-
-    let limit = 1000;
-
+    const limit = 1000
 
     const schema = `
       {
@@ -482,16 +384,19 @@ export class ModxclubSSR extends SSR {
           }
         }
       }
-    `;
+    `
 
-    let objectsResult = await api.query.tagsConnection({
-      first: limit,
-      skip: page > 1 ? (page - 1) * limit : undefined,
-      where: {
-        status_not: "Blocked",
+    const objectsResult = await api.query.tagsConnection(
+      {
+        first: limit,
+        skip: page > 1 ? (page - 1) * limit : undefined,
+        where: {
+          status_not: 'Blocked',
+        },
+        orderBy: 'updatedAt_DESC',
       },
-      orderBy: "updatedAt_DESC",
-    }, schema)
+      schema
+    )
     // .catch(error => {
     //   res.status(500);
     //   res.end(error.message);
@@ -499,93 +404,66 @@ export class ModxclubSSR extends SSR {
     // });
 
     const {
-      aggregate: {
-        count: total,
-      },
+      aggregate: { count: total },
       edges: edges,
-    } = objectsResult;
-
+    } = objectsResult
 
     const objects = edges.map(({ node }) => node)
 
+    const pages = Math.ceil(total / limit)
 
-    let pages = Math.ceil(total / limit);
-
-
-    const xml = new XMLWriter();
+    const xml = new XMLWriter()
 
     xml.startDocument('1.0', 'UTF-8')
 
-
-
     if (page) {
+      xml
+        .startElement('urlset')
+        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
+      objects.map((n) => {
+        const { name, updatedAt } = n
 
-      xml.startElement("urlset")
-        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-      ;
-
-
-
-      objects.map(n => {
-
-        const {
-          name,
-          updatedAt,
-        } = n;
-
-        const url = `/tag/${name}`;
+        const url = `/tag/${name}`
 
         this.addSitemapDocument(xml, uri, {
           url,
           updatedAt,
           priority: 0.9,
         })
+      })
+    } else {
+      xml
+        .startElement('sitemapindex')
+        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9')
 
-      });
-
-    }
-    else {
-
-      xml.startElement('sitemapindex')
-        .writeAttribute('xmlns', 'https://www.sitemaps.org/schemas/sitemap/0.9');
-
-      let i = 0;
+      let i = 0
 
       while (pages > i) {
-        i++;
+        i++
 
         const pageUri = uri.clone().addQuery({
           page: i,
         })
 
-
-        xml.startElement("sitemap")
-          .writeElement("loc", pageUri.toString())
-          .endElement();
+        xml
+          .startElement('sitemap')
+          .writeElement('loc', pageUri.toString())
+          .endElement()
       }
-
     }
 
+    xml.endDocument()
 
-    xml.endDocument();
-
-
-    res.charset = 'utf-8';
+    res.charset = 'utf-8'
 
     res.writeHead(200, {
       'Content-Type': 'application/xml',
+    })
 
-    });
+    res.end(xml.toString())
 
-    res.end(xml.toString());
-
-
-    return;
-
+    return
   }
-
-
 }
 
-
-module.exports = ModxclubSSR;
+module.exports = ModxclubSSR

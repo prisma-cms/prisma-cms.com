@@ -1,29 +1,20 @@
+import React from 'react'
 
+import PropTypes from 'prop-types'
 
-import React, { Component } from 'react';
+import Page from '../../layout'
 
-import PropTypes from "prop-types";
+import PageNotFound from '../../404'
 
-import Page from '../../layout';
+import View from './view'
 
-
-import PageNotFound from "../../404";
-
-
-
-import View from "./view";
-
-import { TopicConnector as Connector } from "../query";
-
+import { TopicConnector as Connector } from '../query'
 
 export class TopicPage extends Page {
-
-
   static propTypes = {
     ...Page.propTypes,
     View: PropTypes.func.isRequired,
   }
-
 
   static defaultProps = {
     ...Page.defaultProps,
@@ -31,85 +22,47 @@ export class TopicPage extends Page {
   }
 
   setPageMeta(meta = {}) {
-
     const {
-      data: {
-        object: topic,
-      },
-    } = this.props;
-
+      data: { object: topic },
+    } = this.props
 
     if (!topic) {
-      return;
+      return
     }
 
-    const {
-      name,
-      longtitle,
-      uri,
-    } = topic;
+    const { name, longtitle, uri } = topic
 
     return super.setPageMeta({
       title: longtitle || name,
       canonical: uri,
       ...meta,
-    });
-
+    })
   }
-
 
   render() {
+    const { View, data, ...other } = this.props
 
-    const {
-      View,
-      data,
-      ...other
-    } = this.props;
-
-
-    const {
-      object,
-      loading,
-    } = data;
+    const { object, loading } = data
 
     if (!object) {
-
       if (loading) {
-        return null;
+        return null
+      } else {
+        return <PageNotFound title="Топик не найден" />
       }
-      else {
-        return <PageNotFound 
-          title="Топик не найден"
-        />
-      }
-
     }
 
-    return super.render(<View
-      data={data}
-      onSave={this.onSave}
-      {...other}
-    />);
-
-
+    return super.render(<View data={data} onSave={this.onSave} {...other} />)
   }
-
 }
 
-
 const TopicConnector = (props) => {
+  const { getCommentsText = true } = props
 
-  const {
-    getCommentsText = true,
-  } = props;
-
-  return <Connector
-    View={TopicPage}
-    getCommentsText={getCommentsText}
-    {...props}
-  />
-
+  return (
+    <Connector View={TopicPage} getCommentsText={getCommentsText} {...props} />
+  )
 }
 
 // export default TopicPage;
-export default TopicConnector;
+export default TopicConnector

@@ -1,6 +1,3 @@
+import TransactionLink from './Link/Transaction'
 
-import TransactionLink from "./Link/Transaction";
-
-export {
-  TransactionLink,
-}
+export { TransactionLink }

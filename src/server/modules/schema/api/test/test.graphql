@@ -1,4 +1,4 @@
-type TestResponse{
+type TestResponse {
   success: Boolean!
   message: String
   errors: [Error!]!
