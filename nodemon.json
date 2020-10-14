@@ -1,8 +1,11 @@
-{   
+{
+  "watch": ["next/server"],
+  "exec": "ts-node --project tsconfig.server.json src/next/server/index.ts",
+  "ext": "js ts",
   "ignore": [
     "*/generated/*",
     "*/coverage/*",
     "*/uploads/*",
     "*/src/components/*"
-  ] 
+  ]
 }

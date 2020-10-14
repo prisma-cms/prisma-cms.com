@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { withStyles } from 'material-ui';
-
+import { withStyles } from 'material-ui'
 
 // import moment from "moment";
 
@@ -15,20 +14,17 @@ import {
   GanttView as PrismaCooperationGanttView,
   // processors,
   GanttPageConnector,
-} from "@prisma-cms/cooperation/lib/components/pages/Tasks/View/Gantt";
+} from '@prisma-cms/cooperation/lib/components/pages/Tasks/View/Gantt'
 
 // import * as Gannt from "@prisma-cms/cooperation/lib/components/pages/Tasks/View/Gantt";
 
-
-// import { graphql, compose } from 'react-apollo';
+// import { graphql, compose } from '@apollo/client';
 
 // import {
 //   Task as TaskQuery,
 //   createTaskProcessor,
 //   updateTaskProcessor,
 // } from "../../query";
-
-
 
 // const UpdateTask = graphql(updateTaskProcessor)(TaskView);
 // const CreateTask = graphql(createTaskProcessor)(TaskView);
@@ -70,9 +66,7 @@ import {
 //   },
 // }
 
-
 class GanttView extends PrismaCooperationGanttView {
-
   // static propTypes = {
 
   // }
@@ -93,8 +87,6 @@ class GanttView extends PrismaCooperationGanttView {
     // itemheight: 1,
   }
 
-
-
   // onSelectItem = (item) => {
   //   this.setState({ selectedItem: item })
   // }
@@ -113,7 +105,6 @@ class GanttView extends PrismaCooperationGanttView {
   //     },
   //   } = item;
 
-
   //   let {
   //     updateTask,
   //   } = this.props;
@@ -130,7 +121,6 @@ class GanttView extends PrismaCooperationGanttView {
   //   if (currentUserId !== createdById) {
   //     return;
   //   }
-
 
   //   let startDatePlaning = moment(start);
   //   let endDatePlaning = moment(end);
@@ -158,22 +148,15 @@ class GanttView extends PrismaCooperationGanttView {
 
   // }
 
-
-
   async componentDidMount() {
-
-    const {
-      data,
-    } = this.props;
+    const { data } = this.props
 
     if (data && !data.loading) {
-      await data.refetch && data.refetch();
+      ;(await data.refetch) && data.refetch()
     }
 
-    super.componentDidMount && super.componentDidMount();
+    super.componentDidMount && super.componentDidMount()
   }
-
-
 
   // render() {
 
@@ -221,7 +204,6 @@ class GanttView extends PrismaCooperationGanttView {
   //     }
 
   //   });
-
 
   //   let links = [];
 
@@ -317,7 +299,6 @@ class GanttView extends PrismaCooperationGanttView {
 //   {...props}
 // />));
 
-export default withStyles(styles)(props => <GanttPageConnector
-  View={GanttView}
-  {...props}
-/>);
+export default withStyles(styles)((props) => (
+  <GanttPageConnector View={GanttView} {...props} />
+))

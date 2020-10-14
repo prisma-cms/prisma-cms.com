@@ -1,81 +1,51 @@
-import React from 'react';
+import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/';
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
 
-import { Notices } from '@prisma-cms/society';
+import { Notices } from '@prisma-cms/society'
 
 export class NoticesMenu extends EditorComponent {
-
-  static Name = 'NoticesMenu';
+  static Name = 'NoticesMenu'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
   }
 
-
   renderPanelView(content) {
-
-    const {
-      classes,
-    } = this.getEditorContext();
+    const { classes } = this.getEditorContext()
 
     return super.renderPanelView(
-      content ||
-      <div
-        className={classes.panelButton}
-      >
-        NoticesMenu
-      </div>
-    );
+      content || <div className={classes.panelButton}>NoticesMenu</div>
+    )
   }
-
 
   getRootElement() {
-
-    return super.getRootElement();
+    return super.getRootElement()
   }
-
 
   canBeParent(parent) {
-
-    return super.canBeParent(parent);
+    return super.canBeParent(parent)
   }
-
 
   canBeChild(child) {
-
-    return false;
+    return false
   }
-
 
   renderChildren() {
+    const { user: currentUser } = this.context
 
-    const {
-      user: currentUser,
-    } = this.context;
+    const {} = this.getEditorContext()
 
-    const {
-    } = this.getEditorContext();
-
-    const {
-      ...other
-    } = this.getComponentProps(this);
+    const { ...other } = this.getComponentProps(this)
 
     if (!currentUser) {
-      return null;
+      return null
     }
 
-    const {
-      id: currentUserId,
-    } = currentUser;
+    const { id: currentUserId } = currentUser
 
-    return <Notices
-      key={currentUserId}
-      user={currentUser}
-      classes={{}}
-    />
+    return <Notices key={currentUserId} user={currentUser} classes={{}} />
   }
-
 }
 
-export default NoticesMenu;
+export default NoticesMenu

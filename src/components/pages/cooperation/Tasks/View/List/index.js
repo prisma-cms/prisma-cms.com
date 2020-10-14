@@ -1,49 +1,40 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { graphql } from 'react-apollo';
+import { graphql } from '@apollo/client'
 
 import {
   // createTaskProcessor,
   updateTaskProcessor,
-} from "../../query";
+} from '../../query'
 
-import Task from "../Task";
+import Task from '../Task'
 
 // const NewTask = graphql(createTaskProcessor)(Task);
-const UpdateTask = graphql(updateTaskProcessor)(Task);
+const UpdateTask = graphql(updateTaskProcessor)(Task)
 
 class TasksList extends Component {
-
   static propTypes = {
     tasks: PropTypes.array.isRequired,
     showDetails: PropTypes.bool.isRequired,
-  };
+  }
 
   static defaultProps = {
     showDetails: false,
-  };
+  }
 
   render() {
-
-    const {
-      tasks,
-      showDetails,
-      ...other
-    } = this.props;
-
+    const { tasks, showDetails, ...other } = this.props
 
     if (!tasks) {
-      return null;
+      return null
     }
 
-    return (
-      tasks.map(n => {
-        const {
-          id,
-        } = n;
+    return tasks.map((n) => {
+      const { id } = n
 
-        return <UpdateTask
+      return (
+        <UpdateTask
           key={id}
           data={{
             object: n,
@@ -51,10 +42,9 @@ class TasksList extends Component {
           showDetails={showDetails}
           {...other}
         />
-      })
-    );
+      )
+    })
   }
 }
 
-
-export default TasksList;
+export default TasksList

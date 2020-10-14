@@ -1,19 +1,20 @@
-
 """
-  Урок по технологии
+Урок по технологии
 """
-type TechnologyLesson{
+type TechnologyLesson {
   id: ID! @unique
   name: String
 
   """
-    Описание
+  Описание
   """
   components: Json
 
-  """Текстовое содержимое сообщения"""
+  """
+  Текстовое содержимое сообщения
+  """
   contentText: String
-  
+
   Technology: Technology
   CreatedBy: User
   Users: [TechnologyLessonUser!]!

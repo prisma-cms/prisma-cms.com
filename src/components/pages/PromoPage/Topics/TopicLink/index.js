@@ -1,62 +1,41 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/';
-import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connector/ListView';
-
-
-
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
+import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connector/ListView'
 
 class TopicLink extends EditorComponent {
-
-
-  static Name = "TopicLink";
+  static Name = 'TopicLink'
 
   renderPanelView() {
+    const { classes } = this.context
 
-    const {
-      classes,
-    } = this.context;
-
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Ссылка на топик
-    </div>);
+    return super.renderPanelView(
+      <div className={classes.panelButton}>Ссылка на топик</div>
+    )
   }
-
 
   renderChildren() {
+    const { TopicLink: PrismaCmsTopicLink } = this.context
 
-    const {
-      TopicLink: PrismaCmsTopicLink,
-    } = this.context;
+    return (
+      <ObjectContext.Consumer>
+        {(context) => {
+          const { object, ...other } = context
 
-    return <ObjectContext.Consumer>
-      {context => {
+          if (!object) {
+            return null
+          }
 
-        const {
-          object,
-          ...other
-        } = context;
-
-
-
-        if (!object) {
-          return null;
-        }
-
-        return <span>
-          <PrismaCmsTopicLink
-            object={object}
-            {...other}
-          />
-        </span>
-
-      }}
-    </ObjectContext.Consumer>;
+          return (
+            <span>
+              <PrismaCmsTopicLink object={object} {...other} />
+            </span>
+          )
+        }}
+      </ObjectContext.Consumer>
+    )
   }
-
 }
 
-export default TopicLink;
+export default TopicLink

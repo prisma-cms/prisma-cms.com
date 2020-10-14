@@ -1,61 +1,41 @@
-import chalk from "chalk";
+import chalk from 'chalk'
 
-import TestModule from "./module";
+import TestModule from './module'
 
-import { parse, print } from 'graphql';
+import { parse, print } from 'graphql'
 
 import expect from 'expect'
 
-
-import {
-  verifySchema,
-}  from "../schema.test";
- 
+import { verifySchema } from '../schema.test'
 
 import mocha from 'mocha'
 const { describe, it } = mocha
 
-
-const module = new TestModule();
-
+const module = new TestModule()
 
 const requiredTypes = [
   {
-    name: "Query",
+    name: 'Query',
     fields: {
-      both: [
-      ],
-      prisma: [
-      ],
-      api: [
-      ],
+      both: [],
+      prisma: [],
+      api: [],
     },
   },
   {
-    name: "Mutation",
+    name: 'Mutation',
     fields: {
-      both: [
-      ],
-      prisma: [
-      ],
-      api: [
-      ],
+      both: [],
+      prisma: [],
+      api: [],
     },
   },
 ]
- 
-
 
 describe('Verify prisma Schema', () => {
-
-  verifySchema(module.getSchema(), requiredTypes);
-
-});
-
+  verifySchema(module.getSchema(), requiredTypes)
+})
 
 describe('Verify API Schema', () => {
-
-  verifySchema(module.getApiSchema(), requiredTypes);
-
-});
-
+  verifySchema(module.getApiSchema(), requiredTypes)
+})

@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import EditableView from "apollo-cms/lib/DataView/Object/Editable";
+import EditableView from 'apollo-cms/lib/DataView/Object/Editable'
 
 class EditableObject extends EditableView {
-
-
   static propTypes = {
     ...EditableView.propTypes,
     setPageMeta: PropTypes.func,
@@ -15,51 +13,36 @@ class EditableObject extends EditableView {
   //   ...EditableView.defaultProps,
   // }
 
-
   getTextField(props) {
+    const inEditMode = this.isInEditMode()
 
-    const inEditMode = this.isInEditMode();
-
-    const {
-      disabled,
-    } = props;
+    const { disabled } = props
 
     if (disabled === undefined && !inEditMode) {
       Object.assign(props, {
         disabled: true,
-      });
+      })
     }
 
-    return super.getTextField(props);
+    return super.getTextField(props)
   }
-
 
   setPageMeta(meta) {
-
     const {
       setPageMeta,
-      data: {
-        object,
-      },
-    } = this.props;
+      data: { object },
+    } = this.props
 
-    
     if (setPageMeta) {
-      
-      setPageMeta(object);
-
+      setPageMeta(object)
     }
-
   }
-
 
   componentDidUpdate(prevProps, prevState) {
+    this.setPageMeta()
 
-    this.setPageMeta();
-
-    super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState);
+    super.componentDidUpdate && super.componentDidUpdate(prevProps, prevState)
   }
-
 }
 
-export default EditableObject;
+export default EditableObject

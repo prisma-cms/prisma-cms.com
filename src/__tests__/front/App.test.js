@@ -15,33 +15,23 @@ import expect from 'expect'
 
 import React, { Component } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 
-import TestApp from "./App";
-import chalk from 'chalk';
-
-
+import TestApp from './App'
+import chalk from 'chalk'
 
 class Renderer extends Component {
-
-  static propTypes = {
-  }
+  static propTypes = {}
 
   render() {
-
-    return <div
-      id="content"
-      {...this.props}
-    />
-
+    return <div id="content" {...this.props} />
   }
 }
 
-const testText = "test";
+const testText = 'test'
 
 describe('@prisma-cms/boilerplate test', () => {
   let node
-
 
   beforeEach(() => {
     node = document.createElement('div')
@@ -51,27 +41,17 @@ describe('@prisma-cms/boilerplate test', () => {
     unmountComponentAtNode(node)
   })
 
-
-
   it('Render Main App', () => {
- 
+    render(
+      <TestApp Renderer={Renderer} lang="ru">
+        {testText}
+      </TestApp>,
+      node,
+      () => {
+        const item = node.querySelector('#test')
 
-    render(<TestApp
-      Renderer={Renderer}
-      lang="ru"
-    > 
-      {testText}
-    </TestApp>, node, () => {
-
-
-
-      const item = node.querySelector("#test");
-
-      expect(testText).toContain(item && item.textContent || "")
-    })
-  });
-
-
-
+        expect(testText).toContain((item && item.textContent) || '')
+      }
+    )
+  })
 })
-

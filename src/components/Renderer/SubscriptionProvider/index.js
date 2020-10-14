@@ -1,66 +1,44 @@
-
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import gql from "graphql-tag";
+import gql from 'graphql-tag'
 
 // import CooperationSubscriptionProvider from "@prisma-cms/cooperation/lib/components/SubscriptionProvider";
 
 export default class SubscriptionProvider extends Component {
-
   static propTypes = {
     client: PropTypes.object.isRequired,
     loadApiData: PropTypes.func.isRequired,
     user: PropTypes.object,
   }
 
-
-  static contextTypes = {
-  };
-
+  static contextTypes = {}
 
   state = {
     subscriptions: [],
   }
 
-
   componentDidMount() {
-
-    this.subscribe();
-
+    this.subscribe()
   }
 
   componentWillUnmount() {
-
-    this.unsubscribe();
-
+    this.unsubscribe()
   }
 
-
-
   async subscribe() {
-
-
-
     const {
       client,
       // loadApiData,
-    } = this.props;
-
+    } = this.props
 
     // const {
     //   localStorage,
     // } = this.context;
 
+    await this.unsubscribe()
 
-    await this.unsubscribe();
-
-
-    let {
-      subscriptions,
-    } = this.state;
-
-
+    const { subscriptions } = this.state
 
     // const subscribeUser = gql`
     //   subscription user{
@@ -92,7 +70,6 @@ export default class SubscriptionProvider extends Component {
 
     // subscriptions.push(userSub);
 
-
     // const subscribeResource = gql`
     //   subscription resource{
     //     resource{
@@ -122,7 +99,6 @@ export default class SubscriptionProvider extends Component {
     //   });
 
     // subscriptions.push(resourceSub);
-
 
     // const subscribeEthTransaction = gql`
     //   subscription ethTransaction{
@@ -157,259 +133,203 @@ export default class SubscriptionProvider extends Component {
     // subscriptions.push(ethTransactionSub);
 
     const subscribeComment = gql`
-      subscription comment{
-        comment{
+      subscription comment {
+        comment {
           mutation
-          node{
+          node {
             id
           }
         }
       }
-    `;
+    `
 
     const commentSub = await client
       .subscribe({
         query: subscribeComment,
-        variables: {
-        },
+        variables: {},
       })
       .subscribe({
         next: async (data) => {
-
-          await this.resetStore();
-
+          await this.resetStore()
         },
         error(error) {
           console.error('subscribeCalls callback with error: ', error)
         },
-      });
+      })
 
-    subscriptions.push(commentSub);
-
+    subscriptions.push(commentSub)
 
     const subscribeTechnology = gql`
-      subscription technology{
-        technology{
+      subscription technology {
+        technology {
           mutation
-          node{
+          node {
             id
           }
         }
       }
-    `;
+    `
 
     const technologySub = await client
       .subscribe({
         query: subscribeTechnology,
-        variables: {
-        },
+        variables: {},
       })
       .subscribe({
         next: async (data) => {
-
-          await this.resetStore();
-
+          await this.resetStore()
         },
         error(error) {
           console.error('subscribeCalls callback with error: ', error)
         },
-      });
+      })
 
-    subscriptions.push(technologySub);
-
-
+    subscriptions.push(technologySub)
 
     const subscribeUserTechnology = gql`
-      subscription userTechnology{
-        userTechnology{
+      subscription userTechnology {
+        userTechnology {
           mutation
-          node{
+          node {
             id
           }
         }
       }
-    `;
+    `
 
     const userTechnologySub = await client
       .subscribe({
         query: subscribeUserTechnology,
-        variables: {
-        },
+        variables: {},
       })
       .subscribe({
         next: async (data) => {
-
-          await this.resetStore();
-
+          await this.resetStore()
         },
         error(error) {
           console.error('subscribeCalls callback with error: ', error)
         },
-      });
+      })
 
-    subscriptions.push(userTechnologySub);
-
-
+    subscriptions.push(userTechnologySub)
 
     const subscribeCareer = gql`
-      subscription career{
-        career{
+      subscription career {
+        career {
           mutation
-          node{
+          node {
             id
           }
         }
       }
-    `;
+    `
 
     const careerSub = await client
       .subscribe({
         query: subscribeCareer,
-        variables: {
-        },
+        variables: {},
       })
       .subscribe({
         next: async (data) => {
-
-          await this.resetStore();
-
+          await this.resetStore()
         },
         error(error) {
           console.error('subscribeCalls callback with error: ', error)
         },
-      });
+      })
 
-    subscriptions.push(careerSub);
-
+    subscriptions.push(careerSub)
 
     const subscribeTechnologyLesson = gql`
-      subscription technologyLesson{
-        technologyLesson{
+      subscription technologyLesson {
+        technologyLesson {
           mutation
-          node{
+          node {
             id
           }
         }
       }
-    `;
+    `
 
     const technologyLessonSub = await client
       .subscribe({
         query: subscribeTechnologyLesson,
-        variables: {
-        },
+        variables: {},
       })
       .subscribe({
         next: async (data) => {
-
-          await this.resetStore();
-
+          await this.resetStore()
         },
         error(error) {
           console.error('subscribeCalls callback with error: ', error)
         },
-      });
+      })
 
-    subscriptions.push(technologyLessonSub);
-    
+    subscriptions.push(technologyLessonSub)
 
     const subscribeTechnologyLessonUser = gql`
-      subscription technologyLessonUser{
-        technologyLessonUser{
+      subscription technologyLessonUser {
+        technologyLessonUser {
           mutation
-          node{
+          node {
             id
           }
         }
       }
-    `;
+    `
 
     const technologyLessonUserSub = await client
       .subscribe({
         query: subscribeTechnologyLessonUser,
-        variables: {
-        },
+        variables: {},
       })
       .subscribe({
         next: async (data) => {
-
-          await this.resetStore();
-
+          await this.resetStore()
         },
         error(error) {
           console.error('subscribeCalls callback with error: ', error)
         },
-      });
+      })
 
-    subscriptions.push(technologyLessonUserSub);
-
+    subscriptions.push(technologyLessonUserSub)
 
     this.setState({
       subscriptions,
-    });
-
+    })
   }
 
-
   unsubscribe() {
-
-
     return new Promise((resolve) => {
-
-      const {
-        subscriptions,
-      } = this.state;
+      const { subscriptions } = this.state
 
       if (subscriptions && subscriptions.length) {
-
-
-        subscriptions.map(n => {
-          n.unsubscribe();
-        });
+        subscriptions.map((n) => {
+          n.unsubscribe()
+        })
 
         Object.assign(this.state, {
           subscriptions: [],
-        });
-
+        })
       }
 
-      resolve();
-
-    });
-
+      resolve()
+    })
   }
-
 
   async resetStore() {
-
-    const {
-      client,
-    } = this.props;
+    const { client } = this.props
 
     if (!client.queryManager.fetchQueryRejectFns.size) {
-
-      return await client.resetStore()
-        .catch(error => {
-          console.error(error);
-        });
-
+      return await client.resetStore().catch((error) => {
+        console.error(error)
+      })
     }
-
   }
-
 
   render() {
-
-    const {
-      children,
-      user,
-      client,
-      loadApiData,
-      ...other
-    } = this.props;
+    const { children, user, client, loadApiData, ...other } = this.props
 
     return children || null
-
   }
-
 }

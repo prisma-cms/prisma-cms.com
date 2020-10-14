@@ -1,44 +1,33 @@
-import React from 'react';
+import React from 'react'
 // import PropTypes from 'prop-types';
 
-import MainMenu from '../../../../../menu/mainMenu';
+import MainMenu from '../../../../../menu/mainMenu'
 
-import EditorComponent from "@prisma-cms/front-editor/lib/components/App/components/";
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
 
 class OldPageHeader extends EditorComponent {
-
   static defaultProps = {
     ...EditorComponent.defaultProps,
   }
 
-  static Name = "OldPageHeader"
+  static Name = 'OldPageHeader'
 
   renderPanelView() {
+    const { classes } = this.getEditorContext()
 
-    const {
-      classes,
-    } = this.getEditorContext();
-
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Old Page Header
-    </div>);
+    return super.renderPanelView(
+      <div className={classes.panelButton}>Old Page Header</div>
+    )
   }
-
 
   // getRootElement() {
 
   //   return MainMenu;
   // }
 
-  renderChildren(){
-
-    return <MainMenu
-
-    />
+  renderChildren() {
+    return <MainMenu />
   }
-
 
   // renderMainView() {
 
@@ -65,7 +54,6 @@ class OldPageHeader extends EditorComponent {
   //     {super.renderMainView()}
   //   </div>;
   // }
-
 }
 
-export default OldPageHeader;
+export default OldPageHeader

@@ -1,142 +1,98 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Page from "../layout";
+import Page from '../layout'
 
-import View from './View';
+import View from './View'
 
-
-import PrismaCmsUsersPage from '@prisma-cms/front/lib/components/pages/UsersPage';
-
+import PrismaCmsUsersPage from '@prisma-cms/front/lib/components/pages/UsersPage'
 
 export class UsersPage extends PrismaCmsUsersPage {
-
-
   static defaultProps = {
     ...PrismaCmsUsersPage.defaultProps,
     View,
   }
 
-
   setPageMeta(meta) {
-
-    return super.setPageMeta(meta || {
-      title: "Участники",
-    });
-
+    return super.setPageMeta(
+      meta || {
+        title: 'Участники',
+      }
+    )
   }
-
 }
 
-
 export default class extends Page {
-
-
-
   setFilters(filters) {
-
     const {
       uri,
-      router: {
-        history,
-      },
-    } = this.context;
+      router: { history },
+    } = this.context
 
-
-
-    let newUri = uri.clone();
+    let newUri = uri.clone()
 
     try {
-
-      filters = filters ? JSON.stringify(filters) : undefined;
-    }
-    catch (error) {
-      console.error(error);
+      filters = filters ? JSON.stringify(filters) : undefined
+    } catch (error) {
+      console.error(error)
     }
 
     if (filters) {
-
       if (newUri.hasQuery) {
         newUri = newUri.setQuery({
           filters,
-        });
-      }
-      else {
+        })
+      } else {
         newUri = newUri.addQuery({
           filters,
-        });
+        })
       }
-
-    }
-    else {
-
-      newUri.removeQuery("filters");
-
+    } else {
+      newUri.removeQuery('filters')
     }
 
-    newUri.removeQuery("page");
+    newUri.removeQuery('page')
 
+    const url = newUri.resource()
 
-    const url = newUri.resource();
-
-
-
-    history.push(url);
-
+    history.push(url)
   }
-
 
   render() {
+    const { uri } = this.context
 
-    const {
-      uri,
-    } = this.context;
+    const { where: propsWhere, ...other } = this.props
 
-    let {
-      where: propsWhere,
-      ...other
-    } = this.props;
-
-    let {
-      filters,
-    } = uri.query(true);
-
+    let { filters } = uri.query(true)
 
     try {
-      filters = filters && JSON.parse(filters) || null;
-    }
-    catch (error) {
-      console.error(console.error(error));
+      filters = (filters && JSON.parse(filters)) || null
+    } catch (error) {
+      console.error(console.error(error))
     }
 
-
-    let AND = [];
+    const AND = []
 
     if (propsWhere) {
-      AND.push(propsWhere);
+      AND.push(propsWhere)
     }
-
 
     if (filters) {
-      AND.push(filters);
+      AND.push(filters)
     }
 
-
-    let where = {
+    const where = {
       AND,
     }
-    
 
-    return super.render(<UsersPage
-      orderBy="createdAt_ASC"
-      filters={filters || {}}
-      setFilters={filters => this.setFilters(filters)}
-      where={where}
-      {...other}
-    />);
-
+    return super.render(
+      <UsersPage
+        orderBy="createdAt_ASC"
+        filters={filters || {}}
+        setFilters={(filters) => this.setFilters(filters)}
+        where={where}
+        {...other}
+      />
+    )
   }
-
 }
-

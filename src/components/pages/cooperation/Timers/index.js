@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Page from "../../layout";
+import Page from '../../layout'
 
 // import {
 //   TimersConnector,
@@ -9,18 +9,14 @@ import Page from "../../layout";
 
 // import View from "./View";
 
-import {
-  TimersPage as PrismaCmsTimersPage,
-} from "@prisma-cms/cooperation";
+import { TimersPage as PrismaCmsTimersPage } from '@prisma-cms/cooperation'
 
 class TimersPage extends Page {
-
   // static propTypes = {
   //   ...Page.propTypes,
   //   first: PropTypes.number.isRequired,
   //   orderBy: PropTypes.string.isRequired,
   // };
-
 
   // static defaultProps = {
   //   ...Page.defaultProps,
@@ -28,8 +24,6 @@ class TimersPage extends Page {
   //   orderBy: "createdAt_DESC",
   //   View,
   // }
-
-
 
   // setPageMeta(meta = {}) {
 
@@ -40,9 +34,7 @@ class TimersPage extends Page {
 
   // }
 
-
   render() {
-
     // let {
     //   first,
     //   where,
@@ -53,12 +45,9 @@ class TimersPage extends Page {
     //   uri,
     // } = this.context;
 
-
     // let {
     //   page,
     // } = uri.query(true);
-
-
 
     // let skip;
 
@@ -76,9 +65,8 @@ class TimersPage extends Page {
         // page={page ? parseInt(page) : undefined}
         {...this.props}
       />
-    );
+    )
   }
 }
 
-
-export default TimersPage;
+export default TimersPage

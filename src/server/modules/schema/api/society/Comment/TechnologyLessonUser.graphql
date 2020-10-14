@@ -1,5 +1,4 @@
 type Mutation {
- 
   createTechnologyLessonUserProcessor(
     data: TechnologyLessonUserCreateInput!
   ): TechnologyLessonUserResponse!
@@ -8,11 +7,9 @@ type Mutation {
     data: TechnologyLessonUserUpdateInput!
     where: TechnologyLessonUserWhereUniqueInput!
   ): TechnologyLessonUserResponse!
-
 }
 
-
-type TechnologyLessonUserResponse{
+type TechnologyLessonUserResponse {
   success: Boolean!
   message: String
   errors: [Error!]!

@@ -1,71 +1,54 @@
+import React from 'react'
 
-import React from "react";
+import gql from 'graphql-tag'
 
-import gql from "graphql-tag";
-
-import { graphql, compose } from "react-apollo";
-
+import { graphql, compose } from '@apollo/client'
 
 import {
   TimerNoNestingFragment,
   UserNoNestingFragment,
   TaskNoNestingFragment,
   ProjectNoNestingFragment,
-} from "../../../../schema/generated/api.fragments";
-
+} from '../../../../schema/generated/api.fragments'
 
 export const createTimerProcessor = gql`
- 
-  mutation createTimerProcessor(
-    $data: TimerCreateInput!
-  ){
-    response: createTimerProcessor(
-      data: $data
-    ){
+  mutation createTimerProcessor($data: TimerCreateInput!) {
+    response: createTimerProcessor(data: $data) {
       success
       message
-      errors{
+      errors {
         key
         message
       }
-      data{
+      data {
         ...TimerNoNesting
       }
     }
   }
 
   ${TimerNoNestingFragment}
-
-`;
-
+`
 
 export const updateTimerProcessor = gql`
-
   mutation updateTimerProcessor(
     $data: TimerUpdateInput!
     $where: TimerWhereUniqueInput!
-  ){
-    response: updateTimerProcessor(
-      data: $data
-      where: $where
-    ){
+  ) {
+    response: updateTimerProcessor(data: $data, where: $where) {
       success
       message
-      errors{
+      errors {
         key
         message
       }
-      data{
+      data {
         ...TimerNoNesting
       }
     }
   }
 
   ${TimerNoNestingFragment}
-
-`;
-
-
+`
 
 export const timerFragment = `
   fragment timerFragment on Timer{
@@ -101,29 +84,26 @@ export const timersListFragment = `
   }
 
   ${timerFragment}
-`;
-
-
+`
 
 export const timersConnectionQuery = gql`
-
   query timersConnection(
-    $first:Int!
-    $skip:Int
+    $first: Int!
+    $skip: Int
     $where: TimerWhereInput
     $orderBy: TimerOrderByInput!
-  ){
+  ) {
     objectsConnection: timersConnection(
       orderBy: $orderBy
       first: $first
       skip: $skip
       where: $where
-    ){
-      aggregate{
+    ) {
+      aggregate {
         count
       }
-      edges{
-        node{
+      edges {
+        node {
           ...timersListFragment
         }
       }
@@ -131,54 +111,28 @@ export const timersConnectionQuery = gql`
   }
 
   ${timersListFragment}
-
-`;
+`
 
 export const timerQuery = gql`
-
-  query timer(
-    $where: TimerWhereUniqueInput!
-  ){
-    object: timer(
-      where: $where
-    ){ 
-      ...timerFragment 
+  query timer($where: TimerWhereUniqueInput!) {
+    object: timer(where: $where) {
+      ...timerFragment
     }
   }
 
   ${timerFragment}
+`
 
-`;
+const TimersQuery = graphql(timersConnectionQuery)
+export const TimersConnector = TimersQuery((props) => {
+  const { View, ...other } = props
 
+  return <View {...other} />
+})
 
+const TimerQuery = graphql(timerQuery)
+export const Timer = TimerQuery((props) => {
+  const { View, ...other } = props
 
-const TimersQuery = graphql(timersConnectionQuery);
-export const TimersConnector = TimersQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-
-const TimerQuery = graphql(timerQuery);
-export const Timer = TimerQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-
+  return <View {...other} />
+})

@@ -1,99 +1,76 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
+import { graphql } from '@apollo/client'
+import gql from 'graphql-tag'
 
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import View from './View/List'
 
-
-import View from "./View/List";
-
-import ListPage from "../List";
-
+import ListPage from '../List'
 
 class BlogsPage extends ListPage {
-
-
   static propTypes = {
     ...ListPage.propTypes,
     View: PropTypes.func.isRequired,
-  };
+  }
 
   static defaultProps = {
     ...ListPage.defaultProps,
     View,
     first: 10,
-    orderBy: "name_ASC",
+    orderBy: 'name_ASC',
   }
-
 
   componentWillMount() {
-
     const {
-      query: {
-        resourcesConnection,
-      },
-    } = this.context;
+      query: { resourcesConnection },
+    } = this.context
 
-    const {
-      View,
-    } = this.props;
+    const { View } = this.props
 
-    this.Renderer = graphql(gql(resourcesConnection))(View);
+    this.Renderer = graphql(gql(resourcesConnection))(View)
 
-    super.componentWillMount && super.componentWillMount();
+    super.componentWillMount && super.componentWillMount()
   }
-
 
   setPageMeta(meta) {
-
     return super.setPageMeta({
-      title: "Блоги",
+      title: 'Блоги',
       ...meta,
-    });
+    })
   }
 
-
-
   render() {
+    const { Renderer } = this
 
-    const {
-      Renderer,
-    } = this;
+    const { View, where, ...other } = this.props
 
-    const {
-      View,
-      where,
-      ...other
-    } = this.props;
+    const filters = this.getFilters()
 
-    const filters = this.getFilters();
-
-    return <Renderer
-      where={{
-        AND: [
-          {
-            type_in: ["Blog", "PersonalBlog"],
-          },
-          {
-            ...where
-          },
-        ],
-        ...filters,
-      }}
-      {...this.getPaginationParams()}
-      {...other}
+    return (
+      <Renderer
+        where={{
+          AND: [
+            {
+              type_in: ['Blog', 'PersonalBlog'],
+            },
+            {
+              ...where,
+            },
+          ],
+          ...filters,
+        }}
+        {...this.getPaginationParams()}
+        {...other}
         addObject={() => {
           const {
-            router: {
-              history,
-            },
-          } = this.context;
-          history.push(`/blogs/create`);
+            router: { history },
+          } = this.context
+          history.push(`/blogs/create`)
         }}
-    />
+      />
+    )
   }
 }
 
-
-export default BlogsPage; 
+export default BlogsPage

@@ -1,68 +1,54 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/';
-import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connector/ListView';
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
+import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connector/ListView'
 
-import TemplatePage from "@prisma-cms/front-editor/lib/dev/Renderer/pages/Templates/Template";
+import TemplatePage from '@prisma-cms/front-editor/lib/dev/Renderer/pages/Templates/Template'
 
-import FrontEditor from "@prisma-cms/front-editor/lib/components/App";
+import FrontEditor from '@prisma-cms/front-editor/lib/components/App'
 
 class Template extends EditorComponent {
-
-
-  static Name = "Template"
+  static Name = 'Template'
 
   static defaultProps = {
     ...EditorComponent.defaultProps,
     style: {
-      width: "100%",
+      width: '100%',
     },
   }
 
   renderPanelView() {
+    return null
 
-    return null;
+    const { classes } = this.context
 
-    const {
-      classes,
-    } = this.context;
-
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      Шаблон
-    </div>);
+    return super.renderPanelView(
+      <div className={classes.panelButton}>Шаблон</div>
+    )
   }
-
-
 
   // canBeDropped(dragItem) {
 
   //   return false;
   // }
 
-
   renderChildren() {
-
     const {
       // Template: PrismaCmsTemplate,
       Link,
-    } = this.context;
+    } = this.context
 
-    return <ObjectContext.Consumer>
-      {context => {
+    return (
+      <ObjectContext.Consumer>
+        {(context) => {
+          const { object, ...other } = context
 
-        const {
-          object,
-          ...other
-        } = context;
+          if (!object) {
+            return null
 
-        if (!object) {
-
-          return null;
-
-          {/* return <FrontEditor
+            {
+              /* return <FrontEditor
             inEditMode={true}
             data={{
               object: {
@@ -84,28 +70,27 @@ class Template extends EditorComponent {
                 },
               ],
             }}
-          />; */}
-        }
+          />; */
+            }
+          }
 
-        const {
-          id: objectId,
-          name,
-        } = object;
+          const { id: objectId, name } = object
 
-        if (!objectId) {
-          return null;
-        }
+          if (!objectId) {
+            return null
+          }
 
-        return <TemplatePage
-          where={{
-            id: objectId,
-          }}
-        />
-
-      }}
-    </ObjectContext.Consumer>;
+          return (
+            <TemplatePage
+              where={{
+                id: objectId,
+              }}
+            />
+          )
+        }}
+      </ObjectContext.Consumer>
+    )
   }
-
 }
 
-export default Template;
+export default Template

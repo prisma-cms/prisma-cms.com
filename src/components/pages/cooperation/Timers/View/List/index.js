@@ -1,53 +1,45 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import { graphql } from 'react-apollo';
+import { graphql } from '@apollo/client'
 
 import {
   // createTimerProcessor,
   updateTimerProcessor,
-} from "../../query";
+} from '../../query'
 
-import Timer from "../Timer";
+import Timer from '../Timer'
 
 // const NewTimer = graphql(createTimerProcessor)(Timer);
-const UpdateTimer = graphql(updateTimerProcessor)(Timer);
+const UpdateTimer = graphql(updateTimerProcessor)(Timer)
 
 class TimersList extends Component {
-
   static propTypes = {
     timers: PropTypes.array.isRequired,
-  };
+  }
 
-  static defaultProps = {
-  };
+  static defaultProps = {}
 
   render() {
+    const { timers } = this.props
 
-    const {
-      timers,
-    } = this.props;
-
-    if(!timers){
-      return null;
+    if (!timers) {
+      return null
     }
 
-    return (
-      timers.map(n => {
-        const {
-          id,
-        } = n;
+    return timers.map((n) => {
+      const { id } = n
 
-        return <UpdateTimer
+      return (
+        <UpdateTimer
           key={id}
           data={{
             object: n,
           }}
         />
-      })
-    );
+      )
+    })
   }
 }
 
-
-export default TimersList;
+export default TimersList

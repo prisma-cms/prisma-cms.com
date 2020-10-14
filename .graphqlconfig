@@ -1,0 +1,4 @@
+{
+  "name": "GraphQL Schema",
+  "schemaPath": "./src/next/src/modules/gql/generated/schema.json"
+}

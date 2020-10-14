@@ -1,219 +1,139 @@
-import chalk from "chalk";
+import chalk from 'chalk'
 
-import TestModule from "../../../server/modules";
+import TestModule from '../../../server/modules'
 
-import { parse, print } from 'graphql';
+import { parse, print } from 'graphql'
 
 import expect from 'expect'
 
 import mocha from 'mocha'
 const { describe, it } = mocha
 
-
-const module = new TestModule();
-
+const module = new TestModule()
 
 export const requiredTypes = [
   {
-    name: "Query",
+    name: 'Query',
     fields: {
-      both: [
-      ],
-      prisma: [
-      ],
-      api: [
-        "me",
-        "users",
-        "logs",
-        "letters",
-        "files",
-      ],
+      both: [],
+      prisma: [],
+      api: ['me', 'users', 'logs', 'letters', 'files'],
     },
   },
   {
-    name: "Mutation",
+    name: 'Mutation',
     fields: {
-      both: [
-      ],
-      prisma: [
-      ],
-      api: [
-        "singleUpload",
-        "multipleUpload",
-      ],
+      both: [],
+      prisma: [],
+      api: ['singleUpload', 'multipleUpload'],
     },
   },
   {
-    name: "UserCreateInput",
+    name: 'UserCreateInput',
     fields: {
-      both: [
-      ],
-      prisma: [
-      ],
-      api: [
-      ],
+      both: [],
+      prisma: [],
+      api: [],
     },
   },
 ]
 
-
 export const verifyTypes = function (types, requiredTypes, verbose = false) {
-
-
   if (verbose) {
+    types.map((type) => {
+      const { name: nameDef, fields } = type
 
-    types.map(type => {
+      const { value: name } = nameDef || {}
 
-      const {
-        name: nameDef,
-        fields,
-      } = type;
-
-
-      const {
-        value: name,
-      } = nameDef || {}
-
-
-
-      fields && fields.map(field => {
-
-        const {
-          name: {
-            value: fieldName,
-          },
-        } = field;
-
-
-
-      });
-
-    });
-
+      fields &&
+        fields.map((field) => {
+          const {
+            name: { value: fieldName },
+          } = field
+        })
+    })
   }
 
+  requiredTypes.map((type) => {
+    const { name, fields: typeFields } = type
 
-  requiredTypes.map(type => {
-
-
-    const {
-      name,
-      fields: typeFields,
-    } = type;
-
-
-    const {
-      both = [],
-      prisma = [],
-    } = typeFields;
+    const { both = [], prisma = [] } = typeFields
 
     let requiredFields = [...new Set(both.concat(prisma))]
 
-
     if (!requiredFields.length) {
-      return;
+      return
     }
 
-
     it(`Check type "${name}"`, () => {
+      const definition = types.find((n) => n.name && n.name.value === name)
 
-      const definition = types.find(n => n.name && n.name.value === name);
+      expect(typeof definition === 'object').toBe(true)
 
-      expect(typeof definition === "object").toBe(true);
-
-      requiredFields.map(fieldName => {
-
-        let finded = false;
-
+      requiredFields.map((fieldName) => {
+        let finded = false
 
         switch (definition.kind) {
+          case 'InputObjectTypeDefinition':
+          case 'ObjectTypeDefinition':
+            const { fields } = definition
 
-          case "InputObjectTypeDefinition":
-          case "ObjectTypeDefinition":
+            finded =
+              fields &&
+              fields.findIndex((n) => {
+                return (
+                  ['FieldDefinition', 'InputValueDefinition'].indexOf(
+                    n.kind
+                  ) !== -1 && n.name.value === fieldName
+                )
+              }) !== -1
 
-            const {
-              fields,
-            } = definition;
+            break
 
-            finded = fields && fields.findIndex(n => {
+          case 'EnumTypeDefinition':
+            const { values } = definition
 
-              return ([
-                "FieldDefinition",
-                "InputValueDefinition",
-              ].indexOf(n.kind) !== -1) && n.name.value === fieldName
-            }) !== -1;
+            finded =
+              values &&
+              values.findIndex((n) => n.name.value === fieldName) !== -1
 
-            break;
-
-          case "EnumTypeDefinition":
-
-            const {
-              values,
-            } = definition;
-
-
-            finded = values && values.findIndex(n => n.name.value === fieldName) !== -1;
-
-            break;
+            break
 
           default:
-
-            console.error("definition", definition);
-            throw new Error("Undefined definition kind");
-            ;
-
+            console.error('definition', definition)
+            throw new Error('Undefined definition kind')
         }
-
 
         if (!finded) {
-          throw (`Can not find field ${name}:${fieldName}`);
+          throw `Can not find field ${name}:${fieldName}`
         }
-
       })
-
     })
-
-  });
-
+  })
 }
-
-
 
 export const verifySchema = function (schema, requiredTypes) {
+  const ast = parse(schema)
 
-  const ast = parse(schema);
+  const { definitions } = ast
 
-  const {
-    definitions,
-  } = ast;
+  let types = definitions.filter((n) => {
+    return (
+      [
+        'ObjectTypeDefinition',
+        'InputObjectTypeDefinition',
+        'EnumTypeDefinition',
+      ].indexOf(n.kind) !== -1
+    )
+  })
 
-
-  let types = definitions.filter(n => {
-
-
-
-    return [
-      "ObjectTypeDefinition",
-      "InputObjectTypeDefinition",
-      "EnumTypeDefinition",
-    ].indexOf(n.kind) !== -1;
-  });
-
-  verifyTypes(types, requiredTypes);
-
+  verifyTypes(types, requiredTypes)
 }
 
-
 describe('Verify prisma Schema 2', () => {
-
-  verifySchema(module.getSchema(), requiredTypes);
-
-});
-
+  verifySchema(module.getSchema(), requiredTypes)
+})
 
 describe('Verify API Schema 2', () => {
-
-  verifySchema(module.getApiSchema(), requiredTypes);
-
-});
-
+  verifySchema(module.getApiSchema(), requiredTypes)
+})

@@ -1,90 +1,61 @@
+import React, { Component, Fragment } from 'react'
 
+import PropTypes from 'prop-types'
 
-import React, { Component, Fragment } from 'react';
+import Page from '../layout'
 
-import PropTypes from "prop-types";
+import Forum from '../../view/forum'
+import { Typography, Tabs, Tab } from 'material-ui'
 
-import Page from '../layout';
+import Comments from './Comments'
+import Tasks from './Tasks'
+import { withStyles } from 'material-ui'
 
+import { ChatRoom } from '@prisma-cms/society'
 
-import Forum from "../../view/forum"
-import { Typography, Tabs, Tab } from 'material-ui';
-
-import Comments from "./Comments";
-import Tasks from "./Tasks";
-import { withStyles } from 'material-ui';
-
-import {
-	ChatRoom,
-} from "@prisma-cms/society";
-
-const styles = theme => {
-
-	return {
-		root: {
-			// border: "1px solid blue",
-			height: "100%",
-			width: "100%",
-			overflow: "hidden",
-			display: "flex",
-			flexDirection: "column",
-		},
-		content: {
-			flex: 1,
-			overflow: "auto",
-		},
-	}
+const styles = (theme) => {
+  return {
+    root: {
+      // border: "1px solid blue",
+      height: '100%',
+      width: '100%',
+      overflow: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    content: {
+      flex: 1,
+      overflow: 'auto',
+    },
+  }
 }
 
 export class MainPage extends Page {
+  static propTypes = {
+    ...Page.propTypes,
+    classes: PropTypes.object.isRequired,
+  }
 
+  state = {
+    ...super.state,
+    tabIndex: 1,
+  }
 
-	static propTypes = {
-		...Page.propTypes,
-		classes: PropTypes.object.isRequired,
-	}
+  setPageMeta(meta = {}) {
+    return super.setPageMeta({
+      title: 'Главная страница',
+    })
+  }
 
+  renderOld() {
+    const { classes, ...other } = this.props
 
-	state = {
-		...super.state,
-		tabIndex: 1,
-	}
+    const { getQueryFragment, Grid, Link } = this.context
 
-
-	setPageMeta(meta = {}) {
-
-		return super.setPageMeta({
-			title: "Главная страница",
-		});
-
-	}
-
-
-	renderOld() {
-
-		const {
-			classes,
-			...other
-		} = this.props;
-
-		const {
-			getQueryFragment,
-			Grid,
-			Link,
-		} = this.context;
-
-
-		return <Grid
-			container
-			spacing={16}
-		>
-			<Grid
-				item
-				xs={12}
-				lg={8}
-			>
-
-				{/* <Link
+    return (
+      <Grid container spacing={16}>
+        <Grid item xs={12} lg={8}>
+          {/* <Link
 					to="/topics"
 					title="Комментарии"
 				>
@@ -106,29 +77,14 @@ export class MainPage extends Page {
 					/>
 				</div> */}
 
-				{this.renderTopics()}
-			</Grid>
-			<Grid
-				item
-				xs={12}
-				lg={4}
-			>
+          {this.renderTopics()}
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <Grid container spacing={16}>
+            <Grid item xs={12} sm={6} lg={12}>
+              {this.renderTimers()}
 
-				<Grid
-					container
-					spacing={16}
-				>
-
-					<Grid
-						item
-						xs={12}
-						sm={6}
-						lg={12}
-					>
-
-						{this.renderTimers()}
-
-						{/* <Link
+              {/* <Link
 							to="/tasks"
 							title="Задачи"
 						>
@@ -140,19 +96,12 @@ export class MainPage extends Page {
 						</Link>
 
 						<Tasks /> */}
+            </Grid>
 
-					</Grid>
+            <Grid item xs={12} sm={6} lg={12}>
+              {this.renderComments()}
 
-					<Grid
-						item
-						xs={12}
-						sm={6}
-						lg={12}
-					>
-
-						{this.renderComments()}
-
-						{/* <Link
+              {/* <Link
 							to="/comments"
 							title="Комментарии"
 						>
@@ -164,223 +113,154 @@ export class MainPage extends Page {
 						</Link>
 
 						<Comments /> */}
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    )
+  }
 
-					</Grid>
+  renderTopics() {
+    const { Link, getQueryFragment } = this.context
 
-				</Grid>
+    const { classes, ...other } = this.props
 
+    return <Forum getQueryFragment={getQueryFragment} {...other} />
 
-			</Grid>
-		</Grid>;
-	}
+    // return <Fragment>
+    // 	<Link
+    // 		to="/topics"
+    // 		title="Комментарии"
+    // 	>
+    // 		<Typography
+    // 			variant="subheading"
+    // 		>
+    // 			Публикации
+    // 		</Typography>
+    // 	</Link>
 
+    // 	<div
+    // 		style={{
+    // 			overflow: "auto",
+    // 		}}
+    // 	>
+    // 		<Forum
+    // 			getQueryFragment={getQueryFragment}
+    // 			{...other}
+    // 		/>
+    // 	</div>
+    // </Fragment>;
+  }
 
-	renderTopics() {
+  renderComments() {
+    const { Link } = this.context
 
-		const {
-			Link,
-			getQueryFragment,
-		} = this.context;
+    return <Comments />
 
+    // return <Fragment>
+    // 	<Link
+    // 		to="/comments"
+    // 		title="Комментарии"
+    // 	>
+    // 		<Typography
+    // 			variant="subheading"
+    // 		>
+    // 			Последние комментарии
+    // 		</Typography>
+    // 	</Link>
 
-		const {
-			classes,
-			...other
-		} = this.props;
+    // 	<Comments />
+    // </Fragment>
+  }
 
-		return <Forum
-			getQueryFragment={getQueryFragment}
-			{...other}
-		/>;
+  renderTimers() {
+    const { Link } = this.context
 
-		// return <Fragment>
-		// 	<Link
-		// 		to="/topics"
-		// 		title="Комментарии"
-		// 	>
-		// 		<Typography
-		// 			variant="subheading"
-		// 		>
-		// 			Публикации
-		// 		</Typography>
-		// 	</Link>
+    return (
+      <Fragment>
+        <Link to="/tasks" title="Задачи">
+          <Typography variant="subheading">Активные задачи</Typography>
+        </Link>
 
-		// 	<div
-		// 		style={{
-		// 			overflow: "auto",
-		// 		}}
-		// 	>
-		// 		<Forum
-		// 			getQueryFragment={getQueryFragment}
-		// 			{...other}
-		// 		/>
-		// 	</div>
-		// </Fragment>;
-	}
+        <Tasks />
+      </Fragment>
+    )
+  }
 
+  renderMainChat() {
+    return (
+      <ChatRoom
+        where={{
+          code: 'public',
+        }}
+      />
+    )
+  }
 
-	renderComments() {
+  render() {
+    const { classes, ...other } = this.props
 
-		const {
-			Link,
-		} = this.context;
+    const { Grid } = this.context
 
-		return <Comments />;
+    const { tabIndex } = this.state
 
-		// return <Fragment>
-		// 	<Link
-		// 		to="/comments"
-		// 		title="Комментарии"
-		// 	>
-		// 		<Typography
-		// 			variant="subheading"
-		// 		>
-		// 			Последние комментарии
-		// 		</Typography>
-		// 	</Link>
+    let tabContent
 
-		// 	<Comments />
-		// </Fragment>
-	}
+    switch (tabIndex) {
+      case 0:
+        tabContent = this.renderMainChat()
 
+        break
 
-	renderTimers() {
+      case 1:
+        tabContent = this.renderTopics()
 
-		const {
-			Link,
-		} = this.context;
+        break
 
-		return <Fragment>
-			<Link
-				to="/tasks"
-				title="Задачи"
-			>
-				<Typography
-					variant="subheading"
-				>
-					Активные задачи
-				</Typography>
-			</Link>
+      case 2:
+        tabContent = this.renderComments()
 
-			<Tasks />
-		</Fragment>
-	}
+        break
 
+      case 3:
+        tabContent = this.renderTimers()
 
-	renderMainChat() {
+        break
 
-		return <ChatRoom
-			where={{
-				code: "public",
-			}}
-		/>
-	}
+      case 4:
+        tabContent = this.renderOld()
 
+        break
+    }
 
-	render() {
-
-		const {
-			classes,
-			...other
-		} = this.props;
-
-
-		const {
-			Grid,
-		} = this.context;
-
-		const {
-			tabIndex,
-		} = this.state;
-
-
-		let tabContent;
-
-		switch (tabIndex) {
-
-			case 0:
-
-				tabContent = this.renderMainChat();
-
-				break;
-
-
-			case 1:
-
-				tabContent = this.renderTopics();
-
-				break;
-
-
-			case 2:
-
-				tabContent = this.renderComments();
-
-				break;
-
-
-			case 3:
-
-				tabContent = this.renderTimers();
-
-				break;
-
-			case 4:
-
-				tabContent = this.renderOld();
-
-				break;
-
-		}
-
-		let content = <div
-			className={classes.root}
-		>
-
-			<Tabs
-				value={tabIndex}
-				onChange={(event, tabIndex) => {
-					this.setState({
-						tabIndex,
-					});
-				}}
-				scrollable
-				scrollButtons="auto"
-			>
-				<Tab
-					value={1}
-					label="Публикации"
-				/>
-				<Tab
-					value={2}
-					label="Комментарии"
-				/>
-				<Tab
-					value={0}
-					label="Чат"
-				/>
-				<Tab
-					value={3}
-					label="Активные задачи"
-				/>
-				{/* <Tab
+    const content = (
+      <div className={classes.root}>
+        <Tabs
+          value={tabIndex}
+          onChange={(event, tabIndex) => {
+            this.setState({
+              tabIndex,
+            })
+          }}
+          scrollable
+          scrollButtons="auto"
+        >
+          <Tab value={1} label="Публикации" />
+          <Tab value={2} label="Комментарии" />
+          <Tab value={0} label="Чат" />
+          <Tab value={3} label="Активные задачи" />
+          {/* <Tab
 					value={4}
 					label="Старая главная"
 				/> */}
-			</Tabs>
+        </Tabs>
 
-			<div
-				className={classes.content}
-			>
-				{tabContent}
-			</div>
-		</div>
+        <div className={classes.content}>{tabContent}</div>
+      </div>
+    )
 
-		return super.render(content)
-	}
-
+    return super.render(content)
+  }
 }
 
-export default withStyles(styles)(props => <MainPage
-	{...props}
-/>);
+export default withStyles(styles)((props) => <MainPage {...props} />)

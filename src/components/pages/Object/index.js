@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Page from "../layout";
+import Page from '../layout'
 
-class ObjectPageLayout extends Page {
+class ObjectPageLayout extends Page {}
 
-
-}
-
-
-export default ObjectPageLayout;
+export default ObjectPageLayout

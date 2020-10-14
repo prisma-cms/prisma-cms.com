@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
+import EditableView from 'apollo-cms/lib/DataView/Object/Editable'
 
-import EditableView from 'apollo-cms/lib/DataView/Object/Editable';
-
-import Forum from "../../../../view/forum"
+import Forum from '../../../../view/forum'
 
 class TagView extends EditableView {
-
-
   canEdit() {
-
     // const {
     //   user: currentUser,
     // } = this.context;
@@ -20,74 +16,51 @@ class TagView extends EditableView {
     //   sudo,
     // } = currentUser || {};
 
-
     // const {
     //   id,
     // } = this.getObjectWithMutations() || {};
 
     // return !id || sudo === true;
 
-    return false;
-
+    return false
   }
-
-
-
 
   getTitle() {
+    const object = this.getObjectWithMutations()
 
-    const object = this.getObjectWithMutations();
+    const { name } = object || {}
 
-    const {
-      name,
-    } = object || {};
-
-    return name && `Топики с тегом "${name}"` || null;
-
+    return (name && `Топики с тегом "${name}"`) || null
   }
 
-
   renderDefaultView() {
+    const { where, ...other } = this.props
 
+    const { name: tagName } = this.getObjectWithMutations()
 
-    const {
-      where,
-      ...other
-    } = this.props;
-
-
-
-    const {
-      name: tagName,
-    } = this.getObjectWithMutations();
-
-
-    let forum = null;
+    let forum = null
 
     if (tagName) {
-      forum = <Forum
-        where={{
-          Tags_some: {
-            Tag: {
-              name: tagName,
+      forum = (
+        <Forum
+          where={{
+            Tags_some: {
+              Tag: {
+                name: tagName,
+              },
             },
-          },
-        }}
-        {...other}
-      />
+          }}
+          {...other}
+        />
+      )
     }
 
     return forum
-
   }
 
   renderEditableView() {
-
-    return this.renderDefaultView();
+    return this.renderDefaultView()
   }
-
-
 }
 
-
-export default TagView;
+export default TagView

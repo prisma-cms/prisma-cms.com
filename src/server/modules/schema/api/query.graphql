@@ -1,6 +1,6 @@
-
 type Query {
-
-  """Client api schema for @prisma-cms/front"""
+  """
+  Client api schema for @prisma-cms/front
+  """
   apiSchema: String!
 }

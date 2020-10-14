@@ -39,7 +39,6 @@
 
 // class CommentView extends EditableView {
 
-
 //   static propTypes = {
 //     ...EditableView.propTypes,
 //     classes: PropTypes.object.isRequired,
@@ -55,15 +54,11 @@
 //     openLoginForm: PropTypes.func.isRequired,
 //   };
 
-
 //   // constructor(props){
 
 //   //   super(props);
 
-
-
 //   // }
-
 
 //   canEdit() {
 
@@ -76,12 +71,10 @@
 //       sudo,
 //     } = currentUser || {};
 
-
 //     const {
 //       id,
 //       CreatedBy,
 //     } = this.getObjectWithMutations() || {};
-
 
 //     const {
 //       id: createdById,
@@ -89,7 +82,6 @@
 
 //     return !id || (createdById && createdById === currentUserId) || sudo === true;
 //   }
-
 
 //   save() {
 
@@ -106,7 +98,6 @@
 //     return super.save();
 //   }
 
-
 //   getCacheKey() {
 
 //     const {
@@ -115,8 +106,6 @@
 
 //     return `comment_${id || "new"}`;
 //   }
-
-
 
 //   renderHeader() {
 
@@ -131,8 +120,6 @@
 //       CreatedBy,
 //       createdAt,
 //     } = object || {}
-
-
 
 //     const inEditMode = this.isInEditMode();
 
@@ -215,16 +202,12 @@
 
 //           </Grid>
 
-
-
 //         </Grid>
-
 
 //       </Grid>
 //     </div>
 
 //   }
-
 
 //   renderDefaultView() {
 
@@ -232,9 +215,7 @@
 //       classes,
 //     } = this.props;
 
-
 //     const comment = this.getObjectWithMutations();
-
 
 //     if (!comment) {
 //       return null;
@@ -244,10 +225,8 @@
 //       text,
 //     } = comment;
 
-
 //     const inEditMode = this.isInEditMode();
 //     const allow_edit = this.canEdit();
-
 
 //     const editor = <Editor
 //       // className="topic-editor"
@@ -256,8 +235,6 @@
 //       fullView={true}
 //       allow_edit={allow_edit}
 //       onChange={(state, rawContent) => {
-
-
 
 //         this.updateObject({
 //           text: rawContent,
@@ -285,15 +262,12 @@
 
 //       </Grid>
 
-
 //     </Grid>;
 //   }
-
 
 //   renderEditableView() {
 
 //     return this.renderDefaultView();
-
 
 //     return <Grid
 //       container
@@ -314,12 +288,9 @@
 
 //       </Grid>
 
-
 //     </Grid>
 
 //   }
-
-
 
 //   renderResetButton() {
 
@@ -329,8 +300,6 @@
 
 //     return id ? super.renderResetButton() : null;
 //   }
-
-
 
 //   render() {
 
@@ -354,6 +323,5 @@
 
 //   }
 // }
-
 
 // export default withStyles(styles)(props => <CommentView {...props}/>);

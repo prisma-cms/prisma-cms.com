@@ -1,53 +1,44 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
-import {
-  styles,
-  TableView,
-} from "apollo-cms/lib/DataView/List/Table";
+import { styles, TableView } from 'apollo-cms/lib/DataView/List/Table'
 
-import withStyles from "material-ui/styles/withStyles";
-import Typography from "material-ui/Typography";
-import Grid from "material-ui/Grid";
+import withStyles from 'material-ui/styles/withStyles'
+import Typography from 'material-ui/Typography'
+import Grid from 'material-ui/Grid'
 
 // import Header from "./header";
 
-const customStyles = theme => {
-
+const customStyles = (theme) => {
   return {
     ...styles,
     root: {
-
-      "#root &": {
-
+      '#root &': {
         border: 0,
-        boxShadow: "none",
+        boxShadow: 'none',
 
-        "& table": {
+        '& table': {
           // border: 2,
           // borderColor: "red",
-          "& thead, tbody": {
-            "& td, th": {
-              padding: "4px 20px",
+          '& thead, tbody': {
+            '& td, th': {
+              padding: '4px 20px',
             },
           },
-          "& thead": {
-            "& th": {
-              textAlign: "center",
+          '& thead': {
+            '& th': {
+              textAlign: 'center',
             },
           },
-          "& tbody": {
-            "& tr": {
-              "&:hover": {
-                backgroundColor: "transparent",
+          '& tbody': {
+            '& tr': {
+              '&:hover': {
+                backgroundColor: 'transparent',
               },
             },
           },
         },
-
       },
-
-
     },
     loading: {
       // https://modxclub.ru/tasks/cjquq4m5o2eah0989chqx3m3d/
@@ -57,13 +48,10 @@ const customStyles = theme => {
 }
 
 class ObjectsListView extends TableView {
-
-
   static propTypes = {
     ...TableView.propTypes,
     withPagination: PropTypes.bool.isRequired,
   }
-
 
   static defaultProps = {
     ...TableView.defaultProps,
@@ -73,26 +61,18 @@ class ObjectsListView extends TableView {
     // Header,
   }
 
-
   getColumns() {
-
-    const {
-      columnData,
-    } = this.props;
+    const { columnData } = this.props
 
     return [
       {
-        id: "id"
+        id: 'id',
       },
-    ].concat(columnData);
+    ].concat(columnData)
   }
 
-
   render() {
-
-    const {
-      Pagination,
-    } = this.context;
+    const { Pagination } = this.context
 
     const {
       page,
@@ -100,25 +80,15 @@ class ObjectsListView extends TableView {
       data: {
         objectsConnection,
         loading,
-        variables: {
-          first: limit,
-        },
+        variables: { first: limit },
       },
-    } = this.props;
+    } = this.props
 
+    const { edges, aggregate } = objectsConnection || {}
 
-    const {
-      edges,
-      aggregate,
-    } = objectsConnection || {};
-
-    const {
-      count = 0,
-    } = aggregate || {};
-
+    const { count = 0 } = aggregate || {}
 
     if (!edges || !edges.length) {
-
       // if (loading) {
       //   return null;
       // }
@@ -127,48 +97,33 @@ class ObjectsListView extends TableView {
       //     Данные не были получены
       //   </Typography>
       // }
-
     }
 
+    return (
+      <Fragment>
+        {super.render()}
 
-    return <Fragment>
-
-      {super.render()}
-
-      {withPagination ? <Grid
-        container
-        spacing={0}
-      >
-
-        {edges && edges.length ? <Grid
-          item
-          xs={12}
-
-        >
-          <Pagination
-            limit={limit}
-            total={count}
-            page={page || 1}
-            style={{
-              marginTop: 20,
-            }}
-          />
-        </Grid> : null
-        }
-
-      </Grid> : null
-      }
-
-    </Fragment>;
-
+        {withPagination ? (
+          <Grid container spacing={0}>
+            {edges && edges.length ? (
+              <Grid item xs={12}>
+                <Pagination
+                  limit={limit}
+                  total={count}
+                  page={page || 1}
+                  style={{
+                    marginTop: 20,
+                  }}
+                />
+              </Grid>
+            ) : null}
+          </Grid>
+        ) : null}
+      </Fragment>
+    )
   }
-
-
 }
 
-export {
-  customStyles as styles,
-  ObjectsListView as TableView,
-}
+export { customStyles as styles, ObjectsListView as TableView }
 
-export default withStyles(customStyles)(ObjectsListView);
+export default withStyles(customStyles)(ObjectsListView)

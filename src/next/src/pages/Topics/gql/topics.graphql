@@ -1,0 +1,98 @@
+query topicsConnection($first: Int, $skip: Int, $where: ResourceWhereInput, $orderBy: ResourceOrderByInput) {
+  objectsConnection: resourcesConnection(orderBy: $orderBy, first: $first, skip: $skip, where: $where) {
+    aggregate {
+      count
+      __typename
+    }
+    edges {
+      node {
+        ...topicsConnectionTopic
+        CreatedBy {
+          ...topicsConnectionUser
+          __typename
+        }
+        Comments(orderBy: id_ASC) {
+          id
+          updatedAt
+          CreatedBy {
+            ...topicsConnectionUser
+            __typename
+          }
+          __typename
+        }
+        Blog {
+          id
+          name
+          longtitle
+          uri
+          __typename
+        }
+        Tags {
+          Tag {
+            id
+            name
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}
+
+fragment topicsConnectionTopic on Resource @prismaCmsFragmentAllFields {
+  id
+  id
+  createdAt
+  updatedAt
+  type
+  name
+  longtitle
+  content
+  components
+  contentText
+  published
+  deleted
+  hidemenu
+  searchable
+  uri
+  isfolder
+  rating
+  positiveVotesCount
+  negativeVotesCount
+  neutralVotesCount
+  oldID
+  commentOldID
+  class_key
+  template
+  mockUpdate
+  __typename
+}
+
+fragment topicsConnectionUser on User @prismaCmsFragmentAllFields {
+  id
+  id
+  createdAt
+  updatedAt
+  username
+  email
+  phone
+  showEmail
+  showPhone
+  password
+  fullname
+  image
+  address
+  sudo
+  active
+  activated
+  deleted
+  hasEmail
+  hasPhone
+  marketplaceToken
+  hidden
+  __typename
+}

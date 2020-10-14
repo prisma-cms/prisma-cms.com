@@ -1,143 +1,110 @@
-
-import PrismaModule from "@prisma-cms/prisma-module";
-import PrismaProcessor from "@prisma-cms/prisma-processor";
-
+import PrismaModule from '@prisma-cms/prisma-module'
+import PrismaProcessor from '@prisma-cms/prisma-processor'
 
 export class CodeChallengeBlockProcessor extends PrismaProcessor {
-
   constructor(props) {
+    super(props)
 
-    super(props);
-
-    this.objectType = "CodeChallengeBlock";
+    this.objectType = 'CodeChallengeBlock'
   }
-
 
   async create(method, args, info) {
+    if (args.data) {
+      let { ...data } = args.data
 
-    if(args.data) {
-
-      let {
-        ...data
-      } = args.data;
-
-      args.data = data;
-
+      args.data = data
     }
 
-    return super.create(method, args, info);
+    return super.create(method, args, info)
   }
-
 
   async update(method, args, info) {
+    if (args.data) {
+      let { ...data } = args.data
 
-    if(args.data) {
-
-      let {
-        ...data
-      } = args.data;
-
-      args.data = data;
-
+      args.data = data
     }
 
-    return super.update(method, args, info);
+    return super.update(method, args, info)
   }
-
 
   async mutate(method, args, info) {
+    if (args.data) {
+      let { ...data } = args.data
 
-    if(args.data) {
-
-      let {
-        ...data
-      } = args.data;
-
-      args.data = data;
-
+      args.data = data
     }
 
-    return super.mutate(method, args);
+    return super.mutate(method, args)
   }
 
-
-
   async delete(method, args, info) {
-
-    return super.delete(method, args);
+    return super.delete(method, args)
   }
 }
 
-
 export default class CodeChallengeBlockModule extends PrismaModule {
-
   constructor(props = {}) {
+    super(props)
 
-    super(props);
-
-    this.mergeModules([
-    ]);
-
+    this.mergeModules([])
   }
-
 
   getProcessor(ctx) {
-    return new (this.getProcessorClass())(ctx);
+    return new (this.getProcessorClass())(ctx)
   }
-
 
   getProcessorClass() {
-    return CodeChallengeBlockProcessor;
+    return CodeChallengeBlockProcessor
   }
 
-
   getResolvers() {
-
     const {
-      Query: {
-        ...Query
-      },
-      Subscription: {
-        ...Subscription
-      },
-      Mutation: {
-        ...Mutation
-      },
+      Query: { ...Query },
+      Subscription: { ...Subscription },
+      Mutation: { ...Mutation },
       ...other
-    } = super.getResolvers();
+    } = super.getResolvers()
 
     return {
       ...other,
       Query: {
         ...Query,
         codeChallengeBlock: (source, args, ctx, info) => {
-          return ctx.db.query.codeChallengeBlock(args, info);
+          return ctx.db.query.codeChallengeBlock(args, info)
         },
         codeChallengeBlocks: (source, args, ctx, info) => {
-          return ctx.db.query.codeChallengeBlocks(args, info);
+          return ctx.db.query.codeChallengeBlocks(args, info)
         },
         codeChallengeBlocksConnection: (source, args, ctx, info) => {
-          return ctx.db.query.codeChallengeBlocksConnection(args, info);
+          return ctx.db.query.codeChallengeBlocksConnection(args, info)
         },
       },
       Mutation: {
         ...Mutation,
         createCodeChallengeBlockProcessor: (source, args, ctx, info) => {
-          return this.getProcessor(ctx).createWithResponse("CodeChallengeBlock", args, info);
+          return this.getProcessor(ctx).createWithResponse(
+            'CodeChallengeBlock',
+            args,
+            info
+          )
         },
         updateCodeChallengeBlockProcessor: (source, args, ctx, info) => {
-          return this.getProcessor(ctx).updateWithResponse("CodeChallengeBlock", args, info);
+          return this.getProcessor(ctx).updateWithResponse(
+            'CodeChallengeBlock',
+            args,
+            info
+          )
         },
         deleteCodeChallengeBlock: (source, args, ctx, info) => {
-          return this.getProcessor(ctx).delete("CodeChallengeBlock", args, info);
+          return this.getProcessor(ctx).delete('CodeChallengeBlock', args, info)
         },
       },
       Subscription: {
         ...Subscription,
         codeChallengeBlock: {
           subscribe: async (parent, args, ctx, info) => {
-
-            return ctx.db.subscription.codeChallengeBlock({}, info);
+            return ctx.db.subscription.codeChallengeBlock({}, info)
           },
         },
       },
@@ -156,7 +123,5 @@ export default class CodeChallengeBlockModule extends PrismaModule {
       //   },
       // },
     }
-
   }
-
 }

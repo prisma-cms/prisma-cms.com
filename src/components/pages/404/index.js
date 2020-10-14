@@ -1,14 +1,12 @@
+import React, { Component } from 'react'
 
-import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 
-import PropTypes from 'prop-types';
+import PageLayout from '../layout'
 
-import PageLayout from '../layout';
-
-import Typography from 'material-ui/Typography';
+import Typography from 'material-ui/Typography'
 
 export default class PageNotFound extends PageLayout {
-
   static propTypes = {
     ...PageLayout.propTypes,
     title: PropTypes.string.isRequired,
@@ -16,15 +14,11 @@ export default class PageNotFound extends PageLayout {
 
   static defaultProps = {
     ...PageLayout.defaultProps,
-    title: "Page not found",
+    title: 'Page not found',
   }
 
-
   setPageMeta(meta = {}) {
-
-    const {
-      title,
-    } = this.props;
+    const { title } = this.props
 
     return super.setPageMeta({
       status: 404,
@@ -32,21 +26,19 @@ export default class PageNotFound extends PageLayout {
     })
   }
 
-
   render() {
+    const { title } = this.props
 
-    const {
-      title,
-    } = this.props;
-
-    return super.render(<Typography
-      variant="title"
-      style={{
-        textAlign: "center",
-        margin: "50px 0",
-      }}
-    >
-      {title}
-    </Typography>)
+    return super.render(
+      <Typography
+        variant="title"
+        style={{
+          textAlign: 'center',
+          margin: '50px 0',
+        }}
+      >
+        {title}
+      </Typography>
+    )
   }
 }

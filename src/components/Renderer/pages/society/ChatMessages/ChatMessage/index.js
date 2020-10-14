@@ -1,24 +1,14 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Page from "../../../layout";
+import Page from '../../../layout'
 
-import {
-  ChatMessage,
-} from "@prisma-cms/society";
-
+import { ChatMessage } from '@prisma-cms/society'
 
 class ChatMessagePage extends Page {
-
   render() {
-
-    return super.render(
-      <ChatMessage
-        {...this.props}
-      />
-    );
+    return super.render(<ChatMessage {...this.props} />)
   }
 }
 
-
-export default ChatMessagePage;
+export default ChatMessagePage

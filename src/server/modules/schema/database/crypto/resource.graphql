@@ -1,5 +1,6 @@
-
 type Resource {
-  """К какому кошельку была создана публикация"""
+  """
+  К какому кошельку была создана публикация
+  """
   EthAccount: EthAccount @relation(name: "EthAccountResources")
 }

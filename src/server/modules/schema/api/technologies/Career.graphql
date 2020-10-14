@@ -1,20 +1,13 @@
-
-
 type Mutation {
- 
-  createCareerProcessor(
-    data: CareerCreateInput!
-  ): CareerResponse!
+  createCareerProcessor(data: CareerCreateInput!): CareerResponse!
 
   updateCareerProcessor(
     data: CareerUpdateInput!
     where: CareerWhereUniqueInput!
   ): CareerResponse!
-
 }
 
-
-type CareerResponse{
+type CareerResponse {
   success: Boolean!
   message: String
   errors: [Error!]!
@@ -27,7 +20,7 @@ input CareerCreateInput {
   # CreatedBy: UserCreateOneWithoutCareerInput
 
   """
-    Дата начала карьеры
+  Дата начала карьеры
   """
   start_date: DateTime
 }
@@ -38,7 +31,7 @@ input CareerUpdateInput {
   # CreatedBy: UserUpdateOneWithoutCareerInput
 
   """
-    Дата начала карьеры
+  Дата начала карьеры
   """
   start_date: DateTime
 }

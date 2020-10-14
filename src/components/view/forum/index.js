@@ -1,26 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 // import PrismaCmsComponent from "@prisma-cms/component";
-import Context from "@prisma-cms/context";
-
+import Context from '@prisma-cms/context'
 
 // import gql from "graphql-tag";
 
-// import { graphql } from "react-apollo";
 
-import View from "./view";
+import View from './view'
 
-
-import {
-  TopicsConnector,
-} from "../../pages/Topics/query";
-
+import { TopicsConnector } from '../../pages/Topics/query'
 
 export class ForumConnector extends Component {
-
-
   static propTypes = {
     View: PropTypes.func.isRequired,
     first: PropTypes.number.isRequired,
@@ -28,141 +19,98 @@ export class ForumConnector extends Component {
     tagName: PropTypes.string,
     where: PropTypes.object,
     getCommentsText: PropTypes.bool.isRequired,
-  };
-
+  }
 
   static defaultProps = {
     View,
     first: 12,
     // where: null,
-    orderBy: "updatedAt_DESC",
+    orderBy: 'updatedAt_DESC',
     getCommentsText: false,
   }
 
-
-  static contextType = Context;
-
+  static contextType = Context
 
   constructor(props) {
-
-    super(props);
-
+    super(props)
   }
 
-
   setFilters(filters) {
-
     const {
       uri,
-      router: {
-        history,
-      },
-    } = this.context;
+      router: { history },
+    } = this.context
 
-
-
-    let newUri = uri.clone();
+    let newUri = uri.clone()
 
     try {
-
-      filters = filters ? JSON.stringify(filters) : undefined;
-    }
-    catch (error) {
-      console.error(error);
+      filters = filters ? JSON.stringify(filters) : undefined
+    } catch (error) {
+      console.error(error)
     }
 
     if (filters) {
-
       if (newUri.hasQuery) {
         newUri = newUri.setQuery({
           filters,
-        });
-      }
-      else {
+        })
+      } else {
         newUri = newUri.addQuery({
           filters,
-        });
+        })
       }
-
-    }
-    else {
-
-      newUri.removeQuery("filters");
-
+    } else {
+      newUri.removeQuery('filters')
     }
 
-    newUri.removeQuery("page");
+    newUri.removeQuery('page')
 
+    const url = newUri.resource()
 
-    const url = newUri.resource();
-
-
-
-    history.push(url);
-
+    history.push(url)
   }
 
-
   render() {
+    const { first, tagName, where: propsWhere, ...other } = this.props
 
-    const {
-      first,
-      tagName,
-      where: propsWhere,
-      ...other
-    } = this.props;
+    const { uri } = this.context
 
-    const {
-      uri,
-    } = this.context;
-
-
-    let {
-      page,
-      filters,
-    } = uri.query(true);
+    let { page, filters } = uri.query(true)
 
     try {
-      filters = filters && JSON.parse(filters) || null;
-    }
-    catch (error) {
-      console.error(console.error(error));
+      filters = (filters && JSON.parse(filters)) || null
+    } catch (error) {
+      console.error(console.error(error))
     }
 
-    let skip;
+    let skip
 
-    page = page && parseInt(page) || 0;
+    page = (page && parseInt(page)) || 0
 
     if (first && page > 1) {
-      skip = (page - 1) * first;
+      skip = (page - 1) * first
     }
 
-    let AND = [];
+    const AND = []
 
     if (propsWhere) {
-      AND.push(propsWhere);
+      AND.push(propsWhere)
     }
-
 
     if (tagName) {
       AND.push({
         tag: tagName,
-      });
+      })
     }
 
     if (filters) {
-      AND.push(filters);
+      AND.push(filters)
     }
 
-
-    let where = {
-      type: "Topic",
+    const where = {
+      type: 'Topic',
       AND,
     }
-
-
-
-
 
     return (
       <TopicsConnector
@@ -171,12 +119,11 @@ export class ForumConnector extends Component {
         page={page}
         where={where}
         filters={filters || {}}
-        setFilters={filters => this.setFilters(filters)}
+        setFilters={(filters) => this.setFilters(filters)}
         {...other}
       />
-    );
+    )
   }
 }
 
-
-export default ForumConnector;
+export default ForumConnector

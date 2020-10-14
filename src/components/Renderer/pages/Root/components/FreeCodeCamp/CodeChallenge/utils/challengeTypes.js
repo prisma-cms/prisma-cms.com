@@ -1,14 +1,14 @@
-export const html = 0;
-export const js = 1;
-export const backend = 2;
-export const zipline = 3;
-export const frontEndProject = 3;
-export const backEndProject = 4;
-export const bonfire = 5;
-export const modern = 6;
-export const step = 7;
-export const quiz = 8;
-export const invalid = 9;
+export const html = 0
+export const js = 1
+export const backend = 2
+export const zipline = 3
+export const frontEndProject = 3
+export const backEndProject = 4
+export const bonfire = 5
+export const modern = 6
+export const step = 7
+export const quiz = 8
+export const invalid = 9
 
 // individual exports
 // export const backend = backend;
@@ -26,15 +26,15 @@ export const challengeTypes = {
   modern,
   step,
   quiz,
-  invalid
-};
+  invalid,
+}
 
 // turn challengeType to file ext
 export const pathsMap = {
   [html]: 'html',
   [js]: 'js',
-  [bonfire]: 'js'
-};
+  [bonfire]: 'js',
+}
 // determine the component to view for each challenge
 export const viewTypes = {
   [html]: 'classic',
@@ -45,8 +45,8 @@ export const viewTypes = {
   [modern]: 'modern',
   [step]: 'step',
   [quiz]: 'quiz',
-  [backend]: 'backend'
-};
+  [backend]: 'backend',
+}
 
 // determine the type of submit function to use for the challenge on completion
 export const submitTypes = {
@@ -64,8 +64,8 @@ export const submitTypes = {
   [step]: 'step',
   [quiz]: 'quiz',
   [backend]: 'backend',
-  [modern]: 'tests'
-};
+  [modern]: 'tests',
+}
 
 // determine which help forum questions should be posted to
 export const helpCategory = {
@@ -111,5 +111,5 @@ export const helpCategory = {
   'data-structures': 'JavaScript',
   'take-home-projects': 'Certification Projects',
   'rosetta-code': 'JavaScript',
-  'project-euler': 'JavaScript'
-};
+  'project-euler': 'JavaScript',
+}

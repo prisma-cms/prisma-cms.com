@@ -1,73 +1,54 @@
+import React from 'react'
 
-import React from "react";
+import gql from 'graphql-tag'
 
-import gql from "graphql-tag";
-
-import { graphql, compose } from "react-apollo";
-
+import { graphql, compose } from '@apollo/client'
 
 import {
   TaskNoNestingFragment,
   UserNoNestingFragment,
   TimerNoNestingFragment,
   ProjectNoNestingFragment,
-} from "../../../../schema/generated/api.fragments";
-
+} from '../../../../schema/generated/api.fragments'
 
 export const createTaskProcessor = gql`
- 
-
-mutation createTaskProcessor(
-  $data: TaskCreateInput!
-){
-  response: createTaskProcessor(
-    data: $data
-  ){
-    success
-    message
-    errors{
-      key
-      message
-    }
-    data{
-      ...TaskNoNesting
-    }
-  }
-}
-
-${TaskNoNestingFragment}
-
-`;
-
-
-export const updateTaskProcessor = gql`
-
-
-  mutation updateTaskProcessor(
-    $data: TaskUpdateInput!
-    $where: TaskWhereUniqueInput!
-  ){
-    response: updateTaskProcessor(
-      data: $data
-      where: $where
-    ){
+  mutation createTaskProcessor($data: TaskCreateInput!) {
+    response: createTaskProcessor(data: $data) {
       success
       message
-      errors{
+      errors {
         key
         message
       }
-      data{
+      data {
         ...TaskNoNesting
       }
     }
   }
 
   ${TaskNoNestingFragment}
+`
 
-`;
+export const updateTaskProcessor = gql`
+  mutation updateTaskProcessor(
+    $data: TaskUpdateInput!
+    $where: TaskWhereUniqueInput!
+  ) {
+    response: updateTaskProcessor(data: $data, where: $where) {
+      success
+      message
+      errors {
+        key
+        message
+      }
+      data {
+        ...TaskNoNesting
+      }
+    }
+  }
 
-
+  ${TaskNoNestingFragment}
+`
 
 export const taskFragment = `
   fragment taskFragment on Task{
@@ -115,29 +96,26 @@ export const tasksListFragment = `
   }
 
   ${taskFragment}
-`;
-
-
+`
 
 export const tasksConnectionQuery = gql`
-
   query tasksConnection(
-    $first:Int!
-    $skip:Int
+    $first: Int!
+    $skip: Int
     $where: TaskWhereInput
     $orderBy: TaskOrderByInput!
-  ){
+  ) {
     objectsConnection: tasksConnection(
       orderBy: $orderBy
       first: $first
       skip: $skip
       where: $where
-    ){
-      aggregate{
+    ) {
+      aggregate {
         count
       }
-      edges{
-        node{
+      edges {
+        node {
           ...tasksListFragment
         }
       }
@@ -145,54 +123,28 @@ export const tasksConnectionQuery = gql`
   }
 
   ${tasksListFragment}
-
-`;
+`
 
 export const taskQuery = gql`
-
-  query task(
-    $where: TaskWhereUniqueInput!
-  ){
-    object: task(
-      where: $where
-    ){ 
-      ...taskFragment 
+  query task($where: TaskWhereUniqueInput!) {
+    object: task(where: $where) {
+      ...taskFragment
     }
   }
 
   ${taskFragment}
+`
 
-`;
+const TasksQuery = graphql(tasksConnectionQuery)
+export const TasksConnector = TasksQuery((props) => {
+  const { View, ...other } = props
 
+  return <View {...other} />
+})
 
+const TaskQuery = graphql(taskQuery)
+export const Task = TaskQuery((props) => {
+  const { View, ...other } = props
 
-const TasksQuery = graphql(tasksConnectionQuery);
-export const TasksConnector = TasksQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-
-const TaskQuery = graphql(taskQuery);
-export const Task = TaskQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-
+  return <View {...other} />
+})

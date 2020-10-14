@@ -1,16 +1,13 @@
+import React from 'react'
 
-import React from "react";
+import gql from 'graphql-tag'
 
-import gql from "graphql-tag";
-
-import { graphql } from "react-apollo";
+import { graphql } from '@apollo/client'
 
 import {
   UserNoNestingFragment,
   ResourceNoNestingFragment,
-} from "../../../schema/generated/api.fragments";
-
-
+} from '../../../schema/generated/api.fragments'
 
 export const blogFragment = `
   fragment blogFragment on Resource{
@@ -21,43 +18,40 @@ export const blogFragment = `
   }
   ${ResourceNoNestingFragment}
   ${UserNoNestingFragment}
-`;
-
+`
 
 export const blogsListFragment = `
   fragment blogsListFragment on Resource{
     ...blogFields
   }
   ${blogFragment}
-`;
+`
 
 export const blogFullFragment = `
   fragment blogFullFragment on Resource{
     ...blogFragment
   }
   ${blogFragment}
-`;
-
+`
 
 export const blogsConnectionQuery = gql`
-
   query blogsConnection(
-    $first:Int!
-    $skip:Int
+    $first: Int!
+    $skip: Int
     $where: ResourceWhereInput
     $orderBy: ResourceOrderByInput!
-  ){
+  ) {
     objectsConnection: blogsConnection(
       orderBy: $orderBy
       first: $first
       skip: $skip
       where: $where
-    ){
-      aggregate{
+    ) {
+      aggregate {
         count
       }
-      edges{
-        node{
+      edges {
+        node {
           ...blogsListFragment
         }
       }
@@ -65,56 +59,30 @@ export const blogsConnectionQuery = gql`
   }
 
   ${blogsListFragment}
-
-`;
-
-
+`
 
 export const blogQuery = gql`
-
-  query blog(
-    $where: ResourceWhereUniqueInput!
-  ){
-    object: resource(
-      where: $where
-    ){ 
+  query blog($where: ResourceWhereUniqueInput!) {
+    object: resource(where: $where) {
       ...blogFullFragment
     }
   }
 
   ${blogFullFragment}
+`
 
-`;
+const BlogsQuery = graphql(blogsConnectionQuery)
 
+export const BlogsConnector = BlogsQuery((props) => {
+  const { View, ...other } = props
 
+  return <View {...other} />
+})
 
+const BlogQuery = graphql(blogQuery)
 
-const BlogsQuery = graphql(blogsConnectionQuery);
+export const BlogConnector = BlogQuery((props) => {
+  const { View, ...other } = props
 
-export const BlogsConnector = BlogsQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-const BlogQuery = graphql(blogQuery);
-
-export const BlogConnector = BlogQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
+  return <View {...other} />
+})

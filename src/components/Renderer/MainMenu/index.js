@@ -1,48 +1,41 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import AppBar from 'material-ui/AppBar'
 // import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
 // import IconButton from 'material-ui/IconButton';
-
 
 // import CreateIcon from 'material-ui-icons/Create';
 
-
-import UserItem from "@prisma-cms/front/lib/components/App/Renderer/MainMenu/User";
-import { styles as defaultStyles } from "@prisma-cms/front/lib/components/App/Renderer/MainMenu";
-import Language from "@prisma-cms/front/lib/components/Language";
+import UserItem from '@prisma-cms/front/lib/components/App/Renderer/MainMenu/User'
+import { styles as defaultStyles } from '@prisma-cms/front/lib/components/App/Renderer/MainMenu'
+import Language from '@prisma-cms/front/lib/components/Language'
 // import UserItem from "./User";
 
-import { Link } from "react-router-dom";
-import { Notices } from '@prisma-cms/society';
+import { Link } from 'react-router-dom'
+import { Notices } from '@prisma-cms/society'
 // import { IconButton } from 'material-ui';
 
 // import Context from "@prisma-cms/context";
-import PrismaCmsComponent from "@prisma-cms/component";
+import PrismaCmsComponent from '@prisma-cms/component'
 
-import {
-  CallRequestButtons,
-} from "@prisma-cms/webrtc";
+import { CallRequestButtons } from '@prisma-cms/webrtc'
 
-export const styles = theme => {
-
+export const styles = (theme) => {
   const {
     palette: {
-      background: {
-        default: backgroundColor,
-      },
+      background: { default: backgroundColor },
     },
-  } = theme;
+  } = theme
 
   return {
     ...defaultStyles,
     root: {
       // flexGrow: 1,
       backgroundColor,
-      position: "relative",
+      position: 'relative',
     },
     flex: {
       flex: 1,
@@ -52,35 +45,31 @@ export const styles = theme => {
       // marginRight: -12,
     },
     fullWidth: {
-      width: "100%",
+      width: '100%',
     },
   }
-};
-
+}
 
 export const locales = {
   ru: {
     values: {
-      "Signin": "Войти",
-      "Signout": "Выход",
-      "Chats": "Чаты",
-      "Users": "Участники",
-      "Ethereum": "Ethereum",
-      "API Schema": "API схема",
-    }
+      Signin: 'Войти',
+      Signout: 'Выход',
+      Chats: 'Чаты',
+      Users: 'Участники',
+      Ethereum: 'Ethereum',
+      'API Schema': 'API схема',
+    },
   },
-};
-
+}
 
 export class MainMenu extends PrismaCmsComponent {
-
   // static contextType = Context;
 
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
     classes: PropTypes.object.isRequired,
-  };
-
+  }
 
   static defaultProps = {
     ...PrismaCmsComponent.defaultProps,
@@ -88,25 +77,16 @@ export class MainMenu extends PrismaCmsComponent {
   }
 
   render() {
-
-    const {
-      classes,
-      ...other
-    } = this.props;
-
+    const { classes, ...other } = this.props
 
     const {
       user: currentUser,
       logout,
-      router: {
-        history,
-      },
+      router: { history },
       Grid,
-    } = this.context;
+    } = this.context
 
-    const {
-      id: userId,
-    } = currentUser || {}
+    const { id: userId } = currentUser || {}
 
     return (
       <AppBar
@@ -114,20 +94,9 @@ export class MainMenu extends PrismaCmsComponent {
         color="default"
         className={classes.root}
       >
-
-        <Grid
-          container
-          alignItems="center"
-          spacing={16}
-        >
-          <Grid
-            item
-            xs={12}
-            sm
-          >
-            <Link
-              to="/"
-            >
+        <Grid container alignItems="center" spacing={16}>
+          <Grid item xs={12} sm>
+            <Link to="/">
               <Typography
                 variant="title"
                 // color="inherit"
@@ -136,95 +105,46 @@ export class MainMenu extends PrismaCmsComponent {
                 Prisma-CMS
               </Typography>
             </Link>
-
           </Grid>
 
-          <Grid
-            item
-          >
-            <Link
-              to="/chat-rooms"
-            >
-              <Typography
-                component="span"
-                className={classes.link}
-              >
-                {this.lexicon("Chats")}
+          <Grid item>
+            <Link to="/chat-rooms">
+              <Typography component="span" className={classes.link}>
+                {this.lexicon('Chats')}
               </Typography>
             </Link>
           </Grid>
 
-          <Grid
-            item
-          >
-            <Link
-              to="/users"
-            >
-              <Typography>
-                {this.lexicon("Users")}
-              </Typography>
+          <Grid item>
+            <Link to="/users">
+              <Typography>{this.lexicon('Users')}</Typography>
             </Link>
-
           </Grid>
 
-          <Grid
-            item
-          >
-            <Link
-              to="/eth-transactions"
-            >
-              <Typography>
-                {this.lexicon("Ethereum")}
-              </Typography>
+          <Grid item>
+            <Link to="/eth-transactions">
+              <Typography>{this.lexicon('Ethereum')}</Typography>
             </Link>
-
           </Grid>
 
-          <Grid
-            item
-          >
-            <a
-              href="/graphql-voyager"
-              rel="noindex,nofollow"
-            >
-              <Typography>
-                {this.lexicon("API Schema")}
-              </Typography>
+          <Grid item>
+            <a href="/graphql-voyager" rel="noindex,nofollow">
+              <Typography>{this.lexicon('API Schema')}</Typography>
             </a>
-
           </Grid>
 
-          <Grid
-            item
-          >
-            <a
-              href="/api/"
-              rel="noindex,nofollow"
-              target="_blank"
-            >
-              <Typography>
-                {this.lexicon("Query Builder")}
-              </Typography>
+          <Grid item>
+            <a href="/api/" rel="noindex,nofollow" target="_blank">
+              <Typography>{this.lexicon('Query Builder')}</Typography>
             </a>
-
           </Grid>
 
+          <Grid item xs></Grid>
 
-          <Grid
-            item
-            xs
-          >
-          </Grid>
+          <Language />
 
-
-          <Language
-          />
-
-          {currentUser ?
-            <Grid
-              key="callRequests"
-              item
-            >
+          {currentUser ? (
+            <Grid key="callRequests" item>
               <CallRequestButtons
                 key={userId}
                 classes={{
@@ -232,14 +152,10 @@ export class MainMenu extends PrismaCmsComponent {
                 }}
               />
             </Grid>
-            : null
-          }
+          ) : null}
 
-          {currentUser ?
-            <Grid
-              key="notifications"
-              item
-            >
+          {currentUser ? (
+            <Grid key="notifications" item>
               <Notices
                 key={userId}
                 user={currentUser}
@@ -248,68 +164,44 @@ export class MainMenu extends PrismaCmsComponent {
                 }}
               />
             </Grid>
-            : null
-          }
+          ) : null}
 
-          {currentUser
-            ?
+          {currentUser ? (
             <Fragment>
-
-              <Grid
-                key="user"
-                item
-              >
-                <UserItem
-                  key={userId}
-                  user={currentUser}
-                  classes={classes}
-                />
+              <Grid key="user" item>
+                <UserItem key={userId} user={currentUser} classes={classes} />
               </Grid>
-              <Grid
-                key="logout"
-                item
-              >
+              <Grid key="logout" item>
                 <Button
                   onClick={() => logout()}
                   className={classes.link}
                   size="small"
                 >
-                  {this.lexicon("Signout")}
+                  {this.lexicon('Signout')}
                 </Button>
-
               </Grid>
             </Fragment>
-            :
-            <Grid
-              key="login"
-              item
-            >
+          ) : (
+            <Grid key="login" item>
               <Button
-                onClick={e => {
+                onClick={(e) => {
                   // this.setState({
                   //   opened: true,
                   // });
-                  const {
-                    openLoginForm,
-                  } = this.context;
-                  openLoginForm();
+                  const { openLoginForm } = this.context
+                  openLoginForm()
                 }}
                 className={classes.link}
                 size="small"
               >
-                {this.lexicon("Signin")}
+                {this.lexicon('Signin')}
               </Button>
-
             </Grid>
-          }
+          )}
         </Grid>
-
       </AppBar>
-    );
+    )
   }
 }
 
-
-export default withStyles(styles)(props => <MainMenu
-  {...props}
-/>);
+export default withStyles(styles)((props) => <MainMenu {...props} />)

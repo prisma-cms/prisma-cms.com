@@ -1,7 +1,4 @@
-
-
 type Mutation {
- 
   createUserTechnologyProcessor(
     data: UserTechnologyCreateInput!
   ): UserTechnologyResponse!
@@ -10,11 +7,9 @@ type Mutation {
     data: UserTechnologyUpdateInput!
     where: UserTechnologyWhereUniqueInput!
   ): UserTechnologyResponse!
-
 }
 
-
-type UserTechnologyResponse{
+type UserTechnologyResponse {
   success: Boolean!
   message: String
   errors: [Error!]!

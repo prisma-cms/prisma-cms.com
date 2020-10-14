@@ -1,33 +1,24 @@
+import CooperationModule from '@prisma-cms/cooperation-module'
 
-import CooperationModule from "@prisma-cms/cooperation-module";
-
-import ProjectModule from "./project";
-
+import ProjectModule from './project'
 
 export default class CooperationModuleCustom extends CooperationModule {
-
   constructor(props = {}) {
+    super(props)
 
-    super(props);
-
-    this.mergeModules([
-      ProjectModule,
-    ]);
-
+    this.mergeModules([ProjectModule])
   }
 
   getApiSchema(types = [], excludeTypes = []) {
-
-    let apiSchema = super.getApiSchema(types, excludeTypes);
+    let apiSchema = super.getApiSchema(types, excludeTypes)
 
     apiSchema = this.cleanupApiSchema(apiSchema, [
-      "TaskUpdateInput",
-      "TaskReactionUpdateInput",
-    ]);
+      'TaskUpdateInput',
+      'TaskReactionUpdateInput',
+    ])
 
     // console.log('apiSchema', apiSchema);
 
-    return apiSchema;
+    return apiSchema
   }
-
 }

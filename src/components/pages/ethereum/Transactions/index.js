@@ -1,33 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Page from '../../layout';
+import Page from '../../layout'
 
-import {
-  TransactionsPage as BaseTransactionsPage,
-} from "@prisma-cms/ethereum";
-
+import { TransactionsPage as BaseTransactionsPage } from '@prisma-cms/ethereum'
 
 class TransactionsPage extends Page {
-
-
   setPageMeta(meta) {
-
-    return super.setPageMeta(meta || {
-      title: "Транзакции Ethereum",
-      ...meta,
-    });
-
+    return super.setPageMeta(
+      meta || {
+        title: 'Транзакции Ethereum',
+        ...meta,
+      }
+    )
   }
 
-
   render() {
-
-    return super.render(<BaseTransactionsPage
-      {...this.props}
-    />);
+    return super.render(<BaseTransactionsPage {...this.props} />)
   }
 }
 
-
-export default TransactionsPage;
+export default TransactionsPage

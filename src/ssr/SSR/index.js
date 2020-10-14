@@ -1,74 +1,60 @@
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
+import { ApolloProvider } from '@apollo/client'
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
 // import Express from 'express';
-import { StaticRouter } from 'react-router';
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { StaticRouter } from 'react-router'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
-import fetch from 'node-fetch';
+import fetch from 'node-fetch'
 
-import React from 'react';
+import React from 'react'
 
-import { getDataFromTree } from "react-apollo"
+import { getDataFromTree } from '@apollo/client'
 
-import ReactDOM from 'react-dom/server';
+import ReactDOM from 'react-dom/server'
 
+import { createGenerateClassName } from 'material-ui/styles'
 
-import { createGenerateClassName } from 'material-ui/styles';
+import MainApp from '../../App'
 
-import MainApp from '../../App';
+import chalk from 'chalk'
 
+import URI from 'urijs'
 
-import chalk from "chalk";
+import cheerio from 'cheerio'
 
-import URI from 'urijs';
-
-import cheerio from "cheerio";
-
-
-var XMLWriter = require('xml-writer');
+const XMLWriter = require('xml-writer')
 
 const { Prisma } = require('prisma-binding')
 
-let api;
+let api
 
-const JssProvider = require('react-jss').JssProvider;
-const SheetsRegistry = require('react-jss').SheetsRegistry;
+const JssProvider = require('react-jss').JssProvider
+const SheetsRegistry = require('react-jss').SheetsRegistry
 
+const fs = require('fs')
 
-const fs = require("fs");
+const PWD = process.env.PWD
 
-const PWD = process.env.PWD;
-
-const HTML = fs.readFileSync(`${PWD}/build/index.html`, "utf8");
-
+const HTML = fs.readFileSync(`${PWD}/build/index.html`, 'utf8')
 
 // let apiSchema;
 
 class Server {
-
-
   constructor(props = {}) {
-
     const {
       App,
       // ...other
-    } = props;
+    } = props
 
-    this.App = App || MainApp;
+    this.App = App || MainApp
 
-    this.props = props;
-
+    this.props = props
   }
 
-
   getApi(props) {
-
     if (!api) {
-
-      const {
-        API_ENDPOINT = 'http://localhost:4000',
-      } = this.props;
+      const { API_ENDPOINT = 'http://localhost:4000' } = this.props
 
       api = new Prisma({
         typeDefs: 'src/schema/generated/api.graphql',
@@ -76,71 +62,58 @@ class Server {
         secret: 'mysecret123',
         debug: false,
         ...props,
-      });
-
+      })
     }
 
-    return api;
+    return api
   }
 
-
   timeLogStart(uri) {
-
-    if (process.env.PRISMA_CMS_TIMELOG === "true") {
-      console.log(chalk.green("Start request", uri));
-      console.time("PrismaCMS SSR Render");
+    if (process.env.PRISMA_CMS_TIMELOG === 'true') {
+      console.log(chalk.green('Start request', uri))
+      console.time('PrismaCMS SSR Render')
     }
-
   }
 
   timeLogEnd() {
-
-    if (process.env.PRISMA_CMS_TIMELOG === "true") {
-      console.timeEnd("PrismaCMS SSR Render");
-      console.log(chalk.green("End request"));
+    if (process.env.PRISMA_CMS_TIMELOG === 'true') {
+      console.timeEnd('PrismaCMS SSR Render')
+      console.log(chalk.green('End request'))
     }
-
   }
 
   timeLog(label) {
-
-    if (process.env.PRISMA_CMS_TIMELOG === "true") {
-
+    if (process.env.PRISMA_CMS_TIMELOG === 'true') {
       // const args = ["PrismaCMS SSR Render"].concat((arguments || []));
 
-      const args = ["PrismaCMS SSR Render"].concat([...arguments]);
+      const args = ['PrismaCMS SSR Render'].concat([...arguments])
 
       // console.log("arguments", arguments);
 
       // console.log("arguments array", [...arguments]);
       // console.log("args", args);
 
-      console.timeLog.apply(this, args);
+      console.timeLog.apply(this, args)
       // console.timeLog.apply("PrismaCMS SSR Render");
       // console.timeLog("PrismaCMS SSR Render", label);
     }
-
   }
 
-
   middleware = async (req, res) => {
-
     // console.log("process.env.NODE_ENV", process.env.PRISMA_CMS_TIMELOG);
-
 
     /**
      * Надо сбрасывать этот объект, чтобы не попадали результаты прошлого выполнения
      */
-    global.document = undefined;
+    global.document = undefined
 
+    const protocol = req.headers['server-protocol'] || req.protocol || 'http'
 
-    const protocol = req.headers["server-protocol"] || req.protocol || "http";
+    const host = req.get('host')
 
-    const host = req.get('host');
+    const uri = new URI(`${protocol}://${host}${req.url}`)
 
-    const uri = new URI(`${protocol}://${host}${req.url}`);
-
-    this.timeLogStart(uri.toString());
+    this.timeLogStart(uri.toString())
 
     // this.timeLog("start", uri.toString());
 
@@ -150,63 +123,46 @@ class Server {
     //   page,
     // } = uri.query(true);
 
+    const urlPath = uri.path()
 
-    const urlPath = uri.path();
-
-
-    let response;
+    let response
 
     switch (urlPath.toLowerCase()) {
+      case '/sitemap.xml':
+        response = await this.renderSitemap(req, res, uri).catch((error) => {
+          console.error(chalk.red('Server error'), error)
+          res.status(500)
+          res.end(error.message)
+        })
 
-
-      case "/sitemap.xml":
-
-        response = await this.renderSitemap(req, res, uri)
-          .catch(error => {
-            console.error(chalk.red("Server error"), error);
-            res.status(500);
-            res.end(error.message);
-            ;
-          });
-
-        break;
+        break
 
       default:
-        response = await this.renderHTML(req, res, uri)
-          .catch(error => {
-            console.error(chalk.red("Server error"), error);
-            res.status(500);
-            res.end(error.message);
-            ;
-          });
+        response = await this.renderHTML(req, res, uri).catch((error) => {
+          console.error(chalk.red('Server error'), error)
+          res.status(500)
+          res.end(error.message)
+        })
 
       // res.end("Debug");
-
     }
 
-    this.timeLogEnd();
+    this.timeLogEnd()
 
     // console.log(chalk.green("response"), response);
 
-    return response;
-
-  };
-
+    return response
+  }
 
   async renderHTML(req, res) {
-
-
-    this.timeLog("renderHTML", "start");
+    this.timeLog('renderHTML', 'start')
 
     // return new Promise((resolve) => {
-
 
     //   this.timeLog("Promise start");
 
     //   setTimeout(() => {
     //     res.end("output");
-
-
 
     //     resolve("dsfdsfdsf");
     //   }, 3000);
@@ -216,20 +172,17 @@ class Server {
     // res.end("output");
     // return;
 
-
-    let context = {}
-
+    const context = {}
 
     const {
       host: hostname,
-      protocol = "http:",
+      protocol = 'http:',
       // referer,
-    } = req.headers;
+    } = req.headers
 
     // const host = req.get('host');
 
-    const uri = new URI(`${protocol}//${hostname}${req.url}`);
-
+    const uri = new URI(`${protocol}//${hostname}${req.url}`)
 
     // let assetsUrl;
 
@@ -242,8 +195,6 @@ class Server {
 
     // let buildPath = basePath + "build/";
 
-
-
     const {
       App: MainApp,
       props: {
@@ -252,10 +203,9 @@ class Server {
         apolloCaches,
         API_ENDPOINT = `${protocol}//${hostname}/api/`,
       },
-    } = this;
+    } = this
 
-
-    this.timeLog("renderHTML", "Init ApolloClient");
+    this.timeLog('renderHTML', 'Init ApolloClient')
 
     const client = new ApolloClient({
       ssrMode: true,
@@ -270,14 +220,13 @@ class Server {
         fetch,
       }),
       cache: new InMemoryCache(),
-    });
+    })
 
+    this.timeLog('renderHTML', 'Init SheetsRegistry')
 
-    this.timeLog("renderHTML", "Init SheetsRegistry");
+    const sheets = new SheetsRegistry()
 
-    const sheets = new SheetsRegistry();
-
-    this.timeLog("renderHTML", "Init App");
+    this.timeLog('renderHTML', 'Init App')
 
     const App = (
       <JssProvider
@@ -290,11 +239,9 @@ class Server {
               sheetsManager={new Map()}
               queryFragments={queryFragments}
               uri={uri}
-              onSchemaLoad={clientSchema => {
-
+              onSchemaLoad={(clientSchema) => {
                 // console.log("onSchemaLoad", schema);
                 // console.log(chalk.green("onSchemaLoad"));
-
                 // if (!apiSchema && clientSchema) {
                 //   // apiSchema = `window.__PRISMA_CMS_API_SCHEMA__=${JSON.stringify(schema).replace(/</g, '\\u003c')};`;
                 //   apiSchema = `window.__PRISMA_CMS_API_SCHEMA_DSL__=${JSON.stringify(clientSchema).replace(/</g, '\\u003c')};`;
@@ -302,37 +249,28 @@ class Server {
                 //     ${apiSchema}
                 //   </script>`
                 // }
-
               }}
             />
           </StaticRouter>
         </ApolloProvider>
       </JssProvider>
-    );
+    )
 
-    this.timeLog("renderHTML", "getDataFromTree start");
+    this.timeLog('renderHTML', 'getDataFromTree start')
 
     await getDataFromTree(App)
       .then(async () => {
         // We are ready to render for real
-        const content = await ReactDOM.renderToString(App);
-        this.timeLog("renderHTML", "getDataFromTree ReactDOM.renderToString");
+        const content = await ReactDOM.renderToString(App)
+        this.timeLog('renderHTML', 'getDataFromTree ReactDOM.renderToString')
 
-        const initialState = await client.extract();
+        const initialState = await client.extract()
 
-        this.timeLog("renderHTML", "getDataFromTree client.extract()");
+        this.timeLog('renderHTML', 'getDataFromTree client.extract()')
 
+        let { title, description, status, canonical } = global.document || {}
 
-        let {
-          title,
-          description,
-          status,
-          canonical,
-        } = global.document || {};
-
-
-        status = status || 200;
-
+        status = status || 200
 
         // const result = await htmlToJson.parse(HTML, {
         //   'head': function ($doc, $) {
@@ -358,10 +296,7 @@ class Server {
         //   //     return href
         //   //   }) || [];
 
-
-
         //   //   switch (currentHost) {
-
 
         //   //   }
 
@@ -369,96 +304,73 @@ class Server {
         //   // }
         // });
 
-
         // let {
         //   head,
         // } = result;
 
-        const Html = ({
-          content,
-          state,
-          sheets = "",
-        }) => {
-
-
-
-          this.timeLog("renderHTML", "cheerio.load start");
+        const Html = ({ content, state, sheets = '' }) => {
+          this.timeLog('renderHTML', 'cheerio.load start')
 
           const $ = cheerio.load(HTML, {
             decodeEntities: false,
-          });
+          })
 
-          this.timeLog("renderHTML", "cheerio.load end");
-
-
+          this.timeLog('renderHTML', 'cheerio.load end')
 
           /**
            * Remove noscript notifi
            */
 
-          $("noscript#react-noscript-notify").remove();
+          $('noscript#react-noscript-notify').remove()
 
-          let root = $(rootSelector);
+          const root = $(rootSelector)
 
-
-          let head = $("head");
+          const head = $('head')
           // let body = $("body");
 
           if (title) {
-            head.find("title").html(title);
+            head.find('title').html(title)
           }
 
           // description = "Sdfdsfsdf";
 
-
-
           if (description) {
-
-            let meta = head.find("meta[name=description]");
+            let meta = head.find('meta[name=description]')
 
             if (!meta.length) {
-
               meta = $(`<meta 
                 name="description"
               />`)
 
-              head.append(meta);
+              head.append(meta)
             }
 
-
-
-
-            meta.attr("content", description);
+            meta.attr('content', description)
           }
 
-
-
           if (canonical) {
-
-            let meta = head.find("link[rel=canonical]");
+            let meta = head.find('link[rel=canonical]')
 
             if (!meta.length) {
-
               meta = $(`<link 
                 rel="canonical"
               />`)
 
-              head.append(meta);
+              head.append(meta)
             }
 
-            meta.attr("href", canonical);
+            meta.attr('href', canonical)
           }
 
-
-          this.timeLog("start add styles");
+          this.timeLog('start add styles')
 
           head.append(`<style
             id="server-side-jss"
           >
             ${sheets.toString()}
-          </style>`);
+          </style>`)
 
-          this.timeLog("end add styles");
+          this.timeLog('end add styles')
 
           // <script dangerouslySetInnerHTML={{
           //   __html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
@@ -470,40 +382,31 @@ class Server {
           // ${`window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`}
           // </script>`);
 
-
           // let apolloState;
 
           if (state) {
-
             // apolloState = `<script type="text/javascript">
             // ${`window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`}
             // </script>`;
 
-
-
-
-            const apolloStateId = new Date().getTime() * Math.random();
+            const apolloStateId = new Date().getTime() * Math.random()
 
             // console.log("apolloStateId", apolloStateId);
 
             root.after(`<script type="text/javascript">
               ${`window.__APOLLO_STATE_ID__=${apolloStateId};`}
-            </script>`);
+            </script>`)
 
-            apolloCaches[apolloStateId] = state;
-
+            apolloCaches[apolloStateId] = state
 
             setTimeout(() => {
               delete apolloCaches[apolloStateId]
-            }, 60 * 5 * 1000);
-
+            }, 60 * 5 * 1000)
           }
-
 
           // this.timeLog( "end add apolloState");
 
           // if (apiSchema) {
-
 
           // this.timeLog( "start add apiSchema");
 
@@ -519,29 +422,29 @@ class Server {
 
           // console.log("content", content);
 
-
-          this.timeLog("renderHTML", "$.html() start");
-          let result = $.html();
-          this.timeLog("renderHTML", "$.html() end");
-
+          this.timeLog('renderHTML', '$.html() start')
+          let result = $.html()
+          this.timeLog('renderHTML', '$.html() end')
 
           // <body><div id="root"></div>
 
-          this.timeLog("renderHTML", "replace root content start");
+          this.timeLog('renderHTML', 'replace root content start')
 
           // result = result.replace(`<body><div id="root"></div>`, `<body><div id="root">${content}</div>`);
           // result = result.replace(`<body><div id="root"></div>`, `<body><div id="root">${content}</div>${apiSchema}`);
           // result = result.replace(`<div id="root"></div>`, `<div id="root">${content || ""}</div>${apolloState || ""}${apiSchema || ""}`);
-          const rootId = rootSelector.replace(/^#/, '');
-          result = result.replace(`<div id="${rootId}"></div>`, `<div id="${rootId}">${content || ""}</div>`);
+          const rootId = rootSelector.replace(/^#/, '')
+          result = result.replace(
+            `<div id="${rootId}"></div>`,
+            `<div id="${rootId}">${content || ''}</div>`
+          )
           // result = result.replace(`<div id="root"></div>`, `<div id="root">${"content" || ""}</div>${apolloState || ""}${apiSchema || ""}`);
           // result = result.replace(`<div id="root"></div>`, `<div id="root">${content || ""}</div>${"apolloState" || ""}${apiSchema || ""}`);
           // result = result.replace(`<div id="root"></div>`, `<div id="root">${content || ""}</div>${"apolloState" || ""}`);
 
-          this.timeLog("renderHTML", "replace root content end");
+          this.timeLog('renderHTML', 'replace root content end')
 
-
-          return result;
+          return result
 
           // const response = (
           //   <html>
@@ -551,7 +454,6 @@ class Server {
           //       }}
           //     >
 
-
           //     </head>
 
           //     <body>
@@ -560,212 +462,156 @@ class Server {
           //     </body>
           //   </html>
           // );
-
-
         }
-
 
         const output = Html({
           content,
           state: initialState,
           sheets,
-        });
+        })
 
-        res.charset = 'utf-8';
+        res.charset = 'utf-8'
 
         res.writeHead(status, {
           'Content-Type': 'text/html; charset=utf-8',
-
-        });
+        })
         // res.end(`<!doctype html>\n${output}`);
 
-        this.timeLog("renderHTML then", "res.end start");
-        res.end(output);
+        this.timeLog('renderHTML then', 'res.end start')
+        res.end(output)
         // res.end("output");
-        this.timeLog("renderHTML then", "res.end end");
-
-
-
+        this.timeLog('renderHTML then', 'res.end end')
       })
-      .catch(e => {
+      .catch((e) => {
+        console.error(chalk.red('Server error'), e, e.stack)
+        console.error(chalk.red('Server error message'), e.message)
 
-        console.error(chalk.red("Server error"), e, e.stack);
-        console.error(chalk.red("Server error message"), e.message);
-
-        const {
-          networkError,
-        } = e;
+        const { networkError } = e
 
         if (networkError) {
-
-          const {
-            errors,
-          } = networkError.result || {};
+          const { errors } = networkError.result || {}
 
           if (errors && errors.length) {
-            errors.map(error => {
-              console.error(chalk.red("Server networkError.errors error"), error);
-              return null;
-            });
+            errors.map((error) => {
+              console.error(
+                chalk.red('Server networkError.errors error'),
+                error
+              )
+              return null
+            })
           }
-
         }
-
 
         res.writeHead(500, {
           'Content-Type': 'text/html; charset=utf-8',
-        });
-        res.end(e.message);
-        ;
-      });
+        })
+        res.end(e.message)
+      })
 
-
-    this.timeLog("renderHTML", "getDataFromTree end");
+    this.timeLog('renderHTML', 'getDataFromTree end')
   }
-
 
   /**
    * Рендеринк карты сайта.
    */
   async renderSitemap(req, res, uri) {
-
-    let {
-      section,
-    } = uri.query(true);
-
+    const { section } = uri.query(true)
 
     switch (section) {
-
-
-      case "main":
-
-        return this.renderMainSitemap(req, res, uri);
+      case 'main':
+        return this.renderMainSitemap(req, res, uri)
       // break;
 
       default:
-        return this.renderRootSitemap(req, res, uri);
-
+        return this.renderRootSitemap(req, res, uri)
     }
-
-
-
   }
 
-
   renderRootSitemap(req, res, uri) {
-
     const cleanUri = uri.clone().query(null)
 
     /**
      * Выводим ссылки на разделы
      */
-    const xml = new XMLWriter();
+    const xml = new XMLWriter()
 
     xml.startDocument('1.0', 'UTF-8')
 
-    xml.startElement("sitemapindex")
-      .writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-    ;
-
-
+    xml
+      .startElement('sitemapindex')
+      .writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9')
     /**
      * Формируем ссылки на разделы
      */
 
-    xml.startElement("sitemap")
-      .writeElement("loc", cleanUri.clone().query({
-        section: "main",
-      }).toString())
-      .endElement();
+    xml
+      .startElement('sitemap')
+      .writeElement(
+        'loc',
+        cleanUri
+          .clone()
+          .query({
+            section: 'main',
+          })
+          .toString()
+      )
+      .endElement()
 
+    xml.endDocument()
 
-    xml.endDocument();
-
-
-
-    res.charset = 'utf-8';
+    res.charset = 'utf-8'
 
     res.writeHead(200, {
       'Content-Type': 'application/xml',
+    })
 
-    });
-
-    res.end(xml.toString());
-
+    res.end(xml.toString())
   }
-
 
   /**
    * Основные страницы
    */
   async renderMainSitemap(req, res, uri) {
-
-
-
-    const xml = new XMLWriter();
+    const xml = new XMLWriter()
 
     xml.startDocument('1.0', 'UTF-8')
 
-
-
-    xml.startElement("urlset")
-      .writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9');
-    ;
-
-
-
+    xml
+      .startElement('urlset')
+      .writeAttribute('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9')
     this.addSitemapDocument(xml, uri, {
       url: `/`,
       priority: 1,
     })
 
-    xml.endDocument();
+    xml.endDocument()
 
-
-
-    res.charset = 'utf-8';
+    res.charset = 'utf-8'
 
     res.writeHead(200, {
       'Content-Type': 'application/xml',
+    })
 
-    });
+    res.end(xml.toString())
 
-    res.end(xml.toString());
-
-
-    return;
+    return
   }
-
-
 
   addSitemapDocument(xml, uri, doc) {
+    const { url, updatedAt, changefreq, priority } = doc
 
-    let {
-      url,
-      updatedAt,
-      changefreq,
-      priority,
-    } = doc;
+    const locUri = new URI(uri.origin()).path(url)
 
+    xml.startElement('url').writeElement('loc', locUri.toString())
 
-    const locUri = new URI(uri.origin()).path(url);
+    updatedAt && xml.writeElement('lastmod', updatedAt)
 
+    changefreq && xml.writeElement('changefreq', changefreq)
 
-    xml.startElement("url")
-      .writeElement("loc", locUri.toString())
+    priority && xml.writeElement('priority', priority)
 
-
-    updatedAt && xml.writeElement("lastmod", updatedAt)
-
-    changefreq && xml.writeElement("changefreq", changefreq)
-
-    priority && xml.writeElement("priority", priority);
-
-    xml.endElement();
-
+    xml.endElement()
   }
-
 }
 
-
-module.exports = Server;
+module.exports = Server

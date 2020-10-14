@@ -1,9 +1,3 @@
+import { buildApiFragments } from './'
 
- 
-
-import {
-  buildApiFragments,
-} from "./";
- 
-
-buildApiFragments();
+buildApiFragments()

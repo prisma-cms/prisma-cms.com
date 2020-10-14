@@ -1,30 +1,19 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import {
-  ProjectPage,
-} from "../";
+import { ProjectPage } from '../'
 
 class CreateProjectPage extends Component {
-
-
   onSave(result) {
-
     if (result) {
-
-      const {
-        data: object,
-      } = result.data && result.data.response || {}
-
+      const { data: object } = (result.data && result.data.response) || {}
 
       const {
         // id,
         Resource,
-      } = object || {};
+      } = object || {}
 
-      const {
-        uri,
-      } = Resource || {};
+      const { uri } = Resource || {}
 
       // if (id) {
 
@@ -36,34 +25,28 @@ class CreateProjectPage extends Component {
       // }
 
       if (uri) {
+        const { history } = this.props
 
-        const {
-          history,
-        } = this.props;
-
-        history.push(uri);
+        history.push(uri)
       }
-
     }
-
   }
 
-
   render() {
-
-    return <ProjectPage
-      data={{
-        object: {
-          Project: {},
-        }
-      }}
-      _dirty={{
-        name: "",
-      }}
-      onSave={result => this.onSave(result)}
-    />
+    return (
+      <ProjectPage
+        data={{
+          object: {
+            Project: {},
+          },
+        }}
+        _dirty={{
+          name: '',
+        }}
+        onSave={(result) => this.onSave(result)}
+      />
+    )
   }
 }
 
-
-export default CreateProjectPage;
+export default CreateProjectPage

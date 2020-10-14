@@ -1,26 +1,18 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 // import PropTypes from 'prop-types';
 
 // import { EditableObjectContext } from '@prisma-cms/front-editor/lib/components/App/context';
-import RichText from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/Fields/RichText';
+import RichText from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/Fields/RichText'
 // import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/ListView';
 // import ResourceField from '..';
 
-
-
 export class RichTextCustom extends RichText {
-
   renderAddButton(content) {
-
-    return super.renderAddButton("Текстовый блок");
+    return super.renderAddButton('Текстовый блок')
   }
 }
 
-
-
 class ResourceContent extends RichTextCustom {
-
-
   // static defaultProps = {
   //   ...ResourceField.defaultProps,
   //   label: undefined,
@@ -28,7 +20,7 @@ class ResourceContent extends RichTextCustom {
   //   // readOnly: true,
   // }
 
-  static Name = "ResourceContent"
+  static Name = 'ResourceContent'
 
   // onBeforeDrop = () => {
 
@@ -37,7 +29,6 @@ class ResourceContent extends RichTextCustom {
   // canBeDropped = (dragItem) => {
   //   return false;
   // }
-
 
   // renderPanelView(content) {
 
@@ -52,18 +43,13 @@ class ResourceContent extends RichTextCustom {
   //   </div>);
   // }
 
-  
   renderPanelView() {
-
-    return null;
+    return null
   }
-
 
   renderAddButton(content) {
-
-    return null;
+    return null
   }
-
 
   // canBeParent(parent) {
 
@@ -73,7 +59,6 @@ class ResourceContent extends RichTextCustom {
   // canBeChild(child) {
   //   return false;
   // }
-
 
   // renderChildren() {
 
@@ -85,17 +70,14 @@ class ResourceContent extends RichTextCustom {
   //     content,
   //   } = this.getComponentProps(this);
 
-
   //   const {
   //     activeItem,
   //     inEditMode,
   //   } = this.getEditorContext();
 
-
   //   const isActive = activeItem === this;
 
   //   const readOnly = !inEditMode || !isActive ? true : false;
-
 
   //   return <Editor
   //     value={content}
@@ -109,7 +91,6 @@ class ResourceContent extends RichTextCustom {
   //     } : undefined}
   //   />
 
-
   //   return <EditableObjectContext.Consumer>
   //     {context => {
 
@@ -120,15 +101,11 @@ class ResourceContent extends RichTextCustom {
   //         getObjectWithMutations,
   //       } = context;
 
-
   //       if (!getObjectWithMutations) {
   //         return null;
   //       }
 
-
-
   //       const object = getObjectWithMutations();
-
 
   //       if (!object) {
   //         return null;
@@ -138,7 +115,6 @@ class ResourceContent extends RichTextCustom {
   //         activeItem,
   //       } = this.getEditorContext();
 
-
   //       const isActive = activeItem === this;
 
   //       const readOnly = !inEditMode || !isActive ? true : false;
@@ -146,11 +122,9 @@ class ResourceContent extends RichTextCustom {
   //       {/* console.log("ResourceContent content", JSON.stringify(content, true, 2));
   //       console.log("ResourceContent isActive", isActive); */}
 
-
   //       {/* const {
   //         id: objectId,
   //       } = object || {}; */}
-
 
   //       return getEditor ? getEditor({
   //         ...this.getComponentProps(this),
@@ -163,11 +137,9 @@ class ResourceContent extends RichTextCustom {
   //             content: value,
   //           });
 
-
   //           {/* const {
   //             components,
   //           } = getObjectWithMutations();
-
 
   //           updateObject({
   //             components,
@@ -180,8 +152,6 @@ class ResourceContent extends RichTextCustom {
   //   </EditableObjectContext.Consumer>
 
   // }
-
-
 }
 
-export default ResourceContent;
+export default ResourceContent

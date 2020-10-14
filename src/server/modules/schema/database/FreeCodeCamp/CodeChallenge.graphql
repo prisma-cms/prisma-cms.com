@@ -1,12 +1,11 @@
-
 """
-  FreeCodeCamp Challenge
+FreeCodeCamp Challenge
 """
 type CodeChallenge {
   id: ID! @id @unique
 
   """
-    Unique block title
+  Unique block title
   """
   externalKey: ID @unique
 
@@ -33,9 +32,8 @@ type CodeChallenge {
   superOrder: Int @default(value: 0)
   challengeOrder: Int @default(value: 0)
 
-
   """
-    External files
+  External files
   """
   required: Json
 
@@ -45,12 +43,11 @@ type CodeChallenge {
   template: String
 
   """
-    Hours only
+  Hours only
   """
   time: String
 
   CreatedBy: User @relation(name: "CodeChallengeCreatedBy")
-
 
   # Custom fields
 

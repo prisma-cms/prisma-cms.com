@@ -1,122 +1,78 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import Page from "../../layout";
+import Page from '../../layout'
 
-import PageNotFound from "../../404";
-import { graphql } from 'react-apollo';
+import PageNotFound from '../../404'
+import { graphql } from '@apollo/client'
 
-import {
-  Comment as CommentQuery,
-} from "../query";
+import { Comment as CommentQuery } from '../query'
 
+import { updateCommentProcessor } from '@modxclub/ui/src/Comments/query.js'
 
-import {
-  updateCommentProcessor,
-} from "@modxclub/ui/src/Comments/query.js";
+import Comment from '@modxclub/ui/src/Comments/Comment'
+import { Typography } from 'material-ui'
 
-import Comment from "@modxclub/ui/src/Comments/Comment";
-import { Typography } from 'material-ui';
+import { Link } from '@modxclub/ui'
 
-import {
-  Link,
-} from "@modxclub/ui";
-
-const UpdateComment = graphql(updateCommentProcessor)(Comment);
+const UpdateComment = graphql(updateCommentProcessor)(Comment)
 
 class CommentPage extends Page {
-
   static propTypes = {
     ...Page.propTypes,
-  };
-
+  }
 
   static defaultProps = {
     ...Page.defaultProps,
   }
 
-
-
   setPageMeta(meta) {
-
     const {
-      data: {
-        object: comment,
-      },
-    } = this.props;
-
+      data: { object: comment },
+    } = this.props
 
     if (!comment) {
-      return;
+      return
     }
 
-    const {
-      CommentTarget: Topic,
-      name,
-      uri,
-    } = comment;
+    const { CommentTarget: Topic, name, uri } = comment
 
-    const {
-      name: topicName,
-      longtitle,
-    } = Topic || {};
+    const { name: topicName, longtitle } = Topic || {}
 
     return super.setPageMeta({
-      title: `${name ? `${name} | ` : ''}Комментарий к топику ${longtitle || topicName}`,
+      title: `${name ? `${name} | ` : ''}Комментарий к топику ${
+        longtitle || topicName
+      }`,
       canonical: uri,
       ...meta,
-    });
-
+    })
   }
 
-
   render() {
+    const { data, ...other } = this.props
 
-    const {
-      data,
-      ...other
-    } = this.props;
-
-    const {
-      object: comment,
-      loading,
-    } = data;
+    const { object: comment, loading } = data
 
     if (!comment) {
-
       if (loading) {
-        return null;
-      }
-      else {
+        return null
+      } else {
         return <PageNotFound />
       }
     }
 
     return super.render(
       <div>
-        <UpdateComment
-          data={data}
-          linkType="target"
-          {...other}
-        />
+        <UpdateComment data={data} linkType="target" {...other} />
 
         <Typography>
-          <Link
-            to="/comments"
-          >
-            Вернуться к списку комментариев
-          </Link>
+          <Link to="/comments">Вернуться к списку комментариев</Link>
         </Typography>
       </div>
-    );
+    )
   }
 }
 
-
 export default (props) => {
-
-  return <CommentQuery
-    View={CommentPage}
-    {...props}
-  />
-};
+  return <CommentQuery View={CommentPage} {...props} />
+}

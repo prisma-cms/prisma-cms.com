@@ -1,6 +1,4 @@
-
-
-type Service{
+type Service {
   oldID: Int @unique
   Resource: Resource! @relation(name: "ServiceResource")
 }

@@ -3,6 +3,7 @@ import React from "react";
 
 import gql from "graphql-tag";
 
+// TODO: react-apollo does not export those any more
 import { graphql, compose } from "react-apollo";
 
 

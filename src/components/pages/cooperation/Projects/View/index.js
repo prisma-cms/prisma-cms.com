@@ -1,157 +1,91 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
+import { Typography } from 'material-ui'
 
-import { Typography } from 'material-ui';
- 
+import Context from '@prisma-cms/context'
+import Filters from '@prisma-cms/filters'
 
-import Context from "@prisma-cms/context";
-import Filters from "@prisma-cms/filters";
-
-import ProjectsList from "./List";
+import ProjectsList from './List'
 
 class ProjectsView extends Component {
-
-  static contextType = Context;
-
+  static contextType = Context
 
   static propTypes = {
     filters: PropTypes.object,
     setFilters: PropTypes.func,
-  };
-
-
-  renderFilters() {
-
-    const {
-      filters,
-      setFilters,
-    } = this.props;
-
-    return filters && setFilters ? <Filters
-      queryName="projects"
-      filters={filters}
-      setFilters={setFilters}
-    /> : null;
   }
 
+  renderFilters() {
+    const { filters, setFilters } = this.props
 
-  
+    return filters && setFilters ? (
+      <Filters queryName="projects" filters={filters} setFilters={setFilters} />
+    ) : null
+  }
+
   render() {
+    const { Pagination, Link, Grid } = this.context
 
-    const  {
-      Pagination,
-      Link,
-      Grid,
-    } = this.context;
-    
-    const {
-      page,
-    } = this.props;
-
-
+    const { page } = this.props
 
     const {
       objectsConnection,
       loading,
-      variables: {
-        first: limit,
-      },
-    } = this.props.data;
+      variables: { first: limit },
+    } = this.props.data
 
+    const { edges, aggregate } = objectsConnection || {}
 
-    const {
-      edges,
-      aggregate,
-    } = objectsConnection || {};
+    const { count = 0 } = aggregate || {}
 
-    const {
-      count = 0,
-    } = aggregate || {};
-
-
-    let output;
+    let output
 
     if (!edges || !edges.length) {
-
       if (loading) {
-        output = null;
+        output = null
+      } else {
+        output = (
+          <Typography variant="title">Данные не были получены</Typography>
+        )
       }
-      else {
-        output = <Typography
-          variant="title"
-        >
-          Данные не были получены
-        </Typography>
-      }
+    } else {
+      const projects = edges.map((n) => n.node)
 
-    }
-    else {
+      output = (
+        <Grid item xs={12}>
+          <ProjectsList projects={projects} />
 
-      let projects = edges.map(n => n.node);
-
-      output = <Grid
-        item
-        xs={12}
-
-      >
-
-        <ProjectsList
-          projects={projects}
-        />
-
-        <Pagination
-          limit={limit}
-          total={count}
-          page={page || 1}
-          style={{
-            marginTop: 20,
-          }}
-        />
-      </Grid>
-
+          <Pagination
+            limit={limit}
+            total={count}
+            page={page || 1}
+            style={{
+              marginTop: 20,
+            }}
+          />
+        </Grid>
+      )
     }
 
+    const content = (
+      <Grid container spacing={8}>
+        <Grid item xs={12}>
+          {this.renderFilters()}
+        </Grid>
 
+        <Grid item xs={12}>
+          <Link to="/projects/create">
+            <Typography>Добавить проект</Typography>
+          </Link>
+        </Grid>
 
-
-    let content = <Grid
-      container
-      spacing={8}
-    >
-
-      <Grid
-        item
-        xs={12}
-
-      >
-        {this.renderFilters()}
+        {output}
       </Grid>
+    )
 
-      <Grid
-        item
-        xs={12}
-
-      >
-        <Link
-          to="/projects/create"
-        >
-          <Typography
-
-          >
-            Добавить проект
-          </Typography>
-        </Link>
-      </Grid>
-
-      {output}
-
-    </Grid>
-
-
-    return (content);
+    return content
   }
 }
 
-
-export default ProjectsView;
+export default ProjectsView

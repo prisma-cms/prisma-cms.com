@@ -1,33 +1,20 @@
 /* eslint-disable no-unreachable */
 
-
 // import PrismaModule from "@prisma-cms/prisma-module";
 
-import ResourceModule, {
-  ResourceProcessor,
-} from "@prisma-cms/resource-module";
+import ResourceModule, { ResourceProcessor } from '@prisma-cms/resource-module'
 
-import chalk from "chalk";
+import chalk from 'chalk'
 
 export class PrismaCmsResourceProcessor extends ResourceProcessor {
-
-
   async create(method, args, info) {
+    const { currentUser, db } = this.ctx
 
-
-    const {
-      currentUser,
-      db,
-    } = this.ctx;
-
-    const {
-      id: currentUserId,
-    } = currentUser || {};
+    const { id: currentUserId } = currentUser || {}
 
     if (!currentUserId) {
-      throw new Error("Необходимо авторизоваться");
+      throw new Error('Необходимо авторизоваться')
     }
-
 
     let {
       data: {
@@ -40,22 +27,14 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
         text: fake,
         ...data
       },
-    } = args;
+    } = args
 
-
-    let {
-      type,
-      name,
-    } = data;
-
+    let { type, name } = data
 
     switch (type) {
-
-      case "Blog":
-
+      case 'Blog':
         {
-
-          this.prepareContent(args, data, method);
+          this.prepareContent(args, data, method)
 
           // if (!contentText) {
           //   // this.addFieldError("content", "Не заполнен текст");
@@ -63,33 +42,27 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
           //   return;
           // }
 
-          const uri = `/blogs/${name}`;
-
+          const uri = `/blogs/${name}`
 
           Object.assign(data, {
             uri,
             isfolder: true,
-          });
-
+          })
 
           Object.assign(args, {
             data,
-          });
+          })
 
-          const result = await super.create(method, args, info);
+          const result = await super.create(method, args, info)
 
-          return result;
+          return result
         }
 
-        break;
+        break
 
-      case "Topic":
-
+      case 'Topic':
         {
-
-          const {
-            contentText,
-          } = this.prepareContent(args, data, method) || {};
+          const { contentText } = this.prepareContent(args, data, method) || {}
 
           if (!contentText) {
             // this.addFieldError("content", "Не заполнен текст");
@@ -97,7 +70,7 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
             // return;
           }
 
-          const uri = `/topics/${name}`;
+          const uri = `/topics/${name}`
 
           // let connect;
 
@@ -120,68 +93,55 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
             uri,
             isfolder: false,
             // Blog,
-          });
-
+          })
 
           Object.assign(args, {
             data,
-          });
+          })
 
+          const result = await super.create(method, args, info)
 
-          const result = await super.create(method, args, info);
-
-
-          const {
-            id: topicID,
-            name: topicName,
-            uri: topicUri,
-          } = result || {};
-
+          const { id: topicID, name: topicName, uri: topicUri } = result || {}
 
           /**
            * Если был создан топик, отправляем уведомления
            */
           if (topicID) {
+            let content
 
-            let content;
-
-            const siteUrl = "https://prisma-cms.com";
+            const siteUrl = 'https://prisma-cms.com'
 
             if (contentText) {
-
               content = `
               <div>
                 ${contentText.substr(0, 3000)}
               </div>
-              `;
+              `
             }
 
-            let subject = `Новый топик ${topicName}`;
+            let subject = `Новый топик ${topicName}`
             let message = `<p>
               <a href="${siteUrl}${topicUri}">${topicName}</a>.
             </p>
               ${content}
-            `;
+            `
 
             const usersWhere = {
               id_not: currentUserId,
               NotificationTypes_some: {
-                name: "new_topic",
+                name: 'new_topic',
               },
             }
 
-            this.sendNotifications({ message, subject }, usersWhere);
-
+            this.sendNotifications({ message, subject }, usersWhere)
           }
 
-          return result;
+          return result
         }
 
-        break;
+        break
 
-
-      case "Comment":
-
+      case 'Comment':
         /**
          * Пока что комментарии есть к топикам.
          * И топик и комментарий - это тип Resource.
@@ -189,26 +149,18 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
          * Если для указанного топика нет еще Thread, значит создаем его.
          */
 
-
-        const {
-          contentText,
-        } = this.prepareContent(args, data, method) || {};
+        const { contentText } = this.prepareContent(args, data, method) || {}
 
         if (!contentText) {
           // this.addFieldError("content", "Не заполнен текст");
-          this.addError("Не заполнен текст");
-          return;
-        }
-        else {
-
-          let name = contentText.substr(0, 50) || "";
-
+          this.addError('Не заполнен текст')
+          return
+        } else {
+          let name = contentText.substr(0, 50) || ''
 
           if (!topicID) {
-            return this.addError("Не был указан ID топика");
-          }
-          else {
-
+            return this.addError('Не был указан ID топика')
+          } else {
             // Проверяем есть ли такой топик
             // const exists = await db.exists.Resource({
             //   id: topicID,
@@ -220,20 +172,14 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
               where: {
                 id: topicID,
               },
-            });
+            })
 
             if (!Topic) {
-              return this.addError("Не был получен топик");
-            }
-            else {
-
-              const {
-                uri: TopicUri,
-                name: topicName,
-              } = Topic;
+              return this.addError('Не был получен топик')
+            } else {
+              const { uri: TopicUri, name: topicName } = Topic
 
               Object.assign(data, {
-
                 name,
                 // uri: `${TopicUri}/comments/${name}`,
                 uri: `/comments/${TopicUri}/${name}`,
@@ -244,59 +190,54 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
                     id: topicID,
                   },
                 },
-              });
-
+              })
 
               Object.assign(args, {
                 data,
-              });
+              })
 
-              const result = await super.create(method, args, info);
+              const result = await super.create(method, args, info)
 
-              const {
-                id: commentId,
-              } = result || {};
-
-
+              const { id: commentId } = result || {}
 
               /**
-               * Если был создан комментарий, 
+               * Если был создан комментарий,
                */
               if (commentId) {
-
                 /**
                  * Обновляем дату топика, чтобы сортировку актуализировать
                  */
-                await db.mutation.updateResource({
-                  data: {
-                    mockUpdate: new Date(),
-                  },
-                  where: {
-                    id: topicID,
-                  },
-                })
-                  .catch(error => {
+                await db.mutation
+                  .updateResource({
+                    data: {
+                      mockUpdate: new Date(),
+                    },
+                    where: {
+                      id: topicID,
+                    },
+                  })
+                  .catch((error) => {
                     /**
                      * Не обламываем процесс, если не получилось обновить дату топика
                      */
-                    this.error(error);
-                    console.error(chalk.red("Update Topic error"), error);
-                  });
+                    this.error(error)
+                    console.error(chalk.red('Update Topic error'), error)
+                  })
 
                 /**
                  * отправляем уведомления
                  */
 
-                const siteUrl = "https://prisma-cms.com";
+                const siteUrl = 'https://prisma-cms.com'
 
-                let subject = `Новый комментарий в топике ${topicName}`;
+                let subject = `Новый комментарий в топике ${topicName}`
                 let message = `<p>
                   В топике <a href="${siteUrl}${TopicUri}">${topicName}</a> создан новый комментарий.
                 </p>
                   <div>
                     ${contentText.substr(0, 1000)}
                   </div>
-                `;
+                `
 
                 const usersWhere = {
                   id_not: currentUserId,
@@ -313,29 +254,32 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
                     ],
                   },
                   NotificationTypes_some: {
-                    name_in: ["new_comment", "new_reply", "new_comments_in_my_topics"],
+                    name_in: [
+                      'new_comment',
+                      'new_reply',
+                      'new_comments_in_my_topics',
+                    ],
                   },
                 }
 
-                this.sendNotifications({
-                  message,
-                  subject,
-                  rank: 100,
-                }, usersWhere);
-
+                this.sendNotifications(
+                  {
+                    message,
+                    subject,
+                    rank: 100,
+                  },
+                  usersWhere
+                )
               }
 
-              return result;
+              return result
             }
-
           }
-
         }
 
+        break
 
-        break;
-
-      default: ;
+      default:
     }
 
     // let uriData = await this.prepareUri(args);
@@ -345,115 +289,86 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
     //   ...this.getCreatedBy(),
     // });
 
-
     Object.assign(args, {
       data,
-    });
+    })
 
     // return this.addFieldError("test", "error");
 
-    return super.create(method, args, info);
+    return super.create(method, args, info)
   }
 
-
-
   async update(method, args, info) {
-
     let {
       where,
       // ...other
-    } = args;
+    } = args
 
-    const {
-      currentUser,
-      db,
-    } = this.ctx;
+    const { currentUser, db } = this.ctx
 
-    const {
-      id: currentUserId,
-    } = currentUser || {};
+    const { id: currentUserId } = currentUser || {}
 
     if (!currentUserId) {
-      throw new Error("Необходимо авторизоваться");
+      throw new Error('Необходимо авторизоваться')
     }
 
-    const resource = await db.query.resource({
-      where,
-    }, `{
+    const resource = await db.query.resource(
+      {
+        where,
+      },
+      `{
       id
       CreatedBy{
         id
       }
-    }`);
+    }`
+    )
 
     if (!resource) {
-      throw new Error("Не был получен ресурс");
+      throw new Error('Не был получен ресурс')
     }
 
-    const {
-      id: createdby,
-    } = resource.CreatedBy || {};
+    const { id: createdby } = resource.CreatedBy || {}
 
     if (createdby !== currentUserId) {
-      throw new Error("Нельзя редактировать чужой документ");
+      throw new Error('Нельзя редактировать чужой документ')
     }
 
-
-    return super.update(method, args, info);
+    return super.update(method, args, info)
   }
 
-
   async sendNotifications(data, where) {
+    const { ctx } = this
 
-    const {
-      ctx,
-    } = this;
+    const { db } = ctx
 
-    const {
-      db,
-    } = ctx;
-
-    const users = await db.query.users({
-      where: {
-        email_gt: "",
-        ...where,
-      }
-    })
-      .catch(error => {
-        console.error(chalk.red("Error"), error);
+    const users = await db.query
+      .users({
+        where: {
+          email_gt: '',
+          ...where,
+        },
       })
-      ;
-
-
-    const processor = this.getProcessor(data, users, this.writeEmail.bind(this));
+      .catch((error) => {
+        console.error(chalk.red('Error'), error)
+      })
+    const processor = this.getProcessor(data, users, this.writeEmail.bind(this))
 
     // eslint-disable-next-line no-unused-vars
     for await (const result of processor) {
-
-
     }
-
   }
 
-
-  async * getProcessor(data, users, processor) {
-
+  async *getProcessor(data, users, processor) {
     while (users && users.length) {
+      const user = users.splice(0, 1)[0]
 
-      const user = users.splice(0, 1)[0];
+      const result = await processor(data, user).catch((error) => {
+        this.error(error)
+        return error
+      })
 
-
-      const result = await processor(data, user)
-        .catch(error => {
-
-
-
-          this.error(error);
-          return error;
-        });
-
-
-      yield result;
+      yield result
     }
 
     // await this.log(`Записано: ${writed}, пропущено: ${skiped}, ошибок: ${errors}`, "Info");
@@ -461,59 +376,44 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
     // if (errors) {
     //   throw new Error("Есть ошибки при импорте");
     // }
-
   }
 
   async writeEmail(data, user) {
+    const { db } = this.ctx
 
-    const {
-      db,
-    } = this.ctx;
+    const { email } = user
 
-    const {
-      email,
-    } = user;
+    const result = await db.mutation
+      .createLetter({
+        data: {
+          // message,
+          // subject,
+          ...data,
+          email,
+        },
+      })
+      .catch((error) => {
+        console.error(chalk.red('writeEmail error'), error)
 
-    const result = await db.mutation.createLetter({
-      data: {
-        // message,
-        // subject,
-        ...data,
-        email,
-      },
-    })
-      .catch(error => {
+        this.error(error)
+      })
 
-        console.error(chalk.red("writeEmail error"), error);
-
-        this.error(error);
-      });
-
-    return result;
+    return result
   }
-
 }
 
-
 export class TopicProcessor extends PrismaCmsResourceProcessor {
-
-
   prepareContent(args, data, method) {
-
     let {
       data: {
         // content,
         components,
       },
-    } = args;
-
+    } = args
 
     if (components !== undefined) {
-
-      let resourceBlocks = [];
-      let entityMap = {};
-
-
+      let resourceBlocks = []
+      let entityMap = {}
 
       // if (components && components.length) {
 
@@ -537,116 +437,81 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
 
       // }
 
-      this.reduceBlocks(components, resourceBlocks, entityMap);
+      this.reduceBlocks(components, resourceBlocks, entityMap)
 
-
-      let newContent = null;
-
+      let newContent = null
 
       if (resourceBlocks.length) {
-
         newContent = {
           blocks: resourceBlocks,
           entityMap,
         }
-
       }
-
 
       Object.assign(data, {
         content: newContent,
         // contentText,
-      });
+      })
 
       Object.assign(args.data, {
         ...data,
-      });
-
+      })
     }
 
+    data = super.prepareContent(args, data, method)
 
-    data = super.prepareContent(args, data, method);
-
-
-    return data;
+    return data
   }
 
-
   reduceBlocks(components, resourceBlocks, entityMap, textLength = 0) {
-
     if (components && components.length) {
-
       // console.log(chalk.green("components"), JSON.stringify(components, true, 2));
 
+      components.map((n) => {
+        const { components: itemComponents, props } = n || {}
 
-      components.map(n => {
-
-        const {
-          components: itemComponents,
-          props,
-        } = n || {};
-
-        const {
-          content,
-          text: contentText,
-        } = props || {};
+        const { content, text: contentText } = props || {}
 
         if (contentText !== undefined) {
-
-          textLength += contentText ? contentText.length : 0;
+          textLength += contentText ? contentText.length : 0
 
           resourceBlocks.push({
-            text: contentText || "",
-          });
-
-        }
-        else {
+            text: contentText || '',
+          })
+        } else {
           const {
             blocks,
             // entityMap: contentEntityMap,
-          } = content || {};
+          } = content || {}
 
           if (blocks && blocks.length) {
-
             // resourceBlocks = resourceBlocks.concat(blocks);
 
-            blocks.map(block => {
+            blocks.map((block) => {
+              const { text } = block
 
-              const {
-                text,
-              } = block;
+              textLength += text ? text.length : 0
 
-              textLength += text ? text.length : 0;
+              resourceBlocks.push(block)
 
-              resourceBlocks.push(block);
-
-              return null;
-            });
-
+              return null
+            })
           }
         }
 
-
         // console.log(chalk.green("textLength"), textLength);
 
-        this.reduceBlocks(itemComponents, resourceBlocks, entityMap, textLength);
+        this.reduceBlocks(itemComponents, resourceBlocks, entityMap, textLength)
 
-        return null;
-      });
-
+        return null
+      })
     }
-
   }
 
-
   async mutate(method, args, info) {
+    let { blogID, ...data } = args.data || {}
 
-    let {
-      blogID,
-      ...data
-    } = args.data || {};
-
-    let Blog;
+    let Blog
 
     if (blogID) {
       Blog = {
@@ -656,27 +521,21 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
       }
     }
 
-
     Object.assign(data, {
       Blog,
-    });
-
+    })
 
     Object.assign(args, {
       data,
-    });
+    })
 
     // console.log('Topic mutate data', JSON.stringify(data, true, 2));
 
-    return super.mutate(method, args, info);
+    return super.mutate(method, args, info)
   }
-
 }
 
-
 class TopicModule extends ResourceModule {
-
-
   // constructor() {
 
   //   super();
@@ -687,21 +546,13 @@ class TopicModule extends ResourceModule {
 
   // }
 
-
   getSchema() {
-
-    return;
+    return
   }
-
 
   getApiSchema(types = []) {
-
-
-    return;
-
+    return
   }
-
-
 
   // injectWhereUnique(where) {
 
@@ -720,25 +571,18 @@ class TopicModule extends ResourceModule {
 
   // }
 
-
   getResolvers() {
-
-
-    let resolvers = super.getResolvers();
+    let resolvers = super.getResolvers()
 
     const {
-      Mutation: {
-        ...Mutation
-      },
+      Mutation: { ...Mutation },
       // Query: {
       //   resource,
       //   ...Query
       // },
       Resource,
       ...other
-    } = resolvers;
-
-
+    } = resolvers
 
     return {
       ...other,
@@ -767,49 +611,66 @@ class TopicModule extends ResourceModule {
       Mutation: {
         ...Mutation,
         createBlogProcessor: (source, args, ctx, info) => {
-
           Object.assign(args.data, {
-            type: "Blog",
-          });
+            type: 'Blog',
+          })
 
-          return this.getProcessor(ctx).createWithResponse("Resource", args, info);
+          return this.getProcessor(ctx).createWithResponse(
+            'Resource',
+            args,
+            info
+          )
         },
         createTopicProcessor: (source, args, ctx, info) => {
-
           Object.assign(args.data, {
-            type: "Topic",
-          });
+            type: 'Topic',
+          })
 
           // return this.getProcessor(ctx).createWithResponse("Resource", args, info);
-          return new TopicProcessor(ctx).createWithResponse("Resource", args, info);
+          return new TopicProcessor(ctx).createWithResponse(
+            'Resource',
+            args,
+            info
+          )
         },
         updateTopicProcessor: (source, args, ctx, info) => {
-
           // return this.getProcessor(ctx).updateWithResponse("Resource", args, info);
-          return new TopicProcessor(ctx).updateWithResponse("Resource", args, info);
+          return new TopicProcessor(ctx).updateWithResponse(
+            'Resource',
+            args,
+            info
+          )
         },
         createCommentProcessor: (source, args, ctx, info) => {
-
           Object.assign(args.data, {
-            type: "Comment",
-          });
+            type: 'Comment',
+          })
 
-          return this.getProcessor(ctx).createWithResponse("Resource", args, info);
+          return this.getProcessor(ctx).createWithResponse(
+            'Resource',
+            args,
+            info
+          )
         },
         updateCommentProcessor: (source, args, ctx, info) => {
-
-          return this.getProcessor(ctx).updateWithResponse("Resource", args, info);
+          return this.getProcessor(ctx).updateWithResponse(
+            'Resource',
+            args,
+            info
+          )
         },
         updateBlogProcessor: (source, args, ctx, info) => {
-
-          return this.getProcessor(ctx).updateWithResponse("Resource", args, info);
+          return this.getProcessor(ctx).updateWithResponse(
+            'Resource',
+            args,
+            info
+          )
         },
       },
       Subscription: {
         resource: {
           subscribe: async (parent, args, ctx, info) => {
-
-            return ctx.db.subscription.resource({}, info);
+            return ctx.db.subscription.resource({}, info)
           },
         },
       },
@@ -817,17 +678,17 @@ class TopicModule extends ResourceModule {
         ...Resource,
 
         /**
-         * Так как ввели новое поле components, если оно заполнено, 
+         * Так как ввели новое поле components, если оно заполнено,
          * то поле content не выводим в целях экономии ресурсов
          */
         content: (source, args, ctx, info) => {
+          const { content, components } = source || {}
 
-          const {
-            content,
-            components,
-          } = source || {};
-
-          return components ? null : Resource && Resource.content ? Resource.content(source, args, ctx, info) : content;
+          return components
+            ? null
+            : Resource && Resource.content
+            ? Resource.content(source, args, ctx, info)
+            : content
         },
         // Comments: (source, args, ctx, info) => {
 
@@ -850,48 +711,41 @@ class TopicModule extends ResourceModule {
          * Для обратной совместимости, потому что CommentTarget переименовалось в Topic
          */
         CommentTarget: async (source, args, ctx, info) => {
-
           const {
             id: commentId,
             CommentTarget,
             // Topic,
-          } = source;
+          } = source
 
-          let result = null;
+          let result = null
 
           if (CommentTarget !== undefined) {
-            result = CommentTarget;
-          }
-
-          else if (commentId) {
-
-            const [topic] = await ctx.db.query.resources({
-              first: 1,
-              where: {
-                Comments_some: {
-                  id: commentId,
+            result = CommentTarget
+          } else if (commentId) {
+            const [topic] = await ctx.db.query.resources(
+              {
+                first: 1,
+                where: {
+                  Comments_some: {
+                    id: commentId,
+                  },
                 },
               },
-            }, info);
+              info
+            )
 
-            result = topic;
-
+            result = topic
           }
 
-          return result;
-
+          return result
         },
       },
-    };
-
+    }
   }
-
 
   getProcessorClass() {
-    return PrismaCmsResourceProcessor;
+    return PrismaCmsResourceProcessor
   }
-
 }
 
-
-export default TopicModule;
+export default TopicModule

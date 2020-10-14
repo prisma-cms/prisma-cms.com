@@ -1,118 +1,104 @@
+import fs from 'fs'
 
-import fs from "fs";
-
-import PrismaModule from "@prisma-cms/prisma-module";
+import PrismaModule from '@prisma-cms/prisma-module'
 
 // import ImportModule from "@modxclub/import-old-site";
 
-import LogModule from "@prisma-cms/log-module";
-import MailModule from "@prisma-cms/mail-module";
+import LogModule from '@prisma-cms/log-module'
+import MailModule from '@prisma-cms/mail-module'
 import UploadModule, {
   Modules as UploadModules,
-} from "@prisma-cms/upload-module";
-import RouterModule from "@prisma-cms/router-module";
+} from '@prisma-cms/upload-module'
+import RouterModule from '@prisma-cms/router-module'
 import SocietyModule, {
   Modules as SocietyModules,
-} from "@prisma-cms/society-module";
+} from '@prisma-cms/society-module'
 import EthereumModule, {
   Modules as EthereumModules,
-} from "@prisma-cms/ethereum-module";
-import WebrtcModule from "@prisma-cms/webrtc-module";
-import MarketplaceModule from "@prisma-cms/marketplace-module";
+} from '@prisma-cms/ethereum-module'
+import WebrtcModule from '@prisma-cms/webrtc-module'
+import MarketplaceModule from '@prisma-cms/marketplace-module'
 // import CooperationModule from "@prisma-cms/cooperation-module";
 
-import McJSModule from "@prisma-cms/mc.js-module";
+import McJSModule from '@prisma-cms/mc.js-module'
 
-import UserModule from "./user";
-import ResourceModule from "./resource";
-import BlogModule from "./blog";
-import CooperationModule from "./cooperation";
-import TestModule from "./test";
-import Technology from "./technologies/Technology";
-import UserTechnology from "./technologies/UserTechnology";
-import TechnologyLesson from "./technologies/TechnologyLesson";
-import Career from "./technologies/Career";
-import TechnologyLessonUser from "./technologies/TechnologyLessonUser";
-import Comment from "./Comment";
+import UserModule from './user'
+import ResourceModule from './resource'
+import BlogModule from './blog'
+import CooperationModule from './cooperation'
+import TestModule from './test'
+import Technology from './technologies/Technology'
+import UserTechnology from './technologies/UserTechnology'
+import TechnologyLesson from './technologies/TechnologyLesson'
+import Career from './technologies/Career'
+import TechnologyLessonUser from './technologies/TechnologyLessonUser'
+import Comment from './Comment'
 // import Gallery from "./Gallery";
 // import GalleryFile from "./GalleryFile";
-import FreeModeCampModule from "./FreeModeCamp";
+import FreeModeCampModule from './FreeModeCamp'
 
+import chalk from 'chalk'
 
-import chalk from 'chalk';
+import { parse, print } from 'graphql'
 
-import { parse, print } from "graphql";
+import URI from 'urijs'
 
-import URI from "urijs";
-
-import MergeSchema from 'merge-graphql-schemas';
-import path from 'path';
-const moduleURL = new URL(import.meta.url);
-const __dirname = path.dirname(moduleURL.pathname);
-const { fileLoader, mergeTypes } = MergeSchema;
-
+import MergeSchema from 'merge-graphql-schemas'
+import path from 'path'
+const moduleURL = new URL(import.meta.url)
+const __dirname = path.dirname(moduleURL.pathname)
+const { fileLoader, mergeTypes } = MergeSchema
 
 class CoreModule extends PrismaModule {
-
-
   constructor(options) {
+    super(options)
 
-    super(options);
+    this.mergeModules(
+      [
+        McJSModule,
+        MarketplaceModule,
+        // CooperationModule,
+        LogModule,
+        MailModule,
+        UploadModule,
+        SocietyModule,
+        EthereumModule,
+        // ImportModule,
+        WebrtcModule,
 
-    this.mergeModules([
-      McJSModule,
-      MarketplaceModule,
-      // CooperationModule,
-      LogModule,
-      MailModule,
-      UploadModule,
-      SocietyModule,
-      EthereumModule,
-      // ImportModule,
-      WebrtcModule,
-
-      // /**
-      //  * Важно кастомные классы в последнюю очередь использовать.
-      //  * Но надо будет вообще вывести базовые кслассы в отдельный загрузчик
-      //  */
-      ResourceModule,
-      BlogModule,
-      CooperationModule,
-      TestModule,
-      UserModule,
-      RouterModule,
-      Technology,
-      TechnologyLesson,
-      UserTechnology,
-      TechnologyLessonUser,
-      Career,
-
-      /**
-       * Конфликтный объект, потому что используются уже ресурсы-комментарии
-       * и инпуты CommentCreateInput и CommentUpdateInput
-       */
-      Comment,
-
-      // Gallery,
-      // GalleryFile,
-      FreeModeCampModule,
-    ]
-      .concat(
-        EthereumModules,
-        SocietyModules,
-        UploadModules,
-      )
-      .concat([
+        // /**
+        //  * Важно кастомные классы в последнюю очередь использовать.
+        //  * Но надо будет вообще вывести базовые кслассы в отдельный загрузчик
+        //  */
+        ResourceModule,
+        BlogModule,
+        CooperationModule,
+        TestModule,
         UserModule,
-      ])
-    );
+        RouterModule,
+        Technology,
+        TechnologyLesson,
+        UserTechnology,
+        TechnologyLessonUser,
+        Career,
 
+        /**
+         * Конфликтный объект, потому что используются уже ресурсы-комментарии
+         * и инпуты CommentCreateInput и CommentUpdateInput
+         */
+        Comment,
+
+        // Gallery,
+        // GalleryFile,
+        FreeModeCampModule,
+      ]
+        .concat(EthereumModules, SocietyModules, UploadModules)
+        .concat([UserModule])
+    )
   }
 
-
   getSchema(types = []) {
-
-    let schema = super.getSchema(types);
+    let schema = super.getSchema(types)
 
     // schema = this.cleanupApiSchema(schema, [
     //   'Resource',
@@ -120,24 +106,22 @@ class CoreModule extends PrismaModule {
 
     let customSchema = fileLoader(__dirname + '/schema/database/', {
       recursive: true,
-    });
+    })
 
     if (customSchema) {
-      schema = mergeTypes([schema].concat(customSchema), { all: true });
+      schema = mergeTypes([schema].concat(customSchema), { all: true })
     }
 
-    return schema;
+    return schema
   }
 
-
   getApiSchema(types = []) {
+    let baseSchema = []
 
-    let baseSchema = [];
-
-    let schemaFile = __dirname + "/../../schema/generated/prisma.graphql";
+    let schemaFile = __dirname + '/../../schema/generated/prisma.graphql'
 
     if (fs.existsSync(schemaFile)) {
-      baseSchema = fs.readFileSync(schemaFile, "utf-8");
+      baseSchema = fs.readFileSync(schemaFile, 'utf-8')
 
       baseSchema = this.cleanupApiSchema(baseSchema, [
         // // Cooperation
@@ -196,38 +180,38 @@ class CoreModule extends PrismaModule {
         // "FileCreateOneWithoutImageResourceInput",
         // "FileUpdateOneWithoutImageResourceInput",
 
-        "ChatRoomCreateInput",
-        "ChatRoomUpdateInput",
-        "UserCreateManyWithoutRoomsInput",
-        "UserUpdateManyWithoutRoomsInput",
+        'ChatRoomCreateInput',
+        'ChatRoomUpdateInput',
+        'UserCreateManyWithoutRoomsInput',
+        'UserUpdateManyWithoutRoomsInput',
 
-        "ChatMessageCreateInput",
-        "ChatMessageUpdateInput",
-        "ChatRoomCreateOneWithoutMessagesInput",
+        'ChatMessageCreateInput',
+        'ChatMessageUpdateInput',
+        'ChatRoomCreateOneWithoutMessagesInput',
 
-        "ChatMessageReadedCreateInput",
-        "ChatMessageCreateOneWithoutReadedByInput",
+        'ChatMessageReadedCreateInput',
+        'ChatMessageCreateOneWithoutReadedByInput',
 
         // "CallRequestCreateInput",
-        "CallRequestUpdateDataInput",
-        "ChatRoomCreateOneWithoutCallRequestsInput",
-        "ChatRoomUpdateOneWithoutCallRequestsInput",
+        'CallRequestUpdateDataInput',
+        'ChatRoomCreateOneWithoutCallRequestsInput',
+        'ChatRoomUpdateOneWithoutCallRequestsInput',
 
-        "EthContractSourceCreateInput",
-        "EthContractSourceUpdateInput",
-        "EthTransactionCreateInput",
-        "EthAccountCreateInput",
-        "EthAccountUpdateInput",
-        "EthTransactionSubscriptionPayload",
+        'EthContractSourceCreateInput',
+        'EthContractSourceUpdateInput',
+        'EthTransactionCreateInput',
+        'EthAccountCreateInput',
+        'EthAccountUpdateInput',
+        'EthTransactionSubscriptionPayload',
 
-        "PlayerCreateInput",
-        "SettingsCreateInput",
-        "SettingsUpdateInput",
-        "CareerCreateInput",
-        "CareerUpdateInput",
+        'PlayerCreateInput',
+        'SettingsCreateInput',
+        'SettingsUpdateInput',
+        'CareerCreateInput',
+        'CareerUpdateInput',
 
-        "CommentCreateInput",
-        "CommentUpdateInput",
+        'CommentCreateInput',
+        'CommentUpdateInput',
 
         /**
          * prisma-3.14
@@ -315,22 +299,18 @@ class CoreModule extends PrismaModule {
         /**
          * Eof prisma-3.14
          */
-
-      ]);
-
+      ])
+    } else {
+      console.error(chalk.red(`Schema file ${schemaFile} did not loaded`))
     }
-    else {
-      console.error(chalk.red(`Schema file ${schemaFile} did not loaded`));
-    }
-
 
     let apiSchema = super.getApiSchema(types.concat(baseSchema), [
       // "Mutation",
-      "User",
-      "Resource",
+      'User',
+      'Resource',
 
-      "UserCreateInput",
-      "UserUpdateInput",
+      'UserCreateInput',
+      'UserUpdateInput',
 
       // "ResourceCreateInput",
       // "ResourceUpdateInput",
@@ -340,7 +320,6 @@ class CoreModule extends PrismaModule {
 
       // "UserSubscriptionPayload",
       // "ResourceSubscriptionPayload",
-
 
       // // Cooperation
       // "ProjectCreateInput",
@@ -400,80 +379,63 @@ class CoreModule extends PrismaModule {
 
       // "EthTransactionCreateInput",
       // "EthTransactionSubscriptionPayload",
-
-    ]);
-
+    ])
 
     let schema = fileLoader(__dirname + '/schema/api/', {
       recursive: true,
-    });
+    })
 
-    apiSchema = mergeTypes(schema.concat(apiSchema), { all: true });
-
-
-
+    apiSchema = mergeTypes(schema.concat(apiSchema), { all: true })
 
     /**
      * Фильтруем все резолверы, коих нет в текущем классе
      */
-    const resolvers = this.getResolvers();
+    const resolvers = this.getResolvers()
 
-    const parsed = parse(apiSchema);
+    const parsed = parse(apiSchema)
 
     let operations = parsed.definitions.filter(
-      n => n.kind === "ObjectTypeDefinition"
-        && ["Query", "Mutation", "Subscription"].indexOf(n.name.value) !== -1
+      (n) =>
+        n.kind === 'ObjectTypeDefinition' &&
+        ['Query', 'Mutation', 'Subscription'].indexOf(n.name.value) !== -1
       // && !resolvers[n.name.value][]
-    );
+    )
 
-    operations.map(n => {
-
+    operations.map((n) => {
       let {
-        name: {
-          value: operationName,
-        },
+        name: { value: operationName },
         fields,
-      } = n;
+      } = n
 
-      n.fields = fields.filter(field => {
+      n.fields = fields.filter((field) => {
+        return resolvers[operationName][field.name.value] ? true : false
+      })
 
-        return resolvers[operationName][field.name.value] ? true : false;
-      });
+      return null
+    })
 
-      return null;
-    });
+    apiSchema = print(parsed)
 
-    apiSchema = print(parsed);
-
-
-    return apiSchema;
-
+    return apiSchema
   }
 
-
   renderApiSchema() {
+    let schemaFile = 'src/schema/generated/api.graphql'
 
-    let schemaFile = "src/schema/generated/api.graphql";
-
-    let baseSchema = "";
+    let baseSchema = ''
 
     if (fs.existsSync(schemaFile)) {
-      baseSchema = fs.readFileSync(schemaFile, "utf-8");
+      baseSchema = fs.readFileSync(schemaFile, 'utf-8')
     }
     // else {
     //   console.log("file not exists");
     // }
 
-    return baseSchema;
+    return baseSchema
   }
 
-
   getResolvers() {
-
-
-    let resolvers = super.getResolvers();
-
-
+    let resolvers = super.getResolvers()
 
     const {
       Query: {
@@ -508,80 +470,56 @@ class CoreModule extends PrismaModule {
       },
       User,
       ...other
-    } = resolvers;
-
+    } = resolvers
 
     let AllowedMutations = {
       ...Mutation,
       createProjectProcessor,
       createTemplateProcessor: async (source, args, ctx, info) => {
-
         // console.log("createTemplateProcessor args", args);
-
 
         /**
          * При создании шаблона, если не был получен проект, создаем его
          */
 
         const {
-          data: {
-            component,
-            Parent,
-          },
-        } = args;
+          data: { component, Parent },
+        } = args
 
-        if (component === "Page" && !Parent) {
+        if (component === 'Page' && !Parent) {
+          const { getProjectFromRequest, currentUser } = ctx
 
-
-          const {
-            getProjectFromRequest,
-            currentUser,
-          } = ctx;
-
-
-          const project = await getProjectFromRequest(ctx);
-
+          const project = await getProjectFromRequest(ctx)
 
           // console.log("createTemplateProcessor project", project);
           // console.log("createTemplateProcessor currentUser", currentUser);
-
 
           /**
            * Если проекта нет и есть текущий пользователь, создаем новый проект
            */
           if (!project && currentUser) {
+            const { id: currentUserId, username } = currentUser
 
             const {
-              id: currentUserId,
-              username,
-            } = currentUser;
-
-            const {
-              request: {
-                headers,
-              },
+              request: { headers },
               db,
-            } = ctx;
-
+            } = ctx
 
             // console.log("headers", headers);
 
-            const {
-              origin,
-            } = headers;
+            const { origin } = headers
 
             if (!origin) {
-              return this.addError("Can not get request origin");
+              return this.addError('Can not get request origin')
             }
 
-            const uri = new URI(origin);
+            const uri = new URI(origin)
 
-            let domain = uri.hostname();
-            let subdomain = uri.subdomain();
-
+            let domain = uri.hostname()
+            let subdomain = uri.subdomain()
 
             if (!domain) {
-              return this.addError("Can not get request domain");
+              return this.addError('Can not get request domain')
             }
 
             // console.log("subdomain", subdomain, subdomain.split("."));
@@ -591,72 +529,63 @@ class CoreModule extends PrismaModule {
              */
 
             if (subdomain) {
-
               const exists = await db.exists.User({
-                username_in: subdomain.split("."),
+                username_in: subdomain.split('.'),
                 username_not: username,
-              });
-
+              })
 
               // console.log("subdomain user exists", exists);
 
               if (exists) {
                 return {
                   success: false,
-                  message: "Can not create project with url match other user's username",
+                  message:
+                    "Can not create project with url match other user's username",
                   errors: [],
                 }
               }
-
             }
 
             // return {
 
             // }
 
-
-            const projectResponse = await createProjectProcessor(null, {
-              data: {
-                // domain,
-                name: domain,
-                url: origin,
-                // CreatedBy: {
-                //   connect: {
-                //     id: currentUserId,
-                //   },
-                // },
-                PrismaUsers: {
-                  connect: {
-                    id: currentUserId,
+            const projectResponse = await createProjectProcessor(
+              null,
+              {
+                data: {
+                  // domain,
+                  name: domain,
+                  url: origin,
+                  // CreatedBy: {
+                  //   connect: {
+                  //     id: currentUserId,
+                  //   },
+                  // },
+                  PrismaUsers: {
+                    connect: {
+                      id: currentUserId,
+                    },
                   },
                 },
               },
-            }, ctx);
+              ctx
+            )
 
-            const {
-              success,
-              data: project,
-            } = projectResponse || {};
+            const { success, data: project } = projectResponse || {}
 
             // console.log("createTemplateProcessor project 2", project);
 
-
             if (!success || !project) {
-
-
               // return {
               //   success: false,
               //   message: "Can not create project",
               //   errors: [],
               // }
 
-              return projectResponse;
-
+              return projectResponse
             }
-
-
           }
-
         }
 
         // return {
@@ -665,11 +594,9 @@ class CoreModule extends PrismaModule {
         //   errors: [],
         // }
 
-
-        return createTemplateProcessor(source, args, ctx, info);
-
+        return createTemplateProcessor(source, args, ctx, info)
       },
-    };
+    }
 
     // for(var i in AllowedMutations){
     //   AllowedMutations[i] = () => {
@@ -695,9 +622,6 @@ class CoreModule extends PrismaModule {
     //   }
     // }
 
-
-
-
     // const {
     //   resource,
     // } = Query
@@ -708,25 +632,20 @@ class CoreModule extends PrismaModule {
         ...Query,
         apiSchema: this.renderApiSchema,
         resource: async (source, args, ctx, info) => {
+          const { where } = args
 
-          const {
-            where,
-          } = args;
-
-          let {
-            uri,
-          } = where || {};
+          let { uri } = where || {}
 
           /**
            * Если указан ури, но не начинается со слеша, то добавляем слеш
            */
-          if (uri && !uri.startsWith("/")) {
-            where.uri = `/${uri}`;
+          if (uri && !uri.startsWith('/')) {
+            where.uri = `/${uri}`
 
-            Object.assign(args, where);
+            Object.assign(args, where)
           }
 
-          return resource(source, args, ctx, info);
+          return resource(source, args, ctx, info)
         },
       },
       Mutation: AllowedMutations,
@@ -755,13 +674,8 @@ class CoreModule extends PrismaModule {
         //   return !currentUserId || currentUserId !== userId ? [] : EthAccounts;
         // },
       },
-    };
-
+    }
   }
-
-
-
 }
 
-
-export default CoreModule;
+export default CoreModule

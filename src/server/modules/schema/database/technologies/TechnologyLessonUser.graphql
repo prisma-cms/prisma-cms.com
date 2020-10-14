@@ -1,8 +1,7 @@
-
 """
-  Кто выполняет урок
+Кто выполняет урок
 """
-type TechnologyLessonUser{
+type TechnologyLessonUser {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -13,15 +12,13 @@ type TechnologyLessonUser{
 }
 
 enum TechnologyLessonUserStatus {
-
   """
-    Принят
+  Принят
   """
   Accepted
 
   """
-    Завершен
+  Завершен
   """
   Completed
-
 }

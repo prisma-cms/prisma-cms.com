@@ -1,35 +1,38 @@
+const PrismaProxy = require('@prisma-cms/front/lib/setupProxy')
 
-const PrismaProxy = require("@prisma-cms/front/lib/setupProxy");
+const proxy = require('http-proxy-middleware')
 
-var proxy = require('http-proxy-middleware');
-
-const cwd = process.cwd();
+const cwd = process.cwd()
 
 module.exports = function (app) {
+  app.get('/pdf.worker.js', (req, res, next) => {
+    res.sendFile(`${cwd}/node_modules/pdfjs-dist/build/pdf.worker.min.js`)
+  })
 
-  app.get("/pdf.worker.js", (req, res, next) => {
-    res.sendFile(`${cwd}/node_modules/pdfjs-dist/build/pdf.worker.min.js`);
-  });
+  app.get('/voyager.worker.js', (req, res, next) => {
+    res.sendFile(
+      `${cwd}/node_modules/@prisma-cms/graphql-voyager/dist/voyager.worker.js`
+    )
+  })
 
-  app.get("/voyager.worker.js", (req, res, next) => {
-    res.sendFile(`${cwd}/node_modules/@prisma-cms/graphql-voyager/dist/voyager.worker.js`);
-  });
+  app.get('/graphql-voyager/voyager.worker.js', (req, res, next) => {
+    res.sendFile(
+      `${cwd}/node_modules/@prisma-cms/graphql-voyager/dist/voyager.worker.js`
+    )
+  })
 
-  app.get("/graphql-voyager/voyager.worker.js", (req, res, next) => {
-    res.sendFile(`${cwd}/node_modules/@prisma-cms/graphql-voyager/dist/voyager.worker.js`);
-  });
+  app.use(
+    proxy('/socket.io/', {
+      target: 'http://localhost:9001',
+      ws: true,
+    })
+  )
 
-  app.use(proxy('/socket.io/', {
-    target: 'http://localhost:9001',
-    ws: true,
-  }));
+  app.get('/media/call.mp3', (req, res, next) => {
+    res.sendFile(`${cwd}/node_modules/@prisma-cms/webrtc/public/media/call.mp3`)
+  })
 
-  app.get("/media/call.mp3", (req, res, next) => {
-    res.sendFile(`${cwd}/node_modules/@prisma-cms/webrtc/public/media/call.mp3`);
-  });
-
-  PrismaProxy(app);
-
-};
+  PrismaProxy(app)
+}
 
 // module.exports = PrismaProxy;

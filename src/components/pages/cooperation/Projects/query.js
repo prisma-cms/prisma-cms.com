@@ -1,10 +1,8 @@
+import React from 'react'
 
-import React from "react";
+import gql from 'graphql-tag'
 
-import gql from "graphql-tag";
-
-import { graphql } from "react-apollo";
-
+import { graphql } from '@apollo/client'
 
 import {
   ProjectNoNestingFragment,
@@ -12,67 +10,50 @@ import {
   TaskNoNestingFragment,
   TimerNoNestingFragment,
   ProjectTaskNoNestingFragment,
-} from "../../../../schema/generated/api.fragments";
-
+} from '../../../../schema/generated/api.fragments'
 
 export const createProjectProcessor = gql`
- 
-
-mutation createProjectProcessor(
-  $data: ProjectCreateInput!
-){
-  response: createProjectProcessor(
-    data: $data
-  ){
-    success
-    message
-    errors{
-      key
+  mutation createProjectProcessor($data: ProjectCreateInput!) {
+    response: createProjectProcessor(data: $data) {
+      success
       message
-    }
-    data{
-      ...ProjectNoNesting
-      Resource{
-        id
-        uri
+      errors {
+        key
+        message
+      }
+      data {
+        ...ProjectNoNesting
+        Resource {
+          id
+          uri
+        }
       }
     }
   }
-}
 
-${ProjectNoNestingFragment}
-
-`;
-
+  ${ProjectNoNestingFragment}
+`
 
 export const updateProjectProcessor = gql`
-
-
-mutation updateProjectProcessor(
-  $data: ProjectUpdateInput!
-  $where: ProjectWhereUniqueInput!
-){
-  response: updateProjectProcessor(
-    data: $data
-    where: $where
-  ){
-    success
-    message
-    errors{
-      key
+  mutation updateProjectProcessor(
+    $data: ProjectUpdateInput!
+    $where: ProjectWhereUniqueInput!
+  ) {
+    response: updateProjectProcessor(data: $data, where: $where) {
+      success
       message
-    }
-    data{
-      ...ProjectNoNesting
+      errors {
+        key
+        message
+      }
+      data {
+        ...ProjectNoNesting
+      }
     }
   }
-}
 
-${ProjectNoNestingFragment}
-
-`;
-
-
+  ${ProjectNoNestingFragment}
+`
 
 export const projectFragment = `
   fragment projectFragment on Project{
@@ -138,29 +119,26 @@ export const projectsListFragment = `
   }
 
   ${projectFragment}
-`;
-
-
+`
 
 export const projectsConnectionQuery = gql`
-
   query projectsConnection(
-    $first:Int!
-    $skip:Int
+    $first: Int!
+    $skip: Int
     $where: ProjectWhereInput
     $orderBy: ProjectOrderByInput!
-  ){
+  ) {
     objectsConnection: projectsConnection(
       orderBy: $orderBy
       first: $first
       skip: $skip
       where: $where
-    ){
-      aggregate{
+    ) {
+      aggregate {
         count
       }
-      edges{
-        node{
+      edges {
+        node {
           ...projectsListFragment
         }
       }
@@ -168,90 +146,51 @@ export const projectsConnectionQuery = gql`
   }
 
   ${projectsListFragment}
-
-`;
+`
 
 export const projectQuery = gql`
-
-  query project(
-    $where: ProjectWhereUniqueInput!
-  ){
-    object: project(
-      where: $where
-    ){ 
-      ...projectFragment 
+  query project($where: ProjectWhereUniqueInput!) {
+    object: project(where: $where) {
+      ...projectFragment
     }
   }
 
   ${projectFragment}
-
-`;
+`
 
 export const projectResourceQuery = gql`
-
-  query project(
-    $where: ResourceWhereUniqueInput!
-  ){
-    object: resource(
-      where: $where
-    ){ 
+  query project($where: ResourceWhereUniqueInput!) {
+    object: resource(where: $where) {
       id
       name
       uri
       type
-      Project{
-        ...projectFragment 
+      Project {
+        ...projectFragment
       }
     }
   }
 
   ${projectFragment}
+`
 
-`;
+const ProjectsQuery = graphql(projectsConnectionQuery)
+export const ProjectsConnector = ProjectsQuery((props) => {
+  const { View, ...other } = props
 
+  return <View {...other} />
+})
 
+const ProjectQuery = graphql(projectQuery)
+export const Project = ProjectQuery((props) => {
+  const { View, ...other } = props
 
-const ProjectsQuery = graphql(projectsConnectionQuery);
-export const ProjectsConnector = ProjectsQuery(props => {
+  return <View {...other} />
+})
 
-  const {
-    View,
-    ...other
-  } = props;
+const ProjectResourceQuery = graphql(projectResourceQuery)
+export const ProjectResource = ProjectResourceQuery((props) => {
+  const { View, ...other } = props
 
-  return <View
-    {...other}
-  />;
-});
-
-
-
-const ProjectQuery = graphql(projectQuery);
-export const Project = ProjectQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-const ProjectResourceQuery = graphql(projectResourceQuery);
-export const ProjectResource = ProjectResourceQuery(props => {
-
-  const {
-    View,
-    ...other
-  } = props;
-
-  return <View
-    {...other}
-  />;
-});
-
-
-
+  return <View {...other} />
+})

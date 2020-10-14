@@ -1,59 +1,39 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
-
-
-import UserLink from '@modxclub/ui/src/Link/User';
-
+import UserLink from '@modxclub/ui/src/Link/User'
 
 export default class UserMenuItem extends Component {
-
-  static defaultProps = {
-  }
-
+  static defaultProps = {}
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-
   }
-
 
   static contextTypes = {
     client: PropTypes.object.isRequired,
-  };
-
+  }
 
   constructor(props) {
+    super(props)
 
-    super(props);
-
-
-    this.state = {
-    };
-
+    this.state = {}
   }
 
-  componentDidMount() {
-
-
-  }
-
+  componentDidMount() {}
 
   render() {
+    const { user } = this.props
 
-    const {
-      user,
-    } = this.props;
-
-    return <UserLink
-      user={user}
-      // showName={false}
-      // style={{
-      //   margin: 0,
-      // }}
-    />;
-
+    return (
+      <UserLink
+        user={user}
+        // showName={false}
+        // style={{
+        //   margin: 0,
+        // }}
+      />
+    )
   }
-
 }

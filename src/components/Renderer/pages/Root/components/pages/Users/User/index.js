@@ -1,73 +1,55 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import EditorComponent from "@prisma-cms/front-editor/lib/components/App/components/";
+import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
 
 // import Icon from "material-ui-icons/SettingsOverscan";
 
-import CustomUserPage from "../../../../../UsersPage/UserPage";
+import CustomUserPage from '../../../../../UsersPage/UserPage'
 
 class UserPage extends EditorComponent {
-
   // static defaultProps = {
   //   ...EditorComponent.defaultProps,
   //   marginTop: 10,
   //   marginBottom: 10,
   // }
 
-  static Name = "UserPage"
+  static Name = 'UserPage'
 
   renderPanelView() {
+    const { classes } = this.getEditorContext()
 
-    const {
-      classes,
-    } = this.getEditorContext();
-
-    return super.renderPanelView(<div
-      className={classes.panelButton}
-    >
-      {/* <Icon />  */}
-      User page
-    </div>);
+    return super.renderPanelView(
+      <div className={classes.panelButton}>
+        {/* <Icon />  */}
+        User page
+      </div>
+    )
   }
 
-
   renderChildren() {
-
     // const {
     //   ...other
     // } = this.getComponentProps(this);
 
-
-    const {
-      parent,
-    } = this.props;
+    const { parent } = this.props
 
     if (!parent) {
-      return false;
+      return false
     }
 
     const {
-      props: {
-        match,
-      },
-    } = parent;
+      props: { match },
+    } = parent
 
-
-
-    const {
-      params: where,
-    } = match || {};
+    const { params: where } = match || {}
 
     if (!where) {
-      return null;
+      return null
     }
 
-    return <CustomUserPage
-      where={where}
-    />;
+    return <CustomUserPage where={where} />
   }
-
 }
 
-export default UserPage;
+export default UserPage

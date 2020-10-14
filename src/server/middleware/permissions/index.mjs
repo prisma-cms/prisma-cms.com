@@ -1,27 +1,21 @@
-
-import GraphQLShield from 'graphql-shield';
+import GraphQLShield from 'graphql-shield'
 
 const {
   rule,
   // and,
   // or,
   shield,
-} = GraphQLShield;
+} = GraphQLShield
 
 const rules = {
   isSudo: rule({ cache: 'no_cache' })((source, args, ctx) => {
+    const { currentUser } = ctx
 
-    const {
-      currentUser,
-    } = ctx;
+    const { sudo } = currentUser || {}
 
-    const {
-      sudo,
-    } = currentUser || {};
-
-    return sudo === true;
+    return sudo === true
   }),
-};
+}
 
 export default shield(
   {
@@ -34,9 +28,7 @@ export default shield(
   },
   {
     fallbackError: (error, parent, args, context, info) => {
-
-      return error || new Error("Доступ запрещен");
+      return error || new Error('Доступ запрещен')
     },
   }
-);
-
+)
