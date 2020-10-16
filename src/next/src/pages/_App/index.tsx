@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NextApp, { AppContext, AppInitialProps } from 'next/app'
-// import { ApolloProvider } from '@apollo/client'
 import { ApolloProvider } from '@apollo/client'
-import { ThemeProvider } from 'styled-components'
-import theme, { GlobalStyle } from './theme'
+// import styled, { ThemeProvider } from 'styled-components'
+// import theme, { GlobalStyle } from './theme'
 import { NextPageContextCustom, AppProps } from './interfaces'
 
 import { useApollo, initializeApollo } from 'src/next/src/lib/apolloClient'
@@ -11,29 +10,131 @@ import { useApollo, initializeApollo } from 'src/next/src/lib/apolloClient'
 import Context from '@prisma-cms/context'
 import URI from 'urijs'
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { muiTheme } from './MUI/theme'
+
+// import JssProvider from 'react-jss/lib/JssProvider'
+// import { createGenerateClassName } from 'material-ui/styles'
+
+// import Typography from 'material-ui/Typography'
+// import Button from 'material-ui/Button';
+// import Grid from 'material-ui/Grid'
+// import Link from 'next/link';
+
+// console.log(process.env);
+
+// const ButtonMuiStyled = styled(Button)`
+//    {
+//     background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+//   }
+// `
+
+
 export default function App({ Component, pageProps }: AppProps) {
   const apolloClient = useApollo(pageProps.initialApolloState)
 
-  return (
+
+  // const {
+  //   sheetsRegistry,
+  //   generateClassName,
+  // } = pageProps;
+
+  useEffect(() => {
+    if (document) {
+      const muiSsrStyles = document.querySelector('#server-side-jss')
+
+      if (muiSsrStyles) {
+        muiSsrStyles.remove()
+      }
+    }
+  })
+
+
+  console.log('Render App');
+
+
+  let content = (
     <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <ApolloProvider client={apolloClient}>
-          <Context.Provider
-            value={{
-              uri: new URI(),
-              client: apolloClient,
-            }}
-          >
-            <nav></nav>
-            <main id="content">
-              <Component {...pageProps} />
-            </main>
-          </Context.Provider>
-        </ApolloProvider>
-      </ThemeProvider>
+
+      {/* <GlobalStyle /> */}
+
+      {/* <ThemeProvider theme={theme}> */}
+
+      <ApolloProvider client={apolloClient}>
+        <Context.Provider
+          value={{
+            uri: new URI(),
+            client: apolloClient,
+          }}
+        >
+          {/* <nav
+                style={{
+                  padding: '0 8px',
+                }}
+              >
+                <Grid
+                  container
+                  spacing={16}
+                >
+                  <Grid
+                    item
+                  >
+                    <Link
+                      href="/"
+                    >
+                      Main Page
+                      </Link>
+                  </Grid>
+                  <Grid
+                    item
+                  >
+                    <Link
+                      href="/topics"
+                    >
+                      Topics
+                      </Link>
+                  </Grid>
+                </Grid>
+              </nav> */}
+          {/* <main id="content"> */}
+
+          {/* <Typography
+                  color="error"
+                  style={{
+                    // display: !global.document ? 'none' : 'inline-block',
+                    // color: !global.document ? 'green' : 'red',
+                  }}
+                >
+                  MUI Typography
+                  </Typography>
+
+                <ButtonMuiStyled>
+                  Button MUI Styled
+                  </ButtonMuiStyled> */}
+
+          <Component {...pageProps} />
+          {/* </main> */}
+        </Context.Provider>
+      </ApolloProvider>
+
+      {/* </ThemeProvider> */}
     </>
   )
+
+  if (typeof window !== 'undefined') {
+
+    content = <MuiThemeProvider
+      theme={muiTheme}
+
+      // For SSR only
+      // sheetsManager={typeof window === 'undefined' ? new Map() : undefined}
+      sheetsManager={new Map()}
+    >
+      {content}
+    </MuiThemeProvider>
+  }
+
+  return content;
 }
 
 App.getInitialProps = async (appContext: AppContext) => {

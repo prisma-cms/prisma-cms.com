@@ -48,6 +48,10 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
     return <div>Loading</div>
   }
 
+  // return <>
+  //   Test
+  // </>
+
   // Filter issue: https://github.com/microsoft/TypeScript/issues/41090
   // const nodes: CommentsConnectionCommentFragment[] = (data?.commentsConnection.edges.map((edge) => edge?.node) || [])
   //   .filter(n => !!n)

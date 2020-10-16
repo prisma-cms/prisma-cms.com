@@ -1,4 +1,17 @@
 {
   "presets": ["next/babel"],
-  "plugins": [["styled-components", { "ssr": true }]]
+  "plugins": [
+    // https://styled-components.com/docs/tooling#serverside-rendering
+    // [
+    //   "babel-plugin-styled-components",
+    //   {
+    //     "ssr": true
+
+    //     // https://styled-components.com/docs/tooling#serverside-rendering
+    //     , "displayName": false
+
+    //     // , "preprocess": false 
+    //   }
+    // ]
+  ]
 }
