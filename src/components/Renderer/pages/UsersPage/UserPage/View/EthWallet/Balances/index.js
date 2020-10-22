@@ -1,23 +1,22 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Typography,
-  Paper,
-  Checkbox,
-  IconButton,
-  CircularProgress,
-} from 'material-ui'
-import { withStyles } from 'material-ui'
+
+import Checkbox from 'material-ui/Checkbox'
+import IconButton from 'material-ui/IconButton'
+import CircularProgress from 'material-ui/Progress/CircularProgress'
+import Paper from 'material-ui/Paper'
+import Typography from 'material-ui/Typography'
+import withStyles from 'material-ui/styles/withStyles'
 
 import WalletIcon from 'material-ui-icons/AccountBalanceWallet'
 import HelpIcon from 'material-ui-icons/Help'
 import CheckIcon from 'material-ui-icons/Check'
 import SendIcon from 'material-ui-icons/Send'
 
-import { Button } from 'material-ui'
+import Button from 'material-ui/Button'
 
 import PrismaCmsComponent from '@prisma-cms/component'
-import { TextField } from 'material-ui'
+import TextField from 'material-ui/TextField'
 
 import NumberFormat from 'react-number-format'
 

@@ -1,9 +1,18 @@
-import { TopicsConnectionQueryHookResult } from 'src/modules/gql/generated/topicsConnection'
+import { Maybe, TopicsConnectionQuery, TopicsConnectionQueryHookResult } from 'src/modules/gql/generated'
+import { ObjectsListViewProps } from '../../List/interfaces';
 
-export type ForumViewPropsData = TopicsConnectionQueryHookResult
+// export type ForumViewPropsData = TopicsConnectionQueryHookResult["data"];
 
-export type ForumViewProps = {} & ForumViewPropsData
 
-export type TableViewProps = {
-  classes: any
-} & ForumViewProps
+/**
+ * Пропсы для компонента вывода топиков
+ */
+export interface ForumViewProps extends ObjectsListViewProps {
+
+  data: Maybe<TopicsConnectionQuery>;
+
+  variables?: TopicsConnectionQueryHookResult["variables"];
+
+  classes?: any;
+
+}

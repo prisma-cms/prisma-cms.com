@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { ChatRooms, NewMessage } from '@prisma-cms/society'
 
 import Context from '@prisma-cms/context'
-import { Typography } from 'material-ui'
-import { withStyles } from 'material-ui'
+import Typography from 'material-ui/Typography'
+import withStyles from 'material-ui/styles/withStyles'
 
 const styles = () => {
   return {

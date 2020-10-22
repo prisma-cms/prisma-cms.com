@@ -6,7 +6,7 @@ import { graphql } from '@apollo/client'
 import gql from 'graphql-tag'
 
 import View from './View'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 export default class TopicBlog extends PrismaCmsComponent {
   static propTypes = {

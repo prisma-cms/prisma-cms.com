@@ -7,9 +7,9 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  #content {
+  /* #content {
     padding: 16px;
-  }
+  } */
 `
 
 const theme = {

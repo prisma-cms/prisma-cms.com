@@ -18,4 +18,5 @@ module.exports = {
   },
   modulePaths: ['<rootDir>'],
   testURL: 'http://localhost:3000',
+  preset: 'ts-jest/presets/js-with-babel',
 }

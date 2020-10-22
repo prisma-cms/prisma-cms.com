@@ -11,7 +11,7 @@ import Resource from '..'
 // import ResourceField from './Field';
 import OldPageHeader from '../../OldPageHeader'
 import OldPages from '../../pages/OldPages'
-import { Button } from 'material-ui'
+import Button from 'material-ui/Button'
 
 export class ResourceFieldsProxy extends EditorComponent {
   static propTypes = {

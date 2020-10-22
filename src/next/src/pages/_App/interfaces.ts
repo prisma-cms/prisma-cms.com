@@ -1,5 +1,8 @@
-import { NextPageContext } from 'next'
+import { NextComponentType, NextPageContext } from 'next'
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import URI from 'urijs'
+import { NextRouter } from 'next/router'
+import { Maybe, MeUserFragment } from 'src/modules/gql/generated'
 // import { ApolloClient } from 'apollo-client'
 // import { NormalizedCacheObject } from 'apollo-cache-inmemory'
 
@@ -28,3 +31,36 @@ export type AppProps = {
  * API-клиент
  */
 export type ApolloClientNormolized = ApolloClient<NormalizedCacheObject>
+
+/**
+ * Свойства, передаваемые в @prisma-cms/context
+ */
+export type PrismaCmsContext = {
+  uri: ReturnType<typeof URI>
+
+  client: ApolloClientNormolized
+
+  // TODO: убрать из контекста
+  router: NextRouter
+
+  // TODO: убрать из контекста
+  /**
+   * GraphQL-запросы
+   */
+  query?: any
+
+  user?: Maybe<MeUserFragment>
+
+  logout: () => void
+
+  openLoginForm: () => void
+
+  lang: string
+}
+
+/**
+ * Страница с кастомным контекстом
+ */
+export type Page<
+  C extends NextPageContextCustom = NextPageContextCustom
+  > = NextComponentType<C>

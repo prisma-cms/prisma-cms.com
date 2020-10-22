@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import NextApp, { AppContext, AppInitialProps } from 'next/app'
+import { useRouter } from 'next/router'
 import { ApolloProvider } from '@apollo/client'
-// import styled, { ThemeProvider } from 'styled-components'
-// import theme, { GlobalStyle } from './theme'
-import { NextPageContextCustom, AppProps } from './interfaces'
+import { ThemeProvider } from 'styled-components'
+import theme, { GlobalStyle } from './theme'
+import { NextPageContextCustom, AppProps, PrismaCmsContext } from './interfaces'
 
-import { useApollo, initializeApollo } from 'src/next/src/lib/apolloClient'
+import { useApollo, initializeApollo, getSubscriptionClient } from 'src/next/src/lib/apolloClient'
 
 import Context from '@prisma-cms/context'
 import URI from 'urijs'
@@ -13,131 +14,187 @@ import URI from 'urijs'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { muiTheme } from './MUI/theme'
 
-// import JssProvider from 'react-jss/lib/JssProvider'
-// import { createGenerateClassName } from 'material-ui/styles'
+import Auth from 'src/next/src/components/Auth'
+import WithUser from './WithUser'
+import { AuthFormResponse } from '../../components/Auth/forms/interfaces'
 
-// import Typography from 'material-ui/Typography'
-// import Button from 'material-ui/Button';
-// import Grid from 'material-ui/Grid'
-// import Link from 'next/link';
+import moment from 'moment'
 
-// console.log(process.env);
-
-// const ButtonMuiStyled = styled(Button)`
-//    {
-//     background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
-//   }
-// `
+// TODO: Проработать локализацию
+moment.locale('ru');
 
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   const apolloClient = useApollo(pageProps.initialApolloState)
-
 
   // const {
   //   sheetsRegistry,
   //   generateClassName,
   // } = pageProps;
 
+  const router = useRouter()
+
   useEffect(() => {
-    if (document) {
-      const muiSsrStyles = document.querySelector('#server-side-jss')
+    if (global.document) {
+      const muiSsrStyles = global.document.querySelector('#server-side-jss')
 
       if (muiSsrStyles) {
         muiSsrStyles.remove()
       }
     }
-  })
+  }, [])
+
+  // useEffect(() => {
+
+  //   router.prefetch = async (url) => {
+  //     // eslint-disable-next-line no-console
+  //     console.log('router.prefetch', url)
+  //   }
+
+  //   const handleRouteChange = (url: string) => {
+  //     // eslint-disable-next-line no-console
+  //     console.log('App is changing to: ', url)
+  //   }
+
+  //   router.events.on('routeChangeStart', handleRouteChange)
+
+  //   // If the component is unmounted, unsubscribe
+  //   // from the event with the `off` method:
+  //   return () => {
+  //     router.events.off('routeChangeStart', handleRouteChange)
+  //   }
+  // }, [])
+
+  // console.log('Render App');
+
+  const [authOpen, setOpened] = useState(false)
 
 
-  console.log('Render App');
+  /**
+   * Сбрасываем кеш аполло-клиента на авторизацию и деавторизацию
+   */
+  const resetConnection = useCallback(async (token: string | null) => {
 
+    if (token) {
+      global.localStorage.setItem('token', token)
+    }
+    else {
+      global.localStorage.removeItem('token')
+    }
 
-  let content = (
-    <>
+    /**
+     * Переподключаем веб-сокет
+     */
+    const subscriptionClient = getSubscriptionClient();
 
-      {/* <GlobalStyle /> */}
+    subscriptionClient?.close(false, false);
 
-      {/* <ThemeProvider theme={theme}> */}
+    await apolloClient.resetStore()
+  }, [apolloClient])
 
-      <ApolloProvider client={apolloClient}>
-        <Context.Provider
-          value={{
-            uri: new URI(),
-            client: apolloClient,
-          }}
-        >
-          {/* <nav
-                style={{
-                  padding: '0 8px',
-                }}
-              >
-                <Grid
-                  container
-                  spacing={16}
-                >
-                  <Grid
-                    item
-                  >
-                    <Link
-                      href="/"
-                    >
-                      Main Page
-                      </Link>
-                  </Grid>
-                  <Grid
-                    item
-                  >
-                    <Link
-                      href="/topics"
-                    >
-                      Topics
-                      </Link>
-                  </Grid>
-                </Grid>
-              </nav> */}
-          {/* <main id="content"> */}
-
-          {/* <Typography
-                  color="error"
-                  style={{
-                    // display: !global.document ? 'none' : 'inline-block',
-                    // color: !global.document ? 'green' : 'red',
-                  }}
-                >
-                  MUI Typography
-                  </Typography>
-
-                <ButtonMuiStyled>
-                  Button MUI Styled
-                  </ButtonMuiStyled> */}
-
-          <Component {...pageProps} />
-          {/* </main> */}
-        </Context.Provider>
-      </ApolloProvider>
-
-      {/* </ThemeProvider> */}
-    </>
+  const loginComplete = useCallback(
+    async (data: AuthFormResponse) => {
+      const { token } = data
+      await resetConnection(token)
+    },
+    [resetConnection]
   )
 
-  if (typeof window !== 'undefined') {
 
-    content = <MuiThemeProvider
-      theme={muiTheme}
+  const loginCanceled = useCallback(() => {
+    setOpened(false)
+  }, [setOpened])
 
-      // For SSR only
-      // sheetsManager={typeof window === 'undefined' ? new Map() : undefined}
-      sheetsManager={new Map()}
-    >
-      {content}
-    </MuiThemeProvider>
-  }
+  const logout = useCallback(async () => {
+    await resetConnection(null)
+  }, [resetConnection])
 
-  return content;
-}
+  /**
+   * Открываем форму для авторизации
+   */
+  const openLoginForm = useCallback(() => {
+    setOpened(true)
+  }, [setOpened])
+
+  const contextValue = useMemo(() => {
+
+    const context: PrismaCmsContext = {
+      uri: new URI(),
+      client: apolloClient,
+      router,
+      logout,
+      openLoginForm,
+      lang: 'ru',
+    };
+
+    return context;
+
+  }, [apolloClient, logout, openLoginForm, router]);
+
+
+  /**
+   * Отлавливаем изменения в контексте
+   */
+  // const compare__context = useMemo(() => {
+
+  //   console.log('compare__context useMemo');
+
+  //   let target = contextValue;
+
+  //   return (a: typeof contextValue) => {
+
+  //     console.log('compare__context a', a);
+
+  //     if (!compare("compare__context", a, target)) {
+  //       target = a;
+  //     }
+  //   }
+
+  // }, [contextValue]);
+
+  // compare__context(contextValue);
+
+
+  return <MuiThemeProvider
+    theme={muiTheme}
+    // For SSR only
+    sheetsManager={typeof global.window === 'undefined' ? new Map() : undefined}
+  >
+    <GlobalStyle />
+    <ThemeProvider theme={theme}>
+      <ApolloProvider client={apolloClient}>
+        <Context.Provider value={contextValue}>
+          <WithUser context={contextValue}>
+
+            <Auth
+              open={authOpen}
+              useMetamask={true}
+              loginComplete={loginComplete}
+              loginCanceled={loginCanceled}
+              showRegForm={true}
+            />
+
+            <Component {...pageProps} />
+
+          </WithUser>
+        </Context.Provider>
+      </ApolloProvider>
+    </ThemeProvider>
+  </MuiThemeProvider>;
+};
 
 App.getInitialProps = async (appContext: AppContext) => {
+  /**
+   * В родном контексте неправильная типизация
+   */
+  // const req = appContext.ctx.req as Request;
+
+  // const lang = req.acceptsLanguages('ru', 'en');
+
+  // if (lang) {
+  //   moment.locale(lang);
+  // }
+
   /**
    * Для того, чтобы в итоге можно было собрать общий аполло-стейт
    * с приложения и далее выполняемый страниц и документа,
@@ -174,3 +231,5 @@ App.getInitialProps = async (appContext: AppContext) => {
 
   return newProps
 }
+
+export default App;

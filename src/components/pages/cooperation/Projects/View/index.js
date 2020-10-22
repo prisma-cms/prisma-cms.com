@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 import Context from '@prisma-cms/context'
 import Filters from '@prisma-cms/filters'

@@ -9,10 +9,8 @@
 import * as Types from './types';
 
 import { TopicsConnectionTopicFragment } from './topicsConnectionTopic';
-import { TopicsConnectionUserFragment } from './topicsConnectionUser';
 import { gql } from '@apollo/client';
 import { TopicsConnectionTopicFragmentDoc } from './topicsConnectionTopic';
-import { TopicsConnectionUserFragmentDoc } from './topicsConnectionUser';
 import * as Apollo from '@apollo/client';
 export type TopicsConnectionQueryVariables = Types.Exact<{
   first?: Types.Maybe<Types.Scalars['Int']>;
@@ -23,13 +21,7 @@ export type TopicsConnectionQueryVariables = Types.Exact<{
 
 
 export type TopicsConnectionQuery = { __typename?: 'Query', objectsConnection: { __typename?: 'ResourceConnection', aggregate: { __typename?: 'AggregateResource', count: number }, edges: Array<Types.Maybe<{ __typename?: 'ResourceEdge', node: (
-        { __typename?: 'Resource', CreatedBy: (
-          { __typename?: 'User' }
-          & TopicsConnectionUserFragment
-        ), Comments?: Types.Maybe<Array<{ __typename?: 'Resource', id: string, updatedAt: any, CreatedBy: (
-            { __typename?: 'User' }
-            & TopicsConnectionUserFragment
-          ) }>>, Blog?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, longtitle?: Types.Maybe<string>, uri: string }>, Tags?: Types.Maybe<Array<{ __typename?: 'ResourceTag', Tag: { __typename?: 'Tag', id: string, name: string } }>> }
+        { __typename?: 'Resource' }
         & TopicsConnectionTopicFragment
       ) }>> } };
 
@@ -48,34 +40,11 @@ export const TopicsConnectionDocument = gql`
     edges {
       node {
         ...topicsConnectionTopic
-        CreatedBy {
-          ...topicsConnectionUser
-        }
-        Comments(orderBy: id_ASC) {
-          id
-          updatedAt
-          CreatedBy {
-            ...topicsConnectionUser
-          }
-        }
-        Blog {
-          id
-          name
-          longtitle
-          uri
-        }
-        Tags {
-          Tag {
-            id
-            name
-          }
-        }
       }
     }
   }
 }
-    ${TopicsConnectionTopicFragmentDoc}
-${TopicsConnectionUserFragmentDoc}`;
+    ${TopicsConnectionTopicFragmentDoc}`;
 
 /**
  * __useTopicsConnectionQuery__

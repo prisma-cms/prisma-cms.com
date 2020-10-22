@@ -2,16 +2,22 @@
   "presets": ["next/babel"],
   "plugins": [
     // https://styled-components.com/docs/tooling#serverside-rendering
+    [
+      "babel-plugin-styled-components",
+      {
+        "ssr": true
+        // https://styled-components.com/docs/tooling#serverside-rendering
+        // , "displayName": false
+        // , "preprocess": false
+      }
+    ]
     // [
-    //   "babel-plugin-styled-components",
-    //   {
-    //     "ssr": true
-
-    //     // https://styled-components.com/docs/tooling#serverside-rendering
-    //     , "displayName": false
-
-    //     // , "preprocess": false 
-    //   }
+    //   "@babel/plugin-proposal-class-properties",
+    //   {}
+    // ],
+    // [
+    //   "@babel/plugin-syntax-class-properties",
+    //   {}
     // ]
   ]
 }

@@ -2,23 +2,15 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
-// import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-// import IconButton from 'material-ui/IconButton';
-
-// import CreateIcon from 'material-ui-icons/Create';
 
 import UserItem from '@prisma-cms/front/lib/components/App/Renderer/MainMenu/User'
 import { styles as defaultStyles } from '@prisma-cms/front/lib/components/App/Renderer/MainMenu'
 import Language from '@prisma-cms/front/lib/components/Language'
-// import UserItem from "./User";
 
 import { Link } from 'react-router-dom'
 import { Notices } from '@prisma-cms/society'
-// import { IconButton } from 'material-ui';
-
-// import Context from "@prisma-cms/context";
 import PrismaCmsComponent from '@prisma-cms/component'
 
 import { CallRequestButtons } from '@prisma-cms/webrtc'

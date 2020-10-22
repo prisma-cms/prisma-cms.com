@@ -5,8 +5,8 @@ import moment from 'moment'
 import EditableView from 'apollo-cms/lib/DataView/Object/Editable'
 
 import Forum from '../../../../view/forum'
-import { Typography } from 'material-ui'
-import { withStyles } from 'material-ui'
+import Typography from 'material-ui/Typography'
+import withStyles from 'material-ui/styles/withStyles'
 
 const styles = {
   root: {

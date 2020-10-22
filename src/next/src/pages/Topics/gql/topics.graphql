@@ -16,28 +16,6 @@ query topicsConnection(
     edges {
       node {
         ...topicsConnectionTopic
-        CreatedBy {
-          ...topicsConnectionUser
-        }
-        Comments(orderBy: id_ASC) {
-          id
-          updatedAt
-          CreatedBy {
-            ...topicsConnectionUser
-          }
-        }
-        Blog {
-          id
-          name
-          longtitle
-          uri
-        }
-        Tags {
-          Tag {
-            id
-            name
-          }
-        }
       }
     }
   }
@@ -49,6 +27,28 @@ fragment topicsConnectionTopic on Resource {
   name
   uri
   longtitle
+  CreatedBy {
+    ...topicsConnectionUser
+  }
+  Comments(orderBy: id_ASC) {
+    id
+    updatedAt
+    CreatedBy {
+      ...topicsConnectionUser
+    }
+  }
+  Blog {
+    id
+    name
+    longtitle
+    uri
+  }
+  Tags {
+    Tag {
+      id
+      name
+    }
+  }
 }
 
 fragment topicsConnectionUser on User {

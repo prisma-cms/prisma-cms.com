@@ -5,11 +5,11 @@ import PropTypes from 'prop-types'
 import Page from '../layout'
 
 import Forum from '../../view/forum'
-import { Typography, Tabs, Tab } from 'material-ui'
+import Tabs, { Typography, Tab } from 'material-ui/Tabs'
 
 import Comments from './Comments'
 import Tasks from './Tasks'
-import { withStyles } from 'material-ui'
+import withStyles from 'material-ui/styles/withStyles'
 
 import { ChatRoom } from '@prisma-cms/society'
 

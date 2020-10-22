@@ -1,7 +1,7 @@
 // TODO: Сейчас пагинатор требует контекст роутера. Надо пофиксить.
 
 import React from 'react'
-import { render } from 'src/next/src/tests/utils'
+import { appRender } from 'src/next/src/tests/utils'
 
 import TopicsPage from '..'
 
@@ -1493,7 +1493,7 @@ jest.mock('@apollo/client/react/hooks', () => {
 
 describe('TopicsPage', () => {
   it('Render TopicsPage', async () => {
-    const tree = await render(
+    const tree = await appRender(
       <TopicsPage
       // title="Test RableView"
       />

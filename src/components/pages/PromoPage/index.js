@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from 'material-ui'
-import { withStyles } from 'material-ui'
+import Button from 'material-ui/Button'
+import withStyles from 'material-ui/styles/withStyles'
 
 // import { FrontEditor } from "@prisma-cms/front";
 import FrontEditor from '@prisma-cms/front-editor/lib/components/App'

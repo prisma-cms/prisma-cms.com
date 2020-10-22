@@ -9,7 +9,7 @@ import moment from 'moment'
 import { UserLink } from '@modxclub/ui'
 
 import Editor from '@modxclub/react-editor'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 import Grid from '@prisma-cms/front/lib/modules/ui/Grid'
 

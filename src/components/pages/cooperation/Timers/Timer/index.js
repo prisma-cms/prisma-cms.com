@@ -9,7 +9,7 @@ import { Timer as TimerQuery, updateTimerProcessor } from '../query'
 
 import TimerView from '../View/Timer'
 
-// import { Typography } from 'material-ui';
+// import Typography from 'material-ui/Typography';
 
 // import {
 //   Link,

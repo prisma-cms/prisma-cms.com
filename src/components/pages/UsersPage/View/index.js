@@ -12,7 +12,7 @@ import {
 import Filters from '@prisma-cms/filters'
 
 import moment from 'moment'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 export class UsersPageView extends PrismaCmsUsersPageView {
   static propTypes = {

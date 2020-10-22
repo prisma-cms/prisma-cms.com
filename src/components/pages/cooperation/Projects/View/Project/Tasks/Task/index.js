@@ -10,7 +10,7 @@ import {
   processors,
 } from '../../../../../Tasks/View/Task'
 
-import { withStyles } from 'material-ui'
+import withStyles from 'material-ui/styles/withStyles'
 import { Grid } from '@modxclub/ui'
 // import { graphql, compose } from '@apollo/client';
 

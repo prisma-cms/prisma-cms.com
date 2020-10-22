@@ -10,22 +10,43 @@ const webpack = (config) => {
   // Note: we provide webpack above so you should not `require` it
   // Perform customizations to webpack config
 
+  // console.log('config', config);
+
   /**
    * Fix locales issue
    * https://github.com/moment/moment/issues/2517#issuecomment-620674018
    */
   config.plugins.push(
     new MomentLocalesPlugin({
-      localesToKeep: ['es-us', 'ru'],
+      localesToKeep: ['ru'],
     })
   )
 
-  // Important: return the modified config
+  // Object.assign(config, {
+  //   // https://nextjs.org/docs/api-reference/next.config.js/disabling-etag-generation
+  //   generateEtags: false,
+  // });
+
   return config
+
+  // Important: return the modified config
+  // return {
+  //   ...config,
+
+  //   // https://nextjs.org/docs/api-reference/next.config.js/disabling-etag-generation
+  //   generateEtags: false,
+  // }
 }
 
-module.exports = withBundleAnalyzer(
+const config = withBundleAnalyzer(
   withTM({
     webpack,
   })
 )
+
+module.exports = {
+  ...config,
+
+  // https://nextjs.org/docs/api-reference/next.config.js/disabling-etag-generation
+  // generateEtags: false,
+}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import EditableView from 'apollo-cms/lib/DataView/Object/Editable'
 
 import withStyles from 'material-ui/styles/withStyles'
-import { IconButton } from 'material-ui'
+import IconButton from 'material-ui/IconButton'
 import StopIcon from 'material-ui-icons/Stop'
 
 import Grid from '@prisma-cms/front/lib/modules/ui/Grid'

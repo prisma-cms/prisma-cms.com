@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import withStyles from 'material-ui/styles/withStyles'
 
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 import Card, { CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'

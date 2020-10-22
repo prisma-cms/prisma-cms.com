@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { TaskList } from '@prisma-cms/react-timeline-gantt'
-import { withStyles } from 'material-ui'
+import withStyles from 'material-ui/styles/withStyles'
 
 // import Row from "./Row";
 

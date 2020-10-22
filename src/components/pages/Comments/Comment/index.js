@@ -10,7 +10,7 @@ import { Comment as CommentQuery } from '../query'
 import { updateCommentProcessor } from '@modxclub/ui/src/Comments/query.js'
 
 import Comment from '@modxclub/ui/src/Comments/Comment'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 import { Link } from '@modxclub/ui'
 

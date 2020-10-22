@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Connector from '@prisma-cms/front-editor/lib/components/App/components/public/Connector'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 class TopicsConnection extends Connector {
   static Name = 'TopicsConnection'

@@ -22,7 +22,7 @@ import {
 
 import ProjectView from '../View/Project'
 
-// import { Typography } from 'material-ui';
+// import Typography from 'material-ui/Typography';
 
 const UpdateProject = graphql(updateProjectProcessor)(ProjectView)
 const CreateProject = graphql(createProjectProcessor)(ProjectView)

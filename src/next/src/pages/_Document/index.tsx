@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import Document, {
   DocumentContext,
   Html,
@@ -7,7 +7,7 @@ import Document, {
   NextScript,
 } from 'next/document'
 
-// import { ServerStyleSheet } from 'styled-components'
+import { ServerStyleSheet } from 'styled-components'
 
 import JssProvider from 'react-jss/lib/JssProvider'
 
@@ -16,19 +16,18 @@ import JssProvider from 'react-jss/lib/JssProvider'
 //   generateClassName,
 // } from 'src/next/src/pages/_App/MUI/theme'
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { createGenerateClassName } from 'material-ui/styles'
-import { muiTheme } from '../_App/MUI/theme';
+// import { muiTheme } from '../_App/MUI/theme'
 
 const SheetsRegistry = require('react-jss').SheetsRegistry
-
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="ru">
         <Head>
-          <link rel="icon" href="/demo/favicon.ico" />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />
@@ -39,15 +38,11 @@ export default class MyDocument extends Document {
   }
 
   static async getInitialProps(ctx: DocumentContext) {
-    // const sheet = new ServerStyleSheet()
-
-
-    console.log('ctx.req?.url', ctx.req?.url);
+    const sheet = new ServerStyleSheet()
 
     const sheetsRegistry = new SheetsRegistry()
 
     const originalRenderPage = ctx.renderPage
-
 
     const generateClassName = createGenerateClassName()
 
@@ -58,67 +53,25 @@ export default class MyDocument extends Document {
     try {
       ctx.renderPage = () => {
         const renderPageResult = originalRenderPage({
+          // enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
           // enhanceComponent: (Component) => (props) => {
-
-          //   return <div id="enhanceComponent">11
-
-          //     <Component {...props} />
-
-          //     22
-          //   </div>
-          // },
-
-          // enhanceApp: (App) => (props) => {
-          enhanceComponent: (Component) => (props) => {
-            // const collectStylesResult = (
-            //   // <JssProvider
-            //   //   registry={sheetsRegistry}
-            //   //   generateClassName={generateClassName}
-            //   // >
-            //   //   {sheet.collectStyles(<App {...props} />)}
-            //   // </JssProvider>
-
-            //   <>
-            //     {sheet.collectStyles(<App {...props} />)}
-            //   </>
-            // )
-
-            // return collectStylesResult
-
-            console.log('enhanceComponent props keys', Object.keys(props));
-
-            const {
-              // pageProps,
-              ...other
-            } = props;
-
-            const newProps = {
-              ...other,
-              // pageProps: {
-              // },
-              // ...pageProps,
-              // generateClassName,
-              // sheetsRegistry,
-            }
-
-            // return sheet.collectStyles(<JssProvider
-            //   registry={sheetsRegistry}
-            //   generateClassName={generateClassName}
-            // ><App {...newProps} /></JssProvider>);
-
-            return <JssProvider
-              registry={sheetsRegistry}
-              generateClassName={generateClassName}
-            >
-              <MuiThemeProvider
-                theme={muiTheme}
-                sheetsManager={new Map()}
-              >
-                <Component {...newProps} />
-              </MuiThemeProvider>
-            </JssProvider>
-
-            // return <App {...newProps} />
+          enhanceApp: (App) => (props) => {
+            return (
+              <>
+                {/* 2_Document:enhanceApp */}
+                {sheet.collectStyles(
+                  <JssProvider
+                    registry={sheetsRegistry}
+                    generateClassName={generateClassName}
+                  >
+                    {/* <MuiThemeProvider theme={muiTheme} sheetsManager={new Map()}> */}
+                    <App {...props} />
+                    {/* </MuiThemeProvider> */}
+                  </JssProvider>
+                )}
+                {/* 2_Document:enhancApp */}
+              </>
+            )
           },
         })
 
@@ -127,18 +80,7 @@ export default class MyDocument extends Document {
 
       const initialProps = await Document.getInitialProps(ctx)
 
-
-
-      const css = sheetsRegistry.toString();
-
-      // console.log('css', css);
-
-
-      // console.log('Math.random()', Math.random());
-
-      // console.log('initialProps', initialProps);
-
-      // return initialProps;
+      const css = sheetsRegistry.toString()
 
       const result = {
         ...initialProps,
@@ -146,48 +88,20 @@ export default class MyDocument extends Document {
         // Styles fragment is rendered after the app and page rendering finish.
         styles: [
           ...React.Children.toArray(initialProps.styles),
-          // sheets.getStyleElement(),
+          sheet.getStyleElement(),
           <style
-            key="styles2"
-            id="styles2"
-          // dangerouslySetInnerHTML={{
-          //   __html: `body > div {color: red;}`
-          // }}
-          />,
-          <style
-            key="styles" id="server-side-jss"
+            key="styles"
+            id="server-side-jss"
             dangerouslySetInnerHTML={{
               __html: css,
             }}
           />,
-          // <Head
-          //   key="styles"
-          // >
-          // </Head>
         ],
       }
 
-      // console.log('result', result);
-
-      return result;
-
-
-      // return {
-              //   ...initialProps,
-              //   styles: (
-              //     <>
-              //       <div
-              //         id="styles-div"
-              //       >55
-              //         {initialProps.styles}
-              //         <style id="server-side-jss">{css}</style>
-              //         {sheet.getStyleElement()}
-              //     66  </div>
-              //     </>
-              //   ),
-              // }
-            } finally {
-              // sheet.seal()
-            }
+      return result
+    } finally {
+      sheet.seal()
+    }
   }
 }

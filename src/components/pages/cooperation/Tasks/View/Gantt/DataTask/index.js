@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 import { DataTask } from '@prisma-cms/react-timeline-gantt'
 
-import { withStyles, IconButton } from 'material-ui'
+import withStyles from 'material-ui/styles/withStyles'
+import IconButton from 'material-ui/IconButton'
 import StartIcon from 'material-ui-icons/PlayArrow'
 import StopIcon from 'material-ui-icons/Stop'
 

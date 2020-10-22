@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Task from './Task'
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 class TasksList extends Component {
   static propTypes = {

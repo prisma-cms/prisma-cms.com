@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
+// import Button from 'material-ui/Button'
 // import IconButton from 'material-ui/IconButton';
 
 import { Grid } from '@modxclub/ui'
@@ -12,29 +12,51 @@ import { Grid } from '@modxclub/ui'
 // import CreateIcon from 'material-ui-icons/Create';
 
 // import UserItem from "@prisma-cms/front/lib/components/App/Renderer/MainMenu/User";
-import { styles as defaultStyles } from '@prisma-cms/front/lib/components/App/Renderer/MainMenu'
-import Language from '@prisma-cms/front/lib/components/Language'
-import UserItem from './User'
+// import { styles as defaultStyles } from '@prisma-cms/front/lib/components/App/Renderer/MainMenu'
+// import Language from '@prisma-cms/front/lib/components/Language'
+// import UserItem from './User'
 
-import { Link } from 'react-router-dom'
-import { Notices } from '@prisma-cms/society'
-// import { IconButton } from 'material-ui';
+// import { Link } from 'react-router-dom'
+import Link from 'next/link'
+// import { Notices } from '@prisma-cms/society'
 
 import PrismaCmsComponent from '@prisma-cms/component'
 
-import { CallRequestButtons } from '@prisma-cms/webrtc'
+// import { CallRequestButtons } from '@prisma-cms/webrtc'
 
-import { Timer } from '@prisma-cms/cooperation'
+// import { Timer } from '@prisma-cms/cooperation'
+
+// export const defaultStyles = theme => {
+
+//   const {
+//     palette: {
+//       type: paletteType,
+//     },
+//   } = theme;
+
+//   return {
+//     root: {
+
+//       // Fix contrast
+//       // "& a, & button": {
+//       //   "&, & *": {
+//       //     color: paletteType === "light" ? "#fff" : undefined,
+//       //   },
+//       // },
+//     },
+//   }
+// }
 
 export const styles = (theme) => {
   const {
     palette: {
       background: { default: backgroundColor },
+      type: paletteType,
     },
   } = theme
 
   return {
-    ...defaultStyles,
+    // ...defaultStyles,
     root: {
       // flexGrow: 1,
       backgroundColor,
@@ -46,6 +68,9 @@ export const styles = (theme) => {
     menuButton: {
       marginLeft: 5,
       // marginRight: -12,
+    },
+    link: {
+      color: paletteType === 'light' ? '#fff' : undefined,
     },
   }
 }
@@ -81,22 +106,16 @@ export class MainMenu extends PrismaCmsComponent {
   }
 
   render() {
-    const {
-      classes,
-      // ...other
-    } = this.props
+    const { classes } = this.props
 
-    const {
-      user: currentUser,
-      logout,
-      // router: {
-      //   history,
-      // },
-    } = this.context
+    // const {
+    //   user: currentUser,
+    //   logout,
+    // } = this.context
 
-    const { id: userId, Timers } = currentUser || {}
+    // const { id: userId, Timers } = currentUser || {}
 
-    const [ActiveTimer] = Timers || []
+    // const [ActiveTimer] = Timers || []
 
     return (
       <AppBar
@@ -114,73 +133,73 @@ export class MainMenu extends PrismaCmsComponent {
                 color="inherit"
                 className={classes.flex}
               >
-                <Link to="/">PrismaCMS</Link>
+                <Link href="/">PrismaCMS</Link>
               </Typography>
             </Grid>
 
             <Grid item>
-              <Link to="/technologies/">
-                <Typography>{this.lexicon('Technologies')}</Typography>
+              <Link href="/technologies/">
+                <a>
+                  <Typography>{this.lexicon('Technologies')}</Typography>
+                </a>
               </Link>
             </Grid>
 
             <Grid item>
-              <Link to="/topics/">
-                <Typography>{this.lexicon('Topics')}</Typography>
+              <Link href="/topics/">
+                <a title={this.lexicon('Topics')}>
+                  <Typography>{this.lexicon('Topics')}</Typography>
+                </a>
               </Link>
             </Grid>
 
             <Grid item>
-              <Link to="/blogs/">
-                <Typography>{this.lexicon('Blogs')}</Typography>
+              <Link href="/blogs/">
+                <a>
+                  <Typography>{this.lexicon('Blogs')}</Typography>
+                </a>
               </Link>
             </Grid>
 
             <Grid item>
-              <Link to="/chat-rooms/">
-                <Typography component="span" className={classes.link}>
-                  {this.lexicon('Chats')}
-                </Typography>
+              <Link href="/chat-rooms/">
+                <a>
+                  <Typography>{this.lexicon('Chats')}</Typography>
+                </a>
               </Link>
             </Grid>
 
             <Grid item>
-              <Link to="/people/">
-                <Typography>{this.lexicon('Users')}</Typography>
+              <Link href="/people/">
+                <a>
+                  <Typography>{this.lexicon('Users')}</Typography>
+                </a>
               </Link>
             </Grid>
 
             <Grid item>
-              <Link to="/projects/">
-                <Typography>{this.lexicon('Projects')}</Typography>
+              <Link href="/projects/">
+                <a>
+                  <Typography>{this.lexicon('Projects')}</Typography>
+                </a>
               </Link>
             </Grid>
 
             <Grid item>
-              <Link to="/tasks/?status_in=New&status_in=Accepted&status_in=Progress&status_in=Paused&status_in=RevisionsRequired&status_in=Discuss&status_in=Approved&status_in=Done">
-                <Typography>{this.lexicon('Tasks')}</Typography>
+              <Link href="/tasks/?status_in=New&status_in=Accepted&status_in=Progress&status_in=Paused&status_in=RevisionsRequired&status_in=Discuss&status_in=Approved&status_in=Done">
+                <a>
+                  <Typography>{this.lexicon('Tasks')}</Typography>
+                </a>
               </Link>
             </Grid>
 
             <Grid item>
-              <Link to="/timers/">
-                <Typography>{this.lexicon('Timers')}</Typography>
+              <Link href="/timers/">
+                <a>
+                  <Typography>{this.lexicon('Timers')}</Typography>
+                </a>
               </Link>
             </Grid>
-
-            {/* 
-            <Grid
-              item
-            >
-              <Link
-                to="/eth-transactions"
-              >
-                <Typography>
-                  {this.lexicon("Ethereum")}
-                </Typography>
-              </Link>
-
-            </Grid> */}
 
             <Grid item>
               <a
@@ -204,23 +223,7 @@ export class MainMenu extends PrismaCmsComponent {
 
             <Grid item xs></Grid>
 
-            <Language />
-
-            {/* <Grid
-              key="write"
-              item
-            >
-              <IconButton
-                onClick={event => {
-                  history.push("/add-topic.html");
-                }}
-              >
-                <CreateIcon />
-              </IconButton>
-
-            </Grid> */}
-
-            {currentUser ? (
+            {/* {currentUser ? (
               <Fragment>
                 <Grid key="callRequests" item>
                   <CallRequestButtons
@@ -269,7 +272,7 @@ export class MainMenu extends PrismaCmsComponent {
                   </Typography>
                 </Button>
               </Grid>
-            )}
+            )} */}
           </Grid>
         </Toolbar>
       </AppBar>

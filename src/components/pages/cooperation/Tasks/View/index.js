@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 import Grid from '../../../ui/Grid'
 import Pagination from '../../../ui/Pagination'

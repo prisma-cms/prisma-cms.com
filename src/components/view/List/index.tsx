@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import { styles, TableView } from 'apollo-cms/lib/DataView/List/Table'
 
 import withStyles from 'material-ui/styles/withStyles'
 // import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
-
-import Pagination from '@prisma-cms/front/lib/components/Pagination'
+import Pagination from 'src/next/src/components/Pagination'
+import { ObjectsListViewProps } from './interfaces'
 
 const customStyles = () => {
   return {
@@ -45,10 +45,11 @@ const customStyles = () => {
   }
 }
 
-class ObjectsListView extends TableView {
+// TODO прописать интерфейс
+class ObjectsListView<P extends ObjectsListViewProps = ObjectsListViewProps> extends TableView<P> {
   static propTypes = {
-    ...TableView.propTypes,
-    withPagination: PropTypes.bool.isRequired,
+    // ...TableView.propTypes,
+    // withPagination: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -58,27 +59,34 @@ class ObjectsListView extends TableView {
     limit: 0,
   }
 
-  getColumns() {
-    const { columnData } = this.props
+  // getColumns() {
 
-    return [
-      {
-        id: 'id',
-      },
-    ].concat(columnData)
-  }
+  //   const columnData = this.props.columnData || []
+
+  //   // return [
+  //   //   {
+  //   //     id: 'id',
+  //   //   },
+  //   // ].concat(columnData)
+
+  //   const columns: ColumnConfig<{id: string}>[] = [
+  //     {
+  //       id: 'id',
+  //     },
+  //   ].concat(columnData)
+
+  //   return columns;
+  // }
 
   render() {
-    const { page, withPagination, data } = this.props
+    const { page, withPagination, data, variables } = this.props
 
-    const {
-      objectsConnection,
-      // loading,
-      variables,
-    } = data || {}
+    const objectsConnection = data?.objectsConnection || {}
 
     const { edges, aggregate } = objectsConnection || {}
-    const { first: limit } = variables || {}
+    // const { first: limit } = variables || {}
+    const limit = variables?.first;
+
 
     const { count = 0 } = aggregate || {}
 
@@ -92,6 +100,7 @@ class ObjectsListView extends TableView {
       //   </Typography>
       // }
     }
+
 
     return (
       <Fragment>
@@ -121,6 +130,4 @@ class ObjectsListView extends TableView {
 // export { customStyles as styles, ObjectsListView as TableView }
 export { customStyles as styles, ObjectsListView }
 
-export default withStyles(customStyles)(
-  (ObjectsListView as unknown) as React.FC
-)
+export default withStyles(customStyles)((props: ObjectsListViewProps) => <ObjectsListView {...props} />)

@@ -2,9 +2,9 @@ import React from 'react'
 
 import { styles, ProjectView as BaseProjectView } from '../../Project'
 
-import { withStyles } from 'material-ui'
+import withStyles from 'material-ui/styles/withStyles'
 
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 
 import { CardContent } from 'material-ui/Card'
 

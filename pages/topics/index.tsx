@@ -1,1 +1,1 @@
-export { default, getServerSideProps } from 'src/next/src/pages/Topics'
+export { default } from 'src/next/src/pages/Topics'
