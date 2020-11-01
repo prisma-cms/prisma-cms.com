@@ -76,6 +76,7 @@ const customStyles = () => {
 /**
  * Табличный вывод топиков
  */
+// export class ForumView<P extends ForumViewProps = ForumViewProps, S = {}, CC extends TopicsConnectionTopicFragment = TopicsConnectionTopicFragment> extends TableView<P, S, CC> {
 export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableView<P> {
   // static propTypes = {
   //   ...TableView.propTypes,
@@ -86,13 +87,13 @@ export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableV
   static defaultProps = {
     ...TableView.defaultProps,
     title: '',
-    columnData: [],
+    // columnData: [],
     // Header,
     // Toolbar: () => (null),
   }
 
 
-  getColumns() {
+  getColumns<CC extends TopicsConnectionTopicFragment>(): ColumnConfig<CC>[] {
 
     const {
       classes,
@@ -103,7 +104,7 @@ export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableV
 
     const activeTag = variables?.where?.Tags_some?.Tag;
 
-    const columns: ColumnConfig<TopicsConnectionTopicFragment>[] = [
+    return [
       {
         id: 'id',
         key: 'topic',
@@ -249,9 +250,7 @@ export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableV
           return date.fromNow()
         },
       },
-    ]
-
-    return columns
+    ];
   }
 }
 

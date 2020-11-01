@@ -1,3 +1,4 @@
+import { Maybe } from 'graphql/jsutils/Maybe'
 import { TypographyProps } from 'material-ui/Typography'
 // import { User } from "src/modules/gql/generated";
 import { UiLinkProps } from '../interfaces'
@@ -14,7 +15,7 @@ export type UserLinkUser = {
 }
 
 export interface UserLinkProps {
-  user?: UserLinkUser
+  user?: Maybe<UserLinkUser>
 
   variant?: TypographyProps['variant']
 

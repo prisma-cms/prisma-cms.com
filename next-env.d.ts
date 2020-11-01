@@ -5,7 +5,7 @@ declare module '@prisma-cms/context'
 declare module '@prisma-cms/filters'
 
 declare module 'apollo-cms/lib/DataView/List/Table' {
-  
+
   import React from 'react'
   import { Exact, Maybe } from 'src/modules/gql/generated';
 
@@ -25,7 +25,7 @@ declare module 'apollo-cms/lib/DataView/List/Table' {
 
     className?: string
 
-    renderer? (value: any, record: P): any
+    renderer?(value: any, record: P): any
   }
 
   export type ColumnConfig<P = {}> = Column<P>
@@ -36,9 +36,9 @@ declare module 'apollo-cms/lib/DataView/List/Table' {
     columnData?: ColumnConfig[];
 
     page: number;
-    
+
     withPagination?: boolean;
-    
+
     data: Maybe<{
       objectsConnection: any;
     }>;
@@ -59,7 +59,6 @@ declare module 'apollo-cms/lib/DataView/List/Table' {
       columnData: [],
     }
 
-    // getColumns<P>(): ColumnConfig<P>[];
   }
 
   export const styles: any = {};

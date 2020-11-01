@@ -107,15 +107,6 @@ TopicsPage.getInitialProps = async (context) => {
     variables: {
       ...topicsVariables,
       ...getQueryParams(context.query),
-      // ...allPostsQueryVars,
-      // skip:
-      //   skip && typeof skip === 'string'
-      //     ? parseInt(skip)
-      //     : allPostsQueryVars.skip,
-      // first:
-      //   first && typeof first === 'string'
-      //     ? parseInt(first)
-      //     : allPostsQueryVars.first,
     },
   })
 
