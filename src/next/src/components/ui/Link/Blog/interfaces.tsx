@@ -4,6 +4,7 @@ import { UiLinkProps } from "../interfaces";
 export interface BlogLinkProps {
 
   object: {
+    __typename?: 'Resource'
     id: string;
     uri: string;
     name: string;

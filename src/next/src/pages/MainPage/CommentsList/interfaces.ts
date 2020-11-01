@@ -1,4 +1,4 @@
-import { Maybe } from 'graphql/jsutils/Maybe'
+import { Maybe } from "src/modules/gql/generated"
 
 export type CommentsListVariables = {
   skip?: number

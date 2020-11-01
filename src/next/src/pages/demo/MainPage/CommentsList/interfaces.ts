@@ -1,4 +1,4 @@
-import { Maybe } from 'graphql/jsutils/Maybe'
+import { Maybe } from "src/modules/gql/generated"
 
 export type CommentsListVariables = {
   skip?: number
@@ -31,7 +31,7 @@ export type UserAvatarProps = {
   /**
    * УРЛ на аватар пользователя
    */
-  url: Maybe<string>
+  url: Maybe<string> | undefined
 
   align: UserAvatarAlign
 }

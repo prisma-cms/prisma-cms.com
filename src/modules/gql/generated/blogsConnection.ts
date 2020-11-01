@@ -30,7 +30,7 @@ export type BlogsConnectionQuery = { __typename?: 'Query', objectsConnection: { 
 
 
 export const BlogsConnectionDocument = gql`
-    query blogsConnection($where: ResourceWhereInput, $orderBy: ResourceOrderByInput = createdAt_DESC, $skip: Int, $after: String, $before: String, $first: Int = 10, $last: Int) {
+    query blogsConnection($where: ResourceWhereInput, $orderBy: ResourceOrderByInput = name_ASC, $skip: Int, $after: String, $before: String, $first: Int = 10, $last: Int) {
   objectsConnection: resourcesConnection(
     where: $where
     orderBy: $orderBy

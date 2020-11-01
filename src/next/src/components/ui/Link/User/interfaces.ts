@@ -1,6 +1,5 @@
-import { Maybe } from 'graphql/jsutils/Maybe'
 import { TypographyProps } from 'material-ui/Typography'
-// import { User } from "src/modules/gql/generated";
+import { Maybe } from "src/modules/gql/generated";
 import { UiLinkProps } from '../interfaces'
 
 export enum UserLinkAvatarSize {
@@ -9,6 +8,7 @@ export enum UserLinkAvatarSize {
 }
 
 export type UserLinkUser = {
+  __typename?: 'User'
   id: string
   username?: string | null
   fullname?: string | null

@@ -4,7 +4,8 @@ import { UiLinkProps } from "../interfaces";
 export interface TagLinkProps {
 
   object: {
-    id?: string;
+    __typename?: 'Tag'
+    id: string;
     name?: string;
     longtitle?: string;
     uri?: string;

@@ -5,7 +5,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import { TechnologiesViewProps } from './interfaces';
 import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table';
 import { TechnologiesConnectionTechnologyFragment } from 'src/modules/gql/generated';
-import { UserLink } from 'src/next/src/components/ui/Link/User';
+import UserLink from 'src/next/src/components/ui/Link/User';
 import Grid from 'src/next/src/components/ui/Grid';
 
 class TechnologiesView<P extends TechnologiesViewProps = TechnologiesViewProps> extends ObjectsListView<P> {
