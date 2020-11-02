@@ -14,10 +14,12 @@ import { Uploader } from '@prisma-cms/ui'
 
 // import { UserLink, ProjectLink, Link, Grid } from '@modxclub/ui'
 
+// TODO: Надо переписать зависимость, чтобы не использовался react-apollo
 import {
   styles as baseStyles,
   ProjectView as PrismaCmsCooperationProjectView,
 } from '@prisma-cms/cooperation/lib/components/pages/Projects/View/Project'
+
 import Link from 'next/link'
 import { ProjectProps, ProjectState } from './interfaces'
 import UserLink from 'src/next/src/components/ui/Link/User'

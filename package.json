@@ -89,7 +89,6 @@
     "node-sass-chokidar": "^1.1.0",
     "prisma-binding": "^2.1.6",
     "react": "^16",
-    "react-apollo": "^2.2.3",
     "react-monaco-editor": "^0.32.1",
     "react-number-format": "^4.0.6",
     "react-reflex": "^3.0.20",

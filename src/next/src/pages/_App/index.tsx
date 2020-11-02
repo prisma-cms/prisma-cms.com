@@ -174,7 +174,9 @@ const App = ({ Component, pageProps }: AppProps) => {
               showRegForm={true}
             />
 
-            <Component {...pageProps} />
+            <div id="content">
+              <Component {...pageProps} />
+            </div>
 
           </WithUser>
         </Context.Provider>
