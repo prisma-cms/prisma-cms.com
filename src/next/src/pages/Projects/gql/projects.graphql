@@ -1,0 +1,119 @@
+query projectsConnection(
+  $first: Int = 12, 
+  $skip: Int, 
+  $where: ProjectWhereInput, 
+  $orderBy: ProjectOrderByInput = updatedAt_DESC
+) {
+  objectsConnection: projectsConnection(orderBy: $orderBy, first: $first, skip: $skip, where: $where) {
+    aggregate {
+      count
+    }
+    edges {
+      node {
+        ...projectsConnectionProject
+      }
+    }
+  }
+}
+
+
+fragment projectsConnectionProject on Project {
+  ...ProjectNoNesting
+  CreatedBy {
+    ...projectsConnectionUser
+  }
+  Members {
+    id
+    User {
+      ...projectsConnectionUser
+    }
+  }
+  ProjectTasks {
+    id
+    createdAt
+    updatedAt
+    Task {
+      ...TaskNoNesting
+      CreatedBy {
+        ...projectsConnectionUser
+      }
+      Timers(where: {stopedAt: null}) {
+        id
+        createdAt
+        updatedAt
+        stopedAt
+        CreatedBy {
+          ...projectsConnectionUser
+        }
+      }
+      CreatedBy {
+        ...projectsConnectionUser
+      }
+      Parent {
+        ...TaskNoNesting
+      }
+    }
+  }
+  Resource {
+    id
+    uri
+    Image {
+      id
+      path
+    }
+  }
+}
+
+fragment ProjectNoNesting on Project {
+  id
+  name
+  domain
+  createdAt
+  updatedAt
+  description
+  url
+  sequence
+  content
+  contentText
+  status
+  public
+  oldID
+}
+
+fragment projectsConnectionUser on User {
+  id
+  createdAt
+  updatedAt
+  username
+  email
+  phone
+  showEmail
+  showPhone
+  password
+  fullname
+  image
+  address
+  sudo
+  active
+  activated
+  deleted
+  hasEmail
+  hasPhone
+  marketplaceToken
+  hidden
+}
+
+fragment TaskNoNesting on Task {
+  id
+  createdAt
+  updatedAt
+  name
+  description
+  content
+  status
+  startDatePlaning
+  endDatePlaning
+  startDate
+  endDate
+}
+

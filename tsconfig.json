@@ -27,6 +27,10 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
+  "typeRoots": [
+    "./node_modules/@types",
+    "./types"
+  ],
   "exclude": ["./node_modules", "dist", ".next", "out", "next.config.js"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

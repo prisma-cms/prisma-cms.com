@@ -19,7 +19,7 @@ export interface UserLinkProps {
 
   variant?: TypographyProps['variant']
 
-  withAvatar: boolean
+  withAvatar?: boolean
 
   classes?: UiLinkProps['classes'] & { avatar: string }
 
@@ -28,9 +28,9 @@ export interface UserLinkProps {
    */
   secondary?: any
 
-  showName: boolean
+  showName?: boolean
 
-  size: UserLinkAvatarSize
+  size?: UserLinkAvatarSize
 
   avatarProps?: any
 

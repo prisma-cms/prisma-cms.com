@@ -1,4 +1,4 @@
-import Maybe from "graphql/tsutils/Maybe";
+import { Maybe } from "src/modules/gql/generated";
 
 export interface TopicLinkProps  {
 
