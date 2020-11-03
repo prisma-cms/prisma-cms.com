@@ -1,20 +1,19 @@
-import { ProjectViewProps, ProjectViewState } from "@prisma-cms/cooperation/lib/components/pages/Projects/View/Project";
-import { ProjectsConnectionProjectFragment } from "src/modules/gql/generated";
+import {
+  ProjectViewProps,
+  ProjectViewState,
+} from '@prisma-cms/cooperation/lib/components/pages/Projects/View/Project'
+import { ProjectsConnectionProjectFragment } from 'src/modules/gql/generated'
 
-export interface ProjectProps extends ProjectViewProps{
+export interface ProjectProps extends ProjectViewProps {
+  object?: ProjectsConnectionProjectFragment
 
-  object?: ProjectsConnectionProjectFragment;
-
-  classes?: any;
-
+  classes?: any
 }
 
 export interface ProjectState extends ProjectViewState {
+  open: boolean
 
-  open: boolean;
+  editMembers: boolean
 
-  editMembers: boolean;
-
-  openedImage: string | undefined;
-
+  openedImage: string | undefined
 }

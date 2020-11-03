@@ -10,21 +10,19 @@ import {
   split,
 } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { WebSocketLink } from '@apollo/client/link/ws'
+import { SubscriptionClient } from 'subscriptions-transport-ws'
 import URI from 'urijs'
 import fetch from 'cross-fetch'
-import { getMainDefinition } from '@apollo/client/utilities';
-import { OperationDefinitionNode } from 'graphql';
+import { getMainDefinition } from '@apollo/client/utilities'
+import { OperationDefinitionNode } from 'graphql'
 
 // import { concatPagination } from '@apollo/client/utilities'
 
-let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
-
+let apolloClient: ApolloClient<NormalizedCacheObject> | undefined
 
 function getEndpoint() {
-
-  let endpoint;
+  let endpoint
 
   const uri = new URI()
 
@@ -45,13 +43,12 @@ function getEndpoint() {
     endpoint = process.env.API_ENDPOINT || 'https://api.prisma-cms.com'
   }
 
-  return endpoint;
+  return endpoint
 }
 
+let wsLink: WebSocketLink | undefined
 
-let wsLink: WebSocketLink | undefined;
-
-let subscriptionClient: SubscriptionClient | undefined;
+let subscriptionClient: SubscriptionClient | undefined
 
 /**
  * Создаем клиента отдельно,
@@ -59,51 +56,43 @@ let subscriptionClient: SubscriptionClient | undefined;
  * Нам этот клиент нужен, чтобы переподключаться при логине/логауте
  */
 export function getSubscriptionClient() {
-
-  if (typeof window === "undefined") {
-    return;
+  if (typeof window === 'undefined') {
+    return
   }
 
   if (!subscriptionClient) {
+    const endpoint = getEndpoint()
 
-    const endpoint = getEndpoint();
+    const wsUri = new URI(endpoint)
 
-    const wsUri = new URI(endpoint);
-
-    let schema = wsUri.scheme();
+    let schema = wsUri.scheme()
 
     switch (schema) {
+      case 'http':
+        schema = 'ws'
+        break
 
-      case "http":
-        schema = "ws";
-        break;
-
-      case "https":
+      case 'https':
       default:
-        schema = "wss";
-        break;
-
+        schema = 'wss'
+        break
     }
 
-    wsUri.scheme(schema);
+    wsUri.scheme(schema)
 
     /**
      * Создаем клиента отдельно,
      * потому что wsLink.subscriptionClient is private
      */
-    subscriptionClient = new SubscriptionClient(
-      wsUri.toString(),
-      {
-        reconnect: true,
-        connectionParams: () => ({
-          Authorization: localStorage && localStorage.token || undefined,
-        }),
-      }
-    );
-
+    subscriptionClient = new SubscriptionClient(wsUri.toString(), {
+      reconnect: true,
+      connectionParams: () => ({
+        Authorization: (localStorage && localStorage.token) || undefined,
+      }),
+    })
   }
 
-  return subscriptionClient;
+  return subscriptionClient
 }
 
 /**
@@ -111,13 +100,12 @@ export function getSubscriptionClient() {
  * Он нужен нам для сброса соединения при логине/логауте
  */
 export function getWsLink() {
-
   /**
    * На стороне сервера нам не нужна поддержка веб-сокетов.
    * Подключаем вебсокеты только на стороне браузера.
    */
-  if (typeof window === "undefined") {
-    return;
+  if (typeof window === 'undefined') {
+    return
   }
 
   /**
@@ -125,13 +113,13 @@ export function getWsLink() {
    */
 
   if (wsLink) {
-    return wsLink;
+    return wsLink
   }
 
-  const subscriptionClient = getSubscriptionClient();
+  const subscriptionClient = getSubscriptionClient()
 
   if (subscriptionClient) {
-    wsLink = new WebSocketLink(subscriptionClient);
+    wsLink = new WebSocketLink(subscriptionClient)
   }
 
   // const {
@@ -140,12 +128,11 @@ export function getWsLink() {
 
   // console.log('subscriptionClient', subscriptionClient);
 
-  return wsLink;
+  return wsLink
 }
 
 function createApolloClient() {
-
-  const endpoint = getEndpoint();
+  const endpoint = getEndpoint()
 
   const errorLink = onError((error) => {
     const { graphQLErrors, networkError } = error
@@ -185,40 +172,34 @@ function createApolloClient() {
     return forward(operation)
   })
 
+  let wsHttpLink: ApolloLink = httpLink
 
-  let wsHttpLink: ApolloLink = httpLink;
-
-  const wsLink = getWsLink();
-
+  const wsLink = getWsLink()
 
   if (wsLink) {
-
     wsHttpLink = split(
       // split based on operation type
       (request) => {
+        const { query } = request
 
-        const { query } = request;
-
-        const { kind, operation } = getMainDefinition(query) as OperationDefinitionNode;
-        return kind === 'OperationDefinition' && operation === 'subscription';
+        const { kind, operation } = getMainDefinition(
+          query
+        ) as OperationDefinitionNode
+        return kind === 'OperationDefinition' && operation === 'subscription'
       },
       wsLink,
-      httpLink,
-    );
-
+      httpLink
+    )
   }
 
   // const link = concat(authMiddleware, httpLink)
-  const link = errorLink.concat(wsHttpLink);
+  const link = errorLink.concat(wsHttpLink)
 
   const client = new ApolloClient({
     ssrMode: typeof window === 'undefined',
     // link: errorLink.concat(link),
 
-    link: from([
-      authMiddleware,
-      link,
-    ]),
+    link: from([authMiddleware, link]),
     cache: new InMemoryCache({
       /**
        * Здесь можно прописать логику для отдельных полей объектов,
@@ -232,14 +213,12 @@ function createApolloClient() {
       //   },
       // },
     }),
-  });
+  })
 
-  return client;
+  return client
 }
 
-
 export function initializeApollo(initialState?: any) {
-
   const _apolloClient = apolloClient ?? createApolloClient()
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state

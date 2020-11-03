@@ -2,11 +2,10 @@ import React from 'react'
 
 import Project from './Project'
 import Grid from 'src/next/src/components/ui/Grid'
-import { ProjectsListProps } from './interfaces';
+import { ProjectsListProps } from './interfaces'
 
 const ProjectsList: React.FC<ProjectsListProps> = (props) => {
-
-  const { projects } = props;
+  const { projects } = props
 
   return (
     <Grid container spacing={16}>

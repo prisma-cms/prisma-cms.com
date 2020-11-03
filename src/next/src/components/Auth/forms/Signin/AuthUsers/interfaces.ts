@@ -4,9 +4,9 @@ import { AuthFormProps, AuthFormState } from '../../interfaces'
 export interface AuthUsersProps extends AuthFormProps {
   // data: AuthFormUsersConnectionQueryHookResult | undefined
 
-  response: Maybe<AuthFormUsersConnectionQuery>;
+  response: Maybe<AuthFormUsersConnectionQuery>
 
-  first: number;
+  first: number
 
   getFilters: () => any
 

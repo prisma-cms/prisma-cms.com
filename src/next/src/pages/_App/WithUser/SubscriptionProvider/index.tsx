@@ -1,15 +1,20 @@
 import { Component } from 'react'
 
 import gql from 'graphql-tag'
-import { SubscriptionProviderProps, SubscriptionProviderState } from './interfaces'
+import {
+  SubscriptionProviderProps,
+  SubscriptionProviderState,
+} from './interfaces'
 
 // import CooperationSubscriptionProvider from "@prisma-cms/cooperation/lib/components/SubscriptionProvider";
 
-export default class SubscriptionProvider extends Component<SubscriptionProviderProps, SubscriptionProviderState> {
-
+export default class SubscriptionProvider extends Component<
+  SubscriptionProviderProps,
+  SubscriptionProviderState
+> {
   state = {
     subscriptions: [],
-  } as SubscriptionProviderState;
+  } as SubscriptionProviderState
 
   componentDidMount() {
     this.subscribe()
@@ -20,21 +25,17 @@ export default class SubscriptionProvider extends Component<SubscriptionProvider
   }
 
   async subscribe() {
-
-    const {
-      client,
-    } = this.props
+    const { client } = this.props
 
     /**
      * На стороне сервера нам не нужны подписки, поэтому четко
      * контролируем серверная это сторона или клиентская
      */
-    const wsAllowed = typeof window !== "undefined";
+    const wsAllowed = typeof window !== 'undefined'
 
     if (!wsAllowed) {
-      return;
+      return
     }
-
 
     await this.unsubscribe()
 
@@ -58,9 +59,8 @@ export default class SubscriptionProvider extends Component<SubscriptionProvider
       })
       .subscribe({
         next: async (data) => {
-
           // eslint-disable-next-line no-console
-          console.log("commentSub next data", data);
+          console.log('commentSub next data', data)
 
           await this.resetStore()
         },
@@ -230,20 +230,17 @@ export default class SubscriptionProvider extends Component<SubscriptionProvider
   }
 
   async resetStore() {
-
     // eslint-disable-next-line no-console
-    console.log('SubscriptionProvider resetStore');
+    console.log('SubscriptionProvider resetStore')
 
     const { client } = this.props
 
-    if (client["queryManager"].fetchCancelFns.size === 0) {
+    if (client['queryManager'].fetchCancelFns.size === 0) {
       // TODO https://github.com/apollographql/apollo-client/issues/2919#issuecomment-719972118
       // Подавляем ошибку, так как аполло не дает возможности проверять,
       // что обновление уже выполняется
-      return await client.resetStore()
-        .catch(console.warn)
+      return await client.resetStore().catch(console.warn)
     }
-
   }
 
   render() {

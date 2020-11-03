@@ -1,0 +1,121 @@
+query tasksConnection(
+  $where: TaskWhereInput
+  $orderBy: TaskOrderByInput = createdAt_DESC
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int = 10
+  $last: Int
+) {
+  objectsConnection: tasksConnection(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+    aggregate {
+      count
+    }
+    edges {
+      node {
+        ...tasksConnectionTask
+      }
+    }
+  }
+}
+
+fragment tasksConnectionTask on Task {
+  ...tasksConnectionTaskNoNesting
+  CreatedBy {
+    ...tasksConnectionUser
+  }
+  Timers(orderBy: createdAt_DESC) {
+    id
+    createdAt
+    updatedAt
+    stopedAt
+    CreatedBy {
+      ...tasksConnectionUser
+    }
+  }
+  TaskProjects {
+    id
+    createdAt
+    updatedAt
+    Project {
+      id
+      name
+      domain
+      createdAt
+      updatedAt
+      description
+      url
+      sequence
+      content
+      contentText
+      status
+      public
+      oldID
+      CreatedBy {
+        ...tasksConnectionUser
+      }
+      Resource {
+        id
+        name
+        uri
+      }
+    }
+  }
+  RelatedTo {
+    ...tasksConnectionTaskNoNesting
+  }
+  Reactions {
+    id
+    createdAt
+    updatedAt
+    type
+    CreatedBy {
+      ...tasksConnectionUser
+    }
+  }
+}
+
+fragment tasksConnectionTaskNoNesting on Task {
+  id
+  createdAt
+  updatedAt
+  name
+  description
+  content
+  status
+  startDatePlaning
+  endDatePlaning
+  startDate
+  endDate
+}
+
+fragment tasksConnectionUser on User {
+  id
+  createdAt
+  updatedAt
+  username
+  email
+  phone
+  showEmail
+  showPhone
+  password
+  fullname
+  image
+  address
+  sudo
+  active
+  activated
+  deleted
+  hasEmail
+  hasPhone
+  marketplaceToken
+  hidden
+}

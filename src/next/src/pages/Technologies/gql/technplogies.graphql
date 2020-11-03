@@ -1,10 +1,15 @@
 query technologiesConnection(
-  $first: Int = 10, 
-  $skip: Int, 
-  $where: TechnologyWhereInput, 
+  $first: Int = 10
+  $skip: Int
+  $where: TechnologyWhereInput
   $orderBy: TechnologyOrderByInput = createdAt_DESC
 ) {
-  objectsConnection: technologiesConnection(first: $first, skip: $skip, where: $where, orderBy: $orderBy) {
+  objectsConnection: technologiesConnection(
+    first: $first
+    skip: $skip
+    where: $where
+    orderBy: $orderBy
+  ) {
     aggregate {
       count
     }
@@ -16,7 +21,7 @@ query technologiesConnection(
   }
 }
 
-fragment technologiesConnectionTechnology on Technology  {
+fragment technologiesConnectionTechnology on Technology {
   id
   createdAt
   updatedAt
@@ -26,13 +31,11 @@ fragment technologiesConnectionTechnology on Technology  {
   site_url
   CreatedBy {
     ...technologiesConnectionUser
-    
   }
   UserTechnologies {
     ...technologiesConnectionUserTechnology
     CreatedBy {
       ...technologiesConnectionUser
-      
     }
   }
 }

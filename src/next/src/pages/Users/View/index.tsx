@@ -1,49 +1,46 @@
-import React from 'react';
-import { ObjectsListView, styles } from 'src/components/view/List';
+import React from 'react'
+import { ObjectsListView, styles } from 'src/components/view/List'
 
-import withStyles from 'material-ui/styles/withStyles';
-import { UsersViewProps } from './interfaces';
-import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table';
-import { UsersConnectionUserFragment } from 'src/modules/gql/generated';
-import UserLink from 'src/next/src/components/ui/Link/User';
-import moment from 'moment';
-import ProjectLink from 'src/next/src/components/ui/Link/Project';
-import Link from 'next/link';
-import Typography from 'material-ui/Typography';
+import withStyles from 'material-ui/styles/withStyles'
+import { UsersViewProps } from './interfaces'
+import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table'
+import { UsersConnectionUserFragment } from 'src/modules/gql/generated'
+import UserLink from 'src/next/src/components/ui/Link/User'
+import moment from 'moment'
+import ProjectLink from 'src/next/src/components/ui/Link/Project'
+import Link from 'next/link'
+import Typography from 'material-ui/Typography'
 
-class UsersView<P extends UsersViewProps = UsersViewProps> extends ObjectsListView<P> {
-
+class UsersView<
+  P extends UsersViewProps = UsersViewProps
+> extends ObjectsListView<P> {
   static defaultProps = {
     ...ObjectsListView.defaultProps,
     title: 'Чат-комнаты',
   }
 
-
   getColumns<CC extends UsersConnectionUserFragment>(): ColumnConfig<CC>[] {
-
     return [
       {
-        id: "id",
-        key: "id",
-        label: "Пользователь",
+        id: 'id',
+        key: 'id',
+        label: 'Пользователь',
         renderer: (_value, record) => {
-          return <UserLink
-            user={record}
-          />
+          return <UserLink user={record} />
         },
       },
       {
-        id: "createdAt",
-        key: "createdAt",
-        label: "Дата регистрации",
-        renderer: (value: CC["createdAt"]) => {
-          return moment(value).format('ll');
+        id: 'createdAt',
+        key: 'createdAt',
+        label: 'Дата регистрации',
+        renderer: (value: CC['createdAt']) => {
+          return moment(value).format('ll')
         },
       },
       {
         id: 'ProjectsCreated',
         label: 'Создал проекты',
-        renderer: (value: CC["ProjectsCreated"], record) => {
+        renderer: (value: CC['ProjectsCreated'], record) => {
           const { username } = record
 
           let output
@@ -88,7 +85,7 @@ class UsersView<P extends UsersViewProps = UsersViewProps> extends ObjectsListVi
         // numeric: false,
         // disablePadding: false,
         label: 'Участвует в проектах',
-        renderer: (value: CC["Projects"], record) => {
+        renderer: (value: CC['Projects'], record) => {
           const { username } = record
 
           let output
@@ -128,8 +125,10 @@ class UsersView<P extends UsersViewProps = UsersViewProps> extends ObjectsListVi
           return output
         },
       },
-    ];
+    ]
   }
 }
 
-export default withStyles(styles)((props: UsersViewProps) => <UsersView {...props} />);
+export default withStyles(styles)((props: UsersViewProps) => (
+  <UsersView {...props} />
+))

@@ -2,23 +2,23 @@ import { AuthFormUsersConnectionQueryVariables } from 'src/modules/gql/generated
 import { AuthFormProps } from '../../interfaces'
 import AuthUsers from '../AuthUsers'
 
-export type AuthUsersConnectorProps = AuthFormProps & AuthFormUsersConnectionQueryVariables & {
-  View?: typeof AuthUsers
+export type AuthUsersConnectorProps = AuthFormProps &
+  AuthFormUsersConnectionQueryVariables & {
+    View?: typeof AuthUsers
 
-  getFilters: () => any
+    getFilters: () => any
 
-  setFilters: (arg0: any) => any
+    setFilters: (arg0: any) => any
 
-  cleanFilters: () => void
+    cleanFilters: () => void
 
-  password: string
+    password: string
 
-  onPasswordChange: (arg0: any) => any
+    onPasswordChange: (arg0: any) => any
 
-  useMetamask: boolean
+    useMetamask: boolean
 
-  showRegForm: boolean
+    showRegForm: boolean
 
-  first: number;
-  
-}
+    first: number
+  }

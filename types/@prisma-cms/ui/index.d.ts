@@ -1,22 +1,15 @@
-
 declare module '@prisma-cms/ui' {
-
-  import React from 'react';
+  import React from 'react'
 
   export interface UploaderProps {
+    onUpload(result: any): any
 
-    onUpload(result: any): any;
+    inEditMode: boolean
 
-    inEditMode: boolean;
+    helperText?: string
 
-    helperText?: string;
-
-    classes?: any;
-
+    classes?: any
   }
 
-  export class Uploader extends React.Component<UploaderProps> {
-
-  }
-
+  export class Uploader extends React.Component<UploaderProps> {}
 }

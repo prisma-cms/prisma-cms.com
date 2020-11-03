@@ -13,7 +13,10 @@ import moment from 'moment'
 // import { styles, TableView } from '../../List'
 import { styles, ObjectsListView as TableView } from '../../List'
 
-import { TopicsConnectionTopicFragment, TopicsConnectionUserFragment } from 'src/modules/gql/generated'
+import {
+  TopicsConnectionTopicFragment,
+  TopicsConnectionUserFragment,
+} from 'src/modules/gql/generated'
 
 import TagLink from 'src/next/src/components/ui/Link/Tag'
 import TopicLink from 'src/next/src/components/ui/Link/Topic'
@@ -77,7 +80,9 @@ const customStyles = () => {
  * Табличный вывод топиков
  */
 // export class ForumView<P extends ForumViewProps = ForumViewProps, S = {}, CC extends TopicsConnectionTopicFragment = TopicsConnectionTopicFragment> extends TableView<P, S, CC> {
-export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableView<P> {
+export class ForumView<
+  P extends ForumViewProps = ForumViewProps
+> extends TableView<P> {
   // static propTypes = {
   //   ...TableView.propTypes,
   //   filters: PropTypes.object,
@@ -92,17 +97,12 @@ export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableV
     // Toolbar: () => (null),
   }
 
-
   getColumns<CC extends TopicsConnectionTopicFragment>(): ColumnConfig<CC>[] {
-
-    const {
-      classes,
-      variables,
-    } = this.props
+    const { classes, variables } = this.props
 
     // const { tag: activeTag } = where || {}
 
-    const activeTag = variables?.where?.Tags_some?.Tag;
+    const activeTag = variables?.where?.Tags_some?.Tag
 
     return [
       {
@@ -165,7 +165,7 @@ export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableV
         },
       },
       {
-        id: "CreatedBy",
+        id: 'CreatedBy',
         label: 'Участники',
         className: classes?.alignCenter,
         renderer: (_value, record) => {
@@ -250,14 +250,12 @@ export class ForumView<P extends ForumViewProps = ForumViewProps> extends TableV
           return date.fromNow()
         },
       },
-    ];
+    ]
   }
 }
 
 export { customStyles as styles, ForumView as TableView }
 
-
 export default withStyles(customStyles)((props: ForumViewProps) => {
   return <ForumView {...props} />
-});
-
+})

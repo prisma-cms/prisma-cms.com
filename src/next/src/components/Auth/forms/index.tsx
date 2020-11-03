@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Dialog from // DialogContent, // DialogActions,
-  'material-ui/Dialog'
+import Dialog from 'material-ui/Dialog' // DialogContent, // DialogActions,
 
 import PrismaCmsComponent from '@prisma-cms/component'
 import { AuthFormProps, AuthFormState } from './interfaces'
@@ -40,7 +39,7 @@ const defaultLocales = {
 class AuthForm<
   P extends AuthFormProps,
   S extends AuthFormState
-  > extends PrismaCmsComponent<P, S> {
+> extends PrismaCmsComponent<P, S> {
   // context!: PrismaCmsContext;
 
   static propTypes = {
@@ -61,12 +60,9 @@ class AuthForm<
     locales: defaultLocales,
   }
 
-
   lexicon = (word: string, options?: any) => {
-
-    return super.lexicon(word, options);
+    return super.lexicon(word, options)
   }
-
 
   renderForm(): JSX.Element | null {
     return null

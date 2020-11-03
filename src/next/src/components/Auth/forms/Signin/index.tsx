@@ -9,7 +9,7 @@ import AuthUsersConnector from './AuthUsersConnector'
 class AuthUsersForm extends PrismaCmsComponent<
   AuthUsersFormProps,
   AuthUsersFormState
-  > {
+> {
   static propTypes = {
     ...PrismaCmsComponent.propTypes,
     first: PropTypes.number.isRequired,
@@ -104,17 +104,19 @@ class AuthUsersForm extends PrismaCmsComponent<
     return this.getFilters()
   }
 
-
   onPasswordChange = (password: string) => {
     this.setState({
       password,
     })
-  };
+  }
 
   render() {
     const { uri } = this.context
 
-    const { first = AuthUsersForm.defaultProps.first as number, ...other } = this.props
+    const {
+      first = AuthUsersForm.defaultProps.first as number,
+      ...other
+    } = this.props
 
     const { password } = this.state
 

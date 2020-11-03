@@ -34,7 +34,7 @@ import ProjectLink from 'src/next/src/components/ui/Link/Project'
 import UserLink from 'src/next/src/components/ui/Link/User'
 import { UserLinkAvatarSize } from 'src/next/src/components/ui/Link/User/interfaces'
 
-import Editor from "@prisma-cms/editor";
+import Editor from '@prisma-cms/editor'
 
 // export {
 //   UserLink,
@@ -52,7 +52,9 @@ export const styles = () => {
   }
 }
 
-export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableView<P> {
+export class TaskView<
+  P extends TaskViewProps = TaskViewProps
+> extends EditableView<P> {
   static propTypes = {
     ...EditableView.propTypes,
     classes: PropTypes.object.isRequired,
@@ -131,8 +133,7 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
   }
 
   getObjectWithMutations(): Task {
-
-    return super.getObjectWithMutations();
+    return super.getObjectWithMutations()
   }
 
   getButtons() {
@@ -144,7 +145,8 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
 
     const { user: currentUser } = this.context
 
-    const activeTimers = (Timers && Timers.filter((n) => n.stopedAt === null)) || []
+    const activeTimers =
+      (Timers && Timers.filter((n) => n.stopedAt === null)) || []
 
     // buttons.push(<IconButton
     //   key="start"
@@ -168,7 +170,7 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
 
     const activeTimer = activeTimers.find(
       (n) => n.CreatedBy?.id === currentUserId
-    );
+    )
 
     if (activeTimer) {
       const { id: timerId } = activeTimer
@@ -180,7 +182,7 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
             this.mutate({
               // mutation: updateTimerProcessor,
               mutation: async () => {
-                console.error("updateTimerProcessor required");
+                console.error('updateTimerProcessor required')
               },
               variables: {
                 data: {
@@ -205,7 +207,7 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
             this.mutate({
               // mutation: createTimerProcessor,
               mutation: async () => {
-                console.error("createTimerProcessor required");
+                console.error('createTimerProcessor required')
               },
               variables: {
                 data: {
@@ -237,7 +239,7 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
 
     // TODO: Ранее структура была на один проект, но сейчас возвращает несколько.
     // Надо доработать для вывода нескольких проектов
-    const Project = TaskProjects?.length ? TaskProjects[0].Project : null;
+    const Project = TaskProjects?.length ? TaskProjects[0].Project : null
 
     const inEditMode = this.isInEditMode()
 
@@ -321,6 +323,7 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
     }
 
     const {
+      id,
       content,
       Timers,
       startDatePlaning,
@@ -354,6 +357,7 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
             <Typography variant="subheading">Описание задачи</Typography>
 
             <Editor
+              editorKey={`task-${id}`}
               value={content}
               readOnly={!inEditMode}
               onChange={(content) => {
@@ -472,4 +476,6 @@ export class TaskView<P extends TaskViewProps = TaskViewProps> extends EditableV
 //   withStyles(styles)((props) => <TaskView {...props} />)
 // )
 
-export default withStyles(styles)((props: TaskViewProps) => <TaskView {...props} />) 
+export default withStyles(styles)((props: TaskViewProps) => (
+  <TaskView {...props} />
+))

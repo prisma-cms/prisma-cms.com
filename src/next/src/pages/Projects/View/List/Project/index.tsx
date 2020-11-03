@@ -14,15 +14,13 @@ import Link from 'next/link'
 import { Project } from 'src/modules/gql/generated'
 
 class ProjectView extends BaseProjectView<ProjectsListProjectProps> {
-
   static defaultProps = {
     ...BaseProjectView.defaultProps,
     classes: {},
   }
 
   getObjectWithMutations(): Project {
-
-    return super.getObjectWithMutations();
+    return super.getObjectWithMutations()
   }
 
   renderTasks() {
@@ -56,7 +54,8 @@ class ProjectView extends BaseProjectView<ProjectsListProjectProps> {
       </CardContent>
     ) : null
   }
-
 }
 
-export default withStyles(styles)((props: ProjectsListProjectProps) => <ProjectView {...props} />)
+export default withStyles(styles)((props: ProjectsListProjectProps) => (
+  <ProjectView {...props} />
+))

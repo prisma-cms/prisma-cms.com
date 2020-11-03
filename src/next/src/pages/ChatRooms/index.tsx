@@ -13,21 +13,21 @@ import { Page } from '../_App/interfaces'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 
-const first = 10;
+const first = 10
 
 const defaultVariables: ChatRoomsConnectionQueryVariables = {
   where: {},
   first,
-};
+}
 
 function getQueryParams(query: ParsedUrlQuery) {
+  let skip: number | undefined
 
-  let skip: number | undefined;
-
-  const page = (query.page && typeof query.page === 'string' && parseInt(query.page)) || 0;
+  const page =
+    (query.page && typeof query.page === 'string' && parseInt(query.page)) || 0
 
   if (page > 1) {
-    skip = (page - 1) * first;
+    skip = (page - 1) * first
   }
 
   return {
@@ -38,28 +38,21 @@ function getQueryParams(query: ParsedUrlQuery) {
 }
 
 const ChatRoomsPage: Page = () => {
+  const router = useRouter()
 
-  const router = useRouter();
+  const { query } = router
 
-
-  const {
-    query,
-  } = router;
-
-  const {
-    page,
-    ...queryVariables
-  } = useMemo(() => {
+  const { page, ...queryVariables } = useMemo(() => {
     return {
       ...defaultVariables,
       ...getQueryParams(query),
-    };
-  }, [query]);
+    }
+  }, [query])
 
   const queryResult = useChatRoomsConnectionQuery({
     variables: queryVariables,
     onCompleted: (data) => {
-      setResponse(data);
+      setResponse(data)
     },
     onError: console.error,
   })
@@ -68,17 +61,17 @@ const ChatRoomsPage: Page = () => {
    * useState используем уже после выполнения запроса, так как на стороне setState не имеет эффекта,
    * надо дефолтные данные сразу задать из полученного результата
    */
-  const [response, setResponse] = useState<ChatRoomsConnectionQuery | null | undefined>(queryResult.data);
+  const [response, setResponse] = useState<
+    ChatRoomsConnectionQuery | null | undefined
+  >(queryResult.data)
 
-  const {
-    variables,
-  } = queryResult;
+  const { variables } = queryResult
 
   return (
     <>
       <Head>
-        <title>Блоги</title>
-        <meta name="description" content="Все блоги" />
+        <title>Чат-комнаты</title>
+        <meta name="description" content="Все чат-комнаты" />
       </Head>
 
       <View

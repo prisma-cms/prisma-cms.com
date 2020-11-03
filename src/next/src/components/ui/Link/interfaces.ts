@@ -1,4 +1,4 @@
-import { TypographyProps } from 'material-ui/Typography';
+import { TypographyProps } from 'material-ui/Typography'
 import { LinkProps } from 'next/link'
 
 export interface UiLinkProps extends LinkProps {
@@ -17,7 +17,7 @@ export interface UiLinkProps extends LinkProps {
 
   onClick?: (event?: any) => void
 
-  color?: TypographyProps["color"];
-  
-  variant?: TypographyProps["variant"];
+  color?: TypographyProps['color']
+
+  variant?: TypographyProps['variant']
 }

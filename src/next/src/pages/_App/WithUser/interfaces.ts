@@ -1,7 +1,7 @@
-import { PrismaCmsContext } from "../interfaces";
+import { PrismaCmsContext } from '../interfaces'
 
 export interface WithUserProps {
   // client: PrismaCmsContext["client"];
 
-  context: PrismaCmsContext;
+  context: PrismaCmsContext
 }

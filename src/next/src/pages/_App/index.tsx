@@ -6,7 +6,11 @@ import { ThemeProvider } from 'styled-components'
 import theme, { GlobalStyle } from './theme'
 import { NextPageContextCustom, AppProps, PrismaCmsContext } from './interfaces'
 
-import { useApollo, initializeApollo, getSubscriptionClient } from 'src/next/src/lib/apolloClient'
+import {
+  useApollo,
+  initializeApollo,
+  getSubscriptionClient,
+} from 'src/next/src/lib/apolloClient'
 
 import Context from '@prisma-cms/context'
 import URI from 'urijs'
@@ -19,10 +23,10 @@ import WithUser from './WithUser'
 import { AuthFormResponse } from '../../components/Auth/forms/interfaces'
 
 import moment from 'moment'
+import Head from 'next/head'
 
 // TODO: Проработать локализацию
-moment.locale('ru');
-
+moment.locale('ru')
 
 const App = ({ Component, pageProps }: AppProps) => {
   const apolloClient = useApollo(pageProps.initialApolloState)
@@ -69,28 +73,28 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   const [authOpen, setOpened] = useState(false)
 
-
   /**
    * Сбрасываем кеш аполло-клиента на авторизацию и деавторизацию
    */
-  const resetConnection = useCallback(async (token: string | null) => {
+  const resetConnection = useCallback(
+    async (token: string | null) => {
+      if (token) {
+        global.localStorage.setItem('token', token)
+      } else {
+        global.localStorage.removeItem('token')
+      }
 
-    if (token) {
-      global.localStorage.setItem('token', token)
-    }
-    else {
-      global.localStorage.removeItem('token')
-    }
+      /**
+       * Переподключаем веб-сокет
+       */
+      const subscriptionClient = getSubscriptionClient()
 
-    /**
-     * Переподключаем веб-сокет
-     */
-    const subscriptionClient = getSubscriptionClient();
+      subscriptionClient?.close(false, false)
 
-    subscriptionClient?.close(false, false);
-
-    await apolloClient.resetStore()
-  }, [apolloClient])
+      await apolloClient.resetStore()
+    },
+    [apolloClient]
+  )
 
   const loginComplete = useCallback(
     async (data: AuthFormResponse) => {
@@ -99,7 +103,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     },
     [resetConnection]
   )
-
 
   const loginCanceled = useCallback(() => {
     setOpened(false)
@@ -117,7 +120,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [setOpened])
 
   const contextValue = useMemo(() => {
-
     const context: PrismaCmsContext = {
       uri: new URI(),
       client: apolloClient,
@@ -125,12 +127,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       logout,
       openLoginForm,
       lang: 'ru',
-    };
+      theme: muiTheme,
+    }
 
-    return context;
-
-  }, [apolloClient, logout, openLoginForm, router]);
-
+    return context
+  }, [apolloClient, logout, openLoginForm, router])
 
   /**
    * Отлавливаем изменения в контексте
@@ -154,36 +155,53 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   // compare__context(contextValue);
 
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="theme-color" content="#000000" />
+        <base href="/" />
+        <link rel="icon" href="/favicon.ico" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&subset=latin,cyrillic"
+          rel="stylesheet"
+        />
+      </Head>
+      <MuiThemeProvider
+        theme={muiTheme}
+        // For SSR only
+        sheetsManager={
+          typeof global.window === 'undefined' ? new Map() : undefined
+        }
+      >
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <ApolloProvider client={apolloClient}>
+            <Context.Provider value={contextValue}>
+              <WithUser context={contextValue}>
+                <Auth
+                  open={authOpen}
+                  useMetamask={true}
+                  loginComplete={loginComplete}
+                  loginCanceled={loginCanceled}
+                  showRegForm={true}
+                />
 
-  return <MuiThemeProvider
-    theme={muiTheme}
-    // For SSR only
-    sheetsManager={typeof global.window === 'undefined' ? new Map() : undefined}
-  >
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
-      <ApolloProvider client={apolloClient}>
-        <Context.Provider value={contextValue}>
-          <WithUser context={contextValue}>
-
-            <Auth
-              open={authOpen}
-              useMetamask={true}
-              loginComplete={loginComplete}
-              loginCanceled={loginCanceled}
-              showRegForm={true}
-            />
-
-            <div id="content">
-              <Component {...pageProps} />
-            </div>
-
-          </WithUser>
-        </Context.Provider>
-      </ApolloProvider>
-    </ThemeProvider>
-  </MuiThemeProvider>;
-};
+                <div id="content">
+                  <Component {...pageProps} />
+                </div>
+              </WithUser>
+            </Context.Provider>
+          </ApolloProvider>
+        </ThemeProvider>
+      </MuiThemeProvider>
+    </>
+  )
+}
 
 App.getInitialProps = async (appContext: AppContext) => {
   /**
@@ -234,4 +252,4 @@ App.getInitialProps = async (appContext: AppContext) => {
   return newProps
 }
 
-export default App;
+export default App

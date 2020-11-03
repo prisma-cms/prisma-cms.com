@@ -1,25 +1,23 @@
-import { TypographyProps } from "material-ui/Typography";
-import { UiLinkProps } from "../interfaces";
+import { TypographyProps } from 'material-ui/Typography'
+import { UiLinkProps } from '../interfaces'
 
 export interface TagLinkProps {
-
   object: {
     __typename?: 'Tag'
-    id: string;
-    name?: string;
-    longtitle?: string;
-    uri?: string;
+    id: string
+    name?: string
+    longtitle?: string
+    uri?: string
   }
 
   classes?: {
-    root: string;
-    text: string;
-  };
+    root: string
+    text: string
+  }
 
-  color?: TypographyProps["color"];
+  color?: TypographyProps['color']
 
-  className?: UiLinkProps["className"];
+  className?: UiLinkProps['className']
 
-  textClassName?: UiLinkProps["textClassName"];
-
+  textClassName?: UiLinkProps['textClassName']
 }

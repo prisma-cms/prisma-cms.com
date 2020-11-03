@@ -14,7 +14,11 @@ import Avatar from 'src/next/src/components/ui/Avatar'
 
 import AuthForm from '../..'
 import { AuthUsersProps, AuthUsersState } from './interfaces'
-import { AuthFormUsersConnectionUserFragment, SigninDocument, SigninMutationResult } from 'src/modules/gql/generated'
+import {
+  AuthFormUsersConnectionUserFragment,
+  SigninDocument,
+  SigninMutationResult,
+} from 'src/modules/gql/generated'
 import UsersList from './UsersList'
 
 class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
@@ -85,8 +89,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
 
     this.setFilters({
       [name]: value ? value : undefined,
-    });
-
+    })
   }
 
   setFilters = (filters: any) => {
@@ -270,15 +273,16 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
         if (count === 1) {
           user = users[0]
         } else {
-
-          usersList = <UsersList
-            users={users}
-            setFilters={this.setFilters}
-            lexicon={this.lexicon}
-            page={page}
-            first={first}
-            count={count}
-          />
+          usersList = (
+            <UsersList
+              users={users}
+              setFilters={this.setFilters}
+              lexicon={this.lexicon}
+              page={page}
+              first={first}
+              count={count}
+            />
+          )
         }
       }
     }

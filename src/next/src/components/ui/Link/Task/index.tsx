@@ -1,52 +1,35 @@
 import React, { Component } from 'react'
-import Typography from "material-ui/Typography";
+import Typography from 'material-ui/Typography'
 
+import Link from '../'
 
-import Link from '../';
+import { withStyles } from 'material-ui/styles'
+import { TaskLinkProps } from './interfaces'
 
-import { withStyles } from 'material-ui/styles';
-import { TaskLinkProps } from './interfaces';
-
-const styles = {
-};
+const styles = {}
 
 export class TaskLink extends Component<TaskLinkProps> {
-
   render() {
-
-    const {
-      object,
-      children,
-      ...other
-    } = this.props;
-
+    const { object, children, ...other } = this.props
 
     if (!object) {
-      return null;
+      return null
     }
 
-    const {
-      id,
-      name,
-    } = object;
-
+    const { id, name } = object
 
     if (!name || !id) {
-      return null;
+      return null
     }
 
-    return <Link
-      href={`/tasks/${id}`}
-      title={name}
-      {...other}
-    >
-      {children || <Typography
-        component="span"
-      >
-        {name}
-      </Typography>}
-    </Link>
+    return (
+      <Link href={`/tasks/${id}`} title={name} {...other}>
+        {children || <Typography component="span">{name}</Typography>}
+      </Link>
+    )
   }
 }
 
-export default withStyles(styles)((props: TaskLinkProps) => <TaskLink {...props} />);
+export default withStyles(styles)((props: TaskLinkProps) => (
+  <TaskLink {...props} />
+))

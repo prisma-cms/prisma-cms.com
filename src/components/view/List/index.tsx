@@ -46,7 +46,9 @@ const customStyles = () => {
 }
 
 // TODO прописать интерфейс
-class ObjectsListView<P extends ObjectsListViewProps = ObjectsListViewProps> extends TableView<P> {
+class ObjectsListView<
+  P extends ObjectsListViewProps = ObjectsListViewProps
+> extends TableView<P> {
   static propTypes = {
     // ...TableView.propTypes,
     // withPagination: PropTypes.bool.isRequired,
@@ -85,8 +87,7 @@ class ObjectsListView<P extends ObjectsListViewProps = ObjectsListViewProps> ext
 
     const { edges, aggregate } = objectsConnection || {}
     // const { first: limit } = variables || {}
-    const limit = variables?.first;
-
+    const limit = variables?.first
 
     const { count = 0 } = aggregate || {}
 
@@ -100,7 +101,6 @@ class ObjectsListView<P extends ObjectsListViewProps = ObjectsListViewProps> ext
       //   </Typography>
       // }
     }
-
 
     return (
       <Fragment>
@@ -130,4 +130,6 @@ class ObjectsListView<P extends ObjectsListViewProps = ObjectsListViewProps> ext
 // export { customStyles as styles, ObjectsListView as TableView }
 export { customStyles as styles, ObjectsListView }
 
-export default withStyles(customStyles)((props: ObjectsListViewProps) => <ObjectsListView {...props} />)
+export default withStyles(customStyles)((props: ObjectsListViewProps) => (
+  <ObjectsListView {...props} />
+))

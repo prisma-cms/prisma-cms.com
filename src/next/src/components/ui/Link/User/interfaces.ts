@@ -1,5 +1,5 @@
 import { TypographyProps } from 'material-ui/Typography'
-import { Maybe } from "src/modules/gql/generated";
+import { Maybe } from 'src/modules/gql/generated'
 import { UiLinkProps } from '../interfaces'
 
 export enum UserLinkAvatarSize {
@@ -42,5 +42,5 @@ export interface UserLinkProps {
 
   onClick?: (event?: any) => void
 
-  className?: string;
+  className?: string
 }

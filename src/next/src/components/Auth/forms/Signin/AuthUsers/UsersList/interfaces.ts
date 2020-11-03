@@ -1,18 +1,17 @@
-import PrismaCmsComponent from "@prisma-cms/component";
-import { AuthFormUsersConnectionUserFragment } from "src/modules/gql/generated";
-import { AuthUsersProps } from "../interfaces";
+import PrismaCmsComponent from '@prisma-cms/component'
+import { AuthFormUsersConnectionUserFragment } from 'src/modules/gql/generated'
+import { AuthUsersProps } from '../interfaces'
 
 export interface UsersListProps {
+  users: AuthFormUsersConnectionUserFragment[]
 
-  users: AuthFormUsersConnectionUserFragment[];
+  setFilters: AuthUsersProps['setFilters']
 
-  setFilters: AuthUsersProps["setFilters"];
+  lexicon: PrismaCmsComponent['lexicon']
 
-  lexicon: PrismaCmsComponent["lexicon"];
+  page: number
 
-  page: number;
+  first: number
 
-  first: number;
-
-  count: number;
+  count: number
 }

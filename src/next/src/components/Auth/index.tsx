@@ -88,7 +88,7 @@ class Auth extends PrismaCmsComponent<AuthProps, AuthState> {
     this.setState({
       step: form,
     })
-  };
+  }
 
   renderSigninForm() {
     const {

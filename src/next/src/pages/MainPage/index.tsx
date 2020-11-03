@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
@@ -40,7 +40,6 @@ export const MainPage: Page = () => {
 }
 
 MainPage.getInitialProps = async (context) => {
-
   const { skip, first } = context.query
 
   const { apolloClient } = context

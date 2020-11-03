@@ -10,20 +10,18 @@ import React from 'react'
 //   processors,
 // } from '../../../../../Tasks/View/Task'
 
-import {
-  TaskView as CooperatorTaskView,
-} from 'src/next/src/pages/Tasks/View/Task';
+import { TaskView as CooperatorTaskView } from 'src/next/src/pages/Tasks/View/Task'
 
 import withStyles from 'material-ui/styles/withStyles'
 import { TasksTaskViewProps } from './interfaces'
 import Grid from 'src/next/src/components/ui/Grid'
-import TaskLink from 'src/next/src/components/ui/Link/Task';
+import TaskLink from 'src/next/src/components/ui/Link/Task'
 // import { graphql, compose } from '@apollo/client';
 
 const styles = {}
 
 class TasksTaskView extends CooperatorTaskView<TasksTaskViewProps> {
-// class TaskView extends React.Component<TaskViewProps> {
+  // class TaskView extends React.Component<TaskViewProps> {
   // static propTypes = {
   //   item: PropTypes.object.isRequired,
   // };
@@ -66,5 +64,6 @@ class TasksTaskView extends CooperatorTaskView<TasksTaskViewProps> {
 //   withStyles(styles)((props) => <TaskView {...props} />)
 // )
 
-export default withStyles(styles)((props: TasksTaskViewProps) => <TasksTaskView {...props} />);
-
+export default withStyles(styles)((props: TasksTaskViewProps) => (
+  <TasksTaskView {...props} />
+))

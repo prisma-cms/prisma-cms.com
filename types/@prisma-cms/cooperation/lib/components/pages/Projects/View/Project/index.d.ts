@@ -1,40 +1,34 @@
-
 declare module '@prisma-cms/cooperation/lib/components/pages/Projects/View/Project' {
-
-  import React from 'react';
+  import React from 'react'
 
   export const styles: any = {}
 
-  export interface ProjectViewProps {
+  export interface ProjectViewProps {}
 
-  }
+  export interface ProjectViewState {}
 
-  export interface ProjectViewState {
-
-  }
-
-  export class ProjectView<P extends ProjectViewProps = ProjectViewProps, S extends ProjectViewState = ProjectViewState> extends React.Component<P, S> {
-
+  export class ProjectView<
+    P extends ProjectViewProps = ProjectViewProps,
+    S extends ProjectViewState = ProjectViewState
+  > extends React.Component<P, S> {
     static propTypes = {}
 
     static defaultProps = {}
 
     updateObject(r: any): void
 
-    getObjectWithMutations(): any;
+    getObjectWithMutations(): any
 
-    renderResetButton(): JSX.Element | null;
+    renderResetButton(): JSX.Element | null
 
-    isInEditMode(): boolean;
+    isInEditMode(): boolean
 
-    getButtons(): JSX.Element[] | null;
+    getButtons(): JSX.Element[] | null
 
-    getTextField(arg0: any): JSX.Element | null;
+    getTextField(arg0: any): JSX.Element | null
 
-    onUpload(arg0: any): void;
+    onUpload(arg0: any): void
 
-    renderTasks(): JSX.Element | null;
-
+    renderTasks(): JSX.Element | null
   }
-
 }

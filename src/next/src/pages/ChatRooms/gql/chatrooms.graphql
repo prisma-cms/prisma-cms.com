@@ -1,13 +1,21 @@
 query chatRoomsConnection(
-  $where: ChatRoomWhereInput, 
-  $orderBy: ChatRoomOrderByInput, 
-  $skip: Int, 
-  $after: String, 
-  $before: String, 
-  $first: Int = 10, 
+  $where: ChatRoomWhereInput
+  $orderBy: ChatRoomOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int = 10
   $last: Int
 ) {
-  objectsConnection: chatRoomsConnection(where: $where, orderBy: $orderBy, skip: $skip, after: $after, before: $before, first: $first, last: $last) {
+  objectsConnection: chatRoomsConnection(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
     aggregate {
       count
     }

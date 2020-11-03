@@ -19,9 +19,8 @@ const createProxy = (props: any) => {
         res.writeHead(500, {
           'Content-Type': 'text/plain',
         })
-      }
-      catch (error) {
-        console.error(error);
+      } catch (error) {
+        console.error(error)
       }
 
       res.end(

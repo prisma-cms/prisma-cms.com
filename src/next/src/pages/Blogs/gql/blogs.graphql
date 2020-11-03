@@ -1,13 +1,21 @@
 query blogsConnection(
-  $where: ResourceWhereInput, 
-  $orderBy: ResourceOrderByInput = name_ASC, 
-  $skip: Int, 
-  $after: String, 
-  $before: String, 
-  $first: Int = 10, 
+  $where: ResourceWhereInput
+  $orderBy: ResourceOrderByInput = name_ASC
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int = 10
   $last: Int
 ) {
-  objectsConnection: resourcesConnection(where: $where, orderBy: $orderBy, skip: $skip, after: $after, before: $before, first: $first, last: $last) {
+  objectsConnection: resourcesConnection(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
     aggregate {
       count
     }

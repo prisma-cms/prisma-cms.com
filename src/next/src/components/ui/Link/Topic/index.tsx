@@ -4,7 +4,6 @@ import Typography from 'material-ui/Typography'
 import Link from '..'
 import { TopicLinkProps } from './interfaces'
 
-
 export class TopicLink extends Component<TopicLinkProps> {
   render() {
     const { object, children, ...other } = this.props
@@ -27,4 +26,4 @@ export class TopicLink extends Component<TopicLinkProps> {
   }
 }
 
-export default TopicLink;
+export default TopicLink

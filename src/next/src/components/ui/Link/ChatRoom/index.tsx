@@ -1,43 +1,29 @@
 import React, { Component } from 'react'
 
+import Link from '..'
 
-import Link from '..';
-
-import { ChatRoomLinkProps } from './interfaces';
+import { ChatRoomLinkProps } from './interfaces'
 
 export class ChatRoomLink extends Component<ChatRoomLinkProps> {
-
   render() {
-
-    const {
-      object,
-      ...other
-    } = this.props;
-
+    const { object, ...other } = this.props
 
     if (!object) {
-      return null;
+      return null
     }
 
-    const {
-      id,
-      name,
-    } = object;
-
+    const { id, name } = object
 
     if (!id) {
-      return null;
+      return null
     }
 
-    return <Link
-      href={`/chat-rooms/${id}`}
-      title={name}
-      {...other}
-    >
-      {name}
-    </Link>
+    return (
+      <Link href={`/chat-rooms/${id}`} title={name} {...other}>
+        {name}
+      </Link>
+    )
   }
 }
 
-
-export default ChatRoomLink;
+export default ChatRoomLink

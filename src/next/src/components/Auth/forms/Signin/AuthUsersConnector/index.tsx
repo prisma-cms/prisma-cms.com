@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { AuthFormUsersConnectionQuery, useAuthFormUsersConnectionQuery } from 'src/modules/gql/generated'
+import {
+  AuthFormUsersConnectionQuery,
+  useAuthFormUsersConnectionQuery,
+} from 'src/modules/gql/generated'
 import AuthUsers from '../AuthUsers'
 import { AuthUsersConnectorProps } from './interfaces'
 
 const AuthUsersConnector: React.FC<AuthUsersConnectorProps> = (props) => {
-  const {
-    View = AuthUsers,
-    where,
-    first,
-    skip,
-    orderBy,
-    ...other
-  } = props
-
+  const { View = AuthUsers, where, first, skip, orderBy, ...other } = props
 
   const data = useAuthFormUsersConnectionQuery({
     /**
@@ -29,10 +24,9 @@ const AuthUsersConnector: React.FC<AuthUsersConnectorProps> = (props) => {
       orderBy,
     },
     onCompleted: (data) => {
-      setResponse(data);
+      setResponse(data)
     },
-
-  });
+  })
 
   /**
    * Объект response нужен для того, чтобы смена списка пользователей выполнялась
@@ -41,7 +35,9 @@ const AuthUsersConnector: React.FC<AuthUsersConnectorProps> = (props) => {
    * По этой причине мы юзаем метод onCompleted, который вывызывается именно в момент завершения
    * выполнения запроса.
    */
-  const [response, setResponse] = useState<AuthFormUsersConnectionQuery | null | undefined>(data.data);
+  const [response, setResponse] = useState<
+    AuthFormUsersConnectionQuery | null | undefined
+  >(data.data)
 
   /**
    * Так как у нас запрос не выполняется, если where не передан,
@@ -50,17 +46,11 @@ const AuthUsersConnector: React.FC<AuthUsersConnectorProps> = (props) => {
    */
   useEffect(() => {
     if (!where && response) {
-
-      setResponse(null);
+      setResponse(null)
     }
-  }, [response, where]);
+  }, [response, where])
 
-
-  return <View
-    response={response || null}
-    first={first}
-    {...other}
-  />;
+  return <View response={response || null} first={first} {...other} />
 }
 
 export default AuthUsersConnector

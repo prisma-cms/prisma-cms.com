@@ -83,8 +83,8 @@ class TimerView extends EditableView<TimerViewProps> {
   async stopTimer(timerId: string) {
     const { mutate } = this.props
 
-    if(!mutate) {
-      throw new Error ('stopTimer mutate required');
+    if (!mutate) {
+      throw new Error('stopTimer mutate required')
     }
 
     return await mutate({
@@ -116,13 +116,11 @@ class TimerView extends EditableView<TimerViewProps> {
   }
 
   getObject(): Timer {
-
-    return super.getObject();
+    return super.getObject()
   }
 
   getObjectWithMutations(): Timer {
-
-    return super.getObjectWithMutations();
+    return super.getObjectWithMutations()
   }
 
   renderHeader() {
@@ -158,18 +156,15 @@ class TimerView extends EditableView<TimerViewProps> {
                 {Task ? <TaskLink object={Task} /> : null}
 
                 {TaskProjects?.map((n) => {
+                  const Project = n.Project
 
-                  const Project = n.Project;
-
-                  return <span
-                    key={n.id}
-                  >
-                    {' '}
-                    (<ProjectLink object={Project} />)
-                  </span>
-
+                  return (
+                    <span key={n.id}>
+                      {' '}
+                      (<ProjectLink object={Project} />)
+                    </span>
+                  )
                 })}
-
               </Grid>
 
               <Grid item>{this.getButtons()}</Grid>
@@ -235,4 +230,6 @@ class TimerView extends EditableView<TimerViewProps> {
   }
 }
 
-export default withStyles(styles)((props: TimerViewProps) => <TimerView {...props} />)
+export default withStyles(styles)((props: TimerViewProps) => (
+  <TimerView {...props} />
+))

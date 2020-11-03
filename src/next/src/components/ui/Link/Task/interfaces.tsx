@@ -1,11 +1,10 @@
 // import { UiLinkProps } from "../interfaces";
 
 export interface TaskLinkProps {
-
   object: {
     __typename?: 'Task'
-    id: string;
-    name: string;
+    id: string
+    name: string
   }
 
   // variant?: UiLinkProps["variant"];
@@ -14,5 +13,4 @@ export interface TaskLinkProps {
   //   root: string;
   //   text: string;
   // }
-  
 }

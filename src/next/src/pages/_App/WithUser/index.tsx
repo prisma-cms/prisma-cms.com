@@ -10,10 +10,7 @@ import { WithUserProps } from './interfaces'
 import SubscriptionProvider from './SubscriptionProvider'
 
 const WithUser: React.FC<WithUserProps> = ({ children, context }) => {
-
-  const {
-    client,
-  } = context;
+  const { client } = context
 
   // TODO Надо проработать перезапрос пользователя.
   /**
@@ -35,7 +32,7 @@ const WithUser: React.FC<WithUserProps> = ({ children, context }) => {
     //    */
     //   console.log('WithUser useMeQuery onCompleted data', data);
     // },
-  });
+  })
 
   // console.log('WithUser useMeQuery loading', loading);
 
@@ -43,8 +40,7 @@ const WithUser: React.FC<WithUserProps> = ({ children, context }) => {
 
   const user = data?.user
 
-  const header = useMemo(() => <Header user={user} />, [user]);
-
+  const header = useMemo(() => <Header user={user} />, [user])
 
   // console.log('contextWithUser user', user);
 
@@ -54,41 +50,33 @@ const WithUser: React.FC<WithUserProps> = ({ children, context }) => {
    * компоненты будут ререндериться.
    */
   const contextWithUser = useMemo(() => {
-
     // console.log('contextWithUser memo');
 
     if (context.user === user) {
-
       const newContext: PrismaCmsContext = {
         ...context,
         user,
-      };
+      }
 
-      return newContext;
+      return newContext
     }
 
     // else
-    return context;
-  }, [context, user]);
+    return context
+  }, [context, user])
 
-
-
-  return <Context.Provider
-    value={contextWithUser}
-  >
-    {/* 
+  return (
+    <Context.Provider value={contextWithUser}>
+      {/* 
     TODO добавить подписку на объект пользователя
   */}
-    <SubscriptionProvider
-      user={user}
-      client={client}
-    >
-      {header}
+      <SubscriptionProvider user={user} client={client}>
+        {header}
 
-      {children}
-    </SubscriptionProvider>
-
-  </Context.Provider>
+        {children}
+      </SubscriptionProvider>
+    </Context.Provider>
+  )
 }
 
 export default WithUser

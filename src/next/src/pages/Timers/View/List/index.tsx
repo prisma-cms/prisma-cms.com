@@ -29,7 +29,7 @@ class TimersListView extends Component<TimersListViewProps> {
     }
 
     return timers.map((n) => {
-      const { id } = n;
+      const { id } = n
 
       return (
         // <UpdateTimer
@@ -40,8 +40,7 @@ class TimersListView extends Component<TimersListViewProps> {
           }}
           mutate={async (arg0: any) => {
             // TODO Прописать апдейтер
-            console.error('TimersList update mutation required', arg0);
-
+            console.error('TimersList update mutation required', arg0)
           }}
         />
       )

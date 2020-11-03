@@ -120,15 +120,9 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
   // }
 
   render() {
-    const {
-      classes,
-      user: currentUser,
-    } = this.props
+    const { classes, user: currentUser } = this.props
 
-    const {
-      logout,
-      openLoginForm,
-    } = this.context
+    const { logout, openLoginForm } = this.context
 
     const { id: userId, Timers } = currentUser || {}
 
@@ -271,27 +265,30 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
                   <UserItem key={userId} user={currentUser} classes={classes} />
                 </Grid>
                 <Grid key="logout" item>
-                  <a href="#" onClick={(event) => {
-                    event.preventDefault();
-                    return logout();
-                  }}>
+                  <a
+                    href="#"
+                    onClick={(event) => {
+                      event.preventDefault()
+                      return logout()
+                    }}
+                  >
                     {this.lexicon('Signout')}
                   </a>
                 </Grid>
               </Fragment>
             ) : (
-                <Grid key="login" item>
-                  <Button
-                    onClick={() => {
-                      return openLoginForm()
-                    }}
-                  >
-                    <Typography component="span">
-                      {this.lexicon('Signin')}
-                    </Typography>
-                  </Button>
-                </Grid>
-              )}
+              <Grid key="login" item>
+                <Button
+                  onClick={() => {
+                    return openLoginForm()
+                  }}
+                >
+                  <Typography component="span">
+                    {this.lexicon('Signin')}
+                  </Typography>
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </Toolbar>
       </AppBar>

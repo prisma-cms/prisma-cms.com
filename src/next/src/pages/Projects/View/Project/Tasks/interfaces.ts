@@ -1,11 +1,8 @@
-
 export interface TasksListProps {
-
-  tasksLimit?: number;
+  tasksLimit?: number
 
   tasks: {
-    __typename?: 'Task',
+    __typename?: 'Task'
     id?: string
   }[]
-
 }

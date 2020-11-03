@@ -61,7 +61,10 @@ export const styles = (theme: any) => {
   }
 }
 
-export class ProjectView<P extends ProjectProps = ProjectProps, S extends ProjectState = ProjectState> extends PrismaCmsCooperationProjectView<P, S> {
+export class ProjectView<
+  P extends ProjectProps = ProjectProps,
+  S extends ProjectState = ProjectState
+> extends PrismaCmsCooperationProjectView<P, S> {
   static propTypes = {
     ...PrismaCmsCooperationProjectView.propTypes,
     classes: PropTypes.object.isRequired,
@@ -125,9 +128,7 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
 
     const { openedImage, editMembers } = this.state
 
-    const {
-      user: currentUser,
-    } = this.context
+    const { user: currentUser } = this.context
 
     if (!object) {
       return null
@@ -164,7 +165,9 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
       project_members.map(function (member: ProjectMember) {
         const { id, User } = member
 
-        members.push(<UserLink key={id} user={User} size={UserLinkAvatarSize.small} />)
+        members.push(
+          <UserLink key={id} user={User} size={UserLinkAvatarSize.small} />
+        )
       }, this)
     }
 
@@ -218,11 +221,9 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
           width: '100%',
         }}
       >
-
         <div className={classes?.header}>
           <Grid container spacing={8} alignItems="center">
-            <Grid item xs={inEditMode}>
-            </Grid>
+            <Grid item xs={inEditMode}></Grid>
 
             <Grid item>{this.getButtons()}</Grid>
 
@@ -239,23 +240,20 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
               name: 'name',
             })
           ) : (
-              <Typography
-                variant="title"
-                style={{
-                  padding: 3,
-                }}
-              >
-                <ProjectLink
-                  object={object}
-                >
-                  <Typography variant="title">{name}</Typography>
-                </ProjectLink>
-              </Typography>
-            )}
+            <Typography
+              variant="title"
+              style={{
+                padding: 3,
+              }}
+            >
+              <ProjectLink object={object}>
+                <Typography variant="title">{name}</Typography>
+              </ProjectLink>
+            </Typography>
+          )}
         </CardContent>
 
-        <CardContent
-        >
+        <CardContent>
           <div className="overlay">
             {inEditMode && currentUser ? (
               <Uploader
@@ -287,21 +285,20 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
               name: 'url',
             })
           ) : (
-              <Typography
-                variant="subheading"
-                style={{
-                  textAlign: 'right',
-                  padding: 5,
-                }}
-              >
-                {url ? (
-                  <a href={url} target="_blank" title={name} rel="noreferrer">
-                    {url}
-                  </a>
-                ) : null}
-              </Typography>
-            )}
-
+            <Typography
+              variant="subheading"
+              style={{
+                textAlign: 'right',
+                padding: 5,
+              }}
+            >
+              {url ? (
+                <a href={url} target="_blank" title={name} rel="noreferrer">
+                  {url}
+                </a>
+              ) : null}
+            </Typography>
+          )}
         </CardContent>
 
         {developer_id ? (
@@ -313,9 +310,7 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
                 flexWrap: 'wrap',
               }}
             >
-              <Link
-                href={developer_uri}
-              >
+              <Link href={developer_uri}>
                 <a
                   style={{
                     textDecoration: 'none',
@@ -366,7 +361,6 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
           </CardContent>
         ) : null} */}
 
-
         {/* 
           TODO: часть свойств диалога не актуальные, я их закомментировал.
           Если функционал пострадает, надо будет восстановить
@@ -379,18 +373,15 @@ export class ProjectView<P extends ProjectProps = ProjectProps, S extends Projec
           //   maxWidth: '100%',
           // }}
           open={this.state.open && openedImage ? true : false}
-        // autoScrollBodyContent={true}
-        // actions={dialog_actions}
+          // autoScrollBodyContent={true}
+          // actions={dialog_actions}
         >
           <DialogContent>
-            {openedImage ? <img
-              className={classes?.imageOpened}
-              src={openedImage}
-            /> : null}
+            {openedImage ? (
+              <img className={classes?.imageOpened} src={openedImage} />
+            ) : null}
           </DialogContent>
-          <DialogActions>
-            {dialog_actions}
-          </DialogActions>
+          <DialogActions>{dialog_actions}</DialogActions>
         </Dialog>
       </Card>
     )

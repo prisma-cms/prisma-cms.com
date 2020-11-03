@@ -3,6 +3,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import URI from 'urijs'
 import { NextRouter } from 'next/router'
 import { Maybe, MeUserFragment } from 'src/modules/gql/generated'
+import { muiTheme } from './MUI/theme'
 // import { ApolloClient } from 'apollo-client'
 // import { NormalizedCacheObject } from 'apollo-cache-inmemory'
 
@@ -47,7 +48,7 @@ export type PrismaCmsContext = {
   /**
    * GraphQL-запросы
    */
-  query?: any
+  query?: any | null
 
   user?: Maybe<MeUserFragment>
 
@@ -56,6 +57,8 @@ export type PrismaCmsContext = {
   openLoginForm: () => void
 
   lang: string
+
+  theme: typeof muiTheme
 }
 
 /**
@@ -63,4 +66,4 @@ export type PrismaCmsContext = {
  */
 export type Page<
   C extends NextPageContextCustom = NextPageContextCustom
-  > = NextComponentType<C>
+> = NextComponentType<C>

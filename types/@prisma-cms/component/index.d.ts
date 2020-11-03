@@ -1,9 +1,8 @@
-
 declare module '@prisma-cms/component' {
   import { PrismaCmsContext } from 'src/next/src/pages/_App/interfaces'
   import React from 'react'
 
-  export interface PrismaCmsComponentProps { }
+  export interface PrismaCmsComponentProps {}
 
   export interface PrismaCmsComponentState {
     inRequest: boolean
@@ -16,12 +15,12 @@ declare module '@prisma-cms/component' {
   export default class PrismaCmsComponent<
     P extends PrismaCmsComponentProps = PrismaCmsComponentProps,
     S extends PrismaCmsComponentState = PrismaCmsComponentState
-    > extends React.PureComponent<P, S> {
+  > extends React.PureComponent<P, S> {
     static propTypes: any
 
     static defaultProps: any
 
-    declare context: PrismaCmsContext
+    context!: PrismaCmsContext
 
     lexicon(word: string, options?: any): any
 
@@ -34,6 +33,5 @@ declare module '@prisma-cms/component' {
     addError(arg0: string | Error): void
 
     render(arg0?: any): React.Element | null
-
   }
 }

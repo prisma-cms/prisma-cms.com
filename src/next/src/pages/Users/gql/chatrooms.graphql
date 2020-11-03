@@ -1,13 +1,21 @@
 query usersConnection(
-  $where: UserWhereInput, 
-  $orderBy: UserOrderByInput = createdAt_ASC, 
-  $skip: Int, 
-  $after: String, 
-  $before: String, 
-  $first: Int = 10, 
+  $where: UserWhereInput
+  $orderBy: UserOrderByInput = createdAt_ASC
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int = 10
   $last: Int
 ) {
-  objectsConnection: usersConnection(where: $where, orderBy: $orderBy, skip: $skip, after: $after, before: $before, first: $first, last: $last) {
+  objectsConnection: usersConnection(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
     aggregate {
       count
     }
@@ -80,9 +88,7 @@ fragment usersConnectionUser on User {
       ...usersConnectionResource
     }
   }
-  
 }
- 
 
 fragment usersConnectionProject on Project {
   id

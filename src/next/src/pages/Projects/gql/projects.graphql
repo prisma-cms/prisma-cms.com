@@ -1,10 +1,15 @@
 query projectsConnection(
-  $first: Int = 12, 
-  $skip: Int, 
-  $where: ProjectWhereInput, 
+  $first: Int = 12
+  $skip: Int
+  $where: ProjectWhereInput
   $orderBy: ProjectOrderByInput = updatedAt_DESC
 ) {
-  objectsConnection: projectsConnection(orderBy: $orderBy, first: $first, skip: $skip, where: $where) {
+  objectsConnection: projectsConnection(
+    orderBy: $orderBy
+    first: $first
+    skip: $skip
+    where: $where
+  ) {
     aggregate {
       count
     }
@@ -15,7 +20,6 @@ query projectsConnection(
     }
   }
 }
-
 
 fragment projectsConnectionProject on Project {
   ...ProjectNoNesting
@@ -37,7 +41,7 @@ fragment projectsConnectionProject on Project {
       CreatedBy {
         ...projectsConnectionUser
       }
-      Timers(where: {stopedAt: null}) {
+      Timers(where: { stopedAt: null }) {
         id
         createdAt
         updatedAt
@@ -116,4 +120,3 @@ fragment TaskNoNesting on Task {
   startDate
   endDate
 }
-
