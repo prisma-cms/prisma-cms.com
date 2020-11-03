@@ -23,6 +23,10 @@ declare module 'apollo-cms/lib/DataView/List/Table' {
     renderer?(value: any, record: P): any
 
     hidden?: boolean
+
+    numeric?: boolean
+
+    disablePadding?: boolean
   }
 
   export type ColumnConfig<P = {}> = Column<P>

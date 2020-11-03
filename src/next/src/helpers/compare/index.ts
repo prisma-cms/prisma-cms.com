@@ -42,9 +42,9 @@ function compare<T>(title: string, a: T, b?: T): boolean {
     if (typeof a !== typeof b) {
       console.error(title, `typeof a "${typeof a}" !== typeof b "${typeof b}"`)
     } else if (typeof a === 'object' && typeof b === 'object') {
-    /**
-     * Compare objects fields
-     */
+      /**
+       * Compare objects fields
+       */
       // TODO: реализовать проверку полей в обе стороны
       const compareFields = (objectA: typeof a, objectB: typeof b) => {
         for (const i in objectA) {
