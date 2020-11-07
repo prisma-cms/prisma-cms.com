@@ -4,8 +4,7 @@ import URI from 'urijs'
 import { NextRouter } from 'next/router'
 import { Maybe, MeUserFragment } from 'src/modules/gql/generated'
 import { muiTheme } from './MUI/theme'
-// import { ApolloClient } from 'apollo-client'
-// import { NormalizedCacheObject } from 'apollo-cache-inmemory'
+import { AppContext, AppInitialProps as NextAppInitialProps } from 'next/app'
 
 /**
  * Расширенный контекст страниц приложения
@@ -19,12 +18,26 @@ export interface NextPageContextCustom extends NextPageContext {
   apolloClient: ApolloClientNormolized
 }
 
+export interface PageProps {
+  initialApolloState?: any
+
+  /**
+   * Apollo-client API query
+   */
+  queryResult?: any
+
+  /**
+   * Серверная ошибка
+   */
+  statusCode?: number
+}
+
 /**
  * Свойства для основного приложения
  */
 export type AppProps = {
   Component: any
-  pageProps: any
+  pageProps: PageProps
 }
 
 // TODO: обновить аполло-клиент
@@ -64,6 +77,16 @@ export type PrismaCmsContext = {
 /**
  * Страница с кастомным контекстом
  */
-export type Page<
-  C extends NextPageContextCustom = NextPageContextCustom
-> = NextComponentType<C>
+export type Page<P extends PageProps = PageProps, IP = P> = NextComponentType<
+  NextPageContextCustom,
+  IP,
+  P
+>
+
+export interface AppInitialProps extends NextAppInitialProps {
+  pageProps: PageProps
+}
+
+export type MainApp<P = AppProps> = React.FC<P> & {
+  getInitialProps(context: AppContext): Promise<AppInitialProps>
+}

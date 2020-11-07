@@ -101,6 +101,7 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
       </CommentsStyled>
 
       {areMoreNodes && (
+        // eslint-disable-next-line react/jsx-no-bind
         <button onClick={() => loadMorePosts()} disabled={loadingMorePosts}>
           {loadingMorePosts ? 'Loading...' : 'Show More'}
         </button>

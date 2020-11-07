@@ -6,6 +6,7 @@
     "*/generated/*",
     "*/coverage/*",
     "*/uploads/*",
-    "*/src/components/*"
+    "*/src/components/*",
+    "*/storybook-static/*"
   ]
 }

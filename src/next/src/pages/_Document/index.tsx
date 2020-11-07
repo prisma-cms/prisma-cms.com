@@ -26,7 +26,20 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="ru">
-        <Head></Head>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <meta name="theme-color" content="#000000" />
+          <base href="/" />
+          <link rel="icon" href="/favicon.ico" />
+          <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&subset=latin,cyrillic"
+            rel="stylesheet"
+          />
+        </Head>
         <body>
           <Main />
           <NextScript />

@@ -1,5 +1,6 @@
+import { useCallback } from 'react'
 import { NetworkStatus } from '@apollo/client'
-import ErrorMessage from '../../ErrorMessage'
+// import ErrorMessage from '../../ErrorMessage'
 import { CommentsListProps, UserAvatarAlign } from './interfaces'
 import {
   CommentsConnectionDocument as allCommentsQueryDocument,
@@ -24,8 +25,8 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
   const { variables } = props
 
   const {
-    loading,
-    error,
+    // loading,
+    // error,
     data,
     networkStatus,
     fetchMore,
@@ -39,14 +40,14 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
 
   const loadingMorePosts = networkStatus === NetworkStatus.fetchMore
 
-  if (error) {
-    console.error('CommentsList loading error', error)
-    return <ErrorMessage message="Error loading posts." />
-  }
+  // if (error) {
+  //   console.error('CommentsList loading error', error)
+  //   return <ErrorMessage message="Error loading posts." />
+  // }
 
-  if (loading && !loadingMorePosts) {
-    return <div>Loading</div>
-  }
+  // if (loading && !loadingMorePosts) {
+  //   return <div>Loading</div>
+  // }
 
   // return <>
   //   Test
@@ -67,7 +68,7 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
 
   const count = data?.commentsConnection.aggregate.count ?? 0
 
-  const loadMorePosts = () => {
+  const loadMorePosts = useCallback(() => {
     fetchMore({
       variables: {
         skip: comments.length,
@@ -92,7 +93,7 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
         return result
       },
     })
-  }
+  }, [comments.length, fetchMore]);
 
   const areMoreNodes = count && comments.length < count
 
@@ -131,7 +132,7 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
       </CommentsStyled>
 
       {areMoreNodes && (
-        <button onClick={() => loadMorePosts()} disabled={loadingMorePosts}>
+        <button onClick={loadMorePosts} disabled={loadingMorePosts}>
           {loadingMorePosts ? 'Loading...' : 'Show More'}
         </button>
       )}

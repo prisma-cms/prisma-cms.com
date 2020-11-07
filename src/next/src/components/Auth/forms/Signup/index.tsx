@@ -26,7 +26,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
     }
   }
 
-  onChange(event: any) {
+  onChange = (event: any) => {
     const { name, value } = event.target
 
     const { data } = this.state
@@ -58,7 +58,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
               name="username"
               fullWidth
               value={username || ''}
-              onChange={(event) => this.onChange(event)}
+              onChange={this.onChange}
             />
           )}
         </Grid>
@@ -70,7 +70,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
               name="email"
               fullWidth
               value={email || ''}
-              onChange={(event) => this.onChange(event)}
+              onChange={this.onChange}
             />
           )}
         </Grid>
@@ -82,7 +82,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
               name="phone"
               fullWidth
               value={phone || ''}
-              onChange={(event: any) => this.onChange(event)}
+              onChange={this.onChange}
             />
           )}
         </Grid>
@@ -94,7 +94,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
               name="fullname"
               fullWidth
               value={fullname || ''}
-              onChange={(event: any) => this.onChange(event)}
+              onChange={this.onChange}
             />
           )}
         </Grid>
@@ -107,7 +107,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
               type="password"
               fullWidth
               value={password || ''}
-              onChange={(event) => this.onChange(event)}
+              onChange={this.onChange}
             />
           )}
         </Grid>
@@ -210,6 +210,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
         <Button
           key="metamask"
           // color="primary"
+          // eslint-disable-next-line react/jsx-no-bind
           onClick={() => {
             this.switchForm('metamask')
           }}
@@ -224,9 +225,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
       <Button
         key="cancel"
         // color="primary"
-        onClick={() => {
-          this.closeForm()
-        }}
+        onClick={this.closeForm}
         size="small"
       >
         {this.lexicon('Cancel')}
@@ -244,6 +243,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
         <Button
           key="switchForm"
           // color="primary"
+          // eslint-disable-next-line react/jsx-no-bind
           onClick={() => {
             this.switchForm('signin')
           }}
@@ -259,6 +259,7 @@ class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
         style={{
           width: '100%',
         }}
+        // eslint-disable-next-line react/jsx-no-bind
         onSubmit={(event) => {
           event.preventDefault()
 

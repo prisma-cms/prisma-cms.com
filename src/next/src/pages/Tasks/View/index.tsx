@@ -68,10 +68,55 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
 
   // }
 
+
+  onClickUpdateTimer = (target: any) => {
+
+    const {
+      updateTimerProcessor,
+    } = this.props
+
+    const timerId = target.attributes.role.value
+
+    updateTimerProcessor({
+      variables: {
+        data: {
+          stopedAt: new Date(),
+        },
+        where: {
+          id: timerId,
+        },
+      },
+    })
+  };
+
+  onClickCreateTimer = (target: any) => {
+
+    const {
+      createTimerProcessor,
+    } = this.props
+
+    const taskId = target.attributes.role.value
+
+    createTimerProcessor({
+      variables: {
+        data: {
+          Task: {
+            connect: {
+              id: taskId,
+            },
+          },
+        },
+      },
+    })
+
+  };
+
+
+
   getButtons(object: TasksConnectionTaskFragment) {
     const buttons: JSX.Element[] = []
 
-    const { createTimerProcessor, updateTimerProcessor, classes } = this.props
+    const { classes } = this.props
 
     // const {
     //   UserLink,
@@ -128,18 +173,8 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
           buttons.push(
             <IconButton
               key="stop"
-              onClick={() =>
-                updateTimerProcessor({
-                  variables: {
-                    data: {
-                      stopedAt: new Date(),
-                    },
-                    where: {
-                      id: timerId,
-                    },
-                  },
-                })
-              }
+              role={timerId}
+              onClick={this.onClickUpdateTimer}
               className={classes.button}
             >
               <StopIcon />
@@ -149,19 +184,8 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
           buttons.push(
             <IconButton
               key="start"
-              onClick={() =>
-                createTimerProcessor({
-                  variables: {
-                    data: {
-                      Task: {
-                        connect: {
-                          id: taskId,
-                        },
-                      },
-                    },
-                  },
-                })
-              }
+              role={taskId}
+              onClick={this.onClickCreateTimer}
               className={classes.button}
             >
               <StartIcon />
@@ -177,6 +201,45 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
   renderDate(date: string | null) {
     return date ? moment(date).format('lll') : null
   }
+
+  onClickDelete = (target: any) => {
+
+    const {
+      deleteTaskReaction,
+    } = this.props
+
+    const likedId = target.attributes.role.value
+
+    deleteTaskReaction({
+      variables: {
+        where: {
+          id: likedId,
+        },
+      },
+    })
+  };
+
+  onClickUpVote = (target: any) => {
+
+    const taskId = target.attributes.role.value
+
+    // createTaskReactionProcessor({
+    // });
+
+    this.mutate({
+      // mutation: gql(createTaskReactionProcessor),
+      variables: {
+        data: {
+          type: 'UpVote',
+          Task: {
+            connect: {
+              id: taskId,
+            },
+          },
+        },
+      },
+    })
+  };
 
   getColumns<CC extends TasksConnectionTaskFragment>(): ColumnConfig<CC>[] {
     const {
@@ -198,7 +261,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
       updateTaskProcessor,
       createTimerProcessor,
       updateTimerProcessor,
-      deleteTaskReaction,
+      // deleteTaskReaction,
       // createTaskReactionProcessor
     } = this.props
 
@@ -417,8 +480,8 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
           const users =
             value && value.length
               ? value.filter(
-                  (n) => n.CreatedBy && n.CreatedBy.id !== currentUserId
-                )
+                (n) => n.CreatedBy && n.CreatedBy.id !== currentUserId
+              )
               : []
 
           let like
@@ -436,15 +499,8 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
 
             like = (
               <IconButton
-                onClick={() => {
-                  deleteTaskReaction({
-                    variables: {
-                      where: {
-                        id: likedId,
-                      },
-                    },
-                  })
-                }}
+                role={likedId}
+                onClick={this.onClickDelete}
               >
                 <FavoriteIcon color="primary" />
               </IconButton>
@@ -452,24 +508,8 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
           } else {
             like = (
               <IconButton
-                onClick={() => {
-                  // createTaskReactionProcessor({
-                  // });
-
-                  this.mutate({
-                    // mutation: gql(createTaskReactionProcessor),
-                    variables: {
-                      data: {
-                        type: 'UpVote',
-                        Task: {
-                          connect: {
-                            id: taskId,
-                          },
-                        },
-                      },
-                    },
-                  })
-                }}
+                role={taskId}
+                onClick={this.onClickUpVote}
               >
                 <FavoriteIcon color="action" />
               </IconButton>
@@ -486,14 +526,14 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
               <Grid container spacing={8}>
                 {users.length
                   ? users.map((n) => (
-                      <Grid key={n.id} item>
-                        <UserLink
-                          user={n.CreatedBy}
-                          size={UserLinkAvatarSize.small}
-                          showName={false}
-                        />
-                      </Grid>
-                    ))
+                    <Grid key={n.id} item>
+                      <UserLink
+                        user={n.CreatedBy}
+                        size={UserLinkAvatarSize.small}
+                        showName={false}
+                      />
+                    </Grid>
+                  ))
                   : null}
               </Grid>
 
@@ -628,12 +668,12 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
               minDate={minDate}
               maxDate={maxDate}
               dates={showDates}
-              onStartDateChange={() => {
-                console.error('onStartDateChange??')
-              }}
-              onEndDateChange={() => {
-                console.error('onEndDateChange??')
-              }}
+              // onStartDateChange={() => {
+              //   console.error('onStartDateChange??')
+              // }}
+              // onEndDateChange={() => {
+              //   console.error('onEndDateChange??')
+              // }}
               {...options}
             />
           </Grid>
@@ -686,10 +726,10 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
     let showAllButton
 
     if (showAll) {
-      showAllButton = <Button onClick={() => setShowAll(false)}>Скрыть</Button>
+      showAllButton = <Button onClick={this.onClickHideAll}>Скрыть</Button>
     } else if (limit && count && count > limit && setShowAll) {
       showAllButton = (
-        <Button onClick={() => setShowAll(true)}>Показать все ({count})</Button>
+        <Button onClick={this.onClickShowAll}>Показать все ({count})</Button>
       )
     }
 
@@ -728,6 +768,26 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
     )
 
     return content
+  }
+
+
+  onClickHideAll = () => {
+
+    const {
+      setShowAll,
+    } = this.props;
+
+    return setShowAll(false)
+  }
+
+
+  onClickShowAll = () => {
+
+    const {
+      setShowAll,
+    } = this.props;
+
+    return setShowAll(true)
   }
 }
 

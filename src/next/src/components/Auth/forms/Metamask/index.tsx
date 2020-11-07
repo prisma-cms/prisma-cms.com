@@ -246,6 +246,16 @@ class MetamaskForm extends AuthForm<MetamaskFormProps, MetamaskFormState> {
     return super.cleanForm()
   }
 
+  onClickCancel = () => {
+    this.closeForm()
+  };
+
+  onSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+
+    this.signup()
+  };
+
   renderForm() {
     const actions = []
 
@@ -261,9 +271,7 @@ class MetamaskForm extends AuthForm<MetamaskFormProps, MetamaskFormState> {
       <Button
         key="cancel"
         // color="primary"
-        onClick={() => {
-          this.closeForm()
-        }}
+        onClick={this.onClickCancel}
         size="small"
       >
         {this.lexicon('Cancel')}
@@ -275,11 +283,7 @@ class MetamaskForm extends AuthForm<MetamaskFormProps, MetamaskFormState> {
         style={{
           width: '100%',
         }}
-        onSubmit={(event) => {
-          event.preventDefault()
-
-          this.signup()
-        }}
+        onSubmit={this.onSubmit}
       >
         <DialogTitle>{this.lexicon('Metamask')}</DialogTitle>
 

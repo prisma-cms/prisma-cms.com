@@ -119,6 +119,12 @@ export class ProjectView<
     return id ? super.renderResetButton() : null
   }
 
+  onClickHideDetails = () => {
+    this.setState({
+      editMembers: false,
+    })
+  };
+
   renderDefaultView() {
     const { classes } = this.props
 
@@ -257,7 +263,7 @@ export class ProjectView<
           <div className="overlay">
             {inEditMode && currentUser ? (
               <Uploader
-                onUpload={(result: any) => this.onUpload(result)}
+                onUpload={this.onUpload}
                 inEditMode={inEditMode}
                 helperText="Для загрузки перетащите файл сюда"
                 classes={{
@@ -270,6 +276,7 @@ export class ProjectView<
               <img
                 className={classes?.thumb}
                 src={thumb}
+                // eslint-disable-next-line react/jsx-no-bind
                 onClick={() => {
                   this.handleOpen(image)
                 }}
@@ -330,11 +337,7 @@ export class ProjectView<
               Участники проекта{' '}
               {editMembers ? (
                 <Button
-                  onClick={() => {
-                    this.setState({
-                      editMembers: false,
-                    })
-                  }}
+                  onClick={this.onClickHideDetails}
                 >
                   Скрыть детали
                 </Button>

@@ -1,3 +1,5 @@
+// TODO Перенести тему в src/theme
+
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`

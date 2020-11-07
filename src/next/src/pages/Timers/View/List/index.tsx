@@ -21,6 +21,11 @@ class TimersListView extends Component<TimersListViewProps> {
 
   static defaultProps = {}
 
+  mutate = async (arg0: any) => {
+    // TODO Прописать апдейтер
+    console.error('TimersList update mutation required', arg0)
+  };
+
   render() {
     const { timers } = this.props
 
@@ -38,10 +43,7 @@ class TimersListView extends Component<TimersListViewProps> {
           data={{
             object: n,
           }}
-          mutate={async (arg0: any) => {
-            // TODO Прописать апдейтер
-            console.error('TimersList update mutation required', arg0)
-          }}
+          mutate={this.mutate}
         />
       )
     })

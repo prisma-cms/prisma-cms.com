@@ -1,10 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import NextApp, { AppContext, AppInitialProps } from 'next/app'
+import NextApp, { AppContext } from 'next/app'
 import { useRouter } from 'next/router'
 import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from 'styled-components'
 import theme, { GlobalStyle } from './theme'
-import { NextPageContextCustom, AppProps, PrismaCmsContext } from './interfaces'
+import {
+  NextPageContextCustom,
+  MainApp,
+  PrismaCmsContext,
+  AppInitialProps,
+  PageProps,
+} from './interfaces'
 
 import {
   useApollo,
@@ -23,18 +29,17 @@ import WithUser from './WithUser'
 import { AuthFormResponse } from '../../components/Auth/forms/interfaces'
 
 import moment from 'moment'
-import Head from 'next/head'
+import Page404 from '../_Error/404'
+import ErrorPage from '../_Error'
+import { NextSeo, NextSeoProps } from 'next-seo'
 
 // TODO: Проработать локализацию
 moment.locale('ru')
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App: MainApp = ({ Component, pageProps }) => {
   const apolloClient = useApollo(pageProps.initialApolloState)
 
-  // const {
-  //   sheetsRegistry,
-  //   generateClassName,
-  // } = pageProps;
+  const { statusCode } = pageProps
 
   const router = useRouter()
 
@@ -47,29 +52,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       }
     }
   }, [])
-
-  // useEffect(() => {
-
-  //   router.prefetch = async (url) => {
-  //     // eslint-disable-next-line no-console
-  //     console.log('router.prefetch', url)
-  //   }
-
-  //   const handleRouteChange = (url: string) => {
-  //     // eslint-disable-next-line no-console
-  //     console.log('App is changing to: ', url)
-  //   }
-
-  //   router.events.on('routeChangeStart', handleRouteChange)
-
-  //   // If the component is unmounted, unsubscribe
-  //   // from the event with the `off` method:
-  //   return () => {
-  //     router.events.off('routeChangeStart', handleRouteChange)
-  //   }
-  // }, [])
-
-  // console.log('Render App');
 
   const [authOpen, setOpened] = useState(false)
 
@@ -133,44 +115,41 @@ const App = ({ Component, pageProps }: AppProps) => {
     return context
   }, [apolloClient, logout, openLoginForm, router])
 
-  /**
-   * Отлавливаем изменения в контексте
-   */
-  // const compare__context = useMemo(() => {
+  const content = useMemo(() => {
+    const meta: NextSeoProps = {}
 
-  //   console.log('compare__context useMemo');
+    let content = null
 
-  //   let target = contextValue;
+    /**
+     * Если получили серверную ошибку, выводим страницу ошибки
+     */
+    if (statusCode && statusCode !== 200) {
+      switch (statusCode) {
+        case 404:
+          meta.noindex = true
+          meta.nofollow = true
 
-  //   return (a: typeof contextValue) => {
+          content = <Page404 />
 
-  //     console.log('compare__context a', a);
+          break
 
-  //     if (!compare("compare__context", a, target)) {
-  //       target = a;
-  //     }
-  //   }
+        default:
+          content = <ErrorPage statusCode={statusCode} />
+      }
+    } else {
+      content = <Component {...pageProps} />
+    }
 
-  // }, [contextValue]);
-
-  // compare__context(contextValue);
+    return (
+      <>
+        <NextSeo {...meta} />
+        {content}
+      </>
+    )
+  }, [statusCode, pageProps])
 
   return (
     <>
-      <Head>
-        <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <meta name="theme-color" content="#000000" />
-        <base href="/" />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700&subset=latin,cyrillic"
-          rel="stylesheet"
-        />
-      </Head>
       <MuiThemeProvider
         theme={muiTheme}
         // For SSR only
@@ -190,10 +169,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                   loginCanceled={loginCanceled}
                   showRegForm={true}
                 />
-
-                <div id="content">
-                  <Component {...pageProps} />
-                </div>
+                <div id="content">{content}</div>
               </WithUser>
             </Context.Provider>
           </ApolloProvider>
@@ -237,14 +213,25 @@ App.getInitialProps = async (appContext: AppContext) => {
    * Здесь вызывается page.getInitialProps() и далее _document.getInitialProps()
    * Все собирается в конечный appProps
    */
-  const appProps = await NextApp.getInitialProps(newAppContext)
 
-  const { pageProps, ...otherProps } = appProps
+  const { pageProps, ...otherProps } = await NextApp.getInitialProps(
+    newAppContext
+  )
+
+  const { statusCode } = pageProps as PageProps
+
+  /**
+   * Если выполняется на серверной стороне
+   */
+  if (statusCode && newAppContext.ctx.res) {
+    newAppContext.ctx.res.statusCode = 404
+  }
 
   const newProps: AppInitialProps = {
     ...otherProps,
     pageProps: {
       ...pageProps,
+      statusCode,
       initialApolloState: apolloClient.cache.extract(),
     },
   }

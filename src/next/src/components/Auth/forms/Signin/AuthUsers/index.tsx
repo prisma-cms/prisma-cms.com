@@ -206,6 +206,10 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
     return super.onRequestClose()
   }
 
+  setFormMetamask = () => {
+    this.switchForm('metamask')
+  };
+
   renderForm(): JSX.Element | null {
     const {
       // Grid,
@@ -323,9 +327,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
           <Button
             key="metamask"
             // color="primary"
-            onClick={() => {
-              this.switchForm('metamask')
-            }}
+            onClick={this.setFormMetamask}
             size="small"
           >
             {this.lexicon('Metamask')}
@@ -338,9 +340,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
           <Button
             key="registration"
             // color="primary"
-            onClick={() => {
-              this.switchForm('signup')
-            }}
+            onClick={this.setFormSignUp}
             size="small"
           >
             {this.lexicon('Signup')}
@@ -353,9 +353,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
       <Button
         key="cancel"
         // color="primary"
-        onClick={() => {
-          this.closeForm()
-        }}
+        onClick={this.closeForm}
         size="small"
       >
         {this.lexicon('Cancel')}
@@ -374,6 +372,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
             label={this.lexicon('Code')}
             helperText={this.lexicon('Type confirm code')}
             // type="password"
+            // eslint-disable-next-line react/jsx-no-bind
             onChange={(event) => {
               const { value } = event.target
 
@@ -417,6 +416,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
             label={this.lexicon('Password')}
             helperText={this.lexicon('Type password')}
             type="password"
+            // eslint-disable-next-line react/jsx-no-bind
             onChange={(event) => {
               const { value } = event.target
 
@@ -443,6 +443,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
             // color="primary"
             key="newPassword"
             size="small"
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={async () => {
               const {
                 createResetPasswordProcessor = `
@@ -515,6 +516,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
           style={{
             width: '100%',
           }}
+          // eslint-disable-next-line react/jsx-no-bind
           onSubmit={(event) => {
             event.preventDefault()
 

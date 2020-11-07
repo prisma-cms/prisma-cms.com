@@ -28,7 +28,8 @@ const UsersList: React.FC<UsersListProps> = (props) => {
           <Grid key={userId} item xs={12}>
             <UserLink
               user={n}
-              onClick={(event: any) => {
+              // eslint-disable-next-line react/jsx-no-bind
+              onClick={(event: React.MouseEvent) => {
                 event.preventDefault()
                 event.stopPropagation()
 

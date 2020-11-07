@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
   TasksConnectionDocument,
   TasksConnectionQueryVariables,
@@ -72,13 +72,41 @@ const TasksPage: Page = () => {
 
   const [showAll, setShowAll] = useState(false)
 
+  const createTimerProcessor = useCallback(async () => {
+    console.error('createTimerProcessor mutation required')
+  }, []);
+
+
+  const updateTimerProcessor = useCallback(async () => {
+    console.error('updateTimerProcessor mutation required')
+  }, []);
+
+
+  const createTaskProcessor = useCallback(async () => {
+    console.error('createTaskProcessor mutation required')
+  }, []);
+
+
+  const updateTaskProcessor = useCallback(async () => {
+    console.error('updateTaskProcessor mutation required')
+  }, []);
+
+
+  const deleteTaskReaction = useCallback(async () => {
+    console.error('deleteTaskReaction mutation required')
+  }, []);
+
+
+  const setFilters = useCallback((filters: any) => {
+    console.error('setFilters impementation required', filters)
+  }, []);
+
   return (
     <>
       <Head>
         <title>Задачи</title>
         <meta name="description" content="Все задачи" />
       </Head>
-
       <View
         // {...queryResult}
         data={response || null}
@@ -86,24 +114,12 @@ const TasksPage: Page = () => {
         page={page}
         showAll={showAll}
         setShowAll={setShowAll}
-        createTimerProcessor={async () => {
-          console.error('createTimerProcessor mutation required')
-        }}
-        updateTimerProcessor={async () => {
-          console.error('updateTimerProcessor mutation required')
-        }}
-        createTaskProcessor={async () => {
-          console.error('createTaskProcessor mutation required')
-        }}
-        updateTaskProcessor={async () => {
-          console.error('updateTaskProcessor mutation required')
-        }}
-        deleteTaskReaction={async () => {
-          console.error('deleteTaskReaction mutation required')
-        }}
-        setFilters={(filters: any) => {
-          console.error('setFilters impementation required', filters)
-        }}
+        createTimerProcessor={createTimerProcessor}
+        updateTimerProcessor={updateTimerProcessor}
+        createTaskProcessor={createTaskProcessor}
+        updateTaskProcessor={updateTaskProcessor}
+        deleteTaskReaction={deleteTaskReaction}
+        setFilters={setFilters}
       />
     </>
   )

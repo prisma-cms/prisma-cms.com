@@ -119,10 +119,22 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
   //   console.log('MainMenu componentWillUnmount', { ...this.props });
   // }
 
+  logout = (event: React.MouseEvent) => {
+    const { logout } = this.context
+    event.preventDefault()
+    return logout()
+  };
+
+  openLoginForm = () => {
+
+    const { openLoginForm } = this.context
+
+    return openLoginForm()
+  }
+
   render() {
     const { classes, user: currentUser } = this.props
 
-    const { logout, openLoginForm } = this.context
 
     const { id: userId, Timers } = currentUser || {}
 
@@ -212,7 +224,7 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
               </Link>
             </Grid>
 
-            <Grid item>
+            {/* <Grid item>
               <a
                 href="/graphql-voyager/"
                 rel="noindex,nofollow"
@@ -220,7 +232,7 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
               >
                 <Typography>{this.lexicon('API Schema')}</Typography>
               </a>
-            </Grid>
+            </Grid> */}
 
             <Grid item>
               <a
@@ -267,28 +279,23 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
                 <Grid key="logout" item>
                   <a
                     href="#"
-                    onClick={(event) => {
-                      event.preventDefault()
-                      return logout()
-                    }}
+                    onClick={this.logout}
                   >
                     {this.lexicon('Signout')}
                   </a>
                 </Grid>
               </Fragment>
             ) : (
-              <Grid key="login" item>
-                <Button
-                  onClick={() => {
-                    return openLoginForm()
-                  }}
-                >
-                  <Typography component="span">
-                    {this.lexicon('Signin')}
-                  </Typography>
-                </Button>
-              </Grid>
-            )}
+                <Grid key="login" item>
+                  <Button
+                    onClick={this.openLoginForm}
+                  >
+                    <Typography component="span">
+                      {this.lexicon('Signin')}
+                    </Typography>
+                  </Button>
+                </Grid>
+              )}
           </Grid>
         </Toolbar>
       </AppBar>

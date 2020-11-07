@@ -1,0 +1,80 @@
+query topic($where: ResourceWhereUniqueInput!) {
+  object: resource(where: $where) {
+    ...topicObject
+  }
+}
+
+fragment topicObject on Resource {
+  id
+  createdAt
+  updatedAt
+  type
+  name
+  longtitle
+  content
+  components
+  contentText
+  published
+  deleted
+  hidemenu
+  searchable
+  uri
+  isfolder
+  rating
+  positiveVotesCount
+  negativeVotesCount
+  neutralVotesCount
+  oldID
+  commentOldID
+  class_key
+  template
+  mockUpdate
+  CreatedBy {
+    ...topicUser
+  }
+  Comments(orderBy: id_ASC) {
+    id
+    uri
+    createdAt
+    updatedAt
+    content
+    CreatedBy {
+      ...topicUser
+    }
+  }
+  Blog {
+    id
+    name
+    longtitle
+    uri
+  }
+  Tags {
+    Tag {
+      id
+      name
+    }
+  }
+}
+
+fragment topicUser on User {
+  id
+  createdAt
+  updatedAt
+  username
+  email
+  phone
+  showEmail
+  showPhone
+  password
+  fullname
+  image
+  address
+  sudo
+  active
+  activated
+  deleted
+  hasEmail
+  hasPhone
+  marketplaceToken
+  hidden
+}

@@ -23,6 +23,7 @@
     "react/display-name": 0,
     "react/prop-types": 0,
     "react/no-unescaped-entities": 0,
+    "react/jsx-no-bind": "error",   // Запрещаем стрелочные функции
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/explicit-member-accessibility": 0,
     "@typescript-eslint/indent": 0,
@@ -44,5 +45,10 @@
         "allow": ["warn", "error"]
       }
     ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

@@ -9,3 +9,6 @@ generated
 /src/server
 /src/ssr
 /src/schema
+/src/components
+**/.storybook/*
+**/storybook-static/*

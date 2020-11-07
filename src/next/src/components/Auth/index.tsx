@@ -120,11 +120,7 @@ class Auth extends PrismaCmsComponent<AuthProps, AuthState> {
         loginCanceled={loginCanceled}
         loginComplete={loginComplete}
         useMetamask={useMetamask}
-        switchForm={(form) => {
-          this.setState({
-            step: form,
-          })
-        }}
+        switchForm={this.switchForm}
       />
     )
   }
@@ -138,11 +134,7 @@ class Auth extends PrismaCmsComponent<AuthProps, AuthState> {
         loginCanceled={loginCanceled}
         loginComplete={loginComplete}
         useMetamask={useMetamask}
-        switchForm={(form) => {
-          this.setState({
-            step: form,
-          })
-        }}
+        switchForm={this.switchForm}
       />
     )
   }

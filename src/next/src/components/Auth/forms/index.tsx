@@ -39,7 +39,7 @@ const defaultLocales = {
 class AuthForm<
   P extends AuthFormProps,
   S extends AuthFormState
-> extends PrismaCmsComponent<P, S> {
+  > extends PrismaCmsComponent<P, S> {
   // context!: PrismaCmsContext;
 
   static propTypes = {
@@ -58,6 +58,11 @@ class AuthForm<
     fullWidth: true,
     maxWidth: 'xs',
     locales: defaultLocales,
+  }
+
+  constructor(props: P) {
+    super(props)
+    this.onRequestClose = this.onRequestClose.bind(this);
   }
 
   lexicon = (word: string, options?: any) => {
@@ -83,7 +88,7 @@ class AuthForm<
     return loginCanceled()
   }
 
-  closeForm() {
+  closeForm = () => {
     const {
       // cleanFilters,
       loginCanceled,
@@ -104,6 +109,10 @@ class AuthForm<
     // this.cleanForm();
 
     return switchForm(form)
+  }
+
+  setFormSignUp = () => {
+    this.switchForm('signup')
   }
 
   async onAuth(result: SigninMutationResult) {
@@ -172,7 +181,7 @@ class AuthForm<
         fullWidth={fullWidth}
         maxWidth={maxWidth}
         open={open}
-        onClose={() => this.onRequestClose()}
+        onClose={this.onRequestClose}
       >
         {this.renderForm()}
       </Dialog>

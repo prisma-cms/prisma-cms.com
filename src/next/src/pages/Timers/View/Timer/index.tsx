@@ -52,6 +52,10 @@ class TimerView extends EditableView<TimerViewProps> {
     )
   }
 
+  onClickStop = (target: any) => {
+    return this.stopTimer(target.attributes.role.value);
+  };
+
   getButtons() {
     const canEdit = this.canEdit()
 
@@ -70,7 +74,8 @@ class TimerView extends EditableView<TimerViewProps> {
     buttons.push(
       <IconButton
         key="stop"
-        onClick={() => this.stopTimer(timerId)}
+        role={timerId}
+        onClick={this.onClickStop}
         disabled={!canEdit}
       >
         <StopIcon />

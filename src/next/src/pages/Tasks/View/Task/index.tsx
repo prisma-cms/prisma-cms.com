@@ -54,7 +54,7 @@ export const styles = () => {
 
 export class TaskView<
   P extends TaskViewProps = TaskViewProps
-> extends EditableView<P> {
+  > extends EditableView<P> {
   static propTypes = {
     ...EditableView.propTypes,
     classes: PropTypes.object.isRequired,
@@ -136,6 +136,48 @@ export class TaskView<
     return super.getObjectWithMutations()
   }
 
+  onClickUpdateTimer = (target: any) => {
+
+    const timerId = target.attributes.role.value;
+
+    return this.mutate({
+      // mutation: updateTimerProcessor,
+      mutation: async () => {
+        console.error('updateTimerProcessor required')
+      },
+      variables: {
+        data: {
+          stopedAt: new Date(),
+        },
+        where: {
+          id: timerId,
+        },
+      },
+    })
+  }
+
+  onClickCreateTimer = (target: any) => {
+
+    const taskId = target.attributes.role.value;
+
+    return this.mutate({
+      // mutation: createTimerProcessor,
+      mutation: async () => {
+        console.error('createTimerProcessor required')
+      },
+      variables: {
+        data: {
+          Task: {
+            connect: {
+              id: taskId,
+            },
+          },
+        },
+      },
+    })
+
+  }
+
   getButtons() {
     const buttons = super.getButtons() || []
 
@@ -178,22 +220,8 @@ export class TaskView<
       buttons.push(
         <IconButton
           key="stop"
-          onClick={() =>
-            this.mutate({
-              // mutation: updateTimerProcessor,
-              mutation: async () => {
-                console.error('updateTimerProcessor required')
-              },
-              variables: {
-                data: {
-                  stopedAt: new Date(),
-                },
-                where: {
-                  id: timerId,
-                },
-              },
-            })
-          }
+          role={timerId}
+          onClick={this.onClickUpdateTimer}
           className={classes?.button}
         >
           <StopIcon />
@@ -203,23 +231,8 @@ export class TaskView<
       buttons.push(
         <IconButton
           key="start"
-          onClick={() =>
-            this.mutate({
-              // mutation: createTimerProcessor,
-              mutation: async () => {
-                console.error('createTimerProcessor required')
-              },
-              variables: {
-                data: {
-                  Task: {
-                    connect: {
-                      id: taskId,
-                    },
-                  },
-                },
-              },
-            })
-          }
+          role={taskId}
+          onClick={this.onClickCreateTimer}
           className={classes?.button}
         >
           <StartIcon />
@@ -313,6 +326,12 @@ export class TaskView<
     ) : null
   }
 
+  onEditorChange = (content: any) => {
+    return this.updateObject({
+      content,
+    })
+  };
+
   renderDefaultView() {
     const { showDetails } = this.props
 
@@ -360,11 +379,7 @@ export class TaskView<
               editorKey={`task-${id}`}
               value={content}
               readOnly={!inEditMode}
-              onChange={(content) => {
-                return this.updateObject({
-                  content,
-                })
-              }}
+              onChange={this.onEditorChange}
             />
           </Grid>
         ) : null}

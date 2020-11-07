@@ -10,3 +10,5 @@ src/node_modules
 /src/server
 /src/ssr
 /src/schema
+.storybook
+storybook-static

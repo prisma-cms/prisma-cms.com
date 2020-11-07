@@ -184,8 +184,15 @@ export default class MembersListEditor extends Component {
     return updateProject(item, data)
   }
 
+  onClickAddMember = () => {
+
+    const { addMember } = this.props;
+
+    return addMember();
+  };
+
   render() {
-    const { item, addMember, removeMember } = this.props
+    const { item, removeMember } = this.props
 
     const { member_query, users } = this.state
 
@@ -232,9 +239,10 @@ export default class MembersListEditor extends Component {
                       .toUpperCase()}
                   />
                 ) : (
-                  <FaceAvatar />
-                )
+                    <FaceAvatar />
+                  )
               }
+              // eslint-disable-next-line react/jsx-no-bind
               onRequestDelete={(event) => {
                 event.stopPropagation()
                 event.preventDefault()
@@ -253,17 +261,17 @@ export default class MembersListEditor extends Component {
                       label={service_name}
                       checked={
                         member_services &&
-                        member_services.find((id) => id == service_id)
+                          member_services.find((id) => id == service_id)
                           ? true
                           : false
                       }
-                      onChange={(event) =>
-                        this.updateMemberServices(
-                          event,
-                          members,
-                          member,
-                          service_id
-                        )
+                      // eslint-disable-next-line react/jsx-no-bind
+                      onChange={(event) => this.updateMemberServices(
+                        event,
+                        members,
+                        member,
+                        service_id
+                      )
                       }
                     />
                   )
@@ -282,55 +290,56 @@ export default class MembersListEditor extends Component {
                 ) : null}
               </div>
             ) : (
-              <div>
-                <TextField
-                  label="Список пользователей"
-                  helperText="Введите логин, емейл или ФИО, чтобы найти нужного специалиста"
-                  value={member_query}
-                  name="member_query"
-                  onChange={(event) => this.onChange(event)}
-                />
+                <div>
+                  <TextField
+                    label="Список пользователей"
+                    helperText="Введите логин, емейл или ФИО, чтобы найти нужного специалиста"
+                    value={member_query}
+                    name="member_query"
+                    onChange={this.onChange}
+                  />
 
-                {users && users.length ? (
-                  <Grid container gutter={0}>
-                    {users.map((user) => {
-                      const { id, username, fullname, photo } = user
+                  {users && users.length ? (
+                    <Grid container gutter={0}>
+                      {users.map((user) => {
+                        const { id, username, fullname, photo } = user
 
-                      if (members.find((n) => n.id == id)) {
-                        return null
-                      }
+                        if (members.find((n) => n.id == id)) {
+                          return null
+                        }
 
-                      return (
-                        <Chip
-                          key={id}
-                          onTouchTap={() => {
-                            return this.addMemberToProject(member, user)
-                          }}
-                          className="link"
-                          style={{
-                            margin: 4,
-                          }}
-                          label={fullname || username || 'Аноним'}
-                          avatar={
-                            photo ? (
-                              <Avatar
-                                type="small"
-                                avatar={photo}
-                                username={(fullname || username || '')
-                                  .substr(0, 1)
-                                  .toUpperCase()}
-                              />
-                            ) : (
-                              <FaceAvatar />
-                            )
-                          }
-                        />
-                      )
-                    })}
-                  </Grid>
-                ) : null}
-              </div>
-            )}
+                        return (
+                          <Chip
+                            key={id}
+                            // eslint-disable-next-line react/jsx-no-bind
+                            onTouchTap={() => {
+                              return this.addMemberToProject(member, user)
+                            }}
+                            className="link"
+                            style={{
+                              margin: 4,
+                            }}
+                            label={fullname || username || 'Аноним'}
+                            avatar={
+                              photo ? (
+                                <Avatar
+                                  type="small"
+                                  avatar={photo}
+                                  username={(fullname || username || '')
+                                    .substr(0, 1)
+                                    .toUpperCase()}
+                                />
+                              ) : (
+                                  <FaceAvatar />
+                                )
+                            }
+                          />
+                        )
+                      })}
+                    </Grid>
+                  ) : null}
+                </div>
+              )}
           </Paper>
         </Grid>
       )
@@ -343,7 +352,7 @@ export default class MembersListEditor extends Component {
             padding: 10,
           }}
         >
-          <Button onClick={() => addMember()}>
+          <Button onClick={this.onClickAddMember}>
             <PlusIcon />
             {!members_list.length
               ? `Добавить участника`
