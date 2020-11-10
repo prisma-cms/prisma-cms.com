@@ -14,7 +14,7 @@ import JssProvider from 'react-jss/lib/JssProvider'
 // import {
 //   // sheetsRegistry,
 //   generateClassName,
-// } from 'src/next/src/pages/_App/MUI/theme'
+// } from 'src/pages/_App/MUI/theme'
 
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { createGenerateClassName } from 'material-ui/styles'

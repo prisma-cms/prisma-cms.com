@@ -22,11 +22,11 @@ import {
 
 import Link from 'next/link'
 import { ProjectProps, ProjectState } from './interfaces'
-import UserLink from 'src/next/src/components/ui/Link/User'
-import { UserLinkAvatarSize } from 'src/next/src/components/ui/Link/User/interfaces'
+import UserLink from 'src/components/ui/Link/User'
+import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
 import { ProjectMember } from 'src/modules/gql/generated'
-import Grid from 'src/next/src/components/ui/Grid'
-import ProjectLink from 'src/next/src/components/ui/Link/Project'
+import Grid from 'src/components/ui/Grid'
+import ProjectLink from 'src/components/ui/Link/Project'
 
 export const styles = (theme: any) => {
   const styles = baseStyles(theme)
@@ -123,7 +123,7 @@ export class ProjectView<
     this.setState({
       editMembers: false,
     })
-  };
+  }
 
   renderDefaultView() {
     const { classes } = this.props
@@ -336,11 +336,7 @@ export class ProjectView<
             <Typography variant="subheading">
               Участники проекта{' '}
               {editMembers ? (
-                <Button
-                  onClick={this.onClickHideDetails}
-                >
-                  Скрыть детали
-                </Button>
+                <Button onClick={this.onClickHideDetails}>Скрыть детали</Button>
               ) : null}
             </Typography>
 

@@ -1,1 +1,1 @@
-export { default } from 'src/next/src/pages/_Error/404'
+export { default } from 'src/pages/_Error/404'

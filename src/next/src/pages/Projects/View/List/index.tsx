@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Project from './Project'
-import Grid from 'src/next/src/components/ui/Grid'
+import Grid from 'src/components/ui/Grid'
 import { ProjectsListProps } from './interfaces'
 
 const ProjectsList: React.FC<ProjectsListProps> = (props) => {

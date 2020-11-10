@@ -6,7 +6,7 @@ import { styles, TableView } from 'apollo-cms/lib/DataView/List/Table'
 import withStyles from 'material-ui/styles/withStyles'
 // import Typography from 'material-ui/Typography'
 import Grid from 'material-ui/Grid'
-import Pagination from 'src/next/src/components/Pagination'
+import Pagination from 'src/components/Pagination'
 import { ObjectsListViewProps } from './interfaces'
 
 const customStyles = () => {

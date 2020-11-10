@@ -3,7 +3,7 @@ import moment from 'moment'
 // import { UserAvatarAlign } from '../interfaces';
 import { CommentHeaderStyled, CommentStyled } from '../styles'
 import { CommentProps } from './interfaces'
-import UserLink from 'src/next/src/components/ui/Link/User'
+import UserLink from 'src/components/ui/Link/User'
 
 /**
  * Компонент вывода комментария

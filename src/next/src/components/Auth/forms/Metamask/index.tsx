@@ -248,13 +248,13 @@ class MetamaskForm extends AuthForm<MetamaskFormProps, MetamaskFormState> {
 
   onClickCancel = () => {
     this.closeForm()
-  };
+  }
 
   onSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
     this.signup()
-  };
+  }
 
   renderForm() {
     const actions = []

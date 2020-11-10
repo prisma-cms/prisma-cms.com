@@ -4,7 +4,7 @@ import React from 'react'
 // import { TopicViewProps } from './interfaces'
 // import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table'
 // import { TopicConnectionResourceFragment } from 'src/modules/gql/generated'
-// import UserLink from 'src/next/src/components/ui/Link/User'
+// import UserLink from 'src/components/ui/Link/User'
 import EditableObject from 'apollo-cms/lib/DataView/Object/Editable'
 
 class TopicView extends EditableObject {

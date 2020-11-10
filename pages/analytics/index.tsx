@@ -1,1 +1,1 @@
-export { default } from 'src/next/src/pages/analytics/Visitors'
+export { default } from 'src/pages/analytics/Visitors'

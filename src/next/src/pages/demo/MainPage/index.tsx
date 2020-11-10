@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 import { GetServerSideProps } from 'next'
 
-import { initializeApollo } from 'src/next/src/lib/apolloClient'
+import { initializeApollo } from 'src/lib/apolloClient'
 
 import CommentsList, {
   allCommentsQueryDocument,

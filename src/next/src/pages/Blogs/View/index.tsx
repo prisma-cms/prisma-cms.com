@@ -5,7 +5,7 @@ import withStyles from 'material-ui/styles/withStyles'
 import { BlogsViewProps } from './interfaces'
 import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table'
 import { BlogsConnectionResourceFragment } from 'src/modules/gql/generated'
-import UserLink from 'src/next/src/components/ui/Link/User'
+import UserLink from 'src/components/ui/Link/User'
 
 class BlogsView<
   P extends BlogsViewProps = BlogsViewProps

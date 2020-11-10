@@ -10,7 +10,7 @@ import blue from 'material-ui/colors/blue'
 
 // Так нельзя делать, так как счетчик классов щелкает. Надо на каждый запрос новый создавать
 // Singleton
-// import { sheetsRegistry } from 'src/next/src/pages/_App/MUI/theme';
+// import { sheetsRegistry } from 'src/pages/_App/MUI/theme';
 // export const sheetsRegistry = new SheetsRegistry()
 
 // export const sheetsManager = new Map()

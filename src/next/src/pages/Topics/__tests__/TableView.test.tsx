@@ -1,7 +1,7 @@
 // TODO: Сейчас пагинатор требует контекст роутера. Надо пофиксить.
 
 import React from 'react'
-import { appRender } from 'src/next/src/tests/utils'
+import { appRender } from 'src/tests/utils'
 
 import TopicsPage from '..'
 

@@ -15,8 +15,6 @@
     "test": "jest",
     "test:api": "TEST_REAL_API=true jest",
     "test:all": "yarn lint && yarn types && yarn test",
-    "start:old": "react-scripts --max-old-space-size=2048 start",
-    "build:old": "PUBLIC_URL=/ react-scripts --max-old-space-size=3048 build",
     "build-less": "node-less-chokidar src/styles/less",
     "start-ssr": "NODE_ENV=production node --experimental-modules src/ssr",
     "start-ssr-dev": "NODE_ENV=production PRISMA_CMS_TIMELOG=true nodemon src/ssr",
@@ -29,10 +27,20 @@
     "build-api-fragments": "node --experimental-modules src/server/scripts/deploy/build-api-fragments",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test:old": "react-scripts test --env=jsdom",
     "test-server": "NODE_OPTIONS=\"--experimental-modules\" yarn mocha --delay src/__tests__/server/index.js",
-    "eject": "react-scripts eject",
     "gen:types": "graphql-codegen --config codegen.yml"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run types"
+    }
+  },
+  "lint-staged": {
+    "*.@(ts|tsx)": [
+      "yarn lint",
+      "yarn format"
+    ]
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
@@ -124,6 +132,7 @@
     "@types/lodash": "^4.14.161",
     "@types/node": "^13.9.5",
     "@types/react": "^16.9.27",
+    "@types/react-dom": "^16.9.9",
     "@types/styled-components": "^5.1.4",
     "@types/urijs": "^1.19.12",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
@@ -137,12 +146,15 @@
     "eslint-plugin-deprecate": "^0.7.0",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "expect": "^26.6.2",
     "express": "^4.17.1",
     "glob": "^7.1.6",
     "graphql-config": "^3.0.3",
     "http-proxy-middleware": "^1.0.6",
     "husky": "^4.2.3",
-    "jest": "^25.2.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
+    "jest-styled-components": "^7.0.3",
     "jest-watch-typeahead": "^0.5.0",
     "lint-staged": "^10.0.10",
     "lodash": "^4.17.20",
@@ -151,7 +163,6 @@
     "next-transpile-modules": "^4.1.0",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.2",
-    "react-scripts": "^2.1.2",
     "react-test-renderer": "^16.13.1",
     "source-map-explorer": "^2.0.1",
     "terser": "3.14.1",

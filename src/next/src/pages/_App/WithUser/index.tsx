@@ -5,7 +5,7 @@ import Context from '@prisma-cms/context'
 import { useMeQuery } from 'src/modules/gql/generated'
 import { PrismaCmsContext } from '../interfaces'
 
-import Header from 'src/next/src/components/MainMenu'
+import Header from 'src/components/MainMenu'
 import { WithUserProps } from './interfaces'
 import SubscriptionProvider from './SubscriptionProvider'
 

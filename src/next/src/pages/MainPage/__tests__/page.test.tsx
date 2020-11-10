@@ -1,5 +1,5 @@
 import React from 'react'
-import { appRender, act } from 'src/next/src/tests/utils'
+import { appRender, act } from 'src/tests/utils'
 import Home from 'pages'
 
 jest.mock('next/router', () => ({

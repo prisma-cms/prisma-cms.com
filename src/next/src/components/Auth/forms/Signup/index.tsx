@@ -2,7 +2,7 @@ import React from 'react'
 
 import { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
 
-import Grid from 'src/next/src/components/ui/Grid'
+import Grid from 'src/components/ui/Grid'
 
 import AuthForm from '../'
 import Button from 'material-ui/Button'

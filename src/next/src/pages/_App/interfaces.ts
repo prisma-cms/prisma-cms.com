@@ -1,3 +1,4 @@
+import React from 'react'
 import { NextComponentType, NextPageContext } from 'next'
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import URI from 'urijs'
@@ -18,7 +19,7 @@ export interface NextPageContextCustom extends NextPageContext {
   apolloClient: ApolloClientNormolized
 }
 
-export interface PageProps {
+export interface PageProps extends React.PropsWithChildren<{}> {
   initialApolloState?: any
 
   /**

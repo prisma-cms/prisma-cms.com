@@ -34,7 +34,7 @@ export class ForumConnector extends Component {
     super(props)
   }
 
-  setFilters(filters) {
+  setFilters = (filters) => {
     const {
       uri,
       router: { history },
@@ -118,7 +118,7 @@ export class ForumConnector extends Component {
         page={page}
         where={where}
         filters={filters || {}}
-        setFilters={(filters) => this.setFilters(filters)}
+        setFilters={this.setFilters}
         {...other}
       />
     )

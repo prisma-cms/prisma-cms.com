@@ -16,7 +16,8 @@ module.exports = {
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/__tests__/__mocks__/fileMock.js',
   },
-  modulePaths: ['<rootDir>'],
+  // Добавил <rootDir>/src/next/, чтобы резолвились пути к модулям
+  modulePaths: ['<rootDir>', '<rootDir>/src/next/'],
   testURL: 'http://localhost:3000',
   preset: 'ts-jest/presets/js-with-babel',
   collectCoverageFrom: [

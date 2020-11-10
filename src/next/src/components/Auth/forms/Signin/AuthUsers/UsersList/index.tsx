@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Grid from 'src/next/src/components/ui/Grid'
-import Pagination from 'src/next/src/components/Pagination'
-import UserLink from 'src/next/src/components/ui/Link/User'
+import Grid from 'src/components/ui/Grid'
+import Pagination from 'src/components/Pagination'
+import UserLink from 'src/components/ui/Link/User'
 import Typography from 'material-ui/Typography'
 
 import { UsersListProps } from './interfaces'

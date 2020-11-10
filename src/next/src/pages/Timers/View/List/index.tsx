@@ -24,7 +24,7 @@ class TimersListView extends Component<TimersListViewProps> {
   mutate = async (arg0: any) => {
     // TODO Прописать апдейтер
     console.error('TimersList update mutation required', arg0)
-  };
+  }
 
   render() {
     const { timers } = this.props

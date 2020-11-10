@@ -17,7 +17,7 @@ import moment from 'moment'
 // import { UserLink, TaskLink, Editor, ProjectLink } from '@modxclub/ui'
 
 // import TimersListView from '../../../Timers/View/List'
-import TimersListView from 'src/next/src/pages/Timers/View/List'
+import TimersListView from 'src/pages/Timers/View/List'
 
 // import { createTaskProcessor, updateTaskProcessor } from '../../query'
 
@@ -26,13 +26,13 @@ import TimersListView from 'src/next/src/pages/Timers/View/List'
 //   updateTimerProcessor,
 // } from '../../../Timers/query'
 // import { graphql, compose } from '@apollo/client'
-import Grid from 'src/next/src/components/ui/Grid'
+import Grid from 'src/components/ui/Grid'
 import { TaskViewProps } from './interfaces'
 import { Task } from 'src/modules/gql/generated'
-import TaskLink from 'src/next/src/components/ui/Link/Task'
-import ProjectLink from 'src/next/src/components/ui/Link/Project'
-import UserLink from 'src/next/src/components/ui/Link/User'
-import { UserLinkAvatarSize } from 'src/next/src/components/ui/Link/User/interfaces'
+import TaskLink from 'src/components/ui/Link/Task'
+import ProjectLink from 'src/components/ui/Link/Project'
+import UserLink from 'src/components/ui/Link/User'
+import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
 
 import Editor from '@prisma-cms/editor'
 
@@ -54,7 +54,7 @@ export const styles = () => {
 
 export class TaskView<
   P extends TaskViewProps = TaskViewProps
-  > extends EditableView<P> {
+> extends EditableView<P> {
   static propTypes = {
     ...EditableView.propTypes,
     classes: PropTypes.object.isRequired,
@@ -137,8 +137,7 @@ export class TaskView<
   }
 
   onClickUpdateTimer = (target: any) => {
-
-    const timerId = target.attributes.role.value;
+    const timerId = target.attributes.role.value
 
     return this.mutate({
       // mutation: updateTimerProcessor,
@@ -157,8 +156,7 @@ export class TaskView<
   }
 
   onClickCreateTimer = (target: any) => {
-
-    const taskId = target.attributes.role.value;
+    const taskId = target.attributes.role.value
 
     return this.mutate({
       // mutation: createTimerProcessor,
@@ -175,7 +173,6 @@ export class TaskView<
         },
       },
     })
-
   }
 
   getButtons() {
@@ -330,7 +327,7 @@ export class TaskView<
     return this.updateObject({
       content,
     })
-  };
+  }
 
   renderDefaultView() {
     const { showDetails } = this.props

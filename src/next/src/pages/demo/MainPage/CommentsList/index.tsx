@@ -93,7 +93,7 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
         return result
       },
     })
-  }, [comments.length, fetchMore]);
+  }, [comments.length, fetchMore])
 
   const areMoreNodes = count && comments.length < count
 

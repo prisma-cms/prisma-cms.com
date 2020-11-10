@@ -1,5 +1,5 @@
 declare module '@prisma-cms/component' {
-  import { PrismaCmsContext } from 'src/next/src/pages/_App/interfaces'
+  import { PrismaCmsContext } from 'src/pages/_App/interfaces'
   import React from 'react'
 
   export interface PrismaCmsComponentProps {}

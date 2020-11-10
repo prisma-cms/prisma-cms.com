@@ -1,1 +1,1 @@
-export { default } from 'src/next/src/pages/Blogs'
+export { default } from 'src/pages/Blogs'

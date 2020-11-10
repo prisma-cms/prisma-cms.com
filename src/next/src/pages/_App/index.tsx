@@ -3,7 +3,7 @@ import NextApp, { AppContext } from 'next/app'
 import { useRouter } from 'next/router'
 import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from 'styled-components'
-import theme, { GlobalStyle } from './theme'
+import theme from 'src/theme'
 import {
   NextPageContextCustom,
   MainApp,
@@ -16,7 +16,7 @@ import {
   useApollo,
   initializeApollo,
   getSubscriptionClient,
-} from 'src/next/src/lib/apolloClient'
+} from 'src/lib/apolloClient'
 
 import Context from '@prisma-cms/context'
 import URI from 'urijs'
@@ -24,7 +24,7 @@ import URI from 'urijs'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { muiTheme } from './MUI/theme'
 
-import Auth from 'src/next/src/components/Auth'
+import Auth from 'src/components/Auth'
 import WithUser from './WithUser'
 import { AuthFormResponse } from '../../components/Auth/forms/interfaces'
 
@@ -157,7 +157,6 @@ const App: MainApp = ({ Component, pageProps }) => {
           typeof global.window === 'undefined' ? new Map() : undefined
         }
       >
-        <GlobalStyle />
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
             <Context.Provider value={contextValue}>
@@ -224,7 +223,7 @@ App.getInitialProps = async (appContext: AppContext) => {
    * Если выполняется на серверной стороне
    */
   if (statusCode && newAppContext.ctx.res) {
-    newAppContext.ctx.res.statusCode = 404
+    newAppContext.ctx.res.statusCode = statusCode
   }
 
   const newProps: AppInitialProps = {

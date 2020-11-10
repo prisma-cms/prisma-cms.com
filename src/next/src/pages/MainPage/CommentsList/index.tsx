@@ -1,5 +1,5 @@
 import { NetworkStatus } from '@apollo/client'
-import ErrorMessage from 'src/next/src/pages/demo/ErrorMessage'
+import ErrorMessage from 'src/pages/demo/ErrorMessage'
 import { CommentsListProps } from './interfaces'
 import {
   CommentsConnectionDocument as allCommentsQueryDocument,

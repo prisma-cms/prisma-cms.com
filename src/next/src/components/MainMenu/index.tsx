@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 // import IconButton from 'material-ui/IconButton';
 
-import Grid from 'src/next/src/components/ui/Grid'
+import Grid from 'src/components/ui/Grid'
 
 // import CreateIcon from 'material-ui-icons/Create';
 
@@ -123,10 +123,9 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
     const { logout } = this.context
     event.preventDefault()
     return logout()
-  };
+  }
 
   openLoginForm = () => {
-
     const { openLoginForm } = this.context
 
     return openLoginForm()
@@ -134,7 +133,6 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
 
   render() {
     const { classes, user: currentUser } = this.props
-
 
     const { id: userId, Timers } = currentUser || {}
 
@@ -277,25 +275,20 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
                   <UserItem key={userId} user={currentUser} classes={classes} />
                 </Grid>
                 <Grid key="logout" item>
-                  <a
-                    href="#"
-                    onClick={this.logout}
-                  >
+                  <a href="#" onClick={this.logout}>
                     {this.lexicon('Signout')}
                   </a>
                 </Grid>
               </Fragment>
             ) : (
-                <Grid key="login" item>
-                  <Button
-                    onClick={this.openLoginForm}
-                  >
-                    <Typography component="span">
-                      {this.lexicon('Signin')}
-                    </Typography>
-                  </Button>
-                </Grid>
-              )}
+              <Grid key="login" item>
+                <Button onClick={this.openLoginForm}>
+                  <Typography component="span">
+                    {this.lexicon('Signin')}
+                  </Typography>
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </Toolbar>
       </AppBar>

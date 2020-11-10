@@ -10,8 +10,8 @@ import ProjectsList from './List'
 
 import { ProjectsViewProps } from './interfaces'
 import { PrismaCmsContext } from '../../_App/interfaces'
-import Pagination from 'src/next/src/components/Pagination'
-import Grid from 'src/next/src/components/ui/Grid'
+import Pagination from 'src/components/Pagination'
+import Grid from 'src/components/ui/Grid'
 import Link from 'next/link'
 import { ProjectsConnectionProjectFragment } from 'src/modules/gql/generated'
 

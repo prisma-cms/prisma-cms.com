@@ -18,10 +18,10 @@ import {
   TopicsConnectionUserFragment,
 } from 'src/modules/gql/generated'
 
-import TagLink from 'src/next/src/components/ui/Link/Tag'
-import TopicLink from 'src/next/src/components/ui/Link/Topic'
-import BlogLink from 'src/next/src/components/ui/Link/Blog'
-import UserLink from 'src/next/src/components/ui/Link/User'
+import TagLink from 'src/components/ui/Link/Tag'
+import TopicLink from 'src/components/ui/Link/Topic'
+import BlogLink from 'src/components/ui/Link/Blog'
+import UserLink from 'src/components/ui/Link/User'
 
 // import PageNotFound from "../../../pages/404";
 
@@ -33,8 +33,9 @@ import {
   ForumViewProps,
   // TableViewProps,
 } from './interfaces'
-import { UserLinkAvatarSize } from '../../../../next/src/components/ui/Link/User/interfaces'
+
 import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table'
+import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
 
 const customStyles = () => {
   // const {

@@ -7,10 +7,10 @@ import gql from 'graphql-tag'
 
 import { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
 
-import Grid from 'src/next/src/components/ui/Grid'
+import Grid from 'src/components/ui/Grid'
 
 import LinearProgress from 'material-ui/Progress/LinearProgress'
-import Avatar from 'src/next/src/components/ui/Avatar'
+import Avatar from 'src/components/ui/Avatar'
 
 import AuthForm from '../..'
 import { AuthUsersProps, AuthUsersState } from './interfaces'
@@ -208,7 +208,7 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
 
   setFormMetamask = () => {
     this.switchForm('metamask')
-  };
+  }
 
   renderForm(): JSX.Element | null {
     const {

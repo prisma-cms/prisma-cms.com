@@ -32,12 +32,12 @@ import { TaskView } from './Task'
 import Button from 'material-ui/Button'
 import { TasksViewProps, TasksViewState } from './interfaces'
 import { TasksConnectionTaskFragment } from 'src/modules/gql/generated'
-import UserLink from 'src/next/src/components/ui/Link/User'
-import { UserLinkAvatarSize } from 'src/next/src/components/ui/Link/User/interfaces'
-import Grid from 'src/next/src/components/ui/Grid'
+import UserLink from 'src/components/ui/Link/User'
+import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
+import Grid from 'src/components/ui/Grid'
 import TaskStatus from '../TaskStatus'
-import TaskLink from 'src/next/src/components/ui/Link/Task'
-import Pagination from 'src/next/src/components/Pagination'
+import TaskLink from 'src/components/ui/Link/Task'
+import Pagination from 'src/components/Pagination'
 
 export class TasksView extends TableView<TasksViewProps, TasksViewState> {
   // static propTypes = {
@@ -68,12 +68,8 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
 
   // }
 
-
   onClickUpdateTimer = (target: any) => {
-
-    const {
-      updateTimerProcessor,
-    } = this.props
+    const { updateTimerProcessor } = this.props
 
     const timerId = target.attributes.role.value
 
@@ -87,13 +83,10 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
         },
       },
     })
-  };
+  }
 
   onClickCreateTimer = (target: any) => {
-
-    const {
-      createTimerProcessor,
-    } = this.props
+    const { createTimerProcessor } = this.props
 
     const taskId = target.attributes.role.value
 
@@ -108,10 +101,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
         },
       },
     })
-
-  };
-
-
+  }
 
   getButtons(object: TasksConnectionTaskFragment) {
     const buttons: JSX.Element[] = []
@@ -203,10 +193,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
   }
 
   onClickDelete = (target: any) => {
-
-    const {
-      deleteTaskReaction,
-    } = this.props
+    const { deleteTaskReaction } = this.props
 
     const likedId = target.attributes.role.value
 
@@ -217,10 +204,9 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
         },
       },
     })
-  };
+  }
 
   onClickUpVote = (target: any) => {
-
     const taskId = target.attributes.role.value
 
     // createTaskReactionProcessor({
@@ -239,7 +225,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
         },
       },
     })
-  };
+  }
 
   getColumns<CC extends TasksConnectionTaskFragment>(): ColumnConfig<CC>[] {
     const {
@@ -480,8 +466,8 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
           const users =
             value && value.length
               ? value.filter(
-                (n) => n.CreatedBy && n.CreatedBy.id !== currentUserId
-              )
+                  (n) => n.CreatedBy && n.CreatedBy.id !== currentUserId
+                )
               : []
 
           let like
@@ -498,19 +484,13 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
             const { id: likedId } = liked
 
             like = (
-              <IconButton
-                role={likedId}
-                onClick={this.onClickDelete}
-              >
+              <IconButton role={likedId} onClick={this.onClickDelete}>
                 <FavoriteIcon color="primary" />
               </IconButton>
             )
           } else {
             like = (
-              <IconButton
-                role={taskId}
-                onClick={this.onClickUpVote}
-              >
+              <IconButton role={taskId} onClick={this.onClickUpVote}>
                 <FavoriteIcon color="action" />
               </IconButton>
             )
@@ -526,14 +506,14 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
               <Grid container spacing={8}>
                 {users.length
                   ? users.map((n) => (
-                    <Grid key={n.id} item>
-                      <UserLink
-                        user={n.CreatedBy}
-                        size={UserLinkAvatarSize.small}
-                        showName={false}
-                      />
-                    </Grid>
-                  ))
+                      <Grid key={n.id} item>
+                        <UserLink
+                          user={n.CreatedBy}
+                          size={UserLinkAvatarSize.small}
+                          showName={false}
+                        />
+                      </Grid>
+                    ))
                   : null}
               </Grid>
 
@@ -770,22 +750,14 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
     return content
   }
 
-
   onClickHideAll = () => {
-
-    const {
-      setShowAll,
-    } = this.props;
+    const { setShowAll } = this.props
 
     return setShowAll(false)
   }
 
-
   onClickShowAll = () => {
-
-    const {
-      setShowAll,
-    } = this.props;
+    const { setShowAll } = this.props
 
     return setShowAll(true)
   }

@@ -1,1 +1,1 @@
-export { default } from 'src/next/src/pages/ChatRooms'
+export { default } from 'src/pages/ChatRooms'

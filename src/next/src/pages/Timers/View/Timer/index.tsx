@@ -10,10 +10,10 @@ import StopIcon from 'material-ui-icons/Stop'
 import moment from 'moment'
 
 // import { UserLink, ProjectLink, TaskLink } from '@modxclub/ui'
-import Grid from 'src/next/src/components/ui/Grid'
-import UserLink from 'src/next/src/components/ui/Link/User'
-import ProjectLink from 'src/next/src/components/ui/Link/Project'
-import TaskLink from 'src/next/src/components/ui/Link/Task'
+import Grid from 'src/components/ui/Grid'
+import UserLink from 'src/components/ui/Link/User'
+import ProjectLink from 'src/components/ui/Link/Project'
+import TaskLink from 'src/components/ui/Link/Task'
 import { Timer } from 'src/modules/gql/generated'
 import { TimerViewProps } from './interfaces'
 
@@ -53,8 +53,8 @@ class TimerView extends EditableView<TimerViewProps> {
   }
 
   onClickStop = (target: any) => {
-    return this.stopTimer(target.attributes.role.value);
-  };
+    return this.stopTimer(target.attributes.role.value)
+  }
 
   getButtons() {
     const canEdit = this.canEdit()

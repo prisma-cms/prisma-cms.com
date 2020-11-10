@@ -1,5 +1,5 @@
 import React from 'react'
-import { appRender } from 'src/next/src/tests/utils'
+import { appRender } from 'src/tests/utils'
 import Auth from '..'
 
 jest.mock('next/router', () => ({

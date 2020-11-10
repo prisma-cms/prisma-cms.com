@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog' // DialogContent, // DialogActions,
 import PrismaCmsComponent from '@prisma-cms/component'
 import { AuthFormProps, AuthFormState } from './interfaces'
 import { SigninMutationResult } from 'src/modules/gql/generated'
-// import { PrismaCmsContext } from 'src/next/src/pages/_App/interfaces';
+// import { PrismaCmsContext } from 'src/pages/_App/interfaces';
 
 const defaultLocales = {
   ru: {
@@ -39,7 +39,7 @@ const defaultLocales = {
 class AuthForm<
   P extends AuthFormProps,
   S extends AuthFormState
-  > extends PrismaCmsComponent<P, S> {
+> extends PrismaCmsComponent<P, S> {
   // context!: PrismaCmsContext;
 
   static propTypes = {
@@ -62,7 +62,7 @@ class AuthForm<
 
   constructor(props: P) {
     super(props)
-    this.onRequestClose = this.onRequestClose.bind(this);
+    this.onRequestClose = this.onRequestClose.bind(this)
   }
 
   lexicon = (word: string, options?: any) => {

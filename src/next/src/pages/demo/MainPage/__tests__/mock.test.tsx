@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'src/next/src/tests/utils'
+import { render } from 'src/tests/utils'
 import Home from 'pages'
 import { CommentsConnectionQuery } from 'src/modules/gql/generated'
 

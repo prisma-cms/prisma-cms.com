@@ -74,32 +74,27 @@ const TasksPage: Page = () => {
 
   const createTimerProcessor = useCallback(async () => {
     console.error('createTimerProcessor mutation required')
-  }, []);
-
+  }, [])
 
   const updateTimerProcessor = useCallback(async () => {
     console.error('updateTimerProcessor mutation required')
-  }, []);
-
+  }, [])
 
   const createTaskProcessor = useCallback(async () => {
     console.error('createTaskProcessor mutation required')
-  }, []);
-
+  }, [])
 
   const updateTaskProcessor = useCallback(async () => {
     console.error('updateTaskProcessor mutation required')
-  }, []);
-
+  }, [])
 
   const deleteTaskReaction = useCallback(async () => {
     console.error('deleteTaskReaction mutation required')
-  }, []);
-
+  }, [])
 
   const setFilters = useCallback((filters: any) => {
     console.error('setFilters impementation required', filters)
-  }, []);
+  }, [])
 
   return (
     <>
