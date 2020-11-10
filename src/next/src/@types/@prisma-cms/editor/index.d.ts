@@ -1,18 +1,34 @@
 declare module '@prisma-cms/editor' {
-  import React from 'react'
+  import React, { ReactNode } from 'react'
 
-  export interface EditorProps {
-    value: any
+  /**
+   * Strings not allowed due key generation
+   */
+  export type PrismaCmsEditorValue = Record<string, any>
 
-    readOnly: boolean
+  export interface PrismaCmsEditorProps {
+    value?: PrismaCmsEditorValue
 
-    onChange(content: any): any
+    /**
+     * Prevent edit content. Default true
+     */
+    readOnly?: boolean
+
+    onChange?(
+      content: PrismaCmsEditorValue,
+      contentState: Record<string, any>
+    ): any
 
     // Обязательно надо передавать какой-то статический ключ, например editor
     // иначе будет каждый раз генерироваться новый и реакт будет ругаться,
     // что атрибут data-editor серверный и клиентский не совпадают
     editorKey: string
+
+    /**
+     * Передаем next/link
+     */
+    LinkComponent?: ReactNode
   }
 
-  export default class Editor extends React.Component<EditorProps> {}
+  export default class Editor extends React.Component<PrismaCmsEditorProps> {}
 }

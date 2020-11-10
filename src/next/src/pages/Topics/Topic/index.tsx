@@ -6,6 +6,7 @@ import View from './View'
 import { Page } from '../../_App/interfaces'
 import { TopicPageProps } from './interfaces'
 import { NextSeo } from 'next-seo'
+import Editor from 'src/uikit/Editor'
 
 const TopicPage: Page<TopicPageProps> = (props) => {
   const { queryResult } = props
@@ -16,6 +17,8 @@ const TopicPage: Page<TopicPageProps> = (props) => {
   return (
     <>
       <NextSeo title={name} description={longtitle || name} />
+
+      <Editor editorKey="test" readOnly={false} />
 
       <View data={queryResult || null} />
     </>
