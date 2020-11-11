@@ -5,6 +5,7 @@ import {
   TimersConnectionQueryVariables,
   useTimersConnectionQuery,
   TimersConnectionQuery,
+  TimersConnectionTimerFragment,
 } from 'src/modules/gql/generated'
 
 import View from './View'
@@ -65,7 +66,21 @@ const TimersPage: Page = () => {
     TimersConnectionQuery | null | undefined
   >(queryResult.data)
 
-  const { variables } = queryResult
+  const objects = useMemo(() => {
+    const objects: TimersConnectionTimerFragment[] = []
+
+    return (
+      response?.objectsConnection.edges.reduce((curr, next) => {
+        if (next?.node) {
+          curr.push(next.node)
+        }
+
+        return curr
+      }, objects) ?? []
+    )
+  }, [response?.objectsConnection.edges])
+
+  const { variables, loading } = queryResult
 
   return (
     <>
@@ -79,7 +94,10 @@ const TimersPage: Page = () => {
 
       <View
         // {...queryResult}
-        data={response || null}
+        loading={loading}
+        // data={response || null}
+        objects={objects}
+        count={response?.objectsConnection.aggregate.count}
         variables={variables}
         page={page}
       />

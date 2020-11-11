@@ -5,6 +5,7 @@ import {
   UsersConnectionQueryVariables,
   useUsersConnectionQuery,
   UsersConnectionQuery,
+  UsersConnectionUserFragment,
 } from 'src/modules/gql/generated'
 
 import View from './View'
@@ -65,7 +66,21 @@ const UsersPage: Page = () => {
     UsersConnectionQuery | null | undefined
   >(queryResult.data)
 
-  const { variables } = queryResult
+  const { variables, loading } = queryResult
+
+  const objects = useMemo(() => {
+    const objects: UsersConnectionUserFragment[] = []
+
+    return (
+      response?.objectsConnection.edges.reduce((curr, next) => {
+        if (next?.node) {
+          curr.push(next.node)
+        }
+
+        return curr
+      }, objects) ?? []
+    )
+  }, [response?.objectsConnection.edges])
 
   return (
     <>
@@ -76,9 +91,12 @@ const UsersPage: Page = () => {
 
       <View
         // {...queryResult}
-        data={response || null}
+        // data={response}
+        objects={objects}
+        count={response?.objectsConnection.aggregate.count}
         variables={variables}
         page={page}
+        loading={loading}
       />
     </>
   )

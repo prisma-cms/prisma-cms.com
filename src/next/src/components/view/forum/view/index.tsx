@@ -34,7 +34,7 @@ import {
   // TableViewProps,
 } from './interfaces'
 
-import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table'
+import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
 
 const customStyles = () => {
@@ -52,7 +52,7 @@ const customStyles = () => {
     },
 
     usersWrapper: {
-      whiteSpace: 'nowrap',
+      whiteSpace: 'nowrap' as 'nowrap',
       display: 'flex',
       alignItems: 'end',
     },
@@ -63,7 +63,7 @@ const customStyles = () => {
       width: '70%',
     },
     alignCenter: {
-      textAlign: 'center',
+      textAlign: 'center' as 'center',
     },
   }
 }

@@ -1,20 +1,17 @@
+import { ObjectsListViewProps } from 'src/components/view/List/interfaces'
 import {
-  TableViewProps,
-  TableViewState,
-} from 'apollo-cms/lib/DataView/List/Table'
-import {
-  TasksConnectionQuery,
+  TasksConnectionTaskFragment,
   TasksConnectionQueryVariables,
 } from 'src/modules/gql/generated'
 
-export interface TasksViewProps extends TableViewProps {
-  createTimerProcessor: (data: any) => Promise<void>
-  updateTimerProcessor: (data: any) => Promise<void>
+export interface TasksViewProps extends ObjectsListViewProps {
+  createTimerProcessor: (data: any) => Promise<any>
+  updateTimerProcessor: (data: any) => Promise<any>
 
-  createTaskProcessor: (data: any) => Promise<void>
-  updateTaskProcessor: (data: any) => Promise<void>
+  createTaskProcessor: (data: any) => Promise<any>
+  updateTaskProcessor: (data: any) => Promise<any>
 
-  deleteTaskReaction: (data: any) => Promise<void>
+  deleteTaskReaction: (data: any) => Promise<any>
 
   classes?: any
 
@@ -22,7 +19,8 @@ export interface TasksViewProps extends TableViewProps {
 
   setFilters(filters: any): void
 
-  data: TasksConnectionQuery | null
+  // data: TasksConnectionQuery | null
+  objects: TasksConnectionTaskFragment[]
 
   variables?: TasksConnectionQueryVariables
 
@@ -30,5 +28,3 @@ export interface TasksViewProps extends TableViewProps {
 
   setShowAll(show: boolean): void
 }
-
-export interface TasksViewState extends TableViewState {}

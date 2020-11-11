@@ -1,3 +1,9 @@
-import { TableViewProps } from 'apollo-cms/lib/DataView/List/Table'
+import { TableViewProps } from 'apollo-cms/dist/DataView/List/Table'
 
-export interface ObjectsListViewProps extends TableViewProps {}
+export interface ObjectsListViewProps extends TableViewProps {
+  page?: number
+
+  withPagination?: boolean
+
+  count: number | undefined
+}

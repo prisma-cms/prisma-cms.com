@@ -6,6 +6,7 @@ import {
   TopicsConnectionQueryVariables,
   useTopicsConnectionQuery,
   TopicsConnectionQuery,
+  TopicsConnectionTopicFragment,
 } from 'src/modules/gql/generated'
 
 import ForumView from 'src/components/view/forum/view'
@@ -68,7 +69,21 @@ const TopicsPage: Page = () => {
     TopicsConnectionQuery | null | undefined
   >(queryResult.data)
 
-  const { variables } = queryResult
+  const { variables, loading } = queryResult
+
+  const objects = useMemo(() => {
+    const objects: TopicsConnectionTopicFragment[] = []
+
+    return (
+      response?.objectsConnection.edges.reduce((curr, next) => {
+        if (next?.node) {
+          curr.push(next.node)
+        }
+
+        return curr
+      }, objects) ?? []
+    )
+  }, [response?.objectsConnection.edges])
 
   return (
     <>
@@ -79,7 +94,10 @@ const TopicsPage: Page = () => {
 
       <ForumView
         // {...queryResult}
-        data={response || null}
+        loading={loading}
+        // data={response || null}
+        objects={objects}
+        count={response?.objectsConnection.aggregate.count}
         variables={variables}
         page={page}
       />

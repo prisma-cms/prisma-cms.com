@@ -44,11 +44,11 @@ export const Editor: React.FC<ContainerProps> = ({
 
   return (
     <div>
-      <div>
+      <p>
         <button onClick={setReadOnlyOnClick}>
-          readOnly {readOnly ? 'Yes' : 'No'}
+          Set {readOnly ? 'editable' : 'readOnly'}
         </button>
-      </div>
+      </p>
       <Component
         {...other}
         onChange={onChangeCallback}

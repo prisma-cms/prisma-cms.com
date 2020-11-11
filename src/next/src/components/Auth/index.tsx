@@ -5,7 +5,7 @@
  */
 
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import PrismaCmsComponent from '@prisma-cms/component'
 
@@ -23,21 +23,21 @@ import MetamaskForm from './forms/Metamask'
 import { AuthProps, AuthState } from './interfaces'
 
 class Auth extends PrismaCmsComponent<AuthProps, AuthState> {
-  static propTypes = {
-    ...PrismaCmsComponent.propTypes,
-    loginCanceled: PropTypes.func.isRequired,
-    loginComplete: PropTypes.func.isRequired,
+  // static propTypes = {
+  //   ...PrismaCmsComponent.propTypes,
+  //   loginCanceled: PropTypes.func.isRequired,
+  //   loginComplete: PropTypes.func.isRequired,
 
-    step: PropTypes.oneOf([
-      // "findUser",
-      'signin',
-      'signup',
-    ]).isRequired,
+  //   step: PropTypes.oneOf([
+  //     // "findUser",
+  //     'signin',
+  //     'signup',
+  //   ]).isRequired,
 
-    // classes: PropTypes.object.isRequired,
-    useMetamask: PropTypes.bool.isRequired,
-    showRegForm: PropTypes.bool.isRequired,
-  }
+  //   // classes: PropTypes.object.isRequired,
+  //   useMetamask: PropTypes.bool.isRequired,
+  //   showRegForm: PropTypes.bool.isRequired,
+  // }
 
   static defaultProps = {
     ...PrismaCmsComponent.defaultProps,

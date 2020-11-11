@@ -1,6 +1,7 @@
 import { ObjectsListViewProps } from 'src/components/view/List/interfaces'
-import { TimersConnectionQuery, Maybe } from 'src/modules/gql/generated'
+import { TimersConnectionTimerFragment } from 'src/modules/gql/generated'
 
 export interface TimersViewProps extends ObjectsListViewProps {
-  data: Maybe<TimersConnectionQuery>
+  // data: Maybe<TimersConnectionQuery>
+  objects: TimersConnectionTimerFragment[]
 }

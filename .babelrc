@@ -2,7 +2,7 @@
   "presets": ["next/babel"],
   "plugins": [
     [
-      "styled-components",
+      "babel-plugin-styled-components",
       {
         // In some projects missed namespace for styled-components
         // По какой-то причине в styled пустой неймспейс и в тестах не проходит маска

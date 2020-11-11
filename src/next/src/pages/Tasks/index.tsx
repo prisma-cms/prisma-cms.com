@@ -5,6 +5,7 @@ import {
   TasksConnectionQueryVariables,
   useTasksConnectionQuery,
   TasksConnectionQuery,
+  TasksConnectionTaskFragment,
 } from 'src/modules/gql/generated'
 
 import View from './View'
@@ -68,7 +69,21 @@ const TasksPage: Page = () => {
     TasksConnectionQuery | null | undefined
   >(queryResult.data)
 
-  const { variables } = queryResult
+  const objects = useMemo(() => {
+    const objects: TasksConnectionTaskFragment[] = []
+
+    return (
+      response?.objectsConnection.edges.reduce((curr, next) => {
+        if (next?.node) {
+          curr.push(next.node)
+        }
+
+        return curr
+      }, objects) ?? []
+    )
+  }, [response?.objectsConnection.edges])
+
+  const { variables, loading } = queryResult
 
   const [showAll, setShowAll] = useState(false)
 
@@ -104,7 +119,10 @@ const TasksPage: Page = () => {
       </Head>
       <View
         // {...queryResult}
-        data={response || null}
+        loading={loading}
+        // data={response || null}
+        objects={objects}
+        count={response?.objectsConnection.aggregate.count}
         variables={variables}
         page={page}
         showAll={showAll}

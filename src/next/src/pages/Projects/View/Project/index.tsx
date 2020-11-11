@@ -130,7 +130,7 @@ export class ProjectView<
 
     const object = this.getObjectWithMutations()
 
-    const inEditMode = this.isInEditMode()
+    const inEditMode = this.inEditMode()
 
     const { openedImage, editMembers } = this.state
 

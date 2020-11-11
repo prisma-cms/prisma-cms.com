@@ -4,10 +4,10 @@ declare module '@prisma-cms/editor' {
   /**
    * Strings not allowed due key generation
    */
-  export type PrismaCmsEditorValue = Record<string, any>
+  export type PrismaCmsEditorRawContent = Record<string, any>
 
   export interface PrismaCmsEditorProps {
-    value?: PrismaCmsEditorValue
+    value?: PrismaCmsEditorRawContent
 
     /**
      * Prevent edit content. Default true
@@ -15,7 +15,7 @@ declare module '@prisma-cms/editor' {
     readOnly?: boolean
 
     onChange?(
-      content: PrismaCmsEditorValue,
+      content: PrismaCmsEditorRawContent,
       contentState: Record<string, any>
     ): any
 
@@ -28,6 +28,8 @@ declare module '@prisma-cms/editor' {
      * Передаем next/link
      */
     LinkComponent?: ReactNode
+
+    className?: string
   }
 
   export default class Editor extends React.Component<PrismaCmsEditorProps> {}

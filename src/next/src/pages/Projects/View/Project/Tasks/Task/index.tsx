@@ -33,7 +33,7 @@ class TasksTaskView extends CooperatorTaskView<TasksTaskViewProps> {
   renderDefaultView() {
     const object = this.getObjectWithMutations()
 
-    const inEditMode = this.isInEditMode()
+    const inEditMode = this.inEditMode()
 
     let output
 

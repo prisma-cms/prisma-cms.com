@@ -34,15 +34,9 @@ const WithUser: React.FC<WithUserProps> = ({ children, context }) => {
     // },
   })
 
-  // console.log('WithUser useMeQuery loading', loading);
-
-  // console.log('WithUser useMeQuery data', { ...data });
-
   const user = data?.user
 
   const header = useMemo(() => <Header user={user} />, [user])
-
-  // console.log('contextWithUser user', user);
 
   /**
    * Контекст обновляем только в случае если объект пользователя изменился.
@@ -50,9 +44,7 @@ const WithUser: React.FC<WithUserProps> = ({ children, context }) => {
    * компоненты будут ререндериться.
    */
   const contextWithUser = useMemo(() => {
-    // console.log('contextWithUser memo');
-
-    if (context.user === user) {
+    if (context.user !== user) {
       const newContext: PrismaCmsContext = {
         ...context,
         user,

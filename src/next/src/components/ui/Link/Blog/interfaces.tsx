@@ -7,7 +7,7 @@ export interface BlogLinkProps {
     id: string
     uri: string
     name: string
-    longtitle: Maybe<string>
+    longtitle?: Maybe<string>
   }
 
   variant?: UiLinkProps['variant']

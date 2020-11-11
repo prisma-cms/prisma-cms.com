@@ -1,6 +1,10 @@
 import React from 'react'
 import { NextComponentType, NextPageContext } from 'next'
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import {
+  ApolloClient,
+  ApolloQueryResult,
+  NormalizedCacheObject,
+} from '@apollo/client'
 import URI from 'urijs'
 import { NextRouter } from 'next/router'
 import { Maybe, MeUserFragment } from 'src/modules/gql/generated'
@@ -73,6 +77,15 @@ export type PrismaCmsContext = {
   lang: string
 
   theme: typeof muiTheme
+
+  localStorage: typeof global.localStorage | undefined
+
+  /**
+   * Сброс кеша аполло-клиента.
+   * Делаем пока через такой хак, потому что в текущем компоненте apollo-cms
+   * используется старый аполло-клиент
+   */
+  apiClientResetStore: () => Promise<void | ApolloQueryResult<any>[] | null>
 }
 
 /**

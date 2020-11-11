@@ -13,7 +13,7 @@ import { PrismaCmsContext } from '../../_App/interfaces'
 import Pagination from 'src/components/Pagination'
 import Grid from 'src/components/ui/Grid'
 import Link from 'next/link'
-import { ProjectsConnectionProjectFragment } from 'src/modules/gql/generated'
+// import { ProjectsConnectionProjectFragment } from 'src/modules/gql/generated'
 
 class ProjectsView extends Component<ProjectsViewProps> {
   static propTypes = {
@@ -34,26 +34,26 @@ class ProjectsView extends Component<ProjectsViewProps> {
   // }
 
   render() {
-    const { page, data, variables } = this.props
+    const { page, objects: projects, variables, count = 0 } = this.props
 
     const limit = variables?.first ?? 0
 
-    const objectsConnection = data?.objectsConnection
+    // const objectsConnection = data?.objectsConnection
 
-    const { edges, aggregate } = objectsConnection || {}
+    // const { edges, aggregate } = objectsConnection || {}
 
-    const { count = 0 } = aggregate || {}
+    // const { count = 0 } = aggregate || {}
 
-    const projects =
-      edges
-        ?.map((n) => n?.node)
-        .reduce<ProjectsConnectionProjectFragment[]>((current, next) => {
-          if (next) {
-            current.push(next)
-          }
+    // const projects =
+    //   edges
+    //     ?.map((n) => n?.node)
+    //     .reduce<ProjectsConnectionProjectFragment[]>((current, next) => {
+    //       if (next) {
+    //         current.push(next)
+    //       }
 
-          return current
-        }, []) ?? []
+    //       return current
+    //     }, []) ?? []
 
     const output = (
       <Grid item xs={12}>

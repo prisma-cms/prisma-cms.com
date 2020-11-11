@@ -21,7 +21,7 @@ declare module '@prisma-cms/cooperation/lib/components/pages/Projects/View/Proje
 
     renderResetButton(): JSX.Element | null
 
-    isInEditMode(): boolean
+    inEditMode(): boolean
 
     getButtons(): JSX.Element[] | null
 

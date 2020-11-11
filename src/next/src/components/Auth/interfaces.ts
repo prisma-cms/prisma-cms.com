@@ -14,7 +14,7 @@ export type AuthProps = PrismaCmsComponentProps & {
 
   loginComplete: (arg0: any) => void
 
-  step?: string
+  step?: 'signin' | 'signup'
 }
 
 export interface AuthState extends PrismaCmsComponentState {

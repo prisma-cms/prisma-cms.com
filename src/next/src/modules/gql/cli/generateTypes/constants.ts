@@ -13,7 +13,7 @@ const TS_PATTERN = `${QUERIES_PATH.replace(/\\/g, '/')}/**/*.@(ts|tsx)`
 
 const EXCLUDE_FILES: Array<string> = []
 
-const MODULES_PATH = 'src/modules/gql/generated/'
+const MODULES_PATH = 'src/next/src/modules/gql/generated/'
 
 const OUTPUT_PATH = path.resolve(ROOT_DIR, MODULES_PATH)
 

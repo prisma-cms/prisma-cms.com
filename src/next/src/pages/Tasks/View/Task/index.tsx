@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
-import EditableView from 'apollo-cms/lib/DataView/Object/Editable'
+import EditableView from 'apollo-cms/dist/DataView/Object/Editable'
 
 import withStyles from 'material-ui/styles/withStyles'
 import IconButton from 'material-ui/IconButton'
@@ -28,7 +28,7 @@ import TimersListView from 'src/pages/Timers/View/List'
 // import { graphql, compose } from '@apollo/client'
 import Grid from 'src/components/ui/Grid'
 import { TaskViewProps } from './interfaces'
-import { Task } from 'src/modules/gql/generated'
+// import { Task } from 'src/modules/gql/generated'
 import TaskLink from 'src/components/ui/Link/Task'
 import ProjectLink from 'src/components/ui/Link/Project'
 import UserLink from 'src/components/ui/Link/User'
@@ -55,11 +55,11 @@ export const styles = () => {
 export class TaskView<
   P extends TaskViewProps = TaskViewProps
 > extends EditableView<P> {
-  static propTypes = {
-    ...EditableView.propTypes,
-    classes: PropTypes.object.isRequired,
-    showDetails: PropTypes.bool.isRequired,
-  }
+  // static propTypes = {
+  //   ...EditableView.propTypes,
+  //   classes: PropTypes.object.isRequired,
+  //   showDetails: PropTypes.bool.isRequired,
+  // }
 
   static defaultProps = {
     ...EditableView.defaultProps,
@@ -71,70 +71,70 @@ export class TaskView<
   //   openLoginForm: PropTypes.func.isRequired,
   // };
 
-  canEdit() {
-    const { user: currentUser } = this.context
+  // canEdit() {
+  //   const { user: currentUser } = this.context
 
-    const { id: currentUserId, sudo } = currentUser || {}
+  //   const { id: currentUserId, sudo } = currentUser || {}
 
-    const { id, CreatedBy } = this.getObjectWithMutations() || {}
+  //   const { id, CreatedBy } = this.getObjectWithMutations() || {}
 
-    const { id: createdById } = CreatedBy || {}
+  //   const { id: createdById } = CreatedBy || {}
 
-    return (
-      !id || (createdById && createdById === currentUserId) || sudo === true
-    )
-  }
+  //   return (
+  //     !id || (createdById && createdById === currentUserId) || sudo === true
+  //   )
+  // }
 
-  save() {
-    const { user: currentUser, openLoginForm } = this.context
+  // save() {
+  //   const { user: currentUser, openLoginForm } = this.context
 
-    if (!currentUser) {
-      return openLoginForm()
-    }
+  //   if (!currentUser) {
+  //     return openLoginForm()
+  //   }
 
-    return super.save()
-  }
+  //   return super.save()
+  // }
 
-  async saveObject(data: Task) {
-    const { mutate: _mutate, createTask, updateTask } = this.props
+  // async saveObject(data: Task) {
+  //   const { mutate: _mutate, createTask, updateTask } = this.props
 
-    let mutate = _mutate || undefined
+  //   let mutate = _mutate || undefined
 
-    if (!mutate) {
-      const { id } = this.getObjectWithMutations() || {}
+  //   if (!mutate) {
+  //     const { id } = this.getObjectWithMutations() || {}
 
-      if (id && updateTask) {
-        mutate = updateTask
-      } else if (!id && createTask) {
-        mutate = createTask
-      }
-    }
+  //     if (id && updateTask) {
+  //       mutate = updateTask
+  //     } else if (!id && createTask) {
+  //       mutate = createTask
+  //     }
+  //   }
 
-    if (!mutate) {
-      throw new Error('Mutate not defined')
-    }
+  //   if (!mutate) {
+  //     throw new Error('Mutate not defined')
+  //   }
 
-    const mutation = this.getMutation(data)
+  //   const mutation = this.getMutation(data)
 
-    const result = await mutate(mutation)
-      // .then((r) => r)
-      .catch((e) => {
-        // throw (e);
-        return e
-      })
+  //   const result = await mutate(mutation)
+  //     // .then((r) => r)
+  //     .catch((e) => {
+  //       // throw (e);
+  //       return e
+  //     })
 
-    return result
-  }
+  //   return result
+  // }
 
   getCacheKey() {
-    const { id } = this.getObject() || {}
+    const { id } = this.getObject() ?? {}
 
-    return `task_${id || 'new'}`
+    return `task_${id || 'new_task'}`
   }
 
-  getObjectWithMutations(): Task {
-    return super.getObjectWithMutations()
-  }
+  // getObjectWithMutations(): Task {
+  //   return super.getObjectWithMutations()
+  // }
 
   onClickUpdateTimer = (target: any) => {
     const timerId = target.attributes.role.value
@@ -180,7 +180,7 @@ export class TaskView<
 
     const { classes } = this.props
 
-    const { id: taskId, Timers } = this.getObjectWithMutations()
+    const { id: taskId, Timers = [] } = this.getObjectWithMutations() ?? {}
 
     const { user: currentUser } = this.context
 
@@ -240,18 +240,18 @@ export class TaskView<
     return buttons
   }
 
-  renderHeader(): JSX.Element | null {
+  renderHeader(): React.ReactNode {
     const { classes } = this.props
 
-    const object = this.getObjectWithMutations()
+    const object = this.getObjectWithMutations() ?? null
 
-    const { id: taskId, CreatedBy, TaskProjects } = object || {}
+    const { id: taskId, CreatedBy, TaskProjects } = object ?? {}
 
     // TODO: Ранее структура была на один проект, но сейчас возвращает несколько.
     // Надо доработать для вывода нескольких проектов
     const Project = TaskProjects?.length ? TaskProjects[0].Project : null
 
-    const inEditMode = this.isInEditMode()
+    const inEditMode = this.inEditMode()
 
     return (
       <div className={classes?.header}>
@@ -267,7 +267,7 @@ export class TaskView<
                   })
                 ) : taskId ? (
                   <Fragment>
-                    <TaskLink object={object} />{' '}
+                    {object ? <TaskLink object={object} /> : null}{' '}
                     {Project ? (
                       <span>
                         {' '}
@@ -293,7 +293,7 @@ export class TaskView<
   }
 
   renderActiveTimers() {
-    const { Timers } = this.getObjectWithMutations() || {}
+    const { Timers } = this.getObjectWithMutations() ?? {}
 
     const activeTimers =
       (Timers && Timers.filter((n) => n.stopedAt === null)) || []
@@ -332,7 +332,7 @@ export class TaskView<
   renderDefaultView() {
     const { showDetails } = this.props
 
-    const task = this.getObjectWithMutations()
+    const task = this.getObjectWithMutations() ?? null
 
     if (!task) {
       return null
@@ -348,7 +348,7 @@ export class TaskView<
       endDate,
     } = task
 
-    const inEditMode = this.isInEditMode()
+    const inEditMode = this.inEditMode()
 
     let details
 
@@ -449,9 +449,9 @@ export class TaskView<
   }
 
   renderResetButton() {
-    const { id } = this.getObjectWithMutations() || {}
+    // const { id } = this.getObjectWithMutations() || {}
 
-    return id ? super.renderResetButton() : null
+    return this.getObjectWithMutations()?.id ? super.renderResetButton() : null
   }
 
   render() {

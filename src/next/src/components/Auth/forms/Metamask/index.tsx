@@ -16,9 +16,9 @@ import { MetamaskFormProps, MetamaskFormState } from './interfaces'
 const globalAny: any = global
 
 class MetamaskForm extends AuthForm<MetamaskFormProps, MetamaskFormState> {
-  static propTypes = {
-    ...AuthForm.propTypes,
-  }
+  // static propTypes = {
+  //   ...AuthForm.propTypes,
+  // }
 
   onChange(event: any) {
     const { name, value } = event.target

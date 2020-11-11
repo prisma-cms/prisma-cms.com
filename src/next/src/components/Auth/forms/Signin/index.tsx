@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import PrismaCmsComponent from '@prisma-cms/component'
 
@@ -10,10 +10,10 @@ class AuthUsersForm extends PrismaCmsComponent<
   AuthUsersFormProps,
   AuthUsersFormState
 > {
-  static propTypes = {
-    ...PrismaCmsComponent.propTypes,
-    first: PropTypes.number.isRequired,
-  }
+  // static propTypes = {
+  //   ...PrismaCmsComponent.propTypes,
+  //   first: PropTypes.number.isRequired,
+  // }
 
   static defaultProps = {
     ...PrismaCmsComponent.defaultProps,

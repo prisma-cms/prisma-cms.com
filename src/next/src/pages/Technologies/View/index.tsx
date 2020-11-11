@@ -3,7 +3,7 @@ import { ObjectsListView, styles } from 'src/components/view/List'
 
 import withStyles from 'material-ui/styles/withStyles'
 import { TechnologiesViewProps } from './interfaces'
-import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table'
+import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { TechnologiesConnectionTechnologyFragment } from 'src/modules/gql/generated'
 import UserLink from 'src/components/ui/Link/User'
 import Grid from 'src/components/ui/Grid'

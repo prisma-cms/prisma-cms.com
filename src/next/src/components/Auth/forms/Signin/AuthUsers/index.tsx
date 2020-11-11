@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
@@ -33,15 +33,15 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
   //   resetPasswordCode: string | null
   // }
 
-  static propTypes = {
-    ...AuthForm.propTypes,
-    data: PropTypes.object,
-    setFilters: PropTypes.func.isRequired,
-    getFilters: PropTypes.func.isRequired,
-    onPasswordChange: PropTypes.func.isRequired,
-    password: PropTypes.string.isRequired,
-    loginComplete: PropTypes.func.isRequired,
-  }
+  // static propTypes = {
+  //   ...AuthForm.propTypes,
+  //   data: PropTypes.object,
+  //   setFilters: PropTypes.func.isRequired,
+  //   getFilters: PropTypes.func.isRequired,
+  //   onPasswordChange: PropTypes.func.isRequired,
+  //   password: PropTypes.string.isRequired,
+  //   loginComplete: PropTypes.func.isRequired,
+  // }
 
   constructor(props: AuthUsersProps) {
     super(props)

@@ -24,6 +24,8 @@ class TimersListView extends Component<TimersListViewProps> {
   mutate = async (arg0: any) => {
     // TODO Прописать апдейтер
     console.error('TimersList update mutation required', arg0)
+
+    return {}
   }
 
   render() {
@@ -40,9 +42,10 @@ class TimersListView extends Component<TimersListViewProps> {
         // <UpdateTimer
         <Timer
           key={id}
-          data={{
-            object: n,
-          }}
+          // data={{
+          //   object: n,
+          // }}
+          object={n}
           mutate={this.mutate}
         />
       )

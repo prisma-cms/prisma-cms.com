@@ -5,6 +5,7 @@ import {
   ProjectsConnectionQueryVariables,
   useProjectsConnectionQuery,
   ProjectsConnectionQuery,
+  ProjectsConnectionProjectFragment,
 } from 'src/modules/gql/generated'
 
 import View from './View'
@@ -65,7 +66,21 @@ const ProjectsPage: Page = () => {
     ProjectsConnectionQuery | null | undefined
   >(queryResult.data)
 
-  const { variables } = queryResult
+  const objects = useMemo(() => {
+    const objects: ProjectsConnectionProjectFragment[] = []
+
+    return (
+      response?.objectsConnection.edges.reduce((curr, next) => {
+        if (next?.node) {
+          curr.push(next.node)
+        }
+
+        return curr
+      }, objects) ?? []
+    )
+  }, [response?.objectsConnection.edges])
+
+  const { variables, loading } = queryResult
 
   return (
     <>
@@ -76,7 +91,10 @@ const ProjectsPage: Page = () => {
 
       <View
         // {...queryResult}
-        data={response || null}
+        // data={response || null}
+        objects={objects}
+        count={response?.objectsConnection.aggregate.count}
+        loading={loading}
         variables={variables}
         page={page}
       />

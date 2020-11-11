@@ -3,6 +3,7 @@ export interface TasksListProps {
 
   tasks: {
     __typename?: 'Task'
-    id?: string
+    id: string
+    name: string
   }[]
 }

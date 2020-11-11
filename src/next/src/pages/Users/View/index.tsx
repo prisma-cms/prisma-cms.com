@@ -3,7 +3,7 @@ import { ObjectsListView, styles } from 'src/components/view/List'
 
 import withStyles from 'material-ui/styles/withStyles'
 import { UsersViewProps } from './interfaces'
-import { ColumnConfig } from 'apollo-cms/lib/DataView/List/Table'
+import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { UsersConnectionUserFragment } from 'src/modules/gql/generated'
 import UserLink from 'src/components/ui/Link/User'
 import moment from 'moment'
@@ -16,10 +16,10 @@ class UsersView<
 > extends ObjectsListView<P> {
   static defaultProps = {
     ...ObjectsListView.defaultProps,
-    title: 'Чат-комнаты',
+    title: 'Пользователи',
   }
 
-  getColumns<CC extends UsersConnectionUserFragment>(): ColumnConfig<CC>[] {
+  getColumns(): ColumnConfig<UsersConnectionUserFragment>[] | undefined {
     return [
       {
         id: 'id',
@@ -33,14 +33,17 @@ class UsersView<
         id: 'createdAt',
         key: 'createdAt',
         label: 'Дата регистрации',
-        renderer: (value: CC['createdAt']) => {
+        renderer: (value: UsersConnectionUserFragment['createdAt']) => {
           return moment(value).format('ll')
         },
       },
       {
         id: 'ProjectsCreated',
         label: 'Создал проекты',
-        renderer: (value: CC['ProjectsCreated'], record) => {
+        renderer: (
+          value: UsersConnectionUserFragment['ProjectsCreated'],
+          record
+        ) => {
           const { username } = record
 
           let output
@@ -85,7 +88,7 @@ class UsersView<
         // numeric: false,
         // disablePadding: false,
         label: 'Участвует в проектах',
-        renderer: (value: CC['Projects'], record) => {
+        renderer: (value: UsersConnectionUserFragment['Projects'], record) => {
           const { username } = record
 
           let output

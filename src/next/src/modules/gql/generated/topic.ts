@@ -47,7 +47,7 @@ export const TopicDocument = gql`
  *   },
  * });
  */
-export function useTopicQuery(baseOptions?: Apollo.QueryHookOptions<TopicQuery, TopicQueryVariables>) {
+export function useTopicQuery(baseOptions: Apollo.QueryHookOptions<TopicQuery, TopicQueryVariables>) {
         return Apollo.useQuery<TopicQuery, TopicQueryVariables>(TopicDocument, baseOptions);
       }
 export function useTopicLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TopicQuery, TopicQueryVariables>) {

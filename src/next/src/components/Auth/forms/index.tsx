@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import Dialog from 'material-ui/Dialog' // DialogContent, // DialogActions,
 
@@ -39,18 +39,18 @@ const defaultLocales = {
 class AuthForm<
   P extends AuthFormProps,
   S extends AuthFormState
-> extends PrismaCmsComponent<P, S> {
+  > extends PrismaCmsComponent<P, S> {
   // context!: PrismaCmsContext;
 
-  static propTypes = {
-    ...PrismaCmsComponent.propTypes,
-    open: PropTypes.bool.isRequired,
-    fullWidth: PropTypes.bool,
-    maxWidth: PropTypes.string,
-    dialogProps: PropTypes.object,
-    loginCanceled: PropTypes.func.isRequired,
-    switchForm: PropTypes.func.isRequired,
-  }
+  // static propTypes = {
+  //   ...PrismaCmsComponent.propTypes,
+  //   open: PropTypes.bool.isRequired,
+  //   fullWidth: PropTypes.bool,
+  //   maxWidth: PropTypes.string,
+  //   dialogProps: PropTypes.object,
+  //   loginCanceled: PropTypes.func.isRequired,
+  //   switchForm: PropTypes.func.isRequired,
+  // }
 
   static defaultProps = {
     ...PrismaCmsComponent.defaultProps,
@@ -174,7 +174,8 @@ class AuthForm<
       // ...other
     } = this.props
 
-    return super.render(
+    return <>
+      {super.render()}
       <Dialog
         // onEntering={this.handleEntering}
         {...dialogProps}
@@ -185,7 +186,7 @@ class AuthForm<
       >
         {this.renderForm()}
       </Dialog>
-    )
+    </>
   }
 }
 

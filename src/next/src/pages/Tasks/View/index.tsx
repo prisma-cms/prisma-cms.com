@@ -10,11 +10,7 @@ import Timeline from '@prisma-cms/timeline'
 
 // import TasksList from "./List";
 
-import {
-  ColumnConfig,
-  styles,
-  TableView,
-} from 'apollo-cms/lib/DataView/List/Table'
+import { styles, ObjectsListView } from 'src/components/view/List'
 
 import withStyles from 'material-ui/styles/withStyles'
 
@@ -30,7 +26,7 @@ import FavoriteIcon from 'material-ui-icons/ThumbUp'
 import { TaskView } from './Task'
 // import gql from 'graphql-tag';
 import Button from 'material-ui/Button'
-import { TasksViewProps, TasksViewState } from './interfaces'
+import { TasksViewProps } from './interfaces'
 import { TasksConnectionTaskFragment } from 'src/modules/gql/generated'
 import UserLink from 'src/components/ui/Link/User'
 import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
@@ -38,8 +34,11 @@ import Grid from 'src/components/ui/Grid'
 import TaskStatus from '../TaskStatus'
 import TaskLink from 'src/components/ui/Link/Task'
 import Pagination from 'src/components/Pagination'
+import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 
-export class TasksView extends TableView<TasksViewProps, TasksViewState> {
+export class TasksView<
+  P extends TasksViewProps = TasksViewProps
+> extends ObjectsListView<P> {
   // static propTypes = {
   //   // eslint-disable-next-line react/forbid-foreign-prop-types
   //   ...TableView.propTypes,
@@ -53,10 +52,10 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
   //   deleteTaskReaction: PropTypes.func.isRequired,
   // };
 
-  static defaultProps = {
-    ...TableView.defaultProps,
-    title: '',
-  }
+  // static defaultProps = {
+  //   ...TableView.defaultProps,
+  //   title: '',
+  // }
 
   // constructor(props) {
 
@@ -165,7 +164,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
               key="stop"
               role={timerId}
               onClick={this.onClickUpdateTimer}
-              className={classes.button}
+              className={classes?.button}
             >
               <StopIcon />
             </IconButton>
@@ -176,7 +175,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
               key="start"
               role={taskId}
               onClick={this.onClickCreateTimer}
-              className={classes.button}
+              className={classes?.button}
             >
               <StartIcon />
             </IconButton>
@@ -335,9 +334,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
         renderer: (_value, record) => {
           return record ? (
             <TaskView
-              data={{
-                object: record,
-              }}
+              object={record}
               classes={classes}
               mutate={updateTaskProcessor}
               createTimer={createTimerProcessor}
@@ -560,23 +557,24 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
     } = theme
 
     const {
-      data,
+      // data,
+      objects: tasks,
       // classes,
     } = this.props
 
     // const tasks = objectsConnection ? objectsConnection.edges.map(n => n?.node).filter(n => !!n) : [];
 
-    const tasks: TasksConnectionTaskFragment[] =
-      data?.objectsConnection.edges.reduce<TasksConnectionTaskFragment[]>(
-        (curr, next) => {
-          if (next?.node) {
-            curr.push(next.node)
-          }
+    // const tasks: TasksConnectionTaskFragment[] =
+    //   data?.objectsConnection.edges.reduce<TasksConnectionTaskFragment[]>(
+    //     (curr, next) => {
+    //       if (next?.node) {
+    //         curr.push(next.node)
+    //       }
 
-          return curr
-        },
-        []
-      ) ?? []
+    //       return curr
+    //     },
+    //     []
+    //   ) ?? []
 
     let minDate = 0
     let maxDate = 0
@@ -683,7 +681,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
     //   Grid,
     // } = this.context;
 
-    const { page, setShowAll, showAll } = this.props
+    const { page = 1, setShowAll, showAll, count = 0, variables } = this.props
 
     // const {
     //   objectsConnection,
@@ -693,15 +691,17 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
     //   },
     // } = this.props.data;
 
-    const objectsConnection = this.props.data?.objectsConnection
-    const limit = this.props.variables?.first
+    // const objectsConnection = this.props.data?.objectsConnection
+    // const limit = this.props.variables?.first
 
-    const {
-      // edges,
-      aggregate,
-    } = objectsConnection || {}
+    // const {
+    //   // edges,
+    //   aggregate,
+    // } = objectsConnection || {}
 
-    const { count = 0 } = aggregate || {}
+    // const { count = 0 } = aggregate || {}
+
+    const limit = variables?.first ?? 0
 
     let showAllButton
 
@@ -734,7 +734,7 @@ export class TasksView extends TableView<TasksViewProps, TasksViewState> {
               <Pagination
                 limit={limit || 0}
                 total={count}
-                page={page || 1}
+                page={page}
                 style={{
                   marginTop: 20,
                 }}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import Task from './Task'
+// import Task from './Task'
 import Typography from 'material-ui/Typography'
 import { TasksListProps } from './interfaces'
 
@@ -21,21 +21,22 @@ class TasksList extends Component<TasksListProps> {
     }
 
     if (tasks.length) {
-      output = tasks.map((n, index) => {
+      output = tasks.map((_n, index) => {
         if (tasksLimit && tasksLimit > 0 && tasksLimit < index + 1) {
-          return
+          return null
         }
 
-        const { id } = n
+        return null
 
-        return (
-          <Task
-            key={id}
-            data={{
-              object: n,
-            }}
-          />
-        )
+        // const { id } = n
+
+        // TODO: Restore
+        // return (
+        //   <Task
+        //     key={id}
+        //     object={n}
+        //   />
+        // )
       })
     } else {
       output = <Typography color="textSecondary">Нет задач</Typography>

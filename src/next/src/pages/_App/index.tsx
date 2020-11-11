@@ -32,6 +32,7 @@ import moment from 'moment'
 import Page404 from '../_Error/404'
 import ErrorPage from '../_Error'
 import { NextSeo, NextSeoProps } from 'next-seo'
+import Head from 'next/head'
 
 // TODO: Проработать локализацию
 moment.locale('ru')
@@ -73,7 +74,7 @@ const App: MainApp = ({ Component, pageProps }) => {
 
       subscriptionClient?.close(false, false)
 
-      await apolloClient.resetStore()
+      await apolloClient.resetStore().catch(console.error)
     },
     [apolloClient]
   )
@@ -110,6 +111,12 @@ const App: MainApp = ({ Component, pageProps }) => {
       openLoginForm,
       lang: 'ru',
       theme: muiTheme,
+      localStorage: global.localStorage,
+      apiClientResetStore: async function () {
+        if (!apolloClient['queryManager'].fetchCancelFns.size) {
+          return apolloClient.resetStore().catch(console.error)
+        }
+      },
     }
 
     return context
@@ -150,6 +157,12 @@ const App: MainApp = ({ Component, pageProps }) => {
 
   return (
     <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+      </Head>
       <MuiThemeProvider
         theme={muiTheme}
         // For SSR only

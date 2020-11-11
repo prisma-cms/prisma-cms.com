@@ -40,6 +40,13 @@ fragment tasksConnectionTask on Task {
     CreatedBy {
       ...tasksConnectionUser
     }
+    Task {
+      id
+      createdAt
+      updatedAt
+      name
+      status
+    }
   }
   TaskProjects {
     id

@@ -28,10 +28,6 @@ export default class MyDocument extends Document {
       <Html lang="ru">
         <Head>
           <meta charSet="utf-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-          />
           <meta name="theme-color" content="#000000" />
           <base href="/" />
           <link rel="icon" href="/favicon.ico" />

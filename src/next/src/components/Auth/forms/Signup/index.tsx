@@ -13,9 +13,9 @@ import { SignupFormProps, SignupFormState } from './interfaces'
 import PhoneField from '@prisma-cms/front/lib/modules/ui/Input/Phone'
 
 class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
-  static propTypes = {
-    ...AuthForm.propTypes,
-  }
+  // static propTypes = {
+  //   ...AuthForm.propTypes,
+  // }
 
   constructor(props: any) {
     super(props)

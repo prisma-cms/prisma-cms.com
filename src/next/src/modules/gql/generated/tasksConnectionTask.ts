@@ -20,7 +20,7 @@ export type TasksConnectionTaskFragment = (
   )>, Timers?: Types.Maybe<Array<{ __typename?: 'Timer', id: string, createdAt: any, updatedAt: any, stopedAt?: Types.Maybe<any>, CreatedBy?: Types.Maybe<(
       { __typename?: 'User' }
       & TasksConnectionUserFragment
-    )> }>>, TaskProjects?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: any, updatedAt: any, Project: { __typename?: 'Project', id: string, name: string, domain?: Types.Maybe<string>, createdAt: any, updatedAt: any, description?: Types.Maybe<string>, url?: Types.Maybe<string>, sequence?: Types.Maybe<number>, content?: Types.Maybe<any>, contentText?: Types.Maybe<string>, status?: Types.Maybe<Types.ProjectStatus>, public?: Types.Maybe<boolean>, oldID?: Types.Maybe<number>, CreatedBy?: Types.Maybe<(
+    )>, Task: { __typename?: 'Task', id: string, createdAt: any, updatedAt: any, name: string, status: Types.TaskStatus } }>>, TaskProjects?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: any, updatedAt: any, Project: { __typename?: 'Project', id: string, name: string, domain?: Types.Maybe<string>, createdAt: any, updatedAt: any, description?: Types.Maybe<string>, url?: Types.Maybe<string>, sequence?: Types.Maybe<number>, content?: Types.Maybe<any>, contentText?: Types.Maybe<string>, status?: Types.Maybe<Types.ProjectStatus>, public?: Types.Maybe<boolean>, oldID?: Types.Maybe<number>, CreatedBy?: Types.Maybe<(
         { __typename?: 'User' }
         & TasksConnectionUserFragment
       )>, Resource?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, uri: string }> } }>>, RelatedTo?: Types.Maybe<Array<(
@@ -46,6 +46,13 @@ export const TasksConnectionTaskFragmentDoc = gql`
     stopedAt
     CreatedBy {
       ...tasksConnectionUser
+    }
+    Task {
+      id
+      createdAt
+      updatedAt
+      name
+      status
     }
   }
   TaskProjects {

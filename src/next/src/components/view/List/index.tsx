@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 // import PropTypes from 'prop-types'
 
-import { styles, TableView } from 'apollo-cms/lib/DataView/List/Table'
+import { styles, TableView } from 'apollo-cms/dist/DataView/List/Table'
 
 import withStyles from 'material-ui/styles/withStyles'
 // import Typography from 'material-ui/Typography'
@@ -25,7 +25,7 @@ const customStyles = () => {
           },
           '& thead': {
             '& th': {
-              textAlign: 'center',
+              textAlign: 'center' as 'center',
             },
           },
           '& tbody': {
@@ -57,7 +57,7 @@ class ObjectsListView<
   static defaultProps = {
     ...TableView.defaultProps,
     withPagination: true,
-    columnData: [],
+    // columnData: [],
     limit: 0,
   }
 
@@ -81,26 +81,32 @@ class ObjectsListView<
   // }
 
   render() {
-    const { page, withPagination, data, variables } = this.props
+    const {
+      page = 1,
+      withPagination,
+      objects,
+      count = 0,
+      variables,
+    } = this.props
 
-    const objectsConnection = data?.objectsConnection || {}
+    // const objectsConnection = data?.objectsConnection
 
-    const { edges, aggregate } = objectsConnection || {}
+    // const { edges, aggregate } = objectsConnection || {}
     // const { first: limit } = variables || {}
     const limit = variables?.first
 
-    const { count = 0 } = aggregate || {}
+    // const { count = 0 } = aggregate || {}
 
-    if (!edges || !edges.length) {
-      // if (loading) {
-      //   return null;
-      // }
-      // else {
-      //   content = <Typography>
-      //     Данные не были получены
-      //   </Typography>
-      // }
-    }
+    // if (!edges || !edges.length) {
+    //   // if (loading) {
+    //   //   return null;
+    //   // }
+    //   // else {
+    //   //   content = <Typography>
+    //   //     Данные не были получены
+    //   //   </Typography>
+    //   // }
+    // }
 
     return (
       <Fragment>
@@ -108,12 +114,12 @@ class ObjectsListView<
 
         {withPagination ? (
           <Grid container spacing={0}>
-            {edges && edges.length ? (
+            {objects.length ? (
               <Grid item xs={12}>
                 <Pagination
                   limit={limit || 0}
                   total={count}
-                  page={page || 1}
+                  page={page}
                   style={{
                     marginTop: 20,
                   }}

@@ -39,6 +39,7 @@ export * from './topicUser';
 export * from './topicsConnection';
 export * from './topicsConnectionTopic';
 export * from './topicsConnectionUser';
+export * from './updateTopicProcessor';
 export * from './usersConnection';
 export * from './usersConnectionProject';
 export * from './usersConnectionResource';

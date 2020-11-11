@@ -1,11 +1,11 @@
 import { ObjectsListViewProps } from 'src/components/view/List/interfaces'
 import {
-  ProjectsConnectionQuery,
+  ProjectsConnectionProjectFragment,
   ProjectsConnectionQueryVariables,
 } from 'src/modules/gql/generated'
 
 export interface ProjectsViewProps extends ObjectsListViewProps {
-  data: ProjectsConnectionQuery | null | undefined
+  objects: ProjectsConnectionProjectFragment[]
 
   variables?: ProjectsConnectionQueryVariables
 }

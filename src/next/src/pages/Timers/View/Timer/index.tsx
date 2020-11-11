@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
-import EditableView from 'apollo-cms/lib/DataView/Object/Editable'
+import EditableView from 'apollo-cms/dist/DataView/Object/Editable'
 
 import withStyles from 'material-ui/styles/withStyles'
 import IconButton from 'material-ui/IconButton'
@@ -14,7 +14,7 @@ import Grid from 'src/components/ui/Grid'
 import UserLink from 'src/components/ui/Link/User'
 import ProjectLink from 'src/components/ui/Link/Project'
 import TaskLink from 'src/components/ui/Link/Task'
-import { Timer } from 'src/modules/gql/generated'
+// import { Timer } from 'src/modules/gql/generated'
 import { TimerViewProps } from './interfaces'
 
 const styles = () => {
@@ -24,14 +24,14 @@ const styles = () => {
 }
 
 class TimerView extends EditableView<TimerViewProps> {
-  static propTypes = {
-    ...EditableView.propTypes,
-    classes: PropTypes.object.isRequired,
-  }
+  // static propTypes = {
+  //   ...EditableView.propTypes,
+  //   classes: PropTypes.object.isRequired,
+  // }
 
-  static defaultProps = {
-    ...EditableView.defaultProps,
-  }
+  // static defaultProps = {
+  //   ...EditableView.defaultProps,
+  // }
 
   // static contextTypes = {
   //   ...EditableView.contextTypes,
@@ -120,13 +120,13 @@ class TimerView extends EditableView<TimerViewProps> {
     return `timer_${id || 'new'}`
   }
 
-  getObject(): Timer {
-    return super.getObject()
-  }
+  // getObject(): Timer {
+  //   return super.getObject()
+  // }
 
-  getObjectWithMutations(): Timer {
-    return super.getObjectWithMutations()
-  }
+  // getObjectWithMutations(): Timer {
+  //   return super.getObjectWithMutations()
+  // }
 
   renderHeader() {
     const { classes } = this.props

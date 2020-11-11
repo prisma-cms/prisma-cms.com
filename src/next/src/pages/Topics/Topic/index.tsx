@@ -1,12 +1,15 @@
 import React from 'react'
-import { TopicDocument, TopicQuery } from 'src/modules/gql/generated'
+import {
+  TopicDocument,
+  TopicQuery,
+  useUpdateTopicProcessorMutation,
+} from 'src/modules/gql/generated'
 
 import View from './View'
 
 import { Page } from '../../_App/interfaces'
 import { TopicPageProps } from './interfaces'
 import { NextSeo } from 'next-seo'
-import Editor from 'src/uikit/Editor'
 
 const TopicPage: Page<TopicPageProps> = (props) => {
   const { queryResult } = props
@@ -14,13 +17,15 @@ const TopicPage: Page<TopicPageProps> = (props) => {
   const name = queryResult.data.object?.name
   const longtitle = queryResult.data.object?.longtitle
 
+  const [mutate] = useUpdateTopicProcessorMutation()
+
   return (
     <>
       <NextSeo title={name} description={longtitle || name} />
 
-      <Editor editorKey="test" readOnly={false} />
-
-      <View data={queryResult || null} />
+      {queryResult.data.object ? (
+        <View object={queryResult.data.object} mutate={mutate} />
+      ) : null}
     </>
   )
 }
