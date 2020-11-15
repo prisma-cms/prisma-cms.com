@@ -1,0 +1,9 @@
+[submodule "packages/@prisma-cms/component"]
+	path = packages/@prisma-cms/component
+	url = git@github.com:prisma-cms/component.git
+[submodule "packages/@prisma-cms/context"]
+	path = packages/@prisma-cms/context
+	url = git@github.com:prisma-cms/context.git
+[submodule "packages/apollo-cms"]
+	path = packages/apollo-cms
+	url = git@github.com:fi1osof/apollo-cms.git

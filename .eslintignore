@@ -12,3 +12,4 @@ generated
 /src/components
 **/.storybook/*
 **/storybook-static/*
+**/packages

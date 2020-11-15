@@ -3,6 +3,8 @@
   "exec": "ts-node --project tsconfig.server.json src/next/server/index.ts",
   "ext": "js ts",
   "ignore": [
+    "*/dist/*",
+    "*/.next/*",
     "*/generated/*",
     "*/coverage/*",
     "*/uploads/*",

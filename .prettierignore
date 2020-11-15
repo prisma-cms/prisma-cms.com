@@ -12,3 +12,4 @@ src/node_modules
 /src/schema
 .storybook
 storybook-static
+/packages

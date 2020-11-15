@@ -9,6 +9,8 @@ module.exports = ({ config }) => {
   config.resolve.modules = [
     path.resolve(__dirname, "../src/next/"),
     path.resolve(__dirname, ".."),
+    path.resolve(__dirname, '../packages/apollo-cms/'),
+    path.resolve(__dirname, '../packages/@prisma-cms/*'),
     "node_modules",
   ];
 

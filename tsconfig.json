@@ -31,6 +31,6 @@
     "resolveJsonModule": true
   },
   // "typeRoots": ["./node_modules/@types", "./src/next/src/@types"],
-  "exclude": ["./node_modules", "dist", ".next", "out", "next.config.js"],
+  "exclude": ["./node_modules", "dist", ".next", "out", "next.config.js", "packages"],
   "include": ["next-env.d.ts", ".storybook/*.tsx", "**/*.ts", "**/*.tsx"]
 }
