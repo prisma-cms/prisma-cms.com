@@ -1,10 +1,9 @@
 {
-  "watch": ["next/server"],
+  "watch": ["packages"],
   "exec": "ts-node --project tsconfig.server.json src/next/server/index.ts",
   "ext": "js ts",
   "ignore": [
-    "*/dist/*",
-    "*/.next/*",
+    "*/src/*",
     "*/generated/*",
     "*/coverage/*",
     "*/uploads/*",

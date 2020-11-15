@@ -18,7 +18,6 @@ import UserItem from './User'
 
 // import { Link } from 'react-router-dom'
 import Link from 'next/link'
-// import { Notices } from '@prisma-cms/society'
 
 import PrismaCmsComponent from '@prisma-cms/component'
 import { MainMenuProps, MainMenuState } from './interfaces'
