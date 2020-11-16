@@ -7,6 +7,6 @@
 [submodule "packages/apollo-cms"]
 	path = packages/apollo-cms
 	url = git@github.com:fi1osof/apollo-cms.git
-[submodule "packages/@prisma-cms/cooperation"]
-	path = packages/@prisma-cms/cooperation
-	url = git@github.com:prisma-cms/cooperation.git
+[submodule "packages/@prisma-cms/editor"]
+	path = packages/@prisma-cms/editor
+	url = git@github.com:prisma-cms/editor.git

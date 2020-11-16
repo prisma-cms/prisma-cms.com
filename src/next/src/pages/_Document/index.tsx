@@ -9,7 +9,7 @@ import Document, {
 
 import { ServerStyleSheet } from 'styled-components'
 
-import JssProvider from 'react-jss/lib/JssProvider'
+import { JssProvider } from 'react-jss'
 
 // import {
 //   // sheetsRegistry,
