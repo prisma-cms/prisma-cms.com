@@ -9,11 +9,10 @@ import {
   TopicsConnectionTopicFragment,
 } from 'src/modules/gql/generated'
 
-import ForumView from 'src/components/view/forum/view'
-
 import { Page } from '../_App/interfaces'
 import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
+import { TopicsView } from './View'
 
 const first = 10
 
@@ -92,7 +91,7 @@ const TopicsPage: Page = () => {
         <meta name="description" content="Все публикации" />
       </Head>
 
-      <ForumView
+      <TopicsView
         // {...queryResult}
         loading={loading}
         // data={response || null}

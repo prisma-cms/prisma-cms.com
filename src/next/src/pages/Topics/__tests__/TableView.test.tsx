@@ -14,7 +14,7 @@ jest.mock('next/router', () => ({
       pathname: '',
       query: {
         skip: '0',
-        first: '2',
+        first: '3',
       },
       asPath: '',
     }
@@ -1499,6 +1499,7 @@ describe('TopicsPage', () => {
       />
     )
 
+    expect(tree.baseElement).toMatchSnapshot()
     // console.log('tree', tree.container.outerHTML);
 
     expect(tree.container.querySelectorAll('table tbody tr').length).toBe(10)
