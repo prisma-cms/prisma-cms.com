@@ -58,10 +58,7 @@ export default class SubscriptionProvider extends Component<
         variables: {},
       })
       .subscribe({
-        next: async (data) => {
-          // eslint-disable-next-line no-console
-          console.log('commentSub next data', data)
-
+        next: async () => {
           await this.resetStore()
         },
         error(error) {
@@ -230,9 +227,6 @@ export default class SubscriptionProvider extends Component<
   }
 
   async resetStore() {
-    // eslint-disable-next-line no-console
-    console.log('SubscriptionProvider resetStore')
-
     const { client } = this.props
 
     if (client['queryManager'].fetchCancelFns.size === 0) {

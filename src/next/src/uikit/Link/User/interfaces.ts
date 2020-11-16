@@ -1,21 +1,21 @@
 import { TypographyProps } from 'material-ui/Typography'
-import { Maybe } from 'src/modules/gql/generated'
+import { Maybe, User } from 'src/modules/gql/generated'
 import { UiLinkProps } from '../interfaces'
 
-export enum UserLinkAvatarSize {
+export enum UikitUserLinkAvatarSize {
   small = 'small',
   normal = 'normal',
 }
 
-export type UserLinkUser = {
-  __typename?: 'User'
-  id: string
-  username?: string | null
-  fullname?: string | null
+export type UikitUserLinkObject = {
+  __typename?: User['__typename']
+  id?: User['id']
+  username?: User['username']
+  fullname?: User['fullname']
 }
 
-export interface UserLinkProps {
-  user?: Maybe<UserLinkUser>
+export interface UikitUserLinkProps {
+  user?: Maybe<UikitUserLinkObject>
 
   variant?: TypographyProps['variant']
 
@@ -30,7 +30,7 @@ export interface UserLinkProps {
 
   showName?: boolean
 
-  size?: UserLinkAvatarSize
+  size?: UikitUserLinkAvatarSize
 
   avatarProps?: any
 

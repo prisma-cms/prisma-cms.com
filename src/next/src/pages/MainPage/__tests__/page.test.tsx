@@ -25,8 +25,6 @@ describe('Home page', () => {
         await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for response
       })
 
-      // console.log('tree', tree.container.outerHTML);
-
       expect(
         tree.container.querySelectorAll('#comments > .comment').length
       ).toBe(3)

@@ -5,8 +5,10 @@ import Link, { styles as defaultStyles } from '..'
 
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
-import { UserLinkProps } from './interfaces'
 import Avatar from 'src/uikit/Avatar'
+
+import { UikitUserLinkProps } from './interfaces'
+export * from './interfaces'
 
 const styles = {
   ...defaultStyles,
@@ -35,7 +37,7 @@ const styles = {
   },
 }
 
-export class UserLink extends Component<UserLinkProps> {
+export class UikitUserLink extends Component<UikitUserLinkProps> {
   static defaultProps = {
     withAvatar: true,
     showName: true,
@@ -130,5 +132,5 @@ export class UserLink extends Component<UserLinkProps> {
 }
 
 export default (withStyles(styles)((props) => (
-  <UserLink {...props} />
-)) as unknown) as typeof UserLink
+  <UikitUserLink {...props} />
+)) as unknown) as typeof UikitUserLink

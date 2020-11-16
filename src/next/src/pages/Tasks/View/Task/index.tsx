@@ -26,13 +26,13 @@ import TimersListView from 'src/pages/Timers/View/List'
 //   updateTimerProcessor,
 // } from '../../../Timers/query'
 // import { graphql, compose } from '@apollo/client'
-import Grid from 'src/components/ui/Grid'
+import Grid from 'src/uikit/Grid'
 import { TaskViewProps } from './interfaces'
 // import { Task } from 'src/modules/gql/generated'
-import TaskLink from 'src/components/ui/Link/Task'
-import ProjectLink from 'src/components/ui/Link/Project'
-import UserLink from 'src/components/ui/Link/User'
-import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
+import TaskLink from 'src/uikit/Link/Task'
+import ProjectLink from 'src/uikit/Link/Project'
+import UserLink from 'src/uikit/Link/User'
+import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
 
 import Editor from '@prisma-cms/editor'
 
@@ -306,7 +306,7 @@ export class TaskView<
 
         collaborators.push(
           <Grid key={id} item>
-            <UserLink user={CreatedBy} size={UserLinkAvatarSize.small} />
+            <UserLink user={CreatedBy} size={UikitUserLinkAvatarSize.small} />
           </Grid>
         )
       })

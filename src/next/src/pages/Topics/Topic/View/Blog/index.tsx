@@ -7,7 +7,7 @@ import PrismaCmsComponent from '@prisma-cms/component'
 
 // import View from './View'
 import Typography from 'material-ui/Typography'
-import BlogLink from 'src/components/ui/Link/Blog'
+import BlogLink from 'src/uikit/Link/Blog'
 import { TopicBlogProps } from './interfaces'
 
 // TODO Восстановить выбор блога

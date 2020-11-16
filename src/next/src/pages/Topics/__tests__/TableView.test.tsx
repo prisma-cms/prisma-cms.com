@@ -24,14 +24,7 @@ jest.mock('next/router', () => ({
 jest.mock('@apollo/client/react/hooks', () => {
   return {
     useQuery: (query: any) => {
-      // ... some logic to decide which query has been requested.
-
-      // console.log('mock useQuery query', JSON.stringify(query, undefined, 2));
-      // console.log('mock useQuery options', options);
-
       let data: TopicsConnectionQuery | null = null
-
-      // console.log('query.definitions[0].name.value', query.definitions[0].name.value);
 
       /**
        * Формируем данные ориентируясь на имя запроса
@@ -1480,8 +1473,6 @@ jest.mock('@apollo/client/react/hooks', () => {
           break
       }
 
-      // console.log('data', data);
-
       return {
         loading: false,
         error: null,
@@ -1500,7 +1491,6 @@ describe('TopicsPage', () => {
     )
 
     expect(tree.baseElement).toMatchSnapshot()
-    // console.log('tree', tree.container.outerHTML);
 
     expect(tree.container.querySelectorAll('table tbody tr').length).toBe(10)
   })

@@ -6,9 +6,9 @@ import withStyles from 'material-ui/styles/withStyles'
 import { TimersViewProps } from './interfaces'
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { TimersConnectionTimerFragment } from 'src/modules/gql/generated'
-import UserLink from 'src/components/ui/Link/User'
-import ProjectLink from 'src/components/ui/Link/Project'
-import TaskLink from 'src/components/ui/Link/Task'
+import UserLink from 'src/uikit/Link/User'
+import ProjectLink from 'src/uikit/Link/Project'
+import TaskLink from 'src/uikit/Link/Task'
 import TaskStatus from '../../Tasks/TaskStatus'
 
 class TimersView<

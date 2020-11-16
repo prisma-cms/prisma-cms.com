@@ -6,17 +6,17 @@ import EditableView from 'apollo-cms/dist/DataView/Object/Editable'
 
 import moment from 'moment'
 
-import UserLink from 'src/components/ui/Link/User'
+import UserLink from 'src/uikit/Link/User'
 
 import Editor from 'src/uikit/Editor'
 import Typography from 'material-ui/Typography'
 
-import Grid from 'src/components/ui/Grid'
+import Grid from 'src/uikit/Grid'
 import { TopicViewProps } from './interfaces'
 import { TopicViewStyled } from './styles'
 import { PrismaCmsEditorRawContent } from '@prisma-cms/editor'
 
-// import CommentsView from './Comments'
+import CommentsView from './Comments'
 import Blog from './Blog'
 
 // const styles = {
@@ -185,7 +185,7 @@ class TopicView extends EditableView<TopicViewProps> {
           />
         </div>
 
-        {/* <CommentsView topic={object} /> */}
+        <CommentsView topic={object} />
       </div>
     )
   }

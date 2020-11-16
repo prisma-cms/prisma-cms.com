@@ -30,7 +30,6 @@ const WithUser: React.FC<WithUserProps> = ({ children, context }) => {
     //    * запроса на сервер, так как данные из кеша берутся, соответственно и этот
     //    * метод не выполняется.
     //    */
-    //   console.log('WithUser useMeQuery onCompleted data', data);
     // },
   })
 

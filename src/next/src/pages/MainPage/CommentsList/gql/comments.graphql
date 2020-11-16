@@ -23,6 +23,8 @@ query commentsConnection(
 fragment commentsConnectionComment on Resource {
   id
   createdAt
+  updatedAt
+  type
   contentText
   CreatedBy {
     ...commentsConnectionCommentUser

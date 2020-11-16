@@ -18,10 +18,10 @@ import {
   TopicsConnectionUserFragment,
 } from 'src/modules/gql/generated'
 
-import TagLink from 'src/components/ui/Link/Tag'
-import TopicLink from 'src/components/ui/Link/Topic'
-import BlogLink from 'src/components/ui/Link/Blog'
-import UserLink from 'src/components/ui/Link/User'
+import TagLink from 'src/uikit/Link/Tag'
+import TopicLink from 'src/uikit/Link/Topic'
+import BlogLink from 'src/uikit/Link/Blog'
+import UserLink from 'src/uikit/Link/User'
 
 // import PageNotFound from "../../../pages/404";
 
@@ -35,7 +35,7 @@ import {
 } from './interfaces'
 
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
-import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
+import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
 
 const customStyles = () => {
   // const {
@@ -207,7 +207,7 @@ export class ForumView<
                     key={id}
                     user={n}
                     showName={false}
-                    size={UserLinkAvatarSize.small}
+                    size={UikitUserLinkAvatarSize.small}
                     className={classes?.member}
                   />
                 )

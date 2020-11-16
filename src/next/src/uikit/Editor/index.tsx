@@ -32,12 +32,6 @@ const Editor: React.FC<EditorProps> = (props) => {
     ...other
   } = props
 
-  // return null;
-  // if (value !== undefined && (!value || Array.isArray(value))) {
-  //   throw new Error('Editor content should be string or object');
-  // }
-  // console.log("value", typeof value, value);
-
   if (!value && readOnly) {
     return null
   }
@@ -48,14 +42,6 @@ const Editor: React.FC<EditorProps> = (props) => {
       readOnly={readOnly}
       onChange={onChange}
       LinkComponent={LinkComponent}
-      // onChange={(rawContent, state) => {
-
-      //   console.log("onChange", rawContent, state);
-
-      //   return;
-
-      //   return onChange && onChange(state, rawContent);
-      // }}
       {...other}
     />
   )

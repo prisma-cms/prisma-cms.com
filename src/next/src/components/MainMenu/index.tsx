@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 // import IconButton from 'material-ui/IconButton';
 
-import Grid from 'src/components/ui/Grid'
+import Grid from 'src/uikit/Grid'
 
 // import CreateIcon from 'material-ui-icons/Create';
 
@@ -95,28 +95,10 @@ export const locales = {
 }
 
 export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
-  // static propTypes = {
-  //   ...PrismaCmsComponent.propTypes,
-  //   classes: PropTypes.object.isRequired,
-  // }
-
   static defaultProps = {
     ...PrismaCmsComponent.defaultProps,
     locales,
   }
-
-  // componentDidMount() {
-  //   console.log('MainMenu componentDidMount', { ...this.props });
-  // }
-
-  // componentDidUpdate() {
-  //   console.log('MainMenu componentDidUpdate', { ...this.props });
-  //   console.log('MainMenu componentDidUpdate context', this.context);
-  // }
-
-  // componentWillUnmount(){
-  //   console.log('MainMenu componentWillUnmount', { ...this.props });
-  // }
 
   logout = (event: React.MouseEvent) => {
     const { logout } = this.context

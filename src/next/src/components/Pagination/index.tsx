@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
 
 import { withStyles } from 'material-ui/styles'
 
 import Link from 'next/link'
-// import * as generatePath from 'react-router-dom/generatePath';
 
 import URI from 'urijs'
 import { PaginationProps } from './interfaces'
@@ -39,21 +37,7 @@ const styles = {
 }
 
 export class Pagination extends Component<PaginationProps> {
-  // props!: PaginationWithStylesProps
-
-  // context!: PrismaCmsContext
-
   static contextType = Context
-
-  // static propTypes = {
-  //   // prop: PropTypes
-  //   classes: PropTypes.object.isRequired,
-  //   limit: PropTypes.number.isRequired,
-  //   // page: PropTypes.number.isRequired,
-  //   total: PropTypes.number.isRequired,
-  //   pagevariable: PropTypes.string.isRequired,
-  //   rowProps: PropTypes.object,
-  // }
 
   static defaultProps = {
     pagevariable: 'page',
@@ -64,55 +48,11 @@ export class Pagination extends Component<PaginationProps> {
 
     const { pagevariable = 'page' } = this.props
 
-    // return '/';
-
-    // if (!router) {
-    //   return null;
-    // }
-
-    // console.log('this.context', this.context);
-
-    // const {
-    //   // history,
-    //   pathname,
-    //   query: search,
-    // } = router
-
     const asPath = router.asPath
 
-    // TODO: Убрать лог
-    // console.log('Paginator router', { ...router })
-
-    // console.log('Paginator query search', search)
-
-    // const {
-    //   location,
-    // } = history;
-
-    // let {
-    //   pathname,
-    //   search,
-    // } = location;
-
-    // const newHref = `${pathname}`;
-
-    // const uri = new URI(`${pathname}${search}`)
     const uri = new URI(asPath)
 
     const query = uri.query(true)
-
-    // console.log('Paginator query', query)
-
-    // let search
-
-    // if(page > 1){
-
-    //   search = search + `&page=${page}`;
-
-    // }
-    // else{
-
-    // }
 
     Object.assign(query, {
       [pagevariable]: page > 1 ? page : undefined,

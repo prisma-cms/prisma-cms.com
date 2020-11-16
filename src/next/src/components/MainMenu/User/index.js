@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 
-import UserLink from 'src/components/ui/Link/User'
+import UserLink from 'src/uikit/Link/User'
 
 export default class UserMenuItem extends Component {
   // static defaultProps = {

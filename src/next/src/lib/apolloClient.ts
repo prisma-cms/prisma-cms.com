@@ -122,12 +122,6 @@ export function getWsLink() {
     wsLink = new WebSocketLink(subscriptionClient)
   }
 
-  // const {
-  //   subscriptionClient,
-  // } = wsLink;
-
-  // console.log('subscriptionClient', subscriptionClient);
-
   return wsLink
 }
 

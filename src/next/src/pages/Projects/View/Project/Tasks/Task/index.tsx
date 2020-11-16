@@ -14,8 +14,8 @@ import { TaskView as CooperatorTaskView } from 'src/pages/Tasks/View/Task'
 
 import withStyles from 'material-ui/styles/withStyles'
 import { TasksTaskViewProps } from './interfaces'
-import Grid from 'src/components/ui/Grid'
-import TaskLink from 'src/components/ui/Link/Task'
+import Grid from 'src/uikit/Grid'
+import TaskLink from 'src/uikit/Link/Task'
 // import { graphql, compose } from '@apollo/client';
 
 const styles = {}

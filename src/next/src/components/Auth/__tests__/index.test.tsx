@@ -42,17 +42,6 @@ describe('Auth', () => {
         showRegForm={true}
       />
     )
-
-    // await act(async () => {
-    //   await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for response
-    // })
-
-    // eslint-disable-next-line no-console
-    // console.log('tree', tree.container.outerHTML)
-
-    // expect(
-    //   tree.container.querySelectorAll('#comments > .comment').length
-    // ).toBe(3)
   })
 
   it('Render Auth opened', () => {
@@ -65,16 +54,5 @@ describe('Auth', () => {
         showRegForm={true}
       />
     )
-
-    // await act(async () => {
-    //   await new Promise((resolve) => setTimeout(resolve, 1000)) // wait for response
-    // })
-
-    // eslint-disable-next-line no-console
-    // console.log('tree', tree.container.outerHTML)
-
-    // expect(
-    //   tree.container.querySelectorAll('#comments > .comment').length
-    // ).toBe(3)
   })
 })

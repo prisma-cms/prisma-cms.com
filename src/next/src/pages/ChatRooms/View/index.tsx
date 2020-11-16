@@ -5,10 +5,10 @@ import withStyles from 'material-ui/styles/withStyles'
 import { ChatRoomsViewProps } from './interfaces'
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { ChatRoomsConnectionChatRoomFragment } from 'src/modules/gql/generated'
-import UserLink from 'src/components/ui/Link/User'
-import Grid from 'src/components/ui/Grid'
-import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
-import ChatRoomLink from 'src/components/ui/Link/ChatRoom'
+import UserLink from 'src/uikit/Link/User'
+import Grid from 'src/uikit/Grid'
+import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
+import ChatRoomLink from 'src/uikit/Link/ChatRoom'
 
 class ChatRoomsView<
   P extends ChatRoomsViewProps = ChatRoomsViewProps
@@ -54,7 +54,7 @@ class ChatRoomsView<
                 <UserLink
                   user={n}
                   showName={false}
-                  size={UserLinkAvatarSize.small}
+                  size={UikitUserLinkAvatarSize.small}
                 />
               </Grid>
             )) ?? []
@@ -77,7 +77,7 @@ class ChatRoomsView<
                 <UserLink
                   user={n.User}
                   showName={false}
-                  size={UserLinkAvatarSize.small}
+                  size={UikitUserLinkAvatarSize.small}
                 />
               </Grid>
             )) ?? []

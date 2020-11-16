@@ -19,20 +19,12 @@ class ProjectView extends BaseProjectView<ProjectsListProjectProps> {
     classes: {},
   }
 
-  // getObjectWithMutations(): Project {
-  //   return super.getObjectWithMutations()
-  // }
-
   renderTasks() {
     const { id: projectId, ProjectTasks } = this.getObjectWithMutations() || {}
-
-    // console.log('ProjectTasks', ProjectTasks);
 
     const Tasks = ProjectTasks
       ? ProjectTasks.map(({ Task }) => Task).filter((n) => n)
       : []
-
-    // console.log('Tasks', Tasks);
 
     const { tasksLimit } = this.props
 

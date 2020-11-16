@@ -7,7 +7,7 @@ import gql from 'graphql-tag'
 
 import { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
 
-import Grid from 'src/components/ui/Grid'
+import Grid from 'src/uikit/Grid'
 
 import LinearProgress from 'material-ui/Progress/LinearProgress'
 import Avatar from 'src/uikit/Avatar'
@@ -52,18 +52,6 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
       resetPasswordInRequest: false,
     }
   }
-
-  // shouldComponentUpdate(nextProps: Readonly<AuthUsersProps>): boolean {
-
-  //   console.log('shouldComponentUpdate nextProps', { ...nextProps });
-  //   console.log('shouldComponentUpdate this.props', { ...this.props });
-
-  //   const loading = nextProps.data?.loading;
-
-  //   return false;
-
-  //   return !loading;
-  // }
 
   renderSearchForm() {
     const { getFilters } = this.props
@@ -556,19 +544,6 @@ class AuthUsers extends AuthForm<AuthUsersProps, AuthUsersState> {
       </>
     )
   }
-
-  // render(){
-
-  //   console.log('AuthUsers super.render', super.render);
-
-  //   return <>
-  //     AuthUsers render
-  //   </>
-  // }
 }
-
-// export default (AuthUsers as unknown) as React.FC<AuthUsersProps>
-
-// export default AuthUsers as unknown as class<T> extends React.Component<AuthUsersProps>;
 
 export default AuthUsers

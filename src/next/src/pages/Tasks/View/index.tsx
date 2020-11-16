@@ -30,11 +30,11 @@ import { TaskView } from './Task'
 import Button from 'material-ui/Button'
 import { TasksViewProps } from './interfaces'
 import { TasksConnectionTaskFragment } from 'src/modules/gql/generated'
-import UserLink from 'src/components/ui/Link/User'
-import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
-import Grid from 'src/components/ui/Grid'
+import UserLink from 'src/uikit/Link/User'
+import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
+import Grid from 'src/uikit/Grid'
 import TaskStatus from '../TaskStatus'
-import TaskLink from 'src/components/ui/Link/Task'
+import TaskLink from 'src/uikit/Link/Task'
 import Pagination from 'src/components/Pagination'
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 
@@ -142,7 +142,7 @@ export class TasksView<
             <UserLink
               key={id}
               user={CreatedBy}
-              size={UserLinkAvatarSize.small}
+              size={UikitUserLinkAvatarSize.small}
               showName={false}
             />
           )
@@ -277,8 +277,6 @@ export class TasksView<
         label: 'Статус',
         hidden: false,
         renderer: (value) => {
-          // console.log("status", record);
-
           return value ? (
             <Grid container spacing={8} alignItems="center">
               <Grid item>
@@ -409,9 +407,6 @@ export class TasksView<
           const max =
             endDate || endDatePlaning ? moment(endDate || endDatePlaning) : null
 
-          // console.log("startDate", min);
-          // console.log("endDate", endDate);
-
           if (min && max) {
             const startTime = min.toDate().getTime()
             const endTime = max.toDate().getTime()
@@ -431,7 +426,7 @@ export class TasksView<
         hidden: false,
         renderer: (value) => {
           return value ? (
-            <UserLink user={value} size={UserLinkAvatarSize.small} />
+            <UserLink user={value} size={UikitUserLinkAvatarSize.small} />
           ) : null
         },
       },
@@ -439,7 +434,6 @@ export class TasksView<
       //   id: "RelatedTo",
       //   label: "Связано с",
       //   renderer: (value, record) => {
-      //     // console.log("status", TaskLink);
 
       //     // return value ? <TaskStatus
       //     //   value={value}
@@ -508,7 +502,7 @@ export class TasksView<
                       <Grid key={n.id} item>
                         <UserLink
                           user={n.CreatedBy}
-                          size={UserLinkAvatarSize.small}
+                          size={UikitUserLinkAvatarSize.small}
                           showName={false}
                         />
                       </Grid>
@@ -555,8 +549,6 @@ export class TasksView<
       theme,
     } = this.context
 
-    // console.log(this.context);
-
     const {
       typography: { caption },
     } = theme
@@ -599,9 +591,6 @@ export class TasksView<
       const max =
         endDate || endDatePlaning ? moment(endDate || endDatePlaning) : null
 
-      // console.log("startDate", min);
-      // console.log("endDate", endDate);
-
       if (min && max) {
         const startTime = min.toDate().getTime()
         const endTime = max.toDate().getTime()
@@ -624,11 +613,6 @@ export class TasksView<
     })
 
     const showDates = defaultDates ? defaultDates : dates
-
-    // console.log("dates", dates);
-    // console.log("tasks", tasks);
-    // console.log("minDate", minDate);
-    // console.log("maxDate", maxDate);
 
     let timeline
 

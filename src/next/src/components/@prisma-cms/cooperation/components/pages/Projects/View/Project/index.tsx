@@ -5,7 +5,7 @@ import EditableView from 'apollo-cms/dist/DataView/Object/Editable'
 import withStyles from 'material-ui/styles/withStyles'
 import Typography from 'material-ui/Typography'
 
-import Grid from 'src/components/ui/Grid'
+import Grid from 'src/uikit/Grid'
 import { ProjectViewProps, ProjectViewState } from './interfaces'
 
 // import TasksListView from "./Tasks";

@@ -22,10 +22,10 @@ import {
 
 // import Link from 'next/link'
 import { ProjectProps, ProjectState } from './interfaces'
-import UserLink from 'src/components/ui/Link/User'
-import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
-import Grid from 'src/components/ui/Grid'
-import ProjectLink from 'src/components/ui/Link/Project'
+import UserLink from 'src/uikit/Link/User'
+import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
+import Grid from 'src/uikit/Grid'
+import ProjectLink from 'src/uikit/Link/Project'
 
 export const styles = () => {
   const styles = baseStyles()
@@ -172,7 +172,7 @@ export class ProjectView<
         const { id, User } = member
 
         members.push(
-          <UserLink key={id} user={User} size={UserLinkAvatarSize.small} />
+          <UserLink key={id} user={User} size={UikitUserLinkAvatarSize.small} />
         )
       }, this)
     }

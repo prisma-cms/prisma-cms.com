@@ -1,5 +1,4 @@
 import { NetworkStatus } from '@apollo/client'
-import ErrorMessage from 'src/pages/demo/ErrorMessage'
 import { CommentsListProps } from './interfaces'
 import {
   CommentsConnectionDocument as allCommentsQueryDocument,
@@ -9,7 +8,7 @@ import {
 } from 'src/modules/gql/generated'
 
 import { CommentsStyled } from './styles'
-import Comment from './Comment'
+import Comment from 'src/uikit/Comments/Comment'
 
 export const allPostsQueryVars = {
   skip: 0,
@@ -37,7 +36,7 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
 
   if (error) {
     console.error('CommentsList loading error', error)
-    return <ErrorMessage message="Error loading posts." />
+    return null
   }
 
   if (loading && !loadingMorePosts) {
@@ -96,7 +95,9 @@ export const CommentsList: React.FC<CommentsListProps> = (props) => {
     <section>
       <CommentsStyled id="comments">
         {comments.map((comment: CommentsConnectionCommentFragment) => {
-          return <Comment key={comment.id} comment={comment} />
+          return (
+            <Comment key={comment.id} object={comment} className="comment" />
+          )
         })}
       </CommentsStyled>
 
