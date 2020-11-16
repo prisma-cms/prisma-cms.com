@@ -39,7 +39,7 @@ const defaultLocales = {
 class AuthForm<
   P extends AuthFormProps,
   S extends AuthFormState
-  > extends PrismaCmsComponent<P, S> {
+> extends PrismaCmsComponent<P, S> {
   // context!: PrismaCmsContext;
 
   // static propTypes = {
@@ -174,19 +174,21 @@ class AuthForm<
       // ...other
     } = this.props
 
-    return <>
-      {super.render()}
-      <Dialog
-        // onEntering={this.handleEntering}
-        {...dialogProps}
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
-        open={open}
-        onClose={this.onRequestClose}
-      >
-        {this.renderForm()}
-      </Dialog>
-    </>
+    return (
+      <>
+        {super.render()}
+        <Dialog
+          // onEntering={this.handleEntering}
+          {...dialogProps}
+          fullWidth={fullWidth}
+          maxWidth={maxWidth}
+          open={open}
+          onClose={this.onRequestClose}
+        >
+          {this.renderForm()}
+        </Dialog>
+      </>
+    )
   }
 }
 

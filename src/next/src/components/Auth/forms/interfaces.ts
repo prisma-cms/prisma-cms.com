@@ -32,5 +32,5 @@ export interface AuthFormProps extends PrismaCmsComponentProps {
 export interface AuthFormState extends PrismaCmsComponentState {
   step: string
 
-  inRequest: boolean;
+  inRequest: boolean
 }
