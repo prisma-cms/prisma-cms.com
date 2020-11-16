@@ -1,13 +1,12 @@
 import {
   ProjectViewProps,
   ProjectViewState,
-} from '@prisma-cms/cooperation/lib/components/pages/Projects/View/Project'
-import { ProjectsConnectionProjectFragment } from 'src/modules/gql/generated'
+} from 'src/components/@prisma-cms/cooperation/components/pages/Projects/View/Project'
+// import { ProjectsConnectionProjectFragment } from 'src/modules/gql/generated'
 
 export interface ProjectProps extends ProjectViewProps {
-  object?: ProjectsConnectionProjectFragment
-
-  classes?: any
+  // object: ProjectsConnectionProjectFragment | null | undefined
+  // classes?: any
 }
 
 export interface ProjectState extends ProjectViewState {

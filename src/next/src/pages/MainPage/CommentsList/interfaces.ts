@@ -12,7 +12,7 @@ export type CommentsListProps = {
 /**
  * Выравнивание аватарки
  */
-export enum UserAvatarAlign {
+export enum CommentUserAvatarAlign {
   /**
    * Слева
    */
@@ -27,11 +27,11 @@ export enum UserAvatarAlign {
 /**
  * Свойства для аватара пользователя
  */
-export type UserAvatarProps = {
+export type CommentUserAvatarProps = {
   /**
    * УРЛ на аватар пользователя
    */
   url: Maybe<string>
 
-  align: UserAvatarAlign
+  align: CommentUserAvatarAlign
 }

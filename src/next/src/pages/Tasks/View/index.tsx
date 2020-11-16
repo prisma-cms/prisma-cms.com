@@ -3,7 +3,9 @@ import React, { Fragment } from 'react'
 
 // import Context from "@prisma-cms/context";
 
-import Filters from '@prisma-cms/filters'
+// import Filters from '@prisma-cms/filters'
+
+// TODO Upgrade package
 import Timeline from '@prisma-cms/timeline'
 
 // import Typography from 'material-ui/Typography';
@@ -526,22 +528,25 @@ export class TasksView<
     ]
   }
 
+  // TODO restore filters
   renderFilters() {
-    const { filters, setFilters } = this.props
+    return null
 
-    return (
-      <Fragment>
-        {filters && setFilters ? (
-          <Filters
-            queryName="tasks"
-            filters={filters}
-            setFilters={setFilters}
-          />
-        ) : null}
+    // const { filters, setFilters } = this.props
 
-        {this.renderTimeline()}
-      </Fragment>
-    )
+    // return (
+    //   <Fragment>
+    //     {filters && setFilters ? (
+    //       <Filters
+    //         queryName="tasks"
+    //         filters={filters}
+    //         setFilters={setFilters}
+    //       />
+    //     ) : null}
+
+    //     {this.renderTimeline()}
+    //   </Fragment>
+    // )
   }
 
   renderTimeline(defaultDates?: any, options?: any) {

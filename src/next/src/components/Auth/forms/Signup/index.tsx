@@ -10,7 +10,8 @@ import TextField from 'material-ui/TextField'
 import gql from 'graphql-tag'
 import { SignupFormProps, SignupFormState } from './interfaces'
 
-import PhoneField from '@prisma-cms/front/lib/modules/ui/Input/Phone'
+// import PhoneField from '@prisma-cms/front/lib/modules/ui/Input/Phone'
+import PhoneField from 'src/uikit/Input/Phone'
 
 class SignupForm extends AuthForm<SignupFormProps, SignupFormState> {
   // static propTypes = {

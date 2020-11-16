@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import Typography from 'material-ui/Typography'
 
-import Avatar from '../../Avatar'
-
 import Link, { styles as defaultStyles } from '..'
 
 import { withStyles } from 'material-ui/styles'
 import Grid from 'material-ui/Grid'
 import { UserLinkProps } from './interfaces'
+import Avatar from 'src/uikit/Avatar'
 
 const styles = {
   ...defaultStyles,

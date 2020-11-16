@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { UserAvatarProps, UserAvatarAlign } from './interfaces'
+import { CommentUserAvatarProps, CommentUserAvatarAlign } from './interfaces'
 
 export const CommentsStyled = styled.div``
 
@@ -27,12 +27,12 @@ export const CommentHeaderStyled = styled.div`
   }
 `
 
-const styles: { [key in UserAvatarAlign]: ReturnType<typeof css> } = {
-  [UserAvatarAlign.Left]: css`
+const styles: { [key in CommentUserAvatarAlign]: ReturnType<typeof css> } = {
+  [CommentUserAvatarAlign.Left]: css`
     margin-right: 6px;
   `,
 
-  [UserAvatarAlign.Right]: css`
+  [CommentUserAvatarAlign.Right]: css`
     margin-left: 6px;
   `,
 }
@@ -40,7 +40,7 @@ const styles: { [key in UserAvatarAlign]: ReturnType<typeof css> } = {
 /**
  * Аватар пользователя
  */
-export const UserAvatarStyled = styled.div<UserAvatarProps>`
+export const UserAvatarStyled = styled.div<CommentUserAvatarProps>`
   background: ${({ url }) =>
     url
       ? `url("${

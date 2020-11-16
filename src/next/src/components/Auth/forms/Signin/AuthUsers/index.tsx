@@ -10,7 +10,7 @@ import { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
 import Grid from 'src/components/ui/Grid'
 
 import LinearProgress from 'material-ui/Progress/LinearProgress'
-import Avatar from 'src/components/ui/Avatar'
+import Avatar from 'src/uikit/Avatar'
 
 import AuthForm from '../..'
 import { AuthUsersProps, AuthUsersState } from './interfaces'

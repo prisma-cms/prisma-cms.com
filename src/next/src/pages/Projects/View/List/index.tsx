@@ -14,12 +14,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
 
         return (
           <Grid key={id} item xs={12} sm={6} md={4} lg={3}>
-            <Project
-              data={{
-                object: n,
-              }}
-              tasksLimit={3}
-            />
+            <Project object={n} tasksLimit={3} />
           </Grid>
         )
       })}

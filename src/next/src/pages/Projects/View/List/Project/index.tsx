@@ -11,7 +11,7 @@ import { CardContent } from 'material-ui/Card'
 import TasksListView from '../../Project/Tasks'
 import { ProjectsListProjectProps } from './interfaces'
 import Link from 'next/link'
-import { Project } from 'src/modules/gql/generated'
+// import { Project } from 'src/modules/gql/generated'
 
 class ProjectView extends BaseProjectView<ProjectsListProjectProps> {
   static defaultProps = {
@@ -19,9 +19,9 @@ class ProjectView extends BaseProjectView<ProjectsListProjectProps> {
     classes: {},
   }
 
-  getObjectWithMutations(): Project {
-    return super.getObjectWithMutations()
-  }
+  // getObjectWithMutations(): Project {
+  //   return super.getObjectWithMutations()
+  // }
 
   renderTasks() {
     const { id: projectId, ProjectTasks } = this.getObjectWithMutations() || {}

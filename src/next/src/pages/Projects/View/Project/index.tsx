@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 
 import withStyles from 'material-ui/styles/withStyles'
 
@@ -7,10 +7,10 @@ import Typography from 'material-ui/Typography'
 
 import Card, { CardContent } from 'material-ui/Card'
 import Button from 'material-ui/Button'
-import Chip from 'material-ui/Chip'
+// import Chip from 'material-ui/Chip'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 
-import { Uploader } from '@prisma-cms/ui'
+// import { Uploader } from '@prisma-cms/ui'
 
 // import { UserLink, ProjectLink, Link, Grid } from '@modxclub/ui'
 
@@ -18,18 +18,17 @@ import { Uploader } from '@prisma-cms/ui'
 import {
   styles as baseStyles,
   ProjectView as PrismaCmsCooperationProjectView,
-} from '@prisma-cms/cooperation/lib/components/pages/Projects/View/Project'
+} from 'src/components/@prisma-cms/cooperation/components/pages/Projects/View/Project'
 
-import Link from 'next/link'
+// import Link from 'next/link'
 import { ProjectProps, ProjectState } from './interfaces'
 import UserLink from 'src/components/ui/Link/User'
 import { UserLinkAvatarSize } from 'src/components/ui/Link/User/interfaces'
-import { ProjectMember } from 'src/modules/gql/generated'
 import Grid from 'src/components/ui/Grid'
 import ProjectLink from 'src/components/ui/Link/Project'
 
-export const styles = (theme: any) => {
-  const styles = baseStyles(theme)
+export const styles = () => {
+  const styles = baseStyles()
 
   const { root, ...other } = styles
 
@@ -65,12 +64,12 @@ export class ProjectView<
   P extends ProjectProps = ProjectProps,
   S extends ProjectState = ProjectState
 > extends PrismaCmsCooperationProjectView<P, S> {
-  static propTypes = {
-    ...PrismaCmsCooperationProjectView.propTypes,
-    classes: PropTypes.object.isRequired,
-    showDetails: PropTypes.bool.isRequired,
-    tasksLimit: PropTypes.number,
-  }
+  // static propTypes = {
+  //   ...PrismaCmsCooperationProjectView.propTypes,
+  //   classes: PropTypes.object.isRequired,
+  //   showDetails: PropTypes.bool.isRequired,
+  //   tasksLimit: PropTypes.number,
+  // }
 
   static defaultProps = {
     ...PrismaCmsCooperationProjectView.defaultProps,
@@ -81,7 +80,7 @@ export class ProjectView<
     return null
   }
 
-  handleOpen = (image: string | null) => {
+  handleOpen = (image: string | null | undefined) => {
     const thumb = image ? `/images/resized/big/${image}` : null
 
     if (!thumb) {
@@ -113,11 +112,11 @@ export class ProjectView<
     }
   }
 
-  renderResetButton() {
-    const { id } = this.getObjectWithMutations() || {}
+  // renderResetButton() {
+  //   const { id } = this.getObjectWithMutations() ?? {}
 
-    return id ? super.renderResetButton() : null
-  }
+  //   return id ? super.renderResetButton() : null
+  // }
 
   onClickHideDetails = () => {
     this.setState({
@@ -134,7 +133,7 @@ export class ProjectView<
 
     const { openedImage, editMembers } = this.state
 
-    const { user: currentUser } = this.context
+    // const { user: currentUser } = this.context
 
     if (!object) {
       return null
@@ -143,21 +142,22 @@ export class ProjectView<
     const {
       name,
       url,
-      developer_id,
-      developer_uri = '/',
-      developer_title,
+      // developer_id,
+      // developer_uri = '/',
+      // developer_title,
       Members,
       Resource,
       CreatedBy,
 
-      image: newImage,
-    } = object
+      // TODO Restore editing image
+      // image: newImage,
+    } = object ?? {}
 
     const { Image } = Resource || {}
 
-    let { path: image } = Image || {}
+    const { path: image } = Image || {}
 
-    image = newImage || image
+    // image = newImage || image
 
     const thumb = image ? `/images/resized/big/${image}` : null
 
@@ -168,7 +168,7 @@ export class ProjectView<
     const members: JSX.Element[] = []
 
     if (project_members.length) {
-      project_members.map(function (member: ProjectMember) {
+      project_members.map((member) => {
         const { id, User } = member
 
         members.push(
@@ -261,6 +261,8 @@ export class ProjectView<
 
         <CardContent>
           <div className="overlay">
+            {/* 
+            TODO: Restore uploader
             {inEditMode && currentUser ? (
               <Uploader
                 onUpload={this.onUpload}
@@ -270,7 +272,7 @@ export class ProjectView<
                   inputRoot: classes?.inputRoot,
                 }}
               ></Uploader>
-            ) : null}
+            ) : null} */}
 
             {thumb ? (
               <img
@@ -308,6 +310,8 @@ export class ProjectView<
           )}
         </CardContent>
 
+        {/* 
+        TODO Restore Developers
         {developer_id ? (
           <CardContent>
             Компания-разработчик
@@ -330,6 +334,7 @@ export class ProjectView<
             </div>
           </CardContent>
         ) : null}
+         */}
 
         {members && members.length ? (
           <CardContent>
@@ -388,4 +393,6 @@ export class ProjectView<
 }
 
 // TODO Разобраться почему здесь без ошибок типизации
-export default withStyles(styles)((props) => <ProjectView {...props} />)
+export default withStyles(styles)((props: ProjectProps) => (
+  <ProjectView {...props} />
+))
