@@ -11,6 +11,11 @@ export interface UikitCommentObjectUser {
 }
 
 export interface UikitCommentObject extends UikitCommentLinkObject {
+  id: Resource['id'] | undefined
+
+  uri: Resource['uri'] | undefined
+
+  // content: RawDraftContentState | null | undefined
   content?: Resource['content']
 
   CreatedBy?: UikitCommentObjectUser

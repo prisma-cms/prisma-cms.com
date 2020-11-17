@@ -9,7 +9,7 @@
 import * as Types from './types';
 
 import { gql } from '@apollo/client';
-export type TopicUserFragment = { __typename?: 'User', id: string, createdAt: any, updatedAt: any, username?: Types.Maybe<string>, email?: Types.Maybe<string>, phone?: Types.Maybe<string>, showEmail?: Types.Maybe<boolean>, showPhone?: Types.Maybe<boolean>, password?: Types.Maybe<string>, fullname?: Types.Maybe<string>, image?: Types.Maybe<string>, address?: Types.Maybe<string>, sudo?: Types.Maybe<boolean>, active?: Types.Maybe<boolean>, activated?: Types.Maybe<boolean>, deleted?: Types.Maybe<boolean>, hasEmail: boolean, hasPhone: boolean, marketplaceToken?: Types.Maybe<string>, hidden?: Types.Maybe<boolean> };
+export type TopicUserFragment = { __typename?: 'User', id: string, createdAt: Date, updatedAt: Date, username?: Types.Maybe<string>, email?: Types.Maybe<string>, phone?: Types.Maybe<string>, showEmail?: Types.Maybe<boolean>, showPhone?: Types.Maybe<boolean>, fullname?: Types.Maybe<string>, image?: Types.Maybe<string>, address?: Types.Maybe<string>, sudo?: Types.Maybe<boolean>, active?: Types.Maybe<boolean>, activated?: Types.Maybe<boolean>, deleted?: Types.Maybe<boolean>, hasEmail: boolean, hasPhone: boolean, hidden?: Types.Maybe<boolean> };
 
 export const TopicUserFragmentDoc = gql`
     fragment topicUser on User {
@@ -21,7 +21,6 @@ export const TopicUserFragmentDoc = gql`
   phone
   showEmail
   showPhone
-  password
   fullname
   image
   address
@@ -31,7 +30,6 @@ export const TopicUserFragmentDoc = gql`
   deleted
   hasEmail
   hasPhone
-  marketplaceToken
   hidden
 }
     `;

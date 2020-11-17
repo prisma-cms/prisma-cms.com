@@ -9,7 +9,7 @@
 import * as Types from './types';
 
 import { gql } from '@apollo/client';
-export type TechnologiesConnectionUserTechnologyFragment = { __typename?: 'UserTechnology', id: string, createdAt: any, updatedAt: any, components?: Types.Maybe<any>, date_from?: Types.Maybe<any>, date_till?: Types.Maybe<any>, status?: Types.Maybe<Types.UserTechnologyStatus> };
+export type TechnologiesConnectionUserTechnologyFragment = { __typename?: 'UserTechnology', id: string, createdAt: Date, updatedAt: Date, components?: Types.Maybe<Record<string, any> | Array<any>>, date_from?: Types.Maybe<Date>, date_till?: Types.Maybe<Date>, status?: Types.Maybe<Types.UserTechnologyStatus> };
 
 export const TechnologiesConnectionUserTechnologyFragmentDoc = gql`
     fragment technologiesConnectionUserTechnology on UserTechnology {

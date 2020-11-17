@@ -13,3 +13,4 @@ src/node_modules
 .storybook
 storybook-static
 /packages
+.github

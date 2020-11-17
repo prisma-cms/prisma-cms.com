@@ -22,12 +22,12 @@ export type ProjectsConnectionProjectFragment = (
   )>, Members?: Types.Maybe<Array<{ __typename?: 'ProjectMember', id: string, User: (
       { __typename?: 'User' }
       & ProjectsConnectionUserFragment
-    ) }>>, ProjectTasks?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: any, updatedAt: any, Task: (
+    ) }>>, ProjectTasks?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: Date, updatedAt: Date, Task: (
       { __typename?: 'Task', CreatedBy?: Types.Maybe<(
         { __typename?: 'User' }
         & ProjectsConnectionUserFragment
         & ProjectsConnectionUserFragment
-      )>, Timers?: Types.Maybe<Array<{ __typename?: 'Timer', id: string, createdAt: any, updatedAt: any, stopedAt?: Types.Maybe<any>, CreatedBy?: Types.Maybe<(
+      )>, Timers?: Types.Maybe<Array<{ __typename?: 'Timer', id: string, createdAt: Date, updatedAt: Date, stopedAt?: Types.Maybe<Date>, CreatedBy?: Types.Maybe<(
           { __typename?: 'User' }
           & ProjectsConnectionUserFragment
         )> }>>, Parent?: Types.Maybe<(

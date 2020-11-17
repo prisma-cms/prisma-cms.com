@@ -37,7 +37,9 @@ import Head from 'next/head'
 // TODO: Проработать локализацию
 moment.locale('ru')
 
-const App: MainApp = ({ Component, pageProps }) => {
+const App: MainApp = (props) => {
+  const { Component, pageProps } = props
+
   const apolloClient = useApollo(pageProps.initialApolloState)
 
   const { statusCode } = pageProps

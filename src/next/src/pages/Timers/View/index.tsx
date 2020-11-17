@@ -19,7 +19,7 @@ class TimersView<
     title: '',
   }
 
-  renderDate(date: string | null) {
+  renderDate(date: Date | null | undefined) {
     if (!date) {
       return null
     }

@@ -20,18 +20,21 @@ export class UikitCommentLink extends Component<UikitCommentLinkProps> {
 
     const { uri, createdAt, CommentTarget: Topic } = object
 
-    if (!uri || !createdAt) {
+    if (!uri) {
       return null
     }
 
     let url
-    let content
+    let content = null
     let title
 
     switch (linkType) {
       case 'comment':
         url = uri
-        content = moment(createdAt).format('lll')
+
+        if (createdAt) {
+          content = moment(createdAt).format('lll')
+        }
 
         break
 
@@ -40,11 +43,11 @@ export class UikitCommentLink extends Component<UikitCommentLinkProps> {
         if (!Topic) {
           console.error('Topic is not defined')
         } else {
-          const { uri, name } = Topic
+          const { uri: topicUri, name: topicName } = Topic
 
-          url = uri
-          content = name
-          title = name
+          url = topicUri
+          content = topicName
+          title = topicName
         }
 
         break

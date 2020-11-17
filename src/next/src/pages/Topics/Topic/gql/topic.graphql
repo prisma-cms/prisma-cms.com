@@ -30,22 +30,15 @@ fragment topicObject on Resource {
   longtitle
   content
   components
-  contentText
   published
   deleted
   hidemenu
-  searchable
   uri
   isfolder
   rating
   positiveVotesCount
   negativeVotesCount
   neutralVotesCount
-  oldID
-  commentOldID
-  class_key
-  template
-  mockUpdate
   CreatedBy {
     ...topicUser
   }
@@ -82,7 +75,6 @@ fragment topicUser on User {
   phone
   showEmail
   showPhone
-  password
   fullname
   image
   address
@@ -92,6 +84,5 @@ fragment topicUser on User {
   deleted
   hasEmail
   hasPhone
-  marketplaceToken
   hidden
 }

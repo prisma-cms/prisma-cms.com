@@ -20,7 +20,7 @@ import { ProjectNoNestingFragmentDoc } from './ProjectNoNesting';
 export type MeUserFragment = (
   { __typename?: 'User', EthAccounts?: Types.Maybe<Array<{ __typename?: 'EthAccount', id: string, address: string, balance?: Types.Maybe<number> }>>, Timers?: Types.Maybe<Array<(
     { __typename?: 'Timer', Task: (
-      { __typename?: 'Task', TaskProjects?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: any, updatedAt: any, Project: (
+      { __typename?: 'Task', TaskProjects?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: Date, updatedAt: Date, Project: (
           { __typename?: 'Project' }
           & ProjectNoNestingFragment
         ) }>> }

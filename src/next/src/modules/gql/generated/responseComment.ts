@@ -9,13 +9,13 @@
 import * as Types from './types';
 
 import { gql } from '@apollo/client';
-export type TimerNoNestingFragment = { __typename?: 'Timer', id: string, createdAt: Date, updatedAt: Date, stopedAt?: Types.Maybe<Date> };
+export type ResponseCommentFragment = { __typename?: 'Resource', id: string, createdAt: Date, updatedAt: Date, content?: Types.Maybe<Record<string, any> | Array<any>> };
 
-export const TimerNoNestingFragmentDoc = gql`
-    fragment TimerNoNesting on Timer {
+export const ResponseCommentFragmentDoc = gql`
+    fragment responseComment on Resource {
   id
   createdAt
   updatedAt
-  stopedAt
+  content
 }
     `;

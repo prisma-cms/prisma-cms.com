@@ -5,6 +5,8 @@ import util from 'util'
 import glob from 'glob'
 
 import * as codegen from '@graphql-codegen/cli'
+import { Types } from '@graphql-codegen/plugin-helpers'
+import { TypeScriptPluginConfig } from '@graphql-codegen/typescript'
 import { parse, ExecutableDefinitionNode } from 'graphql'
 
 import {
@@ -13,9 +15,16 @@ import {
   PACKAGE_APP_FILE_PATH,
   TYPES_FILE_PATH,
   CREATE_REEXPORTS,
+  APOLLO_HELPER_FILE_PATH,
 } from './constants'
 
 import { readFiles, clearOutputDirectory, writeFileIfChanged } from './files'
+
+const scalars = {
+  DateTime: 'Date',
+  Json: 'Record<string, any> | Array<any>',
+  Long: 'number',
+}
 
 const globPromisify = util.promisify(glob)
 
@@ -38,53 +47,16 @@ async function getQueryFiles() {
   return files
 }
 
-const typescriptConfig = {
-  plugins: [
-    {
-      add: {
-        content: prependText.join(''),
-      },
-    },
-    'typescript',
-  ],
-  config: {
-    onlyOperationTypes: false,
-    namingConvention: {
-      enumValues: 'upper-case#upperCase',
-      typeNames: 'pascal-case#pascalCase',
-    },
-    scalars: {
-      DateTime: 'string',
-      URL: 'string',
-    },
-    declarationKind: {
-      type: 'interface',
-      input: 'interface',
-    },
+export const typescriptPluginConfig: TypeScriptPluginConfig = {
+  onlyOperationTypes: false,
+  namingConvention: {
+    enumValues: 'upper-case#upperCase',
+    typeNames: 'pascal-case#pascalCase',
   },
-}
-
-const codegenConfig = {
-  plugins: [
-    {
-      add: {
-        content: prependText.join(''),
-      },
-    },
-    'typescript-operations',
-    'typescript-react-apollo',
-  ],
-  preset: 'near-operation-file',
-  presetConfig: {
-    extension: '.ts',
-    baseTypesPath: './types.ts',
-  },
-  config: {
-    withHOC: false,
-    withHooks: true,
-    withComponent: false,
-    preResolveTypes: true,
-    exportFragmentSpreadSubTypes: true,
+  scalars,
+  declarationKind: {
+    type: 'interface',
+    input: 'interface',
   },
 }
 
@@ -128,6 +100,18 @@ function createQueriesMap(filesMap: any) {
   return queriesMap
 }
 
+const typescriptConfig = {
+  plugins: [
+    {
+      add: {
+        content: prependText.join(''),
+      },
+    },
+    'typescript',
+  ],
+  config: typescriptPluginConfig,
+}
+
 /**
  * Генерируем типы из schema.json
  */
@@ -139,6 +123,9 @@ async function generateTypesFromSchema() {
       schema,
       generates: {
         [TYPES_FILE_PATH]: typescriptConfig,
+        [APOLLO_HELPER_FILE_PATH]: {
+          plugins: ['typescript-apollo-client-helpers'],
+        },
       },
     },
     true
@@ -161,7 +148,10 @@ async function generateTypesFromMap() {
   const queriesMap = createQueriesMap(filesMap)
 
   function loaderFunction(name: string) {
-    return parse(queriesMap.get(path.basename(name)))
+    const query = parse(queriesMap.get(path.basename(name)))
+
+    // console.log("loaderFunction query", query);
+    return query
   }
 
   const loader = { loader: loaderFunction }
@@ -172,16 +162,47 @@ async function generateTypesFromMap() {
     documents[path.join(OUTPUT_PATH, name)] = loader
   }
 
-  const generatedFiles = await codegen.generate(
-    {
-      schema: path.join(OUTPUT_PATH, 'schema.json'),
-      documents,
-      generates: {
-        'front/': codegenConfig,
+  // console.log("documents", documents);
+
+  const codegenConfig = {
+    plugins: [
+      {
+        add: {
+          content: prependText.join(''),
+        },
       },
+      'typescript-operations',
+      'typescript-react-apollo',
+      // "typescript-apollo-client-helpers",
+    ],
+    preset: 'near-operation-file',
+    presetConfig: {
+      extension: '.ts',
+      baseTypesPath: './types.ts',
     },
-    false
-  )
+    config: {
+      withHOC: false,
+      withHooks: true,
+      withComponent: false,
+      preResolveTypes: true,
+      exportFragmentSpreadSubTypes: true,
+    },
+  }
+
+  const config: TypeScriptPluginConfig = {
+    scalars,
+  }
+
+  const input: Types.Config = {
+    schema: path.join(OUTPUT_PATH, 'schema.json'),
+    documents,
+    config,
+    generates: {
+      types: codegenConfig,
+    },
+  }
+
+  const generatedFiles = await codegen.generate(input, false)
   await Promise.all(
     generatedFiles.map(
       ({ filename, content }: { filename: string; content: string }) => {

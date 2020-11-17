@@ -11,13 +11,13 @@ import * as Types from './types';
 import { ChatRoomsConnectionUserFragment } from './chatRoomsConnectionUser';
 import { gql } from '@apollo/client';
 import { ChatRoomsConnectionUserFragmentDoc } from './chatRoomsConnectionUser';
-export type ChatRoomsConnectionChatRoomFragment = { __typename?: 'ChatRoom', id: string, createdAt: any, updatedAt: any, name: string, description?: Types.Maybe<string>, image?: Types.Maybe<string>, code?: Types.Maybe<string>, isPublic?: Types.Maybe<boolean>, CreatedBy: (
+export type ChatRoomsConnectionChatRoomFragment = { __typename?: 'ChatRoom', id: string, createdAt: Date, updatedAt: Date, name: string, description?: Types.Maybe<string>, image?: Types.Maybe<string>, code?: Types.Maybe<string>, isPublic?: Types.Maybe<boolean>, CreatedBy: (
     { __typename?: 'User' }
     & ChatRoomsConnectionUserFragment
   ), Members?: Types.Maybe<Array<(
     { __typename?: 'User' }
     & ChatRoomsConnectionUserFragment
-  )>>, Invitations?: Types.Maybe<Array<{ __typename?: 'ChatRoomInvitation', id: string, createdAt: any, updatedAt: any, User: (
+  )>>, Invitations?: Types.Maybe<Array<{ __typename?: 'ChatRoomInvitation', id: string, createdAt: Date, updatedAt: Date, User: (
       { __typename?: 'User' }
       & ChatRoomsConnectionUserFragment
     ) }>> };

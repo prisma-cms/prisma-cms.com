@@ -17,16 +17,16 @@ export type TasksConnectionTaskFragment = (
   { __typename?: 'Task', CreatedBy?: Types.Maybe<(
     { __typename?: 'User' }
     & TasksConnectionUserFragment
-  )>, Timers?: Types.Maybe<Array<{ __typename?: 'Timer', id: string, createdAt: any, updatedAt: any, stopedAt?: Types.Maybe<any>, CreatedBy?: Types.Maybe<(
+  )>, Timers?: Types.Maybe<Array<{ __typename?: 'Timer', id: string, createdAt: Date, updatedAt: Date, stopedAt?: Types.Maybe<Date>, CreatedBy?: Types.Maybe<(
       { __typename?: 'User' }
       & TasksConnectionUserFragment
-    )>, Task: { __typename?: 'Task', id: string, createdAt: any, updatedAt: any, name: string, status: Types.TaskStatus } }>>, TaskProjects?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: any, updatedAt: any, Project: { __typename?: 'Project', id: string, name: string, domain?: Types.Maybe<string>, createdAt: any, updatedAt: any, description?: Types.Maybe<string>, url?: Types.Maybe<string>, sequence?: Types.Maybe<number>, content?: Types.Maybe<any>, contentText?: Types.Maybe<string>, status?: Types.Maybe<Types.ProjectStatus>, public?: Types.Maybe<boolean>, oldID?: Types.Maybe<number>, CreatedBy?: Types.Maybe<(
+    )>, Task: { __typename?: 'Task', id: string, createdAt: Date, updatedAt: Date, name: string, status: Types.TaskStatus } }>>, TaskProjects?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: Date, updatedAt: Date, Project: { __typename?: 'Project', id: string, name: string, domain?: Types.Maybe<string>, createdAt: Date, updatedAt: Date, description?: Types.Maybe<string>, url?: Types.Maybe<string>, sequence?: Types.Maybe<number>, content?: Types.Maybe<Record<string, any> | Array<any>>, contentText?: Types.Maybe<string>, status?: Types.Maybe<Types.ProjectStatus>, public?: Types.Maybe<boolean>, oldID?: Types.Maybe<number>, CreatedBy?: Types.Maybe<(
         { __typename?: 'User' }
         & TasksConnectionUserFragment
       )>, Resource?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, uri: string }> } }>>, RelatedTo?: Types.Maybe<Array<(
     { __typename?: 'Task' }
     & TasksConnectionTaskNoNestingFragment
-  )>>, Reactions?: Types.Maybe<Array<{ __typename?: 'TaskReaction', id: string, createdAt: any, updatedAt: any, type?: Types.Maybe<Types.TaskReactionType>, CreatedBy?: Types.Maybe<(
+  )>>, Reactions?: Types.Maybe<Array<{ __typename?: 'TaskReaction', id: string, createdAt: Date, updatedAt: Date, type?: Types.Maybe<Types.TaskReactionType>, CreatedBy?: Types.Maybe<(
       { __typename?: 'User' }
       & TasksConnectionUserFragment
     )> }>> }

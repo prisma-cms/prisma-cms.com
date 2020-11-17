@@ -17,6 +17,8 @@ import fetch from 'cross-fetch'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { OperationDefinitionNode } from 'graphql'
 
+import { typePolicies } from './typePolicies'
+
 // import { concatPagination } from '@apollo/client/utilities'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined
@@ -206,6 +208,7 @@ function createApolloClient() {
       //     },
       //   },
       // },
+      typePolicies,
     }),
   })
 

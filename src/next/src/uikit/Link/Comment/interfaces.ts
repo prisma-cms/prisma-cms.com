@@ -2,8 +2,8 @@ import { Resource } from 'src/modules/gql/generated'
 
 export interface UikitCommentLinkObjectResource {
   __typename?: 'Resource'
-  id?: Resource['id']
-  uri?: Resource['uri']
+  id: Resource['id'] | undefined
+  uri: Resource['uri'] | undefined
   createdAt?: Resource['createdAt']
   name?: Resource['name']
 }

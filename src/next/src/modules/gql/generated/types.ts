@@ -15,9 +15,9 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  DateTime: string;
-  Json: any;
-  Long: any;
+  DateTime: Date;
+  Json: Record<string, any> | Array<any>;
+  Long: number;
   /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 };

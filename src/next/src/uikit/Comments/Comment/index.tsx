@@ -14,8 +14,13 @@ import CommentLink from 'src/uikit/Link/Comment'
 
 import { UikitCommentProps } from './interfaces'
 import UserLink from 'src/uikit/Link/User'
-import { PrismaCmsEditorRawContent } from '@prisma-cms/editor/dist'
+import { PrismaCmsEditorRawContent } from '@prisma-cms/editor'
 import { UikitCommentStyled } from './styles'
+import {
+  CreateCommentProcessorDocument,
+  UpdateCommentProcessorDocument,
+} from 'src/modules/gql/generated'
+// import moment from 'moment';
 
 export * from './interfaces'
 
@@ -24,6 +29,32 @@ class UikitComment extends EditableView<UikitCommentProps> {
     ...EditableView.defaultProps,
     SaveIcon: SendIcon,
     linkType: 'comment',
+  }
+
+  getMutation(data: Record<string, any> | null | undefined) {
+    // console.log("getMutation getObject", { ...this.getObject() });
+
+    // const mutate = async (props) => {
+
+    //   console.log("getMutation mutate props", props);
+
+    //   return {};
+    // }
+
+    let mutation
+
+    const id = this.getObjectWithMutations()?.id
+
+    if (id) {
+      mutation = UpdateCommentProcessorDocument
+    } else {
+      mutation = CreateCommentProcessorDocument
+    }
+
+    return {
+      ...super.getMutation(data),
+      mutation,
+    }
   }
 
   canEdit() {
@@ -96,11 +127,11 @@ class UikitComment extends EditableView<UikitCommentProps> {
 
               <Grid item>
                 {/* {createdAt ? <Typography
-                variant="caption"
-                color="textSecondary"
-              >
-                {moment(createdAt).format('lll')}
-              </Typography> : null} */}
+                  variant="caption"
+                  color="textSecondary"
+                >
+                  {moment(createdAt).format('lll')}
+                </Typography> : null} */}
 
                 {commentId ? (
                   <CommentLink object={object} linkType={linkType} />
@@ -126,7 +157,11 @@ class UikitComment extends EditableView<UikitCommentProps> {
       return null
     }
 
-    const { content } = comment
+    // TODO add custom scalar in API
+    const content = comment.content as
+      | PrismaCmsEditorRawContent
+      | null
+      | undefined
 
     const readOnly = !this.inEditMode()
 

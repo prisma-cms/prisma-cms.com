@@ -25,7 +25,8 @@ fragment commentsConnectionComment on Resource {
   createdAt
   updatedAt
   type
-  contentText
+  content
+  uri
   CreatedBy {
     ...commentsConnectionCommentUser
   }

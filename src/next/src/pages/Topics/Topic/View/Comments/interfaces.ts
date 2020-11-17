@@ -6,4 +6,5 @@ export interface TopicCommentsProps {
 
 export interface TopicCommentsState {
   // commentData: Record<string, any>
+  newCommentKey: string
 }

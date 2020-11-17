@@ -11,10 +11,10 @@ import * as Types from './types';
 import { TopicsConnectionUserFragment } from './topicsConnectionUser';
 import { gql } from '@apollo/client';
 import { TopicsConnectionUserFragmentDoc } from './topicsConnectionUser';
-export type TopicsConnectionTopicFragment = { __typename?: 'Resource', id: string, updatedAt: any, name: string, uri: string, longtitle?: Types.Maybe<string>, CreatedBy: (
+export type TopicsConnectionTopicFragment = { __typename?: 'Resource', id: string, updatedAt: Date, name: string, uri: string, longtitle?: Types.Maybe<string>, CreatedBy: (
     { __typename?: 'User' }
     & TopicsConnectionUserFragment
-  ), Comments?: Types.Maybe<Array<{ __typename?: 'Resource', id: string, updatedAt: any, CreatedBy: (
+  ), Comments?: Types.Maybe<Array<{ __typename?: 'Resource', id: string, updatedAt: Date, CreatedBy: (
       { __typename?: 'User' }
       & TopicsConnectionUserFragment
     ) }>>, Blog?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, longtitle?: Types.Maybe<string>, uri: string }>, Tags?: Types.Maybe<Array<{ __typename?: 'ResourceTag', Tag: { __typename?: 'Tag', id: string, name: string } }>> };

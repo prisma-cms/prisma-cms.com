@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { Component } from 'react'
+import React from 'react'
 import UikitComment from 'src/uikit/Comments/Comment'
 import { TopicCommentsProps, TopicCommentsState } from './interfaces'
 // import PropTypes from 'prop-types'
@@ -18,7 +18,11 @@ import { TopicCommentsProps, TopicCommentsState } from './interfaces'
 const NewComment = UikitComment
 const UpdateComment = UikitComment
 
-class TopicComments extends Component<TopicCommentsProps, TopicCommentsState> {
+// TODO Make React.FC
+class TopicComments extends React.PureComponent<
+  TopicCommentsProps,
+  TopicCommentsState
+> {
   // static propTypes = {
   //   topic: PropTypes.object.isRequired,
   // }
@@ -28,29 +32,16 @@ class TopicComments extends Component<TopicCommentsProps, TopicCommentsState> {
 
     this.state = {
       ...this.state,
-      commentData: {
-        object: {},
-      },
+      newCommentKey: new Date().toISOString(),
     }
   }
 
   onCommentSave = () => {
-    console.log('onCommentSave')
+    // console.log('onCommentSave')
 
-    // const { commentData } = this.state
-
-    // this.setState(
-    //   {
-    //     commentData: null,
-    //   },
-    //   () => {
-    //     this.setState({
-    //       commentData: {
-    //         ...commentData,
-    //       },
-    //     })
-    //   }
-    // )
+    this.setState({
+      newCommentKey: new Date().toISOString(),
+    })
   }
 
   render() {
@@ -59,6 +50,7 @@ class TopicComments extends Component<TopicCommentsProps, TopicCommentsState> {
     if (!topic) {
       return null
     }
+    const { newCommentKey } = this.state
 
     // const { commentData } = this.state
 
@@ -69,6 +61,7 @@ class TopicComments extends Component<TopicCommentsProps, TopicCommentsState> {
         Comments.map((n) => {
           const { id } = n
 
+          // TODO useMemo
           return <UpdateComment key={id} object={n} />
         })) ||
       null
@@ -80,7 +73,7 @@ class TopicComments extends Component<TopicCommentsProps, TopicCommentsState> {
         {/* {topicId && commentData ? ( */}
         {topicId ? (
           <NewComment
-            // key={comments.length + "__comment"}
+            key={newCommentKey}
             cacheKey={`${topicId}_comment_new`}
             object={undefined}
             _dirty={{

@@ -13,7 +13,7 @@ import { TechnologiesConnectionUserTechnologyFragment } from './technologiesConn
 import { gql } from '@apollo/client';
 import { TechnologiesConnectionUserFragmentDoc } from './technologiesConnectionUser';
 import { TechnologiesConnectionUserTechnologyFragmentDoc } from './technologiesConnectionUserTechnology';
-export type TechnologiesConnectionTechnologyFragment = { __typename?: 'Technology', id: string, createdAt: any, updatedAt: any, name?: Types.Maybe<string>, components?: Types.Maybe<any>, contentText?: Types.Maybe<string>, site_url?: Types.Maybe<string>, CreatedBy?: Types.Maybe<(
+export type TechnologiesConnectionTechnologyFragment = { __typename?: 'Technology', id: string, createdAt: Date, updatedAt: Date, name?: Types.Maybe<string>, components?: Types.Maybe<Record<string, any> | Array<any>>, contentText?: Types.Maybe<string>, site_url?: Types.Maybe<string>, CreatedBy?: Types.Maybe<(
     { __typename?: 'User' }
     & TechnologiesConnectionUserFragment
   )>, UserTechnologies?: Types.Maybe<Array<(

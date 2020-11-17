@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'src/tests/utils'
-import Home from 'pages'
+import MainPage from 'pages'
 import { CommentsConnectionQuery } from 'src/modules/gql/generated'
 
 jest.mock('next/router', () => ({
@@ -33,10 +33,24 @@ jest.mock('@apollo/client/react/hooks', () => {
                 {
                   node: {
                     id: 'ckfdz5d85q16a0800f34ym0aq',
-                    createdAt: '2020-09-22T13:08:34.229Z',
-                    updatedAt: '2020-09-22T13:08:34.229Z',
-                    contentText:
-                      'Я уже сейчас так наверняка не скажу, но скорее всего это реализация для использования в процессорах. Во всяком случае в нашем form-процессоре использовалась точно: https://github.com/MODX-Club/modxSite/blob/master/core/components/modxsite/processors/site/web/form.class.php Больше ничего не подскажу, давно уже с MODX не работаю.',
+                    uri: '/comments/ckfdz5d85q16a0800f34ym0aq',
+                    createdAt: new Date('2020-09-22T13:08:34.229Z'),
+                    updatedAt: new Date('2020-09-22T13:08:34.229Z'),
+                    content: {
+                      blocks: [
+                        {
+                          key: '60k6s',
+                          text:
+                            'Улучшил скрипты. Теперь downtime при деплое проекта составляет всего несколько секунд.',
+                          type: 'unstyled',
+                          depth: 0,
+                          inlineStyleRanges: [],
+                          entityRanges: [],
+                          data: {},
+                        },
+                      ],
+                      entityMap: {},
+                    },
                     CreatedBy: {
                       id: 'cjoe87z9f001b0d9683ysg0m4',
                       username: 'Fi1osof',
@@ -51,10 +65,24 @@ jest.mock('@apollo/client/react/hooks', () => {
                 {
                   node: {
                     id: 'ckfdygdfipyd30800jvndzlv2',
-                    createdAt: '2020-09-22T12:49:08.093Z',
-                    updatedAt: '2020-09-22T12:49:08.093Z',
-                    contentText:
-                      'Ну вот всё поставил как в статье. Картbнка каптчи да появляется но форма отправляется не зависимо вписываю я код с картинки или нет хотя &preHooks=`modcaptcha.preHook` &captcha_key=`mycaptcha` стоят на вызове сниппета... Сниппет AjaxForm вызываю с Formit.',
+                    uri: '/comments/ckfdygdfipyd30800jvndzlv2',
+                    createdAt: new Date('2020-09-22T12:49:08.093Z'),
+                    updatedAt: new Date('2020-09-22T12:49:08.093Z'),
+                    content: {
+                      blocks: [
+                        {
+                          key: '60k6s',
+                          text:
+                            'Улучшил скрипты. Теперь downtime при деплое проекта составляет всего несколько секунд.',
+                          type: 'unstyled',
+                          depth: 0,
+                          inlineStyleRanges: [],
+                          entityRanges: [],
+                          data: {},
+                        },
+                      ],
+                      entityMap: {},
+                    },
                     CreatedBy: {
                       id: 'ckfdxq6u6pvc80800n4w9lial',
                       username: '1234567',
@@ -69,10 +97,24 @@ jest.mock('@apollo/client/react/hooks', () => {
                 {
                   node: {
                     id: 'ckfdy1mbkpwug0800qwip8p8y',
-                    createdAt: '2020-09-22T12:37:39.775Z',
-                    updatedAt: '2020-09-22T12:37:39.775Z',
-                    contentText:
-                      'В статье, вроде, информации достаточно в статье. Просто устанавливается компонент и чанк вставляется. Но все было давно, сейчас не знаю на сколько это все работоспособное.',
+                    uri: '/comments/ckfdy1mbkpwug0800qwip8p8y',
+                    createdAt: new Date('2020-09-22T12:37:39.775Z'),
+                    updatedAt: new Date('2020-09-22T12:37:39.775Z'),
+                    content: {
+                      blocks: [
+                        {
+                          key: '60k6s',
+                          text:
+                            'Улучшил скрипты. Теперь downtime при деплое проекта составляет всего несколько секунд.',
+                          type: 'unstyled',
+                          depth: 0,
+                          inlineStyleRanges: [],
+                          entityRanges: [],
+                          data: {},
+                        },
+                      ],
+                      entityMap: {},
+                    },
                     CreatedBy: {
                       id: 'cjoe87z9f001b0d9683ysg0m4',
                       username: 'Fi1osof',
@@ -105,9 +147,9 @@ jest.mock('@apollo/client/react/hooks', () => {
   }
 })
 
-describe('Home page', () => {
-  it('Render Home page', async () => {
-    const tree = await render(<Home />)
+describe('MainPage page', () => {
+  it('Render MainPage page', async () => {
+    const tree = await render(<MainPage />)
 
     expect(tree.baseElement).toMatchSnapshot()
 
