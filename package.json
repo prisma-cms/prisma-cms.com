@@ -92,6 +92,7 @@
     "react-monaco-editor": "^0.32.1",
     "react-number-format": "^4.0.6",
     "react-reflex": "^3.0.20",
+    "slick-carousel": "1.8.1",
     "styled-components": "^5.2.0",
     "urijs": "^1.19.1",
     "xml-writer": "^1.7.0"
