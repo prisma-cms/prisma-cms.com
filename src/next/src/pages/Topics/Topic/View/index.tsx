@@ -19,6 +19,8 @@ import { PrismaCmsEditorRawContent } from '@prisma-cms/editor'
 import CommentsView from './Comments'
 import Blog from './Blog'
 
+import RootPage from 'src/components/Root'
+
 // const styles = {
 //   root: {
 //     marginTop: 15,
@@ -161,7 +163,6 @@ class TopicView extends EditableView<TopicViewProps> {
     if (!object) {
       return null
     }
-
     // const { classes } = this.props
 
     const { content } = object
@@ -170,20 +171,28 @@ class TopicView extends EditableView<TopicViewProps> {
 
     // const allow_edit = this.canEdit()
 
+    let output = null
+
+    if (content) {
+      output = (
+        <Editor
+          editorKey="topic"
+          className="topic-editor"
+          value={content}
+          // inEditMode={inEditMode || false}
+          readOnly={inEditMode ? false : true}
+          // fullView={true}
+          // allow_edit={allow_edit}
+          onChange={this.onEditorChange}
+        />
+      )
+    } else {
+      output = <RootPage />
+    }
+
     return (
       <div className={'root'}>
-        <div>
-          <Editor
-            editorKey="topic"
-            className="topic-editor"
-            value={content}
-            // inEditMode={inEditMode || false}
-            readOnly={inEditMode ? false : true}
-            // fullView={true}
-            // allow_edit={allow_edit}
-            onChange={this.onEditorChange}
-          />
-        </div>
+        {output}
 
         <CommentsView topic={object} />
       </div>

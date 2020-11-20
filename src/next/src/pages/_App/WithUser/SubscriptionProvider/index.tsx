@@ -222,7 +222,7 @@ export default class SubscriptionProvider extends Component<
         })
       }
 
-      resolve()
+      resolve(true)
     })
   }
 

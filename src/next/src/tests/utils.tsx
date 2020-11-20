@@ -1,10 +1,8 @@
-import { ReactElement, useEffect, useMemo } from 'react'
+import React, { ReactElement, useEffect, useMemo } from 'react'
 import ReactDOMServer from 'react-dom/server'
-
 import { render as baseRender, RenderResult } from '@testing-library/react'
-
-import App from 'pages/_app'
-import theme from 'src/theme'
+import App from '../pages/_App'
+import theme from '../theme'
 import { ThemeProvider } from 'styled-components'
 
 // For handle css
@@ -58,6 +56,7 @@ const AppProvider: React.FC = ({ children }: any, pageProps: any) => {
 
   return (
     <HeadProvider>
+      {/* @ts-ignore */}
       <App Component={Component} pageProps={pageProps} />
     </HeadProvider>
   )

@@ -18,9 +18,9 @@ class ChatRoomsView<
     title: 'Чат-комнаты',
   }
 
-  getColumns<CC extends ChatRoomsConnectionChatRoomFragment>(): ColumnConfig<
-    CC
-  >[] {
+  getColumns<
+    CC extends ChatRoomsConnectionChatRoomFragment
+  >(): ColumnConfig<CC>[] {
     return [
       {
         id: 'name',

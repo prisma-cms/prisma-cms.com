@@ -10,3 +10,12 @@
 [submodule "packages/@prisma-cms/editor"]
 	path = packages/@prisma-cms/editor
 	url = git@github.com:prisma-cms/editor.git
+[submodule "packages/@prisma-cms/query-builder"]
+	path = packages/@prisma-cms/query-builder
+	url = git@github.com:prisma-cms/query-builder.git
+[submodule "packages/@prisma-cms/front-editor"]
+	path = packages/@prisma-cms/front-editor
+	url = git@github.com:prisma-cms/front-editor.git
+[submodule "packages/@prisma-cms/uploader"]
+	path = packages/@prisma-cms/uploader
+	url = git@github.com:prisma-cms/uploader.git

@@ -66,10 +66,10 @@ class TimerView extends EditableView<TimerViewProps> {
     const { id: timerId, stopedAt } = this.getObjectWithMutations() || {}
 
     if (!timerId || stopedAt) {
-      return null
+      return []
     }
 
-    const buttons: JSX.Element[] = []
+    const buttons: React.ReactNode[] = []
 
     buttons.push(
       <IconButton
