@@ -20,7 +20,7 @@ import CommentsView from './Comments'
 import Blog from './Blog'
 
 import RootPage from 'src/components/Root'
-import { EditorComponentProps } from 'packages/@prisma-cms/front-editor/dist/components/App/components'
+import { EditorComponentProps } from '@prisma-cms/front-editor/dist/components/App/components'
 
 // const styles = {
 //   root: {
