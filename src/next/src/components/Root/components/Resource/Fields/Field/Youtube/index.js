@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React from 'react'
 
-import { EditableObjectContext } from '@prisma-cms/front-editor/lib/components/App/context'
+import { EditableObjectContext } from '@prisma-cms/front-editor/dist/components/App/context'
 import ResourceField from '..'
 import TextField from 'material-ui/TextField'
 

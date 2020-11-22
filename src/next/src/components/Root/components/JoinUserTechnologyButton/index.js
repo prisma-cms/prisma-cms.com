@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
-import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/ListView'
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { ObjectContext } from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector/ListView'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import gql from 'graphql-tag'

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import PrismaCmsComponent from '@prisma-cms/component'
-import RootConnector from '@prisma-cms/front-editor/lib/components/Root'
+import RootConnector from '@prisma-cms/front-editor/dist/components/Root'
 import UserPage from './components/pages/Users/User'
 import OldPageHeader from './components/OldPageHeader'
 import OldPages from './components/pages/OldPages'

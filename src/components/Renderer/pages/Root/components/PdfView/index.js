@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
 
 import { Document, Page } from 'react-pdf'
 import Button from 'material-ui/Button'

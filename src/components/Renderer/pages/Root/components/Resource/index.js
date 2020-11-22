@@ -1,7 +1,7 @@
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
-import EditableObject from '@prisma-cms/front-editor/lib/components/App/components/public/form/EditableObject'
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import EditableObject from '@prisma-cms/front-editor/dist/components/App/components/public/form/EditableObject'
 
 export class Resource extends EditorComponent {
   static Name = 'Resource'

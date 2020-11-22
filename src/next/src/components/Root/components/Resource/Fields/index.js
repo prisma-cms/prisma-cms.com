@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
-// import EditableObject from '@prisma-cms/front-editor/lib/components/App/components/public/form/EditableObject';
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+// import EditableObject from '@prisma-cms/front-editor/dist/components/App/components/public/form/EditableObject';
 import {
   EditableObjectContext,
   EditorContext,
-} from '@prisma-cms/front-editor/lib/components/App/context'
+} from '@prisma-cms/front-editor/dist/components/App/context'
 import Resource from '..'
 // import ResourceField from './Field';
-import OldPageHeader from '../../OldPageHeader'
-import OldPages from '../../pages/OldPages'
+// import OldPageHeader from '../../OldPageHeader'
+// import OldPages from '../../pages/OldPages'
 import Button from 'material-ui/Button'
 
 export class ResourceFieldsProxy extends EditorComponent {
@@ -61,15 +61,15 @@ export class ResourceFields extends EditorComponent {
     return parent instanceof Resource && super.canBeParent(parent)
   }
 
-  canBeChild(child) {
-    // return child instanceof ResourceField && super.canBeChild(child);
+  // canBeChild(child) {
+  //   // return child instanceof ResourceField && super.canBeChild(child);
 
-    return (
-      !(child instanceof OldPageHeader) &&
-      !(child instanceof OldPages) &&
-      super.canBeChild(child)
-    )
-  }
+  //   return (
+  //     !(child instanceof OldPageHeader) &&
+  //     !(child instanceof OldPages) &&
+  //     super.canBeChild(child)
+  //   )
+  // }
 
   renderMainView() {
     return (

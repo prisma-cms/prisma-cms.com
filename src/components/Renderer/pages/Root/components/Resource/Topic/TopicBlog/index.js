@@ -2,8 +2,8 @@ import TopicBlogView from '../../../../../../../pages/Topics/Topic/view/Blog'
 
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
-import { EditableObjectContext } from '@prisma-cms/front-editor/lib/components/App/context'
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { EditableObjectContext } from '@prisma-cms/front-editor/dist/components/App/context'
 // import Topic from "../";
 
 export class TopicBlog extends EditorComponent {

@@ -6,9 +6,9 @@ import Link from 'next/link'
 
 import URI from 'urijs'
 import { PaginationProps } from './interfaces'
-import { PrismaCmsContext } from '../../pages/_App/interfaces'
+export * from './interfaces'
 
-import Context from '@prisma-cms/context'
+import Context, { PrismaCmsContext } from '@prisma-cms/context'
 
 const styles = {
   row: {

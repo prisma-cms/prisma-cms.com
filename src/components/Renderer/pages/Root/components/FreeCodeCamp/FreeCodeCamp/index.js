@@ -1,7 +1,7 @@
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
-import { ConnectorContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector'
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { ConnectorContext } from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector'
 import FreeCodeCampRenderer from './Renderer'
 
 export class FreeCodeCamp extends EditorComponent {

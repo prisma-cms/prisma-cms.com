@@ -20,6 +20,7 @@ import CommentsView from './Comments'
 import Blog from './Blog'
 
 import RootPage from 'src/components/Root'
+import { EditorComponentProps } from 'packages/@prisma-cms/front-editor/dist/components/App/components'
 
 // const styles = {
 //   root: {
@@ -157,6 +158,13 @@ class TopicView extends EditableView<TopicViewProps> {
     })
   }
 
+  onChangeState = (data: EditorComponentProps['_dirty']) => {
+    // console.log("onChangeState components", data);
+
+    this.updateObject(data)
+    return data
+  }
+
   renderDefaultView() {
     const object = this.getObjectWithMutations()
 
@@ -165,9 +173,13 @@ class TopicView extends EditableView<TopicViewProps> {
     }
     // const { classes } = this.props
 
-    const { content } = object
+    // console.log("Topic object", object);
+
+    const { content, components } = object
 
     const inEditMode = this.inEditMode()
+
+    // console.log("Topic components", components);
 
     // const allow_edit = this.canEdit()
 
@@ -187,7 +199,21 @@ class TopicView extends EditableView<TopicViewProps> {
         />
       )
     } else {
-      output = <RootPage />
+      output = (
+        <RootPage
+          // object={undefined}
+          inEditMode={inEditMode}
+          itemsOnly
+          onChangeState={this.onChangeState}
+          object={{
+            name: 'Section',
+            component: 'Section',
+            components:
+              components && Array.isArray(components) ? components : [],
+            props: {},
+          }}
+        />
+      )
     }
 
     return (

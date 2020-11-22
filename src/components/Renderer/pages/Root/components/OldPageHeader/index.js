@@ -3,7 +3,7 @@ import React from 'react'
 
 import MainMenu from '../../../../../menu/mainMenu'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
 
 class OldPageHeader extends EditorComponent {
   static defaultProps = {

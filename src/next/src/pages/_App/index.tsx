@@ -7,7 +7,6 @@ import theme from 'src/theme'
 import {
   NextPageContextCustom,
   MainApp,
-  PrismaCmsContext,
   AppInitialProps,
   PageProps,
 } from './interfaces'
@@ -18,7 +17,7 @@ import {
   getSubscriptionClient,
 } from 'src/lib/apolloClient'
 
-import Context from '@prisma-cms/context'
+import Context, { PrismaCmsContext } from '@prisma-cms/context'
 import URI from 'urijs'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -33,6 +32,9 @@ import Page404 from '../_Error/404'
 import ErrorPage from '../_Error'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import Head from 'next/head'
+import Pagination from '../../components/Pagination'
+import UserLink from '../../uikit/Link/User'
+import Editor from '../../uikit/Editor'
 
 // TODO: Проработать локализацию
 moment.locale('ru')
@@ -119,6 +121,13 @@ const App: MainApp = (props) => {
           return apolloClient.resetStore().catch(console.error)
         }
       },
+
+      /**
+       * @prisma-cms/front-editor
+       */
+      Pagination,
+      UserLink,
+      Editor,
     }
 
     return context

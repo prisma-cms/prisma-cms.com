@@ -1,7 +1,7 @@
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/lib/components/App/components/'
-import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/ListView'
+import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { ObjectContext } from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector/ListView'
 import CodeChallengeRenderer from './Renderer'
 
 export class CodeChallenge extends EditorComponent {

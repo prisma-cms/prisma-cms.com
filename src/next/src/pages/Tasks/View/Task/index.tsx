@@ -214,27 +214,29 @@ export class TaskView<
     if (activeTimer) {
       const { id: timerId } = activeTimer
 
-      buttons.push(
-        <IconButton
-          key="stop"
-          role={timerId}
-          onClick={this.onClickUpdateTimer}
-          className={classes?.button}
-        >
-          <StopIcon />
-        </IconButton>
-      )
+      Array.isArray(buttons) &&
+        buttons.push(
+          <IconButton
+            key="stop"
+            role={timerId}
+            onClick={this.onClickUpdateTimer}
+            className={classes?.button}
+          >
+            <StopIcon />
+          </IconButton>
+        )
     } else {
-      buttons.push(
-        <IconButton
-          key="start"
-          role={taskId}
-          onClick={this.onClickCreateTimer}
-          className={classes?.button}
-        >
-          <StartIcon />
-        </IconButton>
-      )
+      Array.isArray(buttons) &&
+        buttons.push(
+          <IconButton
+            key="start"
+            role={taskId}
+            onClick={this.onClickCreateTimer}
+            className={classes?.button}
+          >
+            <StartIcon />
+          </IconButton>
+        )
     }
 
     return buttons

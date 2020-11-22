@@ -1,6 +1,6 @@
-// import { EditableObjectContext } from '@prisma-cms/front-editor/lib/components/App/context';
-import RichText from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/Fields/RichText'
-// import { ObjectContext } from '@prisma-cms/front-editor/lib/components/App/components/public/Connectors/Connector/ListView';
+// import { EditableObjectContext } from '@prisma-cms/front-editor/dist/components/App/context';
+import RichText from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector/Fields/RichText'
+// import { ObjectContext } from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector/ListView';
 // import ResourceField from '..';
 
 export class RichTextCustom extends RichText {

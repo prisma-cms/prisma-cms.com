@@ -5,8 +5,8 @@ import Button from 'material-ui/Button'
 import withStyles from 'material-ui/styles/withStyles'
 
 // import { FrontEditor } from "@prisma-cms/front";
-import FrontEditor from '@prisma-cms/front-editor/lib/components/App'
-import TemplatePage from '@prisma-cms/front-editor/lib/dev/Renderer/pages/Templates/Template'
+import FrontEditor from '@prisma-cms/front-editor/dist/components/App'
+import TemplatePage from '@prisma-cms/front-editor/dist/dev/Renderer/pages/Templates/Template'
 
 import gql from 'graphql-tag'
 import TopicsConnection from './Topics'

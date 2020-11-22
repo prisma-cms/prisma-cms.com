@@ -91,8 +91,8 @@ import {
   // FrontEditorRoot,
 } from '@prisma-cms/front-editor'
 
-import TemplatesPage from '@prisma-cms/front-editor/lib/components/pages/Templates/'
-import TemplatePage from '@prisma-cms/front-editor/lib/components/pages/Templates/Template'
+import TemplatesPage from '@prisma-cms/front-editor/dist/components/pages/Templates/'
+import TemplatePage from '@prisma-cms/front-editor/dist/components/pages/Templates/Template'
 
 import RootPage from './pages/Root'
 

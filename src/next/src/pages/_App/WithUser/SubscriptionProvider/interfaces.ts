@@ -1,5 +1,5 @@
 import { MeQuery } from 'src/modules/gql/generated'
-import { PrismaCmsContext } from '../../interfaces'
+import { PrismaCmsContext } from '@prisma-cms/context'
 
 export interface SubscriptionProviderProps {
   client: PrismaCmsContext['client']

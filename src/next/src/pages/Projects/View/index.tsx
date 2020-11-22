@@ -3,13 +3,12 @@ import PropTypes from 'prop-types'
 
 import Typography from 'material-ui/Typography'
 
-import Context from '@prisma-cms/context'
+import Context, { PrismaCmsContext } from '@prisma-cms/context'
 // import Filters from '@prisma-cms/filters'
 
 import ProjectsList from './List'
 
 import { ProjectsViewProps } from './interfaces'
-import { PrismaCmsContext } from '../../_App/interfaces'
 import Pagination from 'src/components/Pagination'
 import Grid from 'src/uikit/Grid'
 import Link from 'next/link'

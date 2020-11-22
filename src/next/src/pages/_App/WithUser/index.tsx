@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react'
 
-import Context from '@prisma-cms/context'
+import Context, { PrismaCmsContext } from '@prisma-cms/context'
 
 import { useMeQuery } from 'src/modules/gql/generated'
-import { PrismaCmsContext } from '../interfaces'
 
 import Header from 'src/components/MainMenu'
 import { WithUserProps } from './interfaces'

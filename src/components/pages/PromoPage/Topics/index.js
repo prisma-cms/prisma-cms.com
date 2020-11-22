@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Connector from '@prisma-cms/front-editor/lib/components/App/components/public/Connector'
+import Connector from '@prisma-cms/front-editor/dist/components/App/components/public/Connector'
 import Typography from 'material-ui/Typography'
 
 class TopicsConnection extends Connector {

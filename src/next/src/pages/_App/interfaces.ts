@@ -2,13 +2,13 @@ import React from 'react'
 import { NextComponentType, NextPageContext } from 'next'
 import {
   ApolloClient,
-  ApolloQueryResult,
+  // ApolloQueryResult,
   NormalizedCacheObject,
 } from '@apollo/client'
-import URI from 'urijs'
-import { NextRouter } from 'next/router'
-import { Maybe, MeUserFragment } from 'src/modules/gql/generated'
-import { muiTheme } from './MUI/theme'
+// import URI from 'urijs'
+// import { NextRouter } from 'next/router'
+// import { Maybe, MeUserFragment } from 'src/modules/gql/generated'
+// import { muiTheme } from './MUI/theme'
 import { AppContext, AppInitialProps as NextAppInitialProps } from 'next/app'
 
 /**
@@ -54,39 +54,39 @@ export type ApolloClientNormolized = ApolloClient<NormalizedCacheObject>
 /**
  * Свойства, передаваемые в @prisma-cms/context
  */
-export type PrismaCmsContext = {
-  uri: ReturnType<typeof URI>
+// export type PrismaCmsContext = {
+//   uri: ReturnType<typeof URI>
 
-  client: ApolloClientNormolized
+//   client: ApolloClientNormolized
 
-  // TODO: убрать из контекста
-  router: NextRouter
+//   // TODO: убрать из контекста
+//   router: NextRouter
 
-  // TODO: убрать из контекста
-  /**
-   * GraphQL-запросы
-   */
-  query?: any | null
+//   // TODO: убрать из контекста
+//   /**
+//    * GraphQL-запросы
+//    */
+//   query?: any | null
 
-  user?: Maybe<MeUserFragment>
+//   user?: Maybe<MeUserFragment>
 
-  logout: () => void
+//   logout: () => void
 
-  openLoginForm: () => void
+//   openLoginForm: () => void
 
-  lang: string
+//   lang: string
 
-  theme: typeof muiTheme
+//   theme: typeof muiTheme
 
-  localStorage: typeof global.localStorage | undefined
+//   localStorage: typeof global.localStorage | undefined
 
-  /**
-   * Сброс кеша аполло-клиента.
-   * Делаем пока через такой хак, потому что в текущем компоненте apollo-cms
-   * используется старый аполло-клиент
-   */
-  apiClientResetStore: () => Promise<void | ApolloQueryResult<any>[] | null>
-}
+//   /**
+//    * Сброс кеша аполло-клиента.
+//    * Делаем пока через такой хак, потому что в текущем компоненте apollo-cms
+//    * используется старый аполло-клиент
+//    */
+//   apiClientResetStore: () => Promise<void | ApolloQueryResult<any>[] | null>
+// }
 
 /**
  * Страница с кастомным контекстом
