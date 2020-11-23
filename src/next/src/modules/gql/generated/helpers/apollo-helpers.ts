@@ -1564,7 +1564,7 @@ export type ethSyncStateFieldPolicy = {
 	knownStates?: FieldPolicy<any> | FieldReadFunction<any>,
 	pulledStates?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createBlogProcessor' | 'updateBlogProcessor' | 'createTopicProcessor' | 'updateTopicProcessor' | 'createCommentProcessor' | 'updateCommentProcessor' | 'createTestProcessor' | 'updateTestProcessor' | 'ethSigninOrSignup' | 'ethConnectAuthAccount' | 'fccImportChallengs' | 'createCareerProcessor' | 'updateCareerProcessor' | 'createUserTechnologyProcessor' | 'updateUserTechnologyProcessor' | 'createTechnologyLessonProcessor' | 'updateTechnologyLessonProcessor' | 'createTechnologyProcessor' | 'updateTechnologyProcessor' | 'createTechnologyLessonCommentProcessor' | 'updateTechnologyLessonCommentProcessor' | 'createTechnologyLessonUserProcessor' | 'updateTechnologyLessonUserProcessor' | 'createPlayer' | 'createWorld' | 'createSettings' | 'createCallRequest' | 'createUser' | 'updatePlayer' | 'updateWorld' | 'updateSettings' | 'updateCallRequest' | 'updateUser' | 'deleteGallery' | 'deleteWorld' | 'deleteNotice' | 'deleteGame' | 'deleteGameResult' | 'deleteTournament' | 'deleteTournamentGroup' | 'deleteTourney' | 'deleteProjectMember' | 'deleteTaskReaction' | 'deleteTeamMember' | 'deleteRoute' | 'deleteCodeChallenge' | 'deleteCodeChallengeBlock' | 'deleteTechnologyLesson' | 'deleteCareer' | 'deleteTechnologyLessonUser' | 'deleteUserTechnology' | 'deleteTest' | 'deleteFile' | 'deleteTechnology' | 'deleteTemplate' | 'deleteResource' | 'deleteUser' | 'deleteManyNotices' | 'deleteManyRoutes' | 'deleteManyTests' | 'runCommand' | 'login' | 'createFileProcessor' | 'updateFileProcessor' | 'singleUpload' | 'multipleUpload' | 'createSmsMessageProcessor' | 'createSmsProviderProcessor' | 'updateSmsProviderProcessor' | 'signup' | 'signin' | 'createUserProcessor' | 'updateUserProcessor' | 'resetPasswordProcessor' | 'createResetPasswordProcessor' | 'createTemplateProcessor' | 'updateTemplateProcessor' | 'createGalleryProcessor' | 'updateGalleryProcessor' | 'createResourceProcessor' | 'updateResourceProcessor' | 'createGameProcessor' | 'updateGameProcessor' | 'createGameResultProcessor' | 'updateGameResultProcessor' | 'createTournamentProcessor' | 'updateTournamentProcessor' | 'createTournamentGroupProcessor' | 'updateTournamentGroupProcessor' | 'createTourneyProcessor' | 'updateTourneyProcessor' | 'createChatRoomProcessor' | 'updateChatRoomProcessor' | 'inviteChatRoomProcessor' | 'joinChatRoom' | 'leaveChatRoom' | 'createChatMessageReadedProcessor' | 'createChatMessageProcessor' | 'updateChatMessageProcessor' | 'markAsReadedChatMessage' | 'createEthContractSourceProcessor' | 'updateEthContractSourceProcessor' | 'ethUnlockPersonalAccount' | 'createEthAccountProcessor' | 'updateEthAccountProcessor' | 'createEthTransactionProcessor' | 'ethRecoverPersonalSignature' | 'createCallRequestProcessor' | 'createProjectProcessor' | 'updateProjectProcessor' | 'createProjectMemberProcessor' | 'updateProjectMemberProcessor' | 'createTaskProcessor' | 'updateTaskProcessor' | 'createTaskReactionProcessor' | 'updateTaskReactionProcessor' | 'createTimerProcessor' | 'updateTimerProcessor' | 'createTeamProcessor' | 'updateTeamProcessor' | 'createTeamMemberProcessor' | 'updateTeamMemberProcessor' | 'createServiceProcessor' | 'updateServiceProcessor' | 'createPositionProcessor' | 'updatePositionProcessor' | 'createRouteProcessor' | 'updateRouteProcessor' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createBlogProcessor' | 'updateBlogProcessor' | 'createTopicProcessor' | 'updateTopicProcessor' | 'createCommentProcessor' | 'updateCommentProcessor' | 'createTestProcessor' | 'updateTestProcessor' | 'ethSigninOrSignup' | 'ethConnectAuthAccount' | 'fccImportChallengs' | 'createCareerProcessor' | 'updateCareerProcessor' | 'createUserTechnologyProcessor' | 'updateUserTechnologyProcessor' | 'createTechnologyLessonProcessor' | 'updateTechnologyLessonProcessor' | 'createTechnologyProcessor' | 'updateTechnologyProcessor' | 'createTechnologyLessonCommentProcessor' | 'updateTechnologyLessonCommentProcessor' | 'createTechnologyLessonUserProcessor' | 'updateTechnologyLessonUserProcessor' | 'createPlayer' | 'createWorld' | 'createSettings' | 'updatePlayer' | 'updateWorld' | 'updateSettings' | 'updateCallRequest' | 'deleteGallery' | 'deleteWorld' | 'deleteNotice' | 'deleteTaskReaction' | 'deleteTest' | 'deleteTemplate' | 'deleteManyNotices' | 'deleteManyTests' | 'runCommand' | 'login' | 'singleUpload' | 'multipleUpload' | 'signup' | 'signin' | 'updateUserProcessor' | 'resetPasswordProcessor' | 'createResetPasswordProcessor' | 'createTemplateProcessor' | 'updateTemplateProcessor' | 'createGalleryProcessor' | 'updateGalleryProcessor' | 'createChatRoomProcessor' | 'updateChatRoomProcessor' | 'inviteChatRoomProcessor' | 'joinChatRoom' | 'leaveChatRoom' | 'createChatMessageProcessor' | 'updateChatMessageProcessor' | 'markAsReadedChatMessage' | 'createEthAccountProcessor' | 'createEthTransactionProcessor' | 'ethRecoverPersonalSignature' | 'createCallRequestProcessor' | 'createProjectProcessor' | 'updateProjectProcessor' | 'createTaskProcessor' | 'updateTaskProcessor' | 'createTaskReactionProcessor' | 'createTimerProcessor' | 'updateTimerProcessor' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createBlogProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateBlogProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1592,52 +1592,24 @@ export type MutationFieldPolicy = {
 	createPlayer?: FieldPolicy<any> | FieldReadFunction<any>,
 	createWorld?: FieldPolicy<any> | FieldReadFunction<any>,
 	createSettings?: FieldPolicy<any> | FieldReadFunction<any>,
-	createCallRequest?: FieldPolicy<any> | FieldReadFunction<any>,
-	createUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatePlayer?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateWorld?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateSettings?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateCallRequest?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteGallery?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteWorld?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteNotice?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteGame?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteGameResult?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteTournament?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteTournamentGroup?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteTourney?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteProjectMember?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteTaskReaction?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteTeamMember?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteRoute?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteCodeChallenge?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteCodeChallengeBlock?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteTechnologyLesson?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteCareer?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteTechnologyLessonUser?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteUserTechnology?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteTest?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteFile?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteTechnology?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteTemplate?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteResource?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteUser?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteManyNotices?: FieldPolicy<any> | FieldReadFunction<any>,
-	deleteManyRoutes?: FieldPolicy<any> | FieldReadFunction<any>,
 	deleteManyTests?: FieldPolicy<any> | FieldReadFunction<any>,
 	runCommand?: FieldPolicy<any> | FieldReadFunction<any>,
 	login?: FieldPolicy<any> | FieldReadFunction<any>,
-	createFileProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateFileProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	singleUpload?: FieldPolicy<any> | FieldReadFunction<any>,
 	multipleUpload?: FieldPolicy<any> | FieldReadFunction<any>,
-	createSmsMessageProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createSmsProviderProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateSmsProviderProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	signup?: FieldPolicy<any> | FieldReadFunction<any>,
 	signin?: FieldPolicy<any> | FieldReadFunction<any>,
-	createUserProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateUserProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	resetPasswordProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createResetPasswordProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1645,55 +1617,25 @@ export type MutationFieldPolicy = {
 	updateTemplateProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createGalleryProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateGalleryProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createResourceProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateResourceProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createGameProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateGameProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createGameResultProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateGameResultProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createTournamentProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateTournamentProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createTournamentGroupProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateTournamentGroupProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createTourneyProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateTourneyProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createChatRoomProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateChatRoomProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	inviteChatRoomProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	joinChatRoom?: FieldPolicy<any> | FieldReadFunction<any>,
 	leaveChatRoom?: FieldPolicy<any> | FieldReadFunction<any>,
-	createChatMessageReadedProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createChatMessageProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateChatMessageProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	markAsReadedChatMessage?: FieldPolicy<any> | FieldReadFunction<any>,
-	createEthContractSourceProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateEthContractSourceProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	ethUnlockPersonalAccount?: FieldPolicy<any> | FieldReadFunction<any>,
 	createEthAccountProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateEthAccountProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createEthTransactionProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	ethRecoverPersonalSignature?: FieldPolicy<any> | FieldReadFunction<any>,
 	createCallRequestProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createProjectProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateProjectProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createProjectMemberProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateProjectMemberProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createTaskProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateTaskProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createTaskReactionProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateTaskReactionProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	createTimerProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateTimerProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createTeamProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateTeamProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createTeamMemberProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateTeamMemberProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createServiceProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateServiceProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createPositionProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updatePositionProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	createRouteProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
-	updateRouteProcessor?: FieldPolicy<any> | FieldReadFunction<any>
+	updateTimerProcessor?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type ResourceResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ResourceResponseKeySpecifier)[];
 export type ResourceResponseFieldPolicy = {
@@ -1780,68 +1722,6 @@ export type McJsAuthPayloadFieldPolicy = {
 	token?: FieldPolicy<any> | FieldReadFunction<any>,
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type FileResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | FileResponseKeySpecifier)[];
-export type FileResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type SmsMessageResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | SmsMessageResponseKeySpecifier)[];
-export type SmsMessageResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type SmsMessageKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'from' | 'text' | 'recipients' | 'Provider' | 'deletOnSend' | 'CreatedBy' | 'Status' | SmsMessageKeySpecifier)[];
-export type SmsMessageFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	from?: FieldPolicy<any> | FieldReadFunction<any>,
-	text?: FieldPolicy<any> | FieldReadFunction<any>,
-	recipients?: FieldPolicy<any> | FieldReadFunction<any>,
-	Provider?: FieldPolicy<any> | FieldReadFunction<any>,
-	deletOnSend?: FieldPolicy<any> | FieldReadFunction<any>,
-	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
-	Status?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type SmsProviderKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'name' | 'credentials' | 'CreatedBy' | SmsProviderKeySpecifier)[];
-export type SmsProviderFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	credentials?: FieldPolicy<any> | FieldReadFunction<any>,
-	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type LetsadsSmsMessageStatusKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'name' | 'description' | 'errorCode' | 'SmsMessage' | 'Items' | LetsadsSmsMessageStatusKeySpecifier)[];
-export type LetsadsSmsMessageStatusFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	description?: FieldPolicy<any> | FieldReadFunction<any>,
-	errorCode?: FieldPolicy<any> | FieldReadFunction<any>,
-	SmsMessage?: FieldPolicy<any> | FieldReadFunction<any>,
-	Items?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type LetsadsSmsMessageStatusItemKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'sms_id' | 'Status' | LetsadsSmsMessageStatusItemKeySpecifier)[];
-export type LetsadsSmsMessageStatusItemFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	sms_id?: FieldPolicy<any> | FieldReadFunction<any>,
-	Status?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type SmsProviderResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | SmsProviderResponseKeySpecifier)[];
-export type SmsProviderResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type UserResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | UserResponseKeySpecifier)[];
 export type UserResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1880,41 +1760,6 @@ export type GalleryResponseFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	data?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type GameResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | GameResponseKeySpecifier)[];
-export type GameResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type GameResultResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | GameResultResponseKeySpecifier)[];
-export type GameResultResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type TournamentResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TournamentResponseKeySpecifier)[];
-export type TournamentResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type TournamentGroupResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TournamentGroupResponseKeySpecifier)[];
-export type TournamentGroupResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type TourneyResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TourneyResponseKeySpecifier)[];
-export type TourneyResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type ChatRoomResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ChatRoomResponseKeySpecifier)[];
 export type ChatRoomResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1922,22 +1767,8 @@ export type ChatRoomResponseFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	data?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ChatMessageReadedResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ChatMessageReadedResponseKeySpecifier)[];
-export type ChatMessageReadedResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type ChatMessageResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ChatMessageResponseKeySpecifier)[];
 export type ChatMessageResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type EthContractSourceResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | EthContractSourceResponseKeySpecifier)[];
-export type EthContractSourceResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1964,13 +1795,6 @@ export type ProjectResponseFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	data?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProjectMemberResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ProjectMemberResponseKeySpecifier)[];
-export type ProjectMemberResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type TaskResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TaskResponseKeySpecifier)[];
 export type TaskResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1987,41 +1811,6 @@ export type TaskReactionResponseFieldPolicy = {
 };
 export type TimerResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TimerResponseKeySpecifier)[];
 export type TimerResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type TeamResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TeamResponseKeySpecifier)[];
-export type TeamResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type TeamMemberResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TeamMemberResponseKeySpecifier)[];
-export type TeamMemberResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type ServiceResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ServiceResponseKeySpecifier)[];
-export type ServiceResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type PositionResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | PositionResponseKeySpecifier)[];
-export type PositionResponseFieldPolicy = {
-	success?: FieldPolicy<any> | FieldReadFunction<any>,
-	message?: FieldPolicy<any> | FieldReadFunction<any>,
-	errors?: FieldPolicy<any> | FieldReadFunction<any>,
-	data?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type RouteResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | RouteResponseKeySpecifier)[];
-export type RouteResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3043,6 +2832,47 @@ export type InventorySubscriptionPayloadFieldPolicy = {
 	updatedFields?: FieldPolicy<any> | FieldReadFunction<any>,
 	previousValues?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type LetsadsSmsMessageStatusKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'name' | 'description' | 'errorCode' | 'SmsMessage' | 'Items' | LetsadsSmsMessageStatusKeySpecifier)[];
+export type LetsadsSmsMessageStatusFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	errorCode?: FieldPolicy<any> | FieldReadFunction<any>,
+	SmsMessage?: FieldPolicy<any> | FieldReadFunction<any>,
+	Items?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type SmsMessageKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'from' | 'text' | 'recipients' | 'Provider' | 'deletOnSend' | 'CreatedBy' | 'Status' | SmsMessageKeySpecifier)[];
+export type SmsMessageFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	from?: FieldPolicy<any> | FieldReadFunction<any>,
+	text?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipients?: FieldPolicy<any> | FieldReadFunction<any>,
+	Provider?: FieldPolicy<any> | FieldReadFunction<any>,
+	deletOnSend?: FieldPolicy<any> | FieldReadFunction<any>,
+	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
+	Status?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type SmsProviderKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'name' | 'credentials' | 'CreatedBy' | SmsProviderKeySpecifier)[];
+export type SmsProviderFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	credentials?: FieldPolicy<any> | FieldReadFunction<any>,
+	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type LetsadsSmsMessageStatusItemKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'sms_id' | 'Status' | LetsadsSmsMessageStatusItemKeySpecifier)[];
+export type LetsadsSmsMessageStatusItemFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	sms_id?: FieldPolicy<any> | FieldReadFunction<any>,
+	Status?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type LetsadsSmsMessageStatusConnectionKeySpecifier = ('pageInfo' | 'edges' | 'aggregate' | LetsadsSmsMessageStatusConnectionKeySpecifier)[];
 export type LetsadsSmsMessageStatusConnectionFieldPolicy = {
 	pageInfo?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3521,6 +3351,27 @@ export type VoteSubscriptionPayloadFieldPolicy = {
 	updatedFields?: FieldPolicy<any> | FieldReadFunction<any>,
 	previousValues?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type FileResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | FileResponseKeySpecifier)[];
+export type FileResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type SmsMessageResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | SmsMessageResponseKeySpecifier)[];
+export type SmsMessageResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type SmsProviderResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | SmsProviderResponseKeySpecifier)[];
+export type SmsProviderResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type MarketplaceAuthResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | MarketplaceAuthResponseKeySpecifier)[];
 export type MarketplaceAuthResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3528,8 +3379,57 @@ export type MarketplaceAuthResponseFieldPolicy = {
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
 	data?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type GameResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | GameResponseKeySpecifier)[];
+export type GameResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type GameResultResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | GameResultResponseKeySpecifier)[];
+export type GameResultResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TournamentResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TournamentResponseKeySpecifier)[];
+export type TournamentResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TournamentGroupResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TournamentGroupResponseKeySpecifier)[];
+export type TournamentGroupResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TourneyResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TourneyResponseKeySpecifier)[];
+export type TourneyResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ChatMessageReadedResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ChatMessageReadedResponseKeySpecifier)[];
+export type ChatMessageReadedResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type EthBlockResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | EthBlockResponseKeySpecifier)[];
 export type EthBlockResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type EthContractSourceResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | EthContractSourceResponseKeySpecifier)[];
+export type EthContractSourceResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3549,8 +3449,50 @@ export type IceCandidateFieldPolicy = {
 	sdp?: FieldPolicy<any> | FieldReadFunction<any>,
 	callRequestId?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type PositionResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | PositionResponseKeySpecifier)[];
+export type PositionResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ProjectMemberResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ProjectMemberResponseKeySpecifier)[];
+export type ProjectMemberResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type ServiceResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ServiceResponseKeySpecifier)[];
+export type ServiceResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type ServiceCategoryResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | ServiceCategoryResponseKeySpecifier)[];
 export type ServiceCategoryResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TeamResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TeamResponseKeySpecifier)[];
+export type TeamResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type TeamMemberResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | TeamMemberResponseKeySpecifier)[];
+export type TeamMemberResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type RouteResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | RouteResponseKeySpecifier)[];
+export type RouteResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -4943,55 +4885,6 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: McJsAuthPayloadFieldPolicy,
 	},
-	FileResponse?: {
-		keyFields?: false | FileResponseKeySpecifier | (() => undefined | FileResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: FileResponseFieldPolicy,
-	},
-	SmsMessageResponse?: {
-		keyFields?: false | SmsMessageResponseKeySpecifier | (() => undefined | SmsMessageResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: SmsMessageResponseFieldPolicy,
-	},
-	SmsMessage?: {
-		keyFields?: false | SmsMessageKeySpecifier | (() => undefined | SmsMessageKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: SmsMessageFieldPolicy,
-	},
-	SmsProvider?: {
-		keyFields?: false | SmsProviderKeySpecifier | (() => undefined | SmsProviderKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: SmsProviderFieldPolicy,
-	},
-	LetsadsSmsMessageStatus?: {
-		keyFields?: false | LetsadsSmsMessageStatusKeySpecifier | (() => undefined | LetsadsSmsMessageStatusKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: LetsadsSmsMessageStatusFieldPolicy,
-	},
-	LetsadsSmsMessageStatusItem?: {
-		keyFields?: false | LetsadsSmsMessageStatusItemKeySpecifier | (() => undefined | LetsadsSmsMessageStatusItemKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: LetsadsSmsMessageStatusItemFieldPolicy,
-	},
-	SmsProviderResponse?: {
-		keyFields?: false | SmsProviderResponseKeySpecifier | (() => undefined | SmsProviderResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: SmsProviderResponseFieldPolicy,
-	},
 	UserResponse?: {
 		keyFields?: false | UserResponseKeySpecifier | (() => undefined | UserResponseKeySpecifier),
 		queryType?: true,
@@ -5027,41 +4920,6 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: GalleryResponseFieldPolicy,
 	},
-	GameResponse?: {
-		keyFields?: false | GameResponseKeySpecifier | (() => undefined | GameResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: GameResponseFieldPolicy,
-	},
-	GameResultResponse?: {
-		keyFields?: false | GameResultResponseKeySpecifier | (() => undefined | GameResultResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: GameResultResponseFieldPolicy,
-	},
-	TournamentResponse?: {
-		keyFields?: false | TournamentResponseKeySpecifier | (() => undefined | TournamentResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: TournamentResponseFieldPolicy,
-	},
-	TournamentGroupResponse?: {
-		keyFields?: false | TournamentGroupResponseKeySpecifier | (() => undefined | TournamentGroupResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: TournamentGroupResponseFieldPolicy,
-	},
-	TourneyResponse?: {
-		keyFields?: false | TourneyResponseKeySpecifier | (() => undefined | TourneyResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: TourneyResponseFieldPolicy,
-	},
 	ChatRoomResponse?: {
 		keyFields?: false | ChatRoomResponseKeySpecifier | (() => undefined | ChatRoomResponseKeySpecifier),
 		queryType?: true,
@@ -5069,26 +4927,12 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: ChatRoomResponseFieldPolicy,
 	},
-	ChatMessageReadedResponse?: {
-		keyFields?: false | ChatMessageReadedResponseKeySpecifier | (() => undefined | ChatMessageReadedResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: ChatMessageReadedResponseFieldPolicy,
-	},
 	ChatMessageResponse?: {
 		keyFields?: false | ChatMessageResponseKeySpecifier | (() => undefined | ChatMessageResponseKeySpecifier),
 		queryType?: true,
 		mutationType?: true,
 		subscriptionType?: true,
 		fields?: ChatMessageResponseFieldPolicy,
-	},
-	EthContractSourceResponse?: {
-		keyFields?: false | EthContractSourceResponseKeySpecifier | (() => undefined | EthContractSourceResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: EthContractSourceResponseFieldPolicy,
 	},
 	EthTransactionResponse?: {
 		keyFields?: false | EthTransactionResponseKeySpecifier | (() => undefined | EthTransactionResponseKeySpecifier),
@@ -5111,13 +4955,6 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: ProjectResponseFieldPolicy,
 	},
-	ProjectMemberResponse?: {
-		keyFields?: false | ProjectMemberResponseKeySpecifier | (() => undefined | ProjectMemberResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: ProjectMemberResponseFieldPolicy,
-	},
 	TaskResponse?: {
 		keyFields?: false | TaskResponseKeySpecifier | (() => undefined | TaskResponseKeySpecifier),
 		queryType?: true,
@@ -5138,41 +4975,6 @@ export type TypedTypePolicies = TypePolicies & {
 		mutationType?: true,
 		subscriptionType?: true,
 		fields?: TimerResponseFieldPolicy,
-	},
-	TeamResponse?: {
-		keyFields?: false | TeamResponseKeySpecifier | (() => undefined | TeamResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: TeamResponseFieldPolicy,
-	},
-	TeamMemberResponse?: {
-		keyFields?: false | TeamMemberResponseKeySpecifier | (() => undefined | TeamMemberResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: TeamMemberResponseFieldPolicy,
-	},
-	ServiceResponse?: {
-		keyFields?: false | ServiceResponseKeySpecifier | (() => undefined | ServiceResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: ServiceResponseFieldPolicy,
-	},
-	PositionResponse?: {
-		keyFields?: false | PositionResponseKeySpecifier | (() => undefined | PositionResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: PositionResponseFieldPolicy,
-	},
-	RouteResponse?: {
-		keyFields?: false | RouteResponseKeySpecifier | (() => undefined | RouteResponseKeySpecifier),
-		queryType?: true,
-		mutationType?: true,
-		subscriptionType?: true,
-		fields?: RouteResponseFieldPolicy,
 	},
 	Subscription?: {
 		keyFields?: false | SubscriptionKeySpecifier | (() => undefined | SubscriptionKeySpecifier),
@@ -6056,6 +5858,34 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: InventorySubscriptionPayloadFieldPolicy,
 	},
+	LetsadsSmsMessageStatus?: {
+		keyFields?: false | LetsadsSmsMessageStatusKeySpecifier | (() => undefined | LetsadsSmsMessageStatusKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: LetsadsSmsMessageStatusFieldPolicy,
+	},
+	SmsMessage?: {
+		keyFields?: false | SmsMessageKeySpecifier | (() => undefined | SmsMessageKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: SmsMessageFieldPolicy,
+	},
+	SmsProvider?: {
+		keyFields?: false | SmsProviderKeySpecifier | (() => undefined | SmsProviderKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: SmsProviderFieldPolicy,
+	},
+	LetsadsSmsMessageStatusItem?: {
+		keyFields?: false | LetsadsSmsMessageStatusItemKeySpecifier | (() => undefined | LetsadsSmsMessageStatusItemKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: LetsadsSmsMessageStatusItemFieldPolicy,
+	},
 	LetsadsSmsMessageStatusConnection?: {
 		keyFields?: false | LetsadsSmsMessageStatusConnectionKeySpecifier | (() => undefined | LetsadsSmsMessageStatusConnectionKeySpecifier),
 		queryType?: true,
@@ -6553,6 +6383,27 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: VoteSubscriptionPayloadFieldPolicy,
 	},
+	FileResponse?: {
+		keyFields?: false | FileResponseKeySpecifier | (() => undefined | FileResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: FileResponseFieldPolicy,
+	},
+	SmsMessageResponse?: {
+		keyFields?: false | SmsMessageResponseKeySpecifier | (() => undefined | SmsMessageResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: SmsMessageResponseFieldPolicy,
+	},
+	SmsProviderResponse?: {
+		keyFields?: false | SmsProviderResponseKeySpecifier | (() => undefined | SmsProviderResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: SmsProviderResponseFieldPolicy,
+	},
 	MarketplaceAuthResponse?: {
 		keyFields?: false | MarketplaceAuthResponseKeySpecifier | (() => undefined | MarketplaceAuthResponseKeySpecifier),
 		queryType?: true,
@@ -6560,12 +6411,61 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: MarketplaceAuthResponseFieldPolicy,
 	},
+	GameResponse?: {
+		keyFields?: false | GameResponseKeySpecifier | (() => undefined | GameResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: GameResponseFieldPolicy,
+	},
+	GameResultResponse?: {
+		keyFields?: false | GameResultResponseKeySpecifier | (() => undefined | GameResultResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: GameResultResponseFieldPolicy,
+	},
+	TournamentResponse?: {
+		keyFields?: false | TournamentResponseKeySpecifier | (() => undefined | TournamentResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: TournamentResponseFieldPolicy,
+	},
+	TournamentGroupResponse?: {
+		keyFields?: false | TournamentGroupResponseKeySpecifier | (() => undefined | TournamentGroupResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: TournamentGroupResponseFieldPolicy,
+	},
+	TourneyResponse?: {
+		keyFields?: false | TourneyResponseKeySpecifier | (() => undefined | TourneyResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: TourneyResponseFieldPolicy,
+	},
+	ChatMessageReadedResponse?: {
+		keyFields?: false | ChatMessageReadedResponseKeySpecifier | (() => undefined | ChatMessageReadedResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: ChatMessageReadedResponseFieldPolicy,
+	},
 	EthBlockResponse?: {
 		keyFields?: false | EthBlockResponseKeySpecifier | (() => undefined | EthBlockResponseKeySpecifier),
 		queryType?: true,
 		mutationType?: true,
 		subscriptionType?: true,
 		fields?: EthBlockResponseFieldPolicy,
+	},
+	EthContractSourceResponse?: {
+		keyFields?: false | EthContractSourceResponseKeySpecifier | (() => undefined | EthContractSourceResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: EthContractSourceResponseFieldPolicy,
 	},
 	EthPersonalAccountResponse?: {
 		keyFields?: false | EthPersonalAccountResponseKeySpecifier | (() => undefined | EthPersonalAccountResponseKeySpecifier),
@@ -6581,11 +6481,53 @@ export type TypedTypePolicies = TypePolicies & {
 		subscriptionType?: true,
 		fields?: IceCandidateFieldPolicy,
 	},
+	PositionResponse?: {
+		keyFields?: false | PositionResponseKeySpecifier | (() => undefined | PositionResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: PositionResponseFieldPolicy,
+	},
+	ProjectMemberResponse?: {
+		keyFields?: false | ProjectMemberResponseKeySpecifier | (() => undefined | ProjectMemberResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: ProjectMemberResponseFieldPolicy,
+	},
+	ServiceResponse?: {
+		keyFields?: false | ServiceResponseKeySpecifier | (() => undefined | ServiceResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: ServiceResponseFieldPolicy,
+	},
 	ServiceCategoryResponse?: {
 		keyFields?: false | ServiceCategoryResponseKeySpecifier | (() => undefined | ServiceCategoryResponseKeySpecifier),
 		queryType?: true,
 		mutationType?: true,
 		subscriptionType?: true,
 		fields?: ServiceCategoryResponseFieldPolicy,
+	},
+	TeamResponse?: {
+		keyFields?: false | TeamResponseKeySpecifier | (() => undefined | TeamResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: TeamResponseFieldPolicy,
+	},
+	TeamMemberResponse?: {
+		keyFields?: false | TeamMemberResponseKeySpecifier | (() => undefined | TeamMemberResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: TeamMemberResponseFieldPolicy,
+	},
+	RouteResponse?: {
+		keyFields?: false | RouteResponseKeySpecifier | (() => undefined | RouteResponseKeySpecifier),
+		queryType?: true,
+		mutationType?: true,
+		subscriptionType?: true,
+		fields?: RouteResponseFieldPolicy,
 	}
 };

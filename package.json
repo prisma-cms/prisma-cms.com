@@ -9,8 +9,8 @@
     "packages/@prisma-cms/editor",
     "packages/@prisma-cms/query-builder",
     "packages/@prisma-cms/uploader",
-    "packages/@prisma-cms/front-editor",
-    "packages/apollo-cms"
+    "packages/apollo-cms",
+    "packages/@prisma-cms/front-editor"
   ],
   "scripts": {
     "dev": "nodemon",
@@ -57,7 +57,7 @@
     "@prisma-cms/context": "^2.0.3",
     "@prisma-cms/query-builder": "^2.0.0",
     "@prisma-cms/cooperation-module": "latest",
-    "@prisma-cms/editor": "^2.0.0",
+    "@prisma-cms/editor": "^2.0.7",
     "@prisma-cms/ethereum-module": "latest",
     "@prisma-cms/front-editor": "^3.0.0",
     "@prisma-cms/log-module": "latest",
@@ -80,7 +80,7 @@
     "csstype": "^3.0.4",
     "css": "^3.0.0",
     "ethereumjs-util": "^7.0.7",
-    "graphql": "14.0.2",
+    "graphql": "^15.4.0",
     "graphql-shield": "^7.3.0",
     "graphql-tag": "2.10.0",
     "jss": "^10.4.0",
@@ -110,7 +110,7 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@graphql-codegen/add": "^2.0.1",
-    "@graphql-codegen/cli": "^1.18.0",
+    "@graphql-codegen/cli": "^1.17.10",
     "@graphql-codegen/introspection": "^1.18.0",
     "@graphql-codegen/near-operation-file-preset": "^1.17.11",
     "@graphql-codegen/typescript": "^1.17.10",
@@ -181,8 +181,6 @@
     "@prisma-cms/component": "^2.0.0",
     "@prisma-cms/context": "^2.0.3",
     "@prisma-cms/query-builder": "^2.0.0",
-    "@prisma-cms/front-editor": "^3.0.0",
-    "@prisma-cms/uploader": "^2.0.0",
     "@testing-library/react": "^10.0.1",
     "@testing-library/react-hooks": "^3.4.2",
     "css": "^3.0.0",
@@ -191,8 +189,6 @@
     "jest-styled-components": "^7.0.3",
     "jest-watch-typeahead": "^0.5.0",
     "apollo-cms": "^2.0.0",
-    "graphql": "14.0.2",
-    "graphql-config": "^3.0.3",
     "monaco-editor": "^0.18.1",
     "sha3": "^2.0.7",
     "terser": "3.14.1",
@@ -202,7 +198,9 @@
     "react-jss": "^8.6.1",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
-    "apollo-link-dedup": "1.0.15"
+    "apollo-link-dedup": "1.0.15",
+    "**/apollo-language-server/graphql": "^15.0.0",
+    "**/@types/graphql-upload/graphql": "^15.0.0"
   },
   "browserslist": [
     ">0.2%",
