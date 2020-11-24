@@ -1,8 +1,8 @@
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { EditorComponent } from '@prisma-cms/front-editor'
 import ForumView from '../../../../../../view/forum/view'
-import { ConnectorContext } from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector'
+import { ConnectorContext } from '@prisma-cms/front-editor/dist/components/Connectors/Connector'
 
 export class TopicsPage extends EditorComponent {
   static Name = 'TopicsPage'

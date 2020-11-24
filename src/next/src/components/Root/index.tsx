@@ -1,6 +1,8 @@
 import React from 'react'
 
 import FrontEditor, { FrontEditorProps } from '@prisma-cms/front-editor'
+import FrontEditorComponents from '@prisma-cms/front-editor/dist/preset/all'
+
 // // import OldPageHeader from './components/OldPageHeader'
 // // import OldPages from './components/pages/OldPages'
 // // import SwitchTemplateLink from './components/Link/SwitchTemplate';
@@ -21,6 +23,8 @@ import Youtube from './components/Resource/Fields/Field/Youtube'
 // // import FreeCodeCamp from './components/FreeCodeCamp/FreeCodeCamp'
 // // import CodeChallenge from './components/FreeCodeCamp/CodeChallenge'
 // import CallRequestButtons from './components/webrtc/CallRequestButtons'
+
+type RootPageProps = Omit<FrontEditorProps, 'Components'>
 
 export const CustomComponents = [
   // UserPage,
@@ -49,8 +53,20 @@ export const CustomComponents = [
   // CallRequestButtons,
 ] as FrontEditorProps['Components']
 
-const RootPage: React.FC<FrontEditorProps> = (props) => {
-  return <FrontEditor {...props} CustomComponents={CustomComponents} />
+const Components = CustomComponents.reduce((curr, next) => {
+  const index = curr.findIndex((n) => n.Name === next.Name)
+
+  if (index !== -1) {
+    curr[index] = next
+  } else {
+    curr.push(next)
+  }
+
+  return curr
+}, FrontEditorComponents)
+
+const RootPage: React.FC<RootPageProps> = (props) => {
+  return <FrontEditor Components={Components} {...props} />
 }
 
 export default RootPage

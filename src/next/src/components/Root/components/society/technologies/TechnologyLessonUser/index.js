@@ -2,8 +2,8 @@
 
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
-import { ObjectContext } from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector/ListView'
+import { EditorComponent } from '@prisma-cms/front-editor'
+import { ObjectContext } from '@prisma-cms/front-editor/dist/components/Connectors/Connector/ListView'
 
 export class TechnologyLessonUser extends EditorComponent {
   static Name = 'TechnologyLessonUser'

@@ -1,10 +1,10 @@
 import '@prisma-cms/context'
 import URI from 'urijs'
-import Editor from '@prisma-cms/editor'
+// import Editor from '@prisma-cms/editor'
 import { NextRouter } from 'next/dist/client/router'
 import { ApolloClientNormolized } from 'src/pages/_App/interfaces'
 import { muiTheme } from 'src/pages/_App/MUI/theme'
-import Pagination from '../../components/Pagination'
+// import Pagination from '../../components/Pagination'
 
 declare module '@prisma-cms/context' {
   export type PrismaCmsContext = {
@@ -44,10 +44,10 @@ declare module '@prisma-cms/context' {
      * @prisma-cms/front-editor
      */
 
-    Pagination: any
+    // Pagination: any
 
     UserLink: any
 
-    Editor: any
+    // Editor: any
   }
 }

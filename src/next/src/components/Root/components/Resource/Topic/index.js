@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { EditableObjectContext } from '@prisma-cms/front-editor/dist/components/App/context'
+import { EditableObjectContext } from '@prisma-cms/front-editor'
 
 import Resource from '../'
 

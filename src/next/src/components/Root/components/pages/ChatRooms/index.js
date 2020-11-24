@@ -1,6 +1,6 @@
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { EditorComponent } from '@prisma-cms/front-editor'
 import ChatRoomsPage from '../../../../society/ChatRooms'
 
 export class ChatRooms extends EditorComponent {

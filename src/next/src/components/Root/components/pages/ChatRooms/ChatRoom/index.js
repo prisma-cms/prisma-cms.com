@@ -1,6 +1,6 @@
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { EditorComponent } from '@prisma-cms/front-editor'
 import ChatRoomView from '@prisma-cms/webrtc/lib/components/pages/society/ChatRooms/ChatRoom/View'
 import { EditableObjectContext } from '@prisma-cms/front-editor/dist/components/App/context'
 

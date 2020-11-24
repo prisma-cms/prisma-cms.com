@@ -1,8 +1,8 @@
 import React from 'react'
 
-import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
+import { EditorComponent } from '@prisma-cms/front-editor'
 import Resource from '..'
-import { ObjectContext } from '@prisma-cms/front-editor/dist/components/App/components/public/Connectors/Connector/ListView'
+import { ObjectContext } from '@prisma-cms/front-editor/dist/components/Connectors/Connector/ListView'
 import TopicComments from '../../../../../../pages/Topics/Topic/view/Comments'
 
 export class Comments extends EditorComponent {

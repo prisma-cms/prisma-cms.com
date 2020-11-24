@@ -32,9 +32,9 @@ import Page404 from '../_Error/404'
 import ErrorPage from '../_Error'
 import { NextSeo, NextSeoProps } from 'next-seo'
 import Head from 'next/head'
-import Pagination from '../../components/Pagination'
+// import Pagination from '../../components/Pagination'
 import UserLink from '../../uikit/Link/User'
-import Editor from '../../uikit/Editor'
+// import Editor from '../../uikit/Editor'
 
 // TODO: Проработать локализацию
 moment.locale('ru')
@@ -125,9 +125,9 @@ const App: MainApp = (props) => {
       /**
        * @prisma-cms/front-editor
        */
-      Pagination,
+      // Pagination,
       UserLink,
-      Editor,
+      // Editor,
     }
 
     return context

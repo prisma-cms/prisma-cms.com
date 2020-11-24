@@ -1,12 +1,9 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import EditorComponent from '@prisma-cms/front-editor/dist/components/App/components/'
-// import EditableObject from '@prisma-cms/front-editor/dist/components/App/components/public/form/EditableObject';
-import {
-  EditableObjectContext,
-  EditorContext,
-} from '@prisma-cms/front-editor/dist/components/App/context'
+import { EditorComponent } from '@prisma-cms/front-editor'
+// import EditableObject from '@prisma-cms/front-editor/dist/components/form/EditableObject';
+import { EditableObjectContext, EditorContext } from '@prisma-cms/front-editor'
 import Resource from '..'
 // import ResourceField from './Field';
 // import OldPageHeader from '../../OldPageHeader'
