@@ -58,6 +58,7 @@ let subscriptionClient: SubscriptionClient | undefined
  * Нам этот клиент нужен, чтобы переподключаться при логине/логауте
  */
 export function getSubscriptionClient() {
+  // TODO: Fix for next.js SSR
   if (typeof window === 'undefined') {
     return
   }
