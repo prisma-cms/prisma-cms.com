@@ -20,7 +20,7 @@ import { JssProvider } from 'react-jss'
 import { createGenerateClassName } from 'material-ui/styles'
 // import { muiTheme } from '../_App/MUI/theme'
 
-const SheetsRegistry = require('react-jss').SheetsRegistry
+import { SheetsRegistry } from 'react-jss'
 
 export default class MyDocument extends Document {
   render() {
