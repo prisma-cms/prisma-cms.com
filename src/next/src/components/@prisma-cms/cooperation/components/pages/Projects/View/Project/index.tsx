@@ -56,11 +56,12 @@ export class ProjectView<
     )
   }
 
-  save() {
+  async save() {
     const { user: currentUser, openLoginForm } = this.context
 
     if (!currentUser) {
-      return openLoginForm()
+      openLoginForm()
+      return
     }
 
     return super.save()
@@ -143,7 +144,7 @@ export class ProjectView<
         <Typography variant="subheading">
           Задачи в проекте{' '}
           {projectId ? (
-            <Link to={`/tasks/create/${projectId}`}>Добавить</Link>
+            <Link href={`/tasks/create/${projectId}`}>Добавить</Link>
           ) : null}
         </Typography>
 

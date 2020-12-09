@@ -18,7 +18,7 @@
   },
   "overrides": [
     {
-      "files": ["*.{ts,tsx}"],
+      "files": ["src/**/*.{ts,tsx}"],
       "rules": {
         // Deny use require
         "no-restricted-modules": [

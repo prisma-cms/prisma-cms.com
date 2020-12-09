@@ -207,25 +207,24 @@ export class TasksView<
     })
   }
 
-  onClickUpVote = (target: any) => {
-    const taskId = target.attributes.role.value
-
+  // TODO Fix method
+  onClickUpVote = (_target: any) => {
+    // const taskId = target.attributes.role.value
     // createTaskReactionProcessor({
     // });
-
-    this.mutate({
-      // mutation: gql(createTaskReactionProcessor),
-      variables: {
-        data: {
-          type: 'UpVote',
-          Task: {
-            connect: {
-              id: taskId,
-            },
-          },
-        },
-      },
-    })
+    // this.mutate({
+    //   // mutation: gql(createTaskReactionProcessor),
+    //   variables: {
+    //     data: {
+    //       type: 'UpVote',
+    //       Task: {
+    //         connect: {
+    //           id: taskId,
+    //         },
+    //       },
+    //     },
+    //   },
+    // })
   }
 
   getColumns<CC extends TasksConnectionTaskFragment>(): ColumnConfig<CC>[] {

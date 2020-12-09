@@ -4,6 +4,8 @@ import URI from 'urijs'
 import { NextRouter } from 'next/dist/client/router'
 import { ApolloClientNormolized } from 'src/pages/_App/interfaces'
 import { muiTheme } from 'src/pages/_App/MUI/theme'
+import ProjectLink from 'src/uikit/Link/Project'
+import Link from 'src/uikit/Link'
 // import Pagination from '../../components/Pagination'
 
 declare module '@prisma-cms/context' {
@@ -49,5 +51,8 @@ declare module '@prisma-cms/context' {
     UserLink: any
 
     // Editor: any
+    ProjectLink: typeof ProjectLink
+
+    Link: typeof Link
   }
 }

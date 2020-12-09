@@ -104,11 +104,12 @@ class TimerView extends EditableView<TimerViewProps> {
     })
   }
 
-  save() {
+  async save() {
     const { user: currentUser, openLoginForm } = this.context
 
     if (!currentUser) {
-      return openLoginForm()
+      openLoginForm()
+      return
     }
 
     return super.save()

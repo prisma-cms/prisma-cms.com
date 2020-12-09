@@ -34,6 +34,8 @@ import { NextSeo, NextSeoProps } from 'next-seo'
 import Head from 'next/head'
 // import Pagination from '../../components/Pagination'
 import UserLink from '../../uikit/Link/User'
+import ProjectLink from '../../uikit/Link/Project'
+import Link from '../../uikit/Link'
 // import Editor from '../../uikit/Editor'
 
 // TODO: Проработать локализацию
@@ -128,6 +130,8 @@ const App: MainApp = (props) => {
       // Pagination,
       UserLink,
       // Editor,
+      ProjectLink,
+      Link,
     }
 
     return context
