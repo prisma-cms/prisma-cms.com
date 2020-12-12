@@ -1,17 +1,15 @@
 import Head from 'next/head'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import {
   ResourceType,
   TopicsConnectionDocument,
   TopicsConnectionQueryVariables,
   useTopicsConnectionQuery,
-  TopicsConnectionQuery,
   TopicsConnectionTopicFragment,
 } from 'src/modules/gql/generated'
 
-import { Page } from '../_App/interfaces'
-import { useRouter } from 'next/router'
-import { ParsedUrlQuery } from 'querystring'
+import { Page, NextPageContextCustom } from '../_App/interfaces'
+import { useRouter, NextRouter } from 'next/router'
 import { TopicsView } from './View'
 
 const first = 10
@@ -23,17 +21,28 @@ const topicsVariables: TopicsConnectionQueryVariables = {
   first,
 }
 
-function getQueryParams(query: ParsedUrlQuery) {
+export const getTopicsVariables = (
+  router: NextRouter | NextPageContextCustom,
+  where?: TopicsConnectionQueryVariables['where']
+) => {
   let skip: number | undefined
 
   const page =
-    (query.page && typeof query.page === 'string' && parseInt(query.page)) || 0
+    (router.query.page &&
+      typeof router.query.page === 'string' &&
+      parseInt(router.query.page)) ||
+    0
 
   if (page > 1) {
     skip = (page - 1) * first
   }
 
   return {
+    ...topicsVariables,
+    where: {
+      ...topicsVariables.where,
+      ...where,
+    },
     skip,
     first,
     page,
@@ -43,38 +52,22 @@ function getQueryParams(query: ParsedUrlQuery) {
 const TopicsPage: Page = () => {
   const router = useRouter()
 
-  const { query } = router
-
   const { page, ...queryVariables } = useMemo(() => {
-    return {
-      ...topicsVariables,
-      ...getQueryParams(query),
-    }
-  }, [query])
+    return getTopicsVariables(router)
+  }, [router])
 
-  const queryResult = useTopicsConnectionQuery({
+  const response = useTopicsConnectionQuery({
     variables: queryVariables,
-    onCompleted: (data) => {
-      setResponse(data)
-    },
     onError: console.error,
   })
 
-  /**
-   * useState используем уже после выполнения запроса, так как на стороне setState не имеет эффекта,
-   * надо дефолтные данные сразу задать из полученного результата
-   */
-  const [response, setResponse] = useState<
-    TopicsConnectionQuery | null | undefined
-  >(queryResult.data)
-
-  const { variables, loading } = queryResult
+  const { variables, loading } = response
 
   const objects = useMemo(() => {
     const objects: TopicsConnectionTopicFragment[] = []
 
     return (
-      response?.objectsConnection.edges.reduce((curr, next) => {
+      response.data?.objectsConnection.edges.reduce((curr, next) => {
         if (next?.node) {
           curr.push(next.node)
         }
@@ -82,7 +75,7 @@ const TopicsPage: Page = () => {
         return curr
       }, objects) ?? []
     )
-  }, [response?.objectsConnection.edges])
+  }, [response.data?.objectsConnection.edges])
 
   return (
     <>
@@ -92,11 +85,9 @@ const TopicsPage: Page = () => {
       </Head>
 
       <TopicsView
-        // {...queryResult}
         loading={loading}
-        // data={response || null}
         objects={objects}
-        count={response?.objectsConnection.aggregate.count}
+        count={response.data?.objectsConnection.aggregate.count}
         variables={variables}
         page={page}
       />
@@ -114,10 +105,7 @@ TopicsPage.getInitialProps = async (context) => {
      * Важно, чтобы все переменные запроса серверные и фронтовые совпадали,
      * иначе при рендеринге не будут получены данные из кеша и рендер будет пустой.
      */
-    variables: {
-      ...topicsVariables,
-      ...getQueryParams(context.query),
-    },
+    variables: getTopicsVariables(context),
   })
 
   return {}

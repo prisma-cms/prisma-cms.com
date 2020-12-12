@@ -1,7 +1,7 @@
-import { TopicObjectFragment } from 'src/modules/gql/generated'
+import { Resource_Fragment } from 'src/modules/gql/generated'
 
 export interface TopicCommentsProps {
-  topic: TopicObjectFragment
+  topic: Resource_Fragment
 }
 
 export interface TopicCommentsState {

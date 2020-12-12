@@ -1,0 +1,111 @@
+query user($where: UserWhereUniqueInput!) {
+  object: user(where: $where) {
+    ...user_
+  }
+}
+
+fragment user_ on User {
+  ...UserNoNesting
+  EthAccounts {
+    ...EthAccountNoNesting
+  }
+  NotificationTypes {
+    ...NotificationTypeNoNesting
+  }
+  Projects {
+    ...ProjectMemberNoNesting
+    Project {
+      ...ProjectNoNesting
+      Resource {
+        ...ResourceNoNesting
+      }
+    }
+  }
+  ProjectsCreated {
+    ...ProjectNoNesting
+    Resource {
+      ...ResourceNoNesting
+    }
+  }
+}
+
+fragment UserNoNesting on User {
+  id
+  createdAt
+  updatedAt
+  username
+  email
+  phone
+  showEmail
+  showPhone
+  password
+  fullname
+  image
+  address
+  sudo
+  active
+  activated
+  deleted
+  hasEmail
+  hasPhone
+  marketplaceToken
+  hidden
+}
+
+fragment EthAccountNoNesting on EthAccount {
+  id
+  createdAt
+  updatedAt
+  name
+  description
+  address
+  type
+  source
+  bytecode
+  abi
+  balance
+}
+
+fragment NotificationTypeNoNesting on NotificationType {
+  id
+  createdAt
+  updatedAt
+  name
+  code
+  comment
+  oldID
+}
+
+fragment ProjectMemberNoNesting on ProjectMember {
+  id
+  createdAt
+  updatedAt
+  status
+}
+
+fragment ResourceNoNesting on Resource {
+  id
+  createdAt
+  updatedAt
+  type
+  name
+  longtitle
+  content
+  components
+  contentText
+  published
+  deleted
+  hidemenu
+  searchable
+  uri
+  isfolder
+  rating
+  positiveVotesCount
+  negativeVotesCount
+  neutralVotesCount
+  oldID
+  commentOldID
+  class_key
+  template
+  mockUpdate
+}

@@ -1,0 +1,50 @@
+query task($where: TaskWhereUniqueInput!) {
+  object: task(where: $where) {
+    ...task_
+  }
+}
+
+fragment task_ on Task {
+  ...TaskNoNesting
+  CreatedBy {
+    ...UserNoNesting
+  }
+  Timers(orderBy: createdAt_DESC) {
+    ...TimerNoNesting
+    CreatedBy {
+      ...UserNoNesting
+    }
+  }
+  TaskProjects {
+    id
+    createdAt
+    updatedAt
+    Project {
+      ...ProjectNoNesting
+      CreatedBy {
+        ...UserNoNesting
+      }
+      Resource {
+        id
+        name
+        uri
+      }
+    }
+  }
+  RelatedTo {
+    ...TaskNoNesting
+  }
+  Reactions {
+    ...TaskReactionNoNesting
+    CreatedBy {
+      ...UserNoNesting
+    }
+  }
+}
+
+fragment TaskReactionNoNesting on TaskReaction {
+  id
+  createdAt
+  updatedAt
+  type
+}

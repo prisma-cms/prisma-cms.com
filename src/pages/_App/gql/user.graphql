@@ -27,29 +27,6 @@ fragment MeUser on User {
   }
 }
 
-fragment UserNoNesting on User {
-  id
-  createdAt
-  updatedAt
-  username
-  email
-  phone
-  showEmail
-  showPhone
-  password
-  fullname
-  image
-  address
-  sudo
-  active
-  activated
-  deleted
-  hasEmail
-  hasPhone
-  marketplaceToken
-  hidden
-}
-
 fragment TimerNoNesting on Timer {
   id
   createdAt
@@ -69,20 +46,4 @@ fragment TaskNoNesting on Task {
   endDatePlaning
   startDate
   endDate
-}
-
-fragment ProjectNoNesting on Project {
-  id
-  name
-  domain
-  createdAt
-  updatedAt
-  description
-  url
-  sequence
-  content
-  contentText
-  status
-  public
-  oldID
 }

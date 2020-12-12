@@ -1,8 +1,8 @@
 import { PrismaCmsComponentProps } from '@prisma-cms/component/dist'
-import { TopicObjectFragment } from 'src/modules/gql/generated'
+import { Resource_Fragment } from 'src/modules/gql/generated'
 
 export interface TopicBlogProps extends PrismaCmsComponentProps {
-  Topic: TopicObjectFragment | null | undefined
+  Topic: Resource_Fragment | null | undefined
 
   updateObject: (data: any) => void
 

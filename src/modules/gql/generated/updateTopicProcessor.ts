@@ -8,9 +8,9 @@
 
 import * as Types from './types';
 
-import { TopicObjectFragment } from './topicObject';
+import { Resource_Fragment } from './resource_';
 import { gql } from '@apollo/client';
-import { TopicObjectFragmentDoc } from './topicObject';
+import { Resource_FragmentDoc } from './resource_';
 import * as Apollo from '@apollo/client';
 export type UpdateTopicProcessorMutationVariables = Types.Exact<{
   data: Types.TopicUpdateInput;
@@ -20,7 +20,7 @@ export type UpdateTopicProcessorMutationVariables = Types.Exact<{
 
 export type UpdateTopicProcessorMutation = { __typename?: 'Mutation', response: { __typename?: 'ResourceResponse', success: boolean, message?: Types.Maybe<string>, errors: Array<{ __typename?: 'Error', key: string, message: string }>, data?: Types.Maybe<(
       { __typename?: 'Resource' }
-      & TopicObjectFragment
+      & Resource_Fragment
     )> } };
 
 
@@ -34,11 +34,11 @@ export const UpdateTopicProcessorDocument = gql`
       message
     }
     data {
-      ...topicObject
+      ...resource_
     }
   }
 }
-    ${TopicObjectFragmentDoc}`;
+    ${Resource_FragmentDoc}`;
 export type UpdateTopicProcessorMutationFn = Apollo.MutationFunction<UpdateTopicProcessorMutation, UpdateTopicProcessorMutationVariables>;
 
 /**

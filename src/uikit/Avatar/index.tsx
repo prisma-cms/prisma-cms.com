@@ -66,7 +66,7 @@ export class UserAvatar extends Component<UserAvatarProps> {
       fullname,
       // firstname,
       // lastname,
-    } = user ?? {}
+    } = user
 
     // const name = [firstname, lastname].filter(n => n).reduce((prev, next) => [prev, " ", next]) || username;
     // const name = fullname || [firstname, lastname].filter(n => n).join(" ") || username;

@@ -1,4 +1,4 @@
-import { User } from 'src/modules/gql/generated'
+import { UserNoNestingFragment } from 'src/modules/gql/generated'
 
 export interface UserAvatarProps {
   classes?: Record<string, any>
@@ -7,7 +7,7 @@ export interface UserAvatarProps {
 
   editable?: boolean
 
-  user: Partial<User> & {
+  user: Partial<UserNoNestingFragment> & {
     __typename?: 'User'
   }
 }

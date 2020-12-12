@@ -5,7 +5,7 @@ import Editor from 'src/uikit/Editor'
 import EditableView from 'apollo-cms/dist/DataView/Object/Editable'
 
 // import withStyles from "material-ui/styles/withStyles";
-import { Typography } from 'material-ui'
+import Typography from 'material-ui/Typography'
 import SendIcon from 'material-ui-icons/Send'
 
 import Grid from 'src/uikit/Grid'

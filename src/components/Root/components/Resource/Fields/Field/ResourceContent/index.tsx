@@ -4,7 +4,7 @@ import RichText from '@prisma-cms/front-editor/dist/components/Connectors/Connec
 // import ResourceField from '..';
 
 export class RichTextCustom extends RichText {
-  defaultProps = RichText.defaultProps
+  // static defaultProps = RichText.defaultProps
 
   renderAddButton() {
     return super.renderAddButton('Текстовый блок')
@@ -12,7 +12,7 @@ export class RichTextCustom extends RichText {
 }
 
 class ResourceContent extends RichTextCustom {
-  static Name = 'ResourceContent'
+  static Name = 'ResourceContent' as 'RichText'
 
   renderPanelView() {
     return null

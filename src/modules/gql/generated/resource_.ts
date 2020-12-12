@@ -8,19 +8,19 @@
 
 import * as Types from './types';
 
-import { TopicUserFragment } from './topicUser';
+import { UserNoNestingFragment } from './UserNoNesting';
 import { gql } from '@apollo/client';
-import { TopicUserFragmentDoc } from './topicUser';
-export type TopicObjectFragment = { __typename?: 'Resource', id: string, createdAt: Date, updatedAt: Date, type?: Types.Maybe<Types.ResourceType>, name: string, longtitle?: Types.Maybe<string>, content?: Types.Maybe<Record<string, any> | Array<any>>, components?: Types.Maybe<Record<string, any> | Array<any>>, published: boolean, deleted: boolean, hidemenu: boolean, uri: string, isfolder: boolean, rating?: Types.Maybe<number>, positiveVotesCount?: Types.Maybe<number>, negativeVotesCount?: Types.Maybe<number>, neutralVotesCount?: Types.Maybe<number>, CreatedBy: (
+import { UserNoNestingFragmentDoc } from './UserNoNesting';
+export type Resource_Fragment = { __typename?: 'Resource', id: string, createdAt: Date, updatedAt: Date, type?: Types.Maybe<Types.ResourceType>, name: string, longtitle?: Types.Maybe<string>, content?: Types.Maybe<Record<string, any> | Array<any>>, components?: Types.Maybe<Record<string, any> | Array<any>>, published: boolean, deleted: boolean, hidemenu: boolean, uri: string, isfolder: boolean, rating?: Types.Maybe<number>, positiveVotesCount?: Types.Maybe<number>, negativeVotesCount?: Types.Maybe<number>, neutralVotesCount?: Types.Maybe<number>, CreatedBy: (
     { __typename?: 'User' }
-    & TopicUserFragment
+    & UserNoNestingFragment
   ), Comments?: Types.Maybe<Array<{ __typename?: 'Resource', id: string, uri: string, createdAt: Date, updatedAt: Date, content?: Types.Maybe<Record<string, any> | Array<any>>, CreatedBy: (
       { __typename?: 'User' }
-      & TopicUserFragment
+      & UserNoNestingFragment
     ) }>>, Blog?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, longtitle?: Types.Maybe<string>, uri: string }>, Tags?: Types.Maybe<Array<{ __typename?: 'ResourceTag', Tag: { __typename?: 'Tag', id: string, name: string } }>> };
 
-export const TopicObjectFragmentDoc = gql`
-    fragment topicObject on Resource {
+export const Resource_FragmentDoc = gql`
+    fragment resource_ on Resource {
   id
   createdAt
   updatedAt
@@ -39,7 +39,7 @@ export const TopicObjectFragmentDoc = gql`
   negativeVotesCount
   neutralVotesCount
   CreatedBy {
-    ...topicUser
+    ...UserNoNesting
   }
   Comments(orderBy: id_ASC) {
     id
@@ -48,7 +48,7 @@ export const TopicObjectFragmentDoc = gql`
     updatedAt
     content
     CreatedBy {
-      ...topicUser
+      ...UserNoNesting
     }
   }
   Blog {
@@ -64,4 +64,4 @@ export const TopicObjectFragmentDoc = gql`
     }
   }
 }
-    ${TopicUserFragmentDoc}`;
+    ${UserNoNestingFragmentDoc}`;

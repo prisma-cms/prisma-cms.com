@@ -6,6 +6,7 @@ import { BlogsViewProps } from './interfaces'
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { BlogsConnectionResourceFragment } from 'src/modules/gql/generated'
 import UserLink from 'src/uikit/Link/User'
+import BlogLink from 'src/uikit/Link/Blog'
 
 class BlogsView<
   P extends BlogsViewProps = BlogsViewProps
@@ -21,6 +22,9 @@ class BlogsView<
         id: 'name',
         key: 'name',
         label: 'Название',
+        renderer: (_name: CC['name'], record) => {
+          return <BlogLink object={record} />
+        },
       },
       {
         id: 'CreatedBy',

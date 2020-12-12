@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Head from 'next/head'
 import React, { useMemo } from 'react'
 import {

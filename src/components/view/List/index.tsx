@@ -49,16 +49,17 @@ const customStyles = () => {
 class ObjectsListView<
   P extends ObjectsListViewProps = ObjectsListViewProps
 > extends TableView<P> {
-  static propTypes = {
-    // ...TableView.propTypes,
-    // withPagination: PropTypes.bool.isRequired,
-  }
+  // static propTypes = {
+  //   // ...TableView.propTypes,
+  //   // withPagination: PropTypes.bool.isRequired,
+  // }
 
   static defaultProps = {
     ...TableView.defaultProps,
     withPagination: true,
     // columnData: [],
     limit: 0,
+    className: 'TableView',
   }
 
   // getColumns() {

@@ -1,0 +1,34 @@
+query technology($where: TechnologyWhereUniqueInput!) {
+  object: technology(where: $where) {
+    ...technology_
+  }
+}
+
+fragment technology_ on Technology {
+  id
+  createdAt
+  updatedAt
+  name
+  components
+  contentText
+  site_url
+  CreatedBy {
+    ...UserNoNesting
+  }
+  UserTechnologies {
+    ...userTechnology
+    CreatedBy {
+      ...UserNoNesting
+    }
+  }
+}
+
+fragment userTechnology on UserTechnology {
+  id
+  createdAt
+  updatedAt
+  components
+  date_from
+  date_till
+  status
+}

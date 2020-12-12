@@ -1,40 +1,29 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
-  TopicDocument,
-  TopicQuery,
-  useTopicQuery,
+  useResourceQuery,
   useUpdateTopicProcessorMutation,
 } from 'src/modules/gql/generated'
+
+import { getResourceVariables } from 'src/pages/Resource'
 
 import View from './View'
 
 import { Page } from '../../_App/interfaces'
-import { TopicPageProps } from './interfaces'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 
-const TopicPage: Page<TopicPageProps> = () => {
+export const TopicPage: Page = () => {
   const router = useRouter()
 
   const [mutate] = useUpdateTopicProcessorMutation()
 
-  const { asPath } = router
+  const variables = useMemo(() => getResourceVariables(router), [router])
 
-  const queryResult = useTopicQuery({
-    variables: {
-      where: {
-        uri: asPath,
-      },
-    },
-    // onCompleted: (data) => {
-    //   // setResponse(data.object)
-    // },
+  const queryResult = useResourceQuery({
+    variables,
+    skip: !variables.where,
     onError: console.error,
   })
-
-  // const [response, setResponse] = useState<
-  //   TopicObjectFragment | null | undefined
-  // >(queryResult.data?.object)
 
   const object = queryResult.data?.object
   const name = object?.name
@@ -49,27 +38,8 @@ const TopicPage: Page<TopicPageProps> = () => {
   )
 }
 
-TopicPage.getInitialProps = async (context) => {
-  const { apolloClient, asPath } = context
-
-  const queryResult = await apolloClient.query<TopicQuery>({
-    query: TopicDocument,
-
-    /**
-     * Важно, чтобы все переменные запроса серверные и фронтовые совпадали,
-     * иначе при рендеринге не будут получены данные из кеша и рендер будет пустой.
-     */
-    variables: {
-      where: {
-        uri: asPath,
-      },
-    },
-  })
-
-  return {
-    queryResult,
-    statusCode: !queryResult.data.object ? 404 : undefined,
-  }
-}
-
-export default TopicPage
+/**
+ * @deprecated
+ * Do not use TopicPage directly. Use ResourcePage instead
+ */
+// export default TopicPage

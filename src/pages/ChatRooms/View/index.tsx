@@ -46,7 +46,7 @@ class ChatRoomsView<
       {
         id: 'Members',
         key: 'Members',
-        label: 'Кто использует',
+        label: 'Участники',
         renderer: (value: CC['Members']) => {
           const items =
             value?.map((n) => (

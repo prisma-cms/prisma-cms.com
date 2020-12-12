@@ -1,0 +1,58 @@
+query project($where: ResourceWhereUniqueInput!) {
+  object: resource(where: $where) {
+    id
+    name
+    uri
+    type
+    Project {
+      ...project_
+    }
+  }
+}
+
+fragment project_ on Project {
+  ...ProjectNoNesting
+  CreatedBy {
+    ...UserNoNesting
+  }
+  Members {
+    id
+    User {
+      ...UserNoNesting
+    }
+  }
+  ProjectTasks {
+    id
+    createdAt
+    updatedAt
+    Task {
+      ...TaskNoNesting
+      CreatedBy {
+        ...UserNoNesting
+      }
+      Timers(where: { stopedAt: null }) {
+        id
+        createdAt
+        updatedAt
+        stopedAt
+        CreatedBy {
+          ...UserNoNesting
+        }
+      }
+      CreatedBy {
+        ...UserNoNesting
+      }
+      Parent {
+        ...TaskNoNesting
+      }
+    }
+  }
+  Resource {
+    id
+    uri
+    Image {
+      id
+      path
+    }
+  }
+}
