@@ -55,8 +55,6 @@ export class TechnologyProcessor extends PrismaProcessor {
       if (components !== undefined) {
         const contentText = this.reduceComponents(components, '')
 
-        // console.log("contentText", contentText);
-
         Object.assign(data, {
           contentText: contentText ? contentText : null,
         })

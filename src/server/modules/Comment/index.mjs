@@ -16,8 +16,6 @@ export class CommentProcessor extends PrismaProcessor {
     if (args.data) {
       let { TechnologyLesson, ...data } = args.data
 
-      // console.log("args.data", JSON.stringify(args.data, true, 2));
-
       if (TechnologyLesson !== undefined) {
         const { connect } = TechnologyLesson || {}
 
@@ -62,8 +60,6 @@ export class CommentProcessor extends PrismaProcessor {
       if (components !== undefined) {
         const contentText = this.reduceComponents(components, '')
 
-        // console.log("contentText", contentText);
-
         Object.assign(data, {
           contentText: contentText ? contentText : null,
         })
@@ -74,13 +70,7 @@ export class CommentProcessor extends PrismaProcessor {
       })
 
       args.data = data
-
-      // console.log(chalk.green("data"), JSON.stringify(data, true, 2));
     }
-
-    // console.log("hasErrors", this.hasErrors());
-
-    // return false;
 
     return super.mutate(method, args)
   }

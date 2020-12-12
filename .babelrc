@@ -2,6 +2,13 @@
   "presets": ["next/babel"],
   "plugins": [
     [
+      // https://github.com/facebook/create-react-app/issues/8918
+      "@babel/plugin-transform-typescript",
+      {
+        "allowDeclareFields": true
+      }
+    ],
+    [
       "babel-plugin-styled-components",
       {
         // In some projects missed namespace for styled-components

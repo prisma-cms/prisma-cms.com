@@ -1,7 +1,4 @@
 export const reduceContentComponents = function (components, text = '') {
-  // let text = "";
-
-  // console.log(chalk.green("components"), JSON.stringify(components, true, 2));
 
   if (components && components.length) {
     components.map((n) => {
@@ -35,11 +32,6 @@ export const reduceContentComponents = function (components, text = '') {
           return null
         })
       }
-
-      // console.log(chalk.green("props"), JSON.stringify(props, true, 2));
-
-      // console.log(chalk.green("component"), component);
-      // console.log(chalk.green("tag"), tag);
 
       if (componentText && typeof componentText === 'string') {
         text += componentText

@@ -37,9 +37,6 @@ class TestProcessor extends PrismaProcessor {
   }
 
   async mutate(method, args, info) {
-    // console.log("args", args);
-
-    // return false;
 
     let { name, ...data } = args.data || {}
 

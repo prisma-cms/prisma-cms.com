@@ -159,8 +159,6 @@ class TopicView extends EditableView<TopicViewProps> {
   }
 
   onChangeState = (data: EditorComponentProps['_dirty']) => {
-    // console.log("onChangeState components", data);
-
     this.updateObject(data)
     return data
   }
@@ -171,17 +169,10 @@ class TopicView extends EditableView<TopicViewProps> {
     if (!object) {
       return null
     }
-    // const { classes } = this.props
-
-    // console.log("Topic object", object);
 
     const { content, components } = object
 
     const inEditMode = this.inEditMode()
-
-    // console.log("Topic components", components);
-
-    // const allow_edit = this.canEdit()
 
     let output = null
 

@@ -150,7 +150,6 @@ async function generateTypesFromMap() {
   function loaderFunction(name: string) {
     const query = parse(queriesMap.get(path.basename(name)))
 
-    // console.log("loaderFunction query", query);
     return query
   }
 
@@ -161,8 +160,6 @@ async function generateTypesFromMap() {
   for (const name of queriesMap.keys()) {
     documents[path.join(OUTPUT_PATH, name)] = loader
   }
-
-  // console.log("documents", documents);
 
   const codegenConfig = {
     plugins: [

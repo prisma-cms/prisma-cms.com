@@ -67,7 +67,6 @@ export class ModxclubUserProcessor extends UserPayload {
    *
    */
   async ethSigninOrSignup(args, info) {
-    // console.log("ethSigninOrSignup args", args);
 
     const {
       db,
@@ -91,8 +90,6 @@ export class ModxclubUserProcessor extends UserPayload {
     if (!address) {
       return this.addError('Не был получен адрес подписчика')
     }
-
-    // console.log("ethSigninOrSignup address", address);
 
     /**
      * Пытаемся получить аккаунт, если уже имеется
@@ -149,8 +146,6 @@ export class ModxclubUserProcessor extends UserPayload {
       }
     }
 
-    // console.log("ethSigninOrSignup ethAccount", JSON.stringify(ethAccount, true, 2));
-
     // return {}
 
     /**
@@ -160,8 +155,6 @@ export class ModxclubUserProcessor extends UserPayload {
      */
 
     const generatedPassword = await this.generatePassword()
-
-    // console.log("ethSigninOrSignup generatedPassword", generatedPassword);
 
     /**
      * result возможен только если с аккаунтом был получен ранее авторизованный пользователь.
@@ -177,8 +170,6 @@ export class ModxclubUserProcessor extends UserPayload {
             : address.substr(2, 5) + address.substr(15, 5),
         },
       })
-
-      // console.log("ethSigninOrSignup result", JSON.stringify(result, true, 2));
     }
 
     const { success, data } = result || {}
@@ -263,7 +254,6 @@ export class ModxclubUserProcessor extends UserPayload {
    *
    */
   async ethConnectAuthAccount(args, info) {
-    // console.log("ethSigninOrSignup args", args);
 
     const {
       db,
@@ -290,8 +280,6 @@ export class ModxclubUserProcessor extends UserPayload {
     if (!address) {
       return this.addError('Не был получен адрес подписчика')
     }
-
-    // console.log("ethSigninOrSignup address", address);
 
     /**
      * Пытаемся получить аккаунт, если уже имеется
@@ -381,8 +369,6 @@ export class ModxclubUserProcessor extends UserPayload {
       )
     }
 
-    // console.log("ethConnectAuthAccount ethAccount", JSON.stringify(ethAccount, true, 2));
-
     return result || this.prepareResponse()
 
     /**
@@ -392,8 +378,6 @@ export class ModxclubUserProcessor extends UserPayload {
      */
 
     const generatedPassword = await this.generatePassword()
-
-    // console.log("ethSigninOrSignup generatedPassword", generatedPassword);
 
     /**
      * result возможен только если с аккаунтом был получен ранее авторизованный пользователь.
@@ -406,8 +390,6 @@ export class ModxclubUserProcessor extends UserPayload {
           EthAccountAuthed,
         },
       })
-
-      // console.log("ethSigninOrSignup result", JSON.stringify(result, true, 2));
     }
 
     const { success, data } = result || {}
@@ -669,8 +651,6 @@ class ModxclubUserModule extends UserModule {
 
       const project = await getProjectFromRequest(ctx)
 
-      // console.log("ctx project", project);
-
       if (project) {
         const { id: projectId } = project
 
@@ -799,8 +779,6 @@ class ModxclubUserModule extends UserModule {
 
           const result = await new ModxclubUserProcessor(ctx).signin(args, info)
 
-          // console.log("signin result", result);
-
           await this.injectProjectLink(result, ctx)
 
           return result
@@ -812,8 +790,6 @@ class ModxclubUserModule extends UserModule {
             args,
             info
           )
-
-          // console.log("signin result", result);
 
           await this.injectProjectLink(result, ctx)
 
@@ -833,7 +809,6 @@ class ModxclubUserModule extends UserModule {
           return result
         },
         updateUserProcessor: (source, args, ctx, info) => {
-          // console.log("updateUserProcessor args", args);
 
           return new ModxclubUserProcessor(ctx).updateWithResponse(
             'User',

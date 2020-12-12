@@ -4,7 +4,6 @@ import { TypedTypePolicies } from 'src/modules/gql/generated/helpers/apollo-help
 const DateTime = (
   v: string | null | undefined
 ): Scalars['DateTime'] | null | undefined => {
-  // console.log("typePolicies Resource createdAt", v);
   return typeof v === 'string' ? new Date(v) : v
 }
 

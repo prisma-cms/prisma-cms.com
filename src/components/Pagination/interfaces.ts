@@ -3,7 +3,7 @@ export type PaginationProps = {
 
   page: number
 
-  limit: number
+  limit: number | null | undefined
 
   total: number
 

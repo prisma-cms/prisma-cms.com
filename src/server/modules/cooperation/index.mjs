@@ -17,8 +17,6 @@ export default class CooperationModuleCustom extends CooperationModule {
       'TaskReactionUpdateInput',
     ])
 
-    // console.log('apiSchema', apiSchema);
-
     return apiSchema
   }
 }

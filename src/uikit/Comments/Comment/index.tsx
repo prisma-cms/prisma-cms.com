@@ -32,15 +32,6 @@ class UikitComment extends EditableView<UikitCommentProps> {
   }
 
   getMutation(data: Record<string, any> | null | undefined) {
-    // console.log("getMutation getObject", { ...this.getObject() });
-
-    // const mutate = async (props) => {
-
-    //   console.log("getMutation mutate props", props);
-
-    //   return {};
-    // }
-
     let mutation
 
     const id = this.getObjectWithMutations()?.id

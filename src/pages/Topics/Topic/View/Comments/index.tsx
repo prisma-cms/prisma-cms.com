@@ -37,8 +37,6 @@ class TopicComments extends React.PureComponent<
   }
 
   onCommentSave = () => {
-    // console.log('onCommentSave')
-
     this.setState({
       newCommentKey: new Date().toISOString(),
     })

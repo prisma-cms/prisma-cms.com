@@ -15,7 +15,7 @@ import {
 import Component from '..'
 import { EditorProps as ComponentProps } from '../interfaces'
 
-const title = 'Editor'
+const title = 'prisma-cms.com/UI/Editor'
 
 interface ContainerProps extends ComponentProps {}
 

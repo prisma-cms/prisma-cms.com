@@ -21,13 +21,7 @@ export class ResourceFieldsProxy extends EditorComponent {
    * надо обновить данные абсолютного родителя, а не просто текущего элемента
    */
   updateObject(data) {
-    // console.log("ResourceFieldsProxy updateObject data", { ...data });
-
-    // const object = this.getObjectWithMutations();
-
     const { objectContext } = this.props
-
-    // console.log("ResourceFieldsProxy updateObject objectContext", { ...objectContext });
 
     const { updateObject } = objectContext
 
@@ -93,8 +87,6 @@ export class ResourceFields extends EditorComponent {
       const { updateObject, getObjectWithMutations } = objectContext || {}
 
       if (updateObject && getObjectWithMutations) {
-        // console.log("updateObject updateObject", updateObject);
-
         const { components } = getObjectWithMutations() || {}
 
         if (components) {

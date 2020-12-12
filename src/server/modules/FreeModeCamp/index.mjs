@@ -36,12 +36,8 @@ export default class FreeModeCampModule extends PrismaModule {
             return reject(err)
           }
 
-          // console.log('client', client);
-
           const mongo_db = client.db('freecodecamp')
           const challengeCollection = mongo_db.collection('challenge')
-
-          // console.log('challengeCollection', challengeCollection);
 
           challengeCollection.find({}).toArray(async (err, docs) => {
             if (err) {
@@ -51,8 +47,6 @@ export default class FreeModeCampModule extends PrismaModule {
             // let challengeTypes = []
             let superBlocks = []
             let blocks = []
-
-            // console.log("Found the following records");
 
             // const insert = docs.splice(0, 100).map((n, index) => {
             const challenges = docs.map((n, index) => {
@@ -178,7 +172,6 @@ export default class FreeModeCampModule extends PrismaModule {
                           data,
                         })
                         .then((r) => {
-                          // console.log('Insert result', r);
 
                           return resolve(r)
                         })
@@ -198,7 +191,6 @@ export default class FreeModeCampModule extends PrismaModule {
               })
             ).then(
               (value) => {
-                // console.log('result2', value);
 
                 return value
               },
@@ -207,23 +199,8 @@ export default class FreeModeCampModule extends PrismaModule {
               }
             )
 
-            // await Promise.all(insert)
-            //   .then(value => {
-
-            //     // console.log('result2', value);
-
-            //     return value;
-            //   }, error => {
-
-            //     console.log('error', error);
-
-            //     reject(error);
-            //   });
-
             const doc = docs.pop()
 
-            // console.log('doc', JSON.stringify(doc, true, 2))
-            // callback(docs);
 
             result = {
               // challengeTypes,
@@ -261,7 +238,6 @@ export default class FreeModeCampModule extends PrismaModule {
                   data,
                 })
                 .then((r) => {
-                  // console.log('Insert result', r);
 
                   return resolve(r)
                 })

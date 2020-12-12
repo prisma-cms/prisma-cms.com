@@ -1,0 +1,66 @@
+query chatRoom($where: ChatRoomWhereUniqueInput!) {
+  object: chatRoom(where: $where) {
+    ...fChatRoom
+  }
+}
+
+fragment fChatRoom on ChatRoom {
+  ...ChatRoomNoNesting
+  CreatedBy {
+    ...UserNoNesting
+  }
+  Members {
+    ...UserNoNesting
+  }
+  Invitations {
+    id
+    createdAt
+    updatedAt
+    User {
+      ...UserNoNesting
+    }
+  }
+  Messages {
+    id
+    createdAt
+    updatedAt
+    content
+    CreatedBy {
+      ...UserNoNesting
+    }
+  }
+}
+
+fragment ChatRoomNoNesting on ChatRoom {
+  id
+  createdAt
+  updatedAt
+  name
+  description
+  image
+  code
+  isPublic
+}
+
+fragment UserNoNesting on User {
+  id
+  createdAt
+  updatedAt
+  username
+  email
+  phone
+  showEmail
+  showPhone
+  password
+  fullname
+  image
+  address
+  sudo
+  active
+  activated
+  deleted
+  hasEmail
+  hasPhone
+  marketplaceToken
+  hidden
+}

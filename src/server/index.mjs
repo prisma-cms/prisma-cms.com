@@ -48,8 +48,6 @@ const web3 = new Web3(GethServer)
  */
 // const getProjectFromRequest = async function (ctx) {
 
-//   // console.log("ctx", ctx.request.headers);
-
 //   const {
 //     request: {
 //       headers: {
@@ -70,8 +68,6 @@ const web3 = new Web3(GethServer)
 //   if (!domain) {
 //     return;
 //   }
-
-//   // console.log("ctx domain", domain);
 
 //   return await db.query.project({
 //     where: {
@@ -96,7 +92,6 @@ const web3 = new Web3(GethServer)
 
 class Server extends PrismaCmsServer {
   async beforeStart() {
-    // console.log("this.db", this.db);
 
     socketIO(this.db)
 

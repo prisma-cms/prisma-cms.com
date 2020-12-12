@@ -1,0 +1,5 @@
+query chatMessage($where: ChatMessageWhereUniqueInput!) {
+  object: chatMessage(where: $where) {
+    ...chatMessage_
+  }
+}

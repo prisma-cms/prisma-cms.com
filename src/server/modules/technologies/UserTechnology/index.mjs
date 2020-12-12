@@ -49,8 +49,6 @@ export class UserTechnologyProcessor extends PrismaProcessor {
           })
         : null
 
-      // console.log("userTechnology_old", userTechnology_old);
-
       if (Technology !== undefined) {
         const { connect } = Technology
 
@@ -66,9 +64,6 @@ export class UserTechnologyProcessor extends PrismaProcessor {
               id: currentUserId,
             },
           })
-
-          // console.log("currentUserId", currentUserId);
-          // console.log("exist", exist);
 
           if (exist) {
             this.addError('Данная технология уже указана у пользователя')
@@ -86,9 +81,6 @@ export class UserTechnologyProcessor extends PrismaProcessor {
           date_from !== undefined ? date_from : date_from_old
         const date_till_value =
           date_till !== undefined ? date_till : date_till_old
-
-        // console.log("date_from_value", date_from_value);
-        // console.log("date_till_value", date_till_value);
 
         if (date_from && moment(new Date(date_from)) > moment()) {
           this.addFieldError(

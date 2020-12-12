@@ -1,0 +1,69 @@
+query chatMessagesConnection(
+  $where: ChatMessageWhereInput
+  $orderBy: ChatMessageOrderByInput
+  $skip: Int
+  $after: String
+  $before: String
+  $first: Int = 10
+  $last: Int
+) {
+  objectsConnection: chatMessagesConnection(
+    where: $where
+    orderBy: $orderBy
+    skip: $skip
+    after: $after
+    before: $before
+    first: $first
+    last: $last
+  ) {
+    aggregate {
+      count
+    }
+    edges {
+      node {
+        ...chatMessage_
+      }
+    }
+  }
+}
+
+fragment chatMessage_ on ChatMessage {
+  ...ChatMessageNoNesting
+  Room {
+    ...ChatRoomNoNesting
+  }
+  CreatedBy {
+    ...UserNoNesting
+  }
+}
+
+fragment ChatMessageNoNesting on ChatMessage {
+  id
+  createdAt
+  updatedAt
+  content
+  contentText
+}
+
+fragment UserNoNesting on User {
+  id
+  createdAt
+  updatedAt
+  username
+  email
+  phone
+  showEmail
+  showPhone
+  password
+  fullname
+  image
+  address
+  sudo
+  active
+  activated
+  deleted
+  hasEmail
+  hasPhone
+  marketplaceToken
+  hidden
+}

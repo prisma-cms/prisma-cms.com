@@ -427,9 +427,6 @@ class CoreModule extends PrismaModule {
     if (fs.existsSync(schemaFile)) {
       baseSchema = fs.readFileSync(schemaFile, 'utf-8')
     }
-    // else {
-    //   console.log("file not exists");
-    // }
 
     return baseSchema
   }
@@ -476,8 +473,6 @@ class CoreModule extends PrismaModule {
       ...Mutation,
       createProjectProcessor,
       createTemplateProcessor: async (source, args, ctx, info) => {
-        // console.log("createTemplateProcessor args", args);
-
         /**
          * При создании шаблона, если не был получен проект, создаем его
          */
@@ -491,9 +486,6 @@ class CoreModule extends PrismaModule {
 
           const project = await getProjectFromRequest(ctx)
 
-          // console.log("createTemplateProcessor project", project);
-          // console.log("createTemplateProcessor currentUser", currentUser);
-
           /**
            * Если проекта нет и есть текущий пользователь, создаем новый проект
            */
@@ -504,8 +496,6 @@ class CoreModule extends PrismaModule {
               request: { headers },
               db,
             } = ctx
-
-            // console.log("headers", headers);
 
             const { origin } = headers
 
@@ -522,8 +512,6 @@ class CoreModule extends PrismaModule {
               return this.addError('Can not get request domain')
             }
 
-            // console.log("subdomain", subdomain, subdomain.split("."));
-
             /**
              * Если это поддомен, проверяем на совпадение с пользователями
              */
@@ -534,8 +522,6 @@ class CoreModule extends PrismaModule {
                 username_not: username,
               })
 
-              // console.log("subdomain user exists", exists);
-
               if (exists) {
                 return {
                   success: false,
@@ -545,10 +531,6 @@ class CoreModule extends PrismaModule {
                 }
               }
             }
-
-            // return {
-
-            // }
 
             const projectResponse = await createProjectProcessor(
               null,
@@ -574,14 +556,7 @@ class CoreModule extends PrismaModule {
 
             const { success, data: project } = projectResponse || {}
 
-            // console.log("createTemplateProcessor project 2", project);
-
             if (!success || !project) {
-              // return {
-              //   success: false,
-              //   message: "Can not create project",
-              //   errors: [],
-              // }
 
               return projectResponse
             }

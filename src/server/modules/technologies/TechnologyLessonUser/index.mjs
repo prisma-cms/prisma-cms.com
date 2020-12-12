@@ -36,9 +36,6 @@ export class TechnologyLessonUserProcessor extends PrismaProcessor {
           },
         })
 
-        // console.log("currentUserId", currentUserId);
-        // console.log("exist", exist);
-
         if (exist) {
           this.addError('Данный урок уже принят')
         }

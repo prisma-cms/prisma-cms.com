@@ -125,10 +125,6 @@ export class AcceptTechnologyLesson extends EditorComponent {
             return null
           }
 
-          // console.log("userLesson", userLesson);
-
-          // return children;
-
           if (!userLesson) {
             output = (
               <Button

@@ -27,7 +27,6 @@ const TopicPage: Page<TopicPageProps> = () => {
       },
     },
     // onCompleted: (data) => {
-    //   console.log("TopicPage onCompleted data", data);
     //   // setResponse(data.object)
     // },
     onError: console.error,

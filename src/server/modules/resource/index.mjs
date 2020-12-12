@@ -465,7 +465,6 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
 
   reduceBlocks(components, resourceBlocks, entityMap, textLength = 0) {
     if (components && components.length) {
-      // console.log(chalk.green("components"), JSON.stringify(components, true, 2));
 
       components.map((n) => {
         const { components: itemComponents, props } = n || {}
@@ -499,8 +498,6 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
           }
         }
 
-        // console.log(chalk.green("textLength"), textLength);
-
         this.reduceBlocks(itemComponents, resourceBlocks, entityMap, textLength)
 
         return null
@@ -529,22 +526,11 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
       data,
     })
 
-    // console.log('Topic mutate data', JSON.stringify(data, true, 2));
-
     return super.mutate(method, args, info)
   }
 }
 
 class TopicModule extends ResourceModule {
-  // constructor() {
-
-  //   super();
-
-  //   this.mergeModules([
-  //     SocialModule,
-  //   ]);
-
-  // }
 
   getSchema() {
     return

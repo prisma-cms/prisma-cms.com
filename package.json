@@ -107,6 +107,7 @@
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-typescript": "^7.12.1",
     "@babel/polyfill": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@graphql-codegen/add": "^2.0.1",
