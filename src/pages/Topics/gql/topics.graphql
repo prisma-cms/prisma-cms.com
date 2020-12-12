@@ -1,0 +1,59 @@
+query topicsConnection(
+  $first: Int = 10
+  $skip: Int
+  $where: ResourceWhereInput
+  $orderBy: ResourceOrderByInput = updatedAt_DESC
+) {
+  objectsConnection: resourcesConnection(
+    orderBy: $orderBy
+    first: $first
+    skip: $skip
+    where: $where
+  ) {
+    aggregate {
+      count
+    }
+    edges {
+      node {
+        ...topicsConnectionTopic
+      }
+    }
+  }
+}
+
+fragment topicsConnectionTopic on Resource {
+  id
+  updatedAt
+  name
+  uri
+  longtitle
+  CreatedBy {
+    ...topicsConnectionUser
+  }
+  Comments(orderBy: id_ASC) {
+    id
+    updatedAt
+    CreatedBy {
+      ...topicsConnectionUser
+    }
+  }
+  Blog {
+    id
+    name
+    longtitle
+    uri
+  }
+  Tags {
+    Tag {
+      id
+      name
+    }
+  }
+}
+
+fragment topicsConnectionUser on User {
+  id
+  username
+  fullname
+  image
+}

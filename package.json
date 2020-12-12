@@ -14,11 +14,11 @@
   ],
   "scripts": {
     "dev": "nodemon",
-    "generate:types": "NODE_PATH=./ ts-node -P tsconfig.server.json src/next/src/modules/gql/cli/generateTypes/run",
+    "generate:types": "NODE_PATH=./ ts-node -P tsconfig.server.json src/modules/gql/cli/generateTypes/run",
     "clean": "rimraf ./dist",
     "build": "next build && tsc --project tsconfig.server.json",
     "build:analyze": "ANALYZE=true yarn build",
-    "start": "cross-env NODE_ENV=production node dist/server/index.js",
+    "start": "cross-env NODE_ENV=production node dist/next/server/index.js",
     "types": "tsc --pretty --noEmit",
     "format": "prettier --write .",
     "lint": "eslint . --ext ts --ext tsx --ext js",

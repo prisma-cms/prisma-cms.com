@@ -11,9 +11,7 @@
     "jsx": "preserve",
     "lib": ["dom", "es2017", "es7", "es6"],
     "baseUrl": ".",
-    "paths": {
-      "src/*": ["src/next/src/*"]
-    },
+    "paths": {},
     "moduleResolution": "node",
     "strict": true,
     "allowJs": true,

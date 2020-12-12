@@ -1,0 +1,37 @@
+mutation createCommentProcessor($data: CommentCreateInput!) {
+  response: createCommentProcessor(data: $data) {
+    success
+    message
+    errors {
+      key
+      message
+    }
+    data {
+      ...responseComment
+    }
+  }
+}
+
+mutation updateCommentProcessor(
+  $data: CommentUpdateInput!
+  $where: ResourceWhereUniqueInput!
+) {
+  response: updateCommentProcessor(data: $data, where: $where) {
+    success
+    message
+    errors {
+      key
+      message
+    }
+    data {
+      ...responseComment
+    }
+  }
+}
+
+fragment responseComment on Resource {
+  id
+  createdAt
+  updatedAt
+  content
+}

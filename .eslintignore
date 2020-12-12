@@ -5,11 +5,9 @@
 **/coverage/*
 **/public/*
 generated
-/src/node_modules
 /src/server
 /src/ssr
 /src/schema
-/src/components
 **/.storybook/*
 **/storybook-static/*
 /packages

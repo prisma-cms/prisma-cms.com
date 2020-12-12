@@ -9,7 +9,6 @@ public
 coverage
 dist
 generated
-src/node_modules
 /src/server
 /src/ssr
 /src/schema
