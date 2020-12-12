@@ -40,6 +40,9 @@ yarn-error.log*
 
 # yarn
 yarn.lock
+.yarn
+.yarnrc.yml
+.pnp.js
 
 # envs
 .env

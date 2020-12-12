@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "nodemon",
     "generate:types": "NODE_PATH=./ ts-node -P tsconfig.server.json src/next/src/modules/gql/cli/generateTypes/run",
+    "clean": "rimraf ./dist",
     "build": "next build && tsc --project tsconfig.server.json",
     "build:analyze": "ANALYZE=true yarn build",
     "start": "cross-env NODE_ENV=production node dist/server/index.js",
@@ -132,6 +133,7 @@
     "@types/jest": "^25.1.4",
     "@types/lodash": "^4.14.161",
     "@types/node": "^13.9.5",
+    "@types/prop-types": "^15.7.3",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.9",
     "@types/react-jss": "^8.6.1",
@@ -168,6 +170,7 @@
     "nodemon": "^2.0.4",
     "npm": "^6.14.8",
     "prettier": "^2.0.2",
+    "prop-types": "^15.7.2",
     "react-test-renderer": "^16.13.1",
     "sass-loader": "^10.0.5",
     "scss-loader": "^0.0.1",
@@ -199,9 +202,7 @@
     "react-jss": "^8.6.1",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
-    "apollo-link-dedup": "1.0.15",
-    "**/apollo-language-server/graphql": "^15.0.0",
-    "**/@types/graphql-upload/graphql": "^15.0.0"
+    "apollo-link-dedup": "1.0.15"
   },
   "browserslist": [
     ">0.2%",
