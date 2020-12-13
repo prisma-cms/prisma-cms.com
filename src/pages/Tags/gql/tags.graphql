@@ -1,0 +1,34 @@
+query tagsConnection(
+  $first: Int!
+  $skip: Int
+  $where: TagWhereInput
+  $orderBy: TagOrderByInput
+) {
+  tagsConnection(first: $first, skip: $skip, where: $where, orderBy: $orderBy) {
+    aggregate {
+      count
+    }
+    edges {
+      node {
+        ...tag_
+      }
+    }
+  }
+}
+
+fragment tag_ on Tag {
+  id
+  name
+  Resources {
+    id
+    Resource {
+      id
+      type
+      name
+      uri
+    }
+  }
+  CreatedBy {
+    ...UserNoNesting
+  }
+}

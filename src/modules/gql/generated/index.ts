@@ -43,6 +43,8 @@ export * from './signin';
 export * from './sitemapResourcesConnection';
 export * from './sitemapTagsConnection';
 export * from './sitemapUsersConnection';
+export * from './tag_';
+export * from './tagsConnection';
 export * from './task';
 export * from './task_';
 export * from './tasksConnection';
