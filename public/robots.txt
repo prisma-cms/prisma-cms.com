@@ -1,0 +1,4 @@
+User-agent: *
+Host: https://prisma-cms.com/
+Sitemap: https://prisma-cms.com/sitemap.xml
+Disallow: 

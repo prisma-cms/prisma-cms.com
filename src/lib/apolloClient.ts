@@ -128,7 +128,7 @@ export function getWsLink() {
   return wsLink
 }
 
-function createApolloClient() {
+function createApolloClient(withWs: boolean) {
   const endpoint = getEndpoint()
 
   const errorLink = onError((error) => {
@@ -171,7 +171,7 @@ function createApolloClient() {
 
   let wsHttpLink: ApolloLink = httpLink
 
-  const wsLink = getWsLink()
+  const wsLink = withWs ? getWsLink() : undefined
 
   if (wsLink) {
     wsHttpLink = split(
@@ -216,8 +216,8 @@ function createApolloClient() {
   return client
 }
 
-export function initializeApollo(initialState?: any) {
-  const _apolloClient = apolloClient ?? createApolloClient()
+export function initializeApollo(initialState: any, withWs: boolean) {
+  const _apolloClient = apolloClient ?? createApolloClient(withWs)
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
   // gets hydrated here
@@ -239,7 +239,10 @@ export function initializeApollo(initialState?: any) {
   return _apolloClient
 }
 
-export function useApollo(initialState: any) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState])
+export function useApollo(initialState: any, withWs: boolean) {
+  const store = useMemo(() => initializeApollo(initialState, withWs), [
+    initialState,
+    withWs,
+  ])
   return store
 }

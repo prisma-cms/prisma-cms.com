@@ -33,4 +33,10 @@ export const typePolicies: TypedTypePolicies = {
       updatedAt: DateTime,
     },
   },
+  Tag: {
+    fields: {
+      createdAt: DateTime,
+      updatedAt: DateTime,
+    },
+  },
 }

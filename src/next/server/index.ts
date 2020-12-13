@@ -3,12 +3,14 @@ import next from 'next'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import { endpoint } from '../../config'
 
+import Sitemap from './sitemap/prisma-cms.com'
+
 const port = (process.env.PORT && parseInt(process.env.PORT, 10)) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const createProxy = (props: any) => {
+const createProxy = (props: Record<string, any>) => {
   return createProxyMiddleware({
     target: endpoint,
     changeOrigin: true,
@@ -60,6 +62,8 @@ app.prepare().then(() => {
   )
 
   server.use('/api/', apiProxy)
+
+  server.get('/sitemap.xml', new Sitemap({}).middleware)
 
   server.all('*', (req, res) => {
     return handle(req, res)

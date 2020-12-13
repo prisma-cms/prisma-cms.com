@@ -1,0 +1,24 @@
+query sitemapResourcesConnection(
+  $first: Int!
+  $skip: Int
+  $where: ResourceWhereInput!
+  $orderBy: ResourceOrderByInput!
+) {
+  resourcesConnection(
+    first: $first
+    skip: $skip
+    where: $where
+    orderBy: $orderBy
+  ) {
+    aggregate {
+      count
+    }
+    edges {
+      node {
+        id
+        uri
+        updatedAt
+      }
+    }
+  }
+}

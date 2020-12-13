@@ -1,0 +1,24 @@
+query sitemapUsersConnection(
+  $first: Int!
+  $skip: Int
+  $where: UserWhereInput!
+  $orderBy: UserOrderByInput!
+) {
+  usersConnection(
+    first: $first
+    skip: $skip
+    where: $where
+    orderBy: $orderBy
+  ) {
+    aggregate {
+      count
+    }
+    edges {
+      node {
+        id
+        username
+        updatedAt
+      }
+    }
+  }
+}

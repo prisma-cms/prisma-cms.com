@@ -41,10 +41,12 @@ import Link from '../../uikit/Link'
 // TODO: Проработать локализацию
 moment.locale('ru')
 
+const withWs = true
+
 const App: MainApp = (props) => {
   const { Component, pageProps } = props
 
-  const apolloClient = useApollo(pageProps.initialApolloState)
+  const apolloClient = useApollo(pageProps.initialApolloState, withWs)
 
   const { statusCode } = pageProps
 
@@ -223,7 +225,7 @@ App.getInitialProps = async (appContext: AppContext) => {
    * с приложения и далее выполняемый страниц и документа,
    * передаем аполло-клиент далее в контекст приложения.
    */
-  const apolloClient = initializeApollo()
+  const apolloClient = initializeApollo(undefined, withWs)
 
   /**
    * Передаваемый далее в страницу контекст
