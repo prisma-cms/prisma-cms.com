@@ -39,4 +39,16 @@ export const typePolicies: TypedTypePolicies = {
       updatedAt: DateTime,
     },
   },
+  CodeChallengeBlock: {
+    fields: {
+      createdAt: DateTime,
+      updatedAt: DateTime,
+    },
+  },
+  CodeChallenge: {
+    fields: {
+      createdAt: DateTime,
+      updatedAt: DateTime,
+    },
+  },
 }

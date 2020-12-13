@@ -35,7 +35,7 @@ import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
 import Grid from 'src/uikit/Grid'
 import TaskStatus from '../TaskStatus'
 import TaskLink from 'src/uikit/Link/Task'
-import Pagination from 'src/components/Pagination'
+// import Pagination from 'src/components/Pagination'
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 
 export class TasksView<
@@ -669,7 +669,7 @@ export class TasksView<
     //   Grid,
     // } = this.context;
 
-    const { page = 1, setShowAll, showAll, count = 0, variables } = this.props
+    const { setShowAll, showAll, count = 0, variables } = this.props
 
     // const {
     //   objectsConnection,
@@ -710,7 +710,7 @@ export class TasksView<
             textAlign: 'center',
           }}
         >
-          <Grid
+          {/* <Grid
             container
             style={{
               display: 'inline-flex',
@@ -730,7 +730,8 @@ export class TasksView<
             </Grid>
 
             <Grid item>{showAllButton}</Grid>
-          </Grid>
+          </Grid> */}
+          <Grid item>{showAllButton}</Grid>
         </div>
       </Fragment>
     )

@@ -10,6 +10,7 @@ import {
 // import { Maybe, MeUserFragment } from 'src/modules/gql/generated'
 // import { muiTheme } from './MUI/theme'
 import { AppContext, AppInitialProps as NextAppInitialProps } from 'next/app'
+import { LayoutStyledProps } from './styles/interfaces'
 
 /**
  * Расширенный контекст страниц приложения
@@ -23,7 +24,7 @@ export interface NextPageContextCustom extends NextPageContext {
   apolloClient: ApolloClientNormolized
 }
 
-export interface PageProps extends React.PropsWithChildren<{}> {
+export type PageProps = React.PropsWithChildren<{}> & {
   initialApolloState?: any
 
   /**
@@ -35,6 +36,11 @@ export interface PageProps extends React.PropsWithChildren<{}> {
    * Серверная ошибка
    */
   statusCode?: number
+
+  /**
+   * Настройки основного контейнера
+   */
+  layout?: LayoutStyledProps
 }
 
 /**

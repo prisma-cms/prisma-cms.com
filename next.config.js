@@ -6,11 +6,35 @@ const withTM = require('next-transpile-modules')(['@modxclub'])
 
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin')
 
+const withCSS = require('@zeit/next-css')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+
 const webpack = (config) => {
   // Note: we provide webpack above so you should not `require` it
   // Perform customizations to webpack config
 
   // console.log('config', config);
+
+  config.module.rules.push({
+    test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+    use: {
+      loader: 'url-loader',
+      options: {
+        limit: 100000,
+      },
+    },
+  })
+
+  config.plugins.push(
+    new MonacoWebpackPlugin({
+      // Add languages as needed...
+      languages: [
+        'javascript',
+        // 'typescript',
+      ],
+      filename: 'static/[name].worker.js',
+    })
+  )
 
   /**
    * Fix locales issue
@@ -39,9 +63,11 @@ const webpack = (config) => {
 }
 
 const config = withBundleAnalyzer(
-  withTM({
-    webpack,
-  })
+  withTM(
+    withCSS({
+      webpack,
+    })
+  )
 )
 
 module.exports = {

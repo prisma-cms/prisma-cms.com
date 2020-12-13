@@ -22,6 +22,7 @@ import TagLink from 'src/uikit/Link/Tag'
 import TopicLink from 'src/uikit/Link/Topic'
 import BlogLink from 'src/uikit/Link/Blog'
 import UserLink from 'src/uikit/Link/User'
+import { Theme } from 'material-ui/styles'
 
 // import PageNotFound from "../../../pages/404";
 
@@ -37,7 +38,7 @@ import {
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
 
-const customStyles = () => {
+const customStyles = (theme: Theme) => {
   // const {
   //   palette: {
   //     background: { default: defaultBackground },
@@ -45,7 +46,7 @@ const customStyles = () => {
   // } = theme
 
   return {
-    ...styles(),
+    ...styles(theme),
 
     tags: {
       marginTop: 5,

@@ -8,11 +8,19 @@ import withStyles from 'material-ui/styles/withStyles'
 import Grid from 'material-ui/Grid'
 import Pagination from 'src/components/Pagination'
 import { ObjectsListViewProps } from './interfaces'
+import { Theme } from 'material-ui/styles'
 
-const customStyles = () => {
+// console.log('styles', styles);
+
+const customStyles = (theme: Theme) => {
+  const defaultStyles = styles(theme)
+
+  // console.log('defaultStyles', defaultStyles);
+
   return {
-    ...styles,
+    ...defaultStyles,
     root: {
+      ...defaultStyles.root,
       '#root &': {
         border: 0,
         boxShadow: 'none',

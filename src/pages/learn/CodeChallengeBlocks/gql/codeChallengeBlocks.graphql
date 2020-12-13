@@ -1,0 +1,53 @@
+query codeChallengeBlocks {
+  codeChallengeBlocks(where: { Parent: null }, orderBy: rank_ASC) {
+    ...codeChallengeBlocksBlock
+  }
+}
+
+fragment codeChallengeBlocksBlock on CodeChallengeBlock {
+  ...challengeBlockNoNesting
+  Children(orderBy: rank_ASC) {
+    ...challengeBlockNoNesting
+    Challenges(orderBy: rank_ASC) {
+      ...challenge
+    }
+  }
+}
+
+fragment challengeBlockNoNesting on CodeChallengeBlock {
+  id
+  externalKey
+  createdAt
+  updatedAt
+  name
+  rank
+}
+
+fragment challenge on CodeChallenge {
+  id
+  externalKey
+  createdAt
+  updatedAt
+  name
+  dashedName
+  localeTitle
+  description
+  challengeType
+  forumTopicId
+  translations
+  tests
+  solutions
+  instructions
+  files
+  videoUrl
+  order
+  superOrder
+  challengeOrder
+  required
+  isRequired
+  isPrivate
+  isBeta
+  template
+  time
+  rank
+}

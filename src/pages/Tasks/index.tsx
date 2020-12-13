@@ -154,7 +154,11 @@ TasksPage.getInitialProps = async (context) => {
     },
   })
 
-  return {}
+  return {
+    layout: {
+      variant: 'fullwidth',
+    },
+  }
 }
 
 export default TasksPage

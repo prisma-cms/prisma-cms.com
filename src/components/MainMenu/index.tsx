@@ -90,6 +90,7 @@ export const locales = {
       Tasks: 'Задачи',
       Timers: 'Таймеры',
       Technologies: 'Технологии',
+      Learn: 'Уроки',
     },
   },
 }
@@ -140,9 +141,9 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
             </Grid>
 
             <Grid item>
-              <Link href="/technologies/">
-                <a>
-                  <Typography>{this.lexicon('Technologies')}</Typography>
+              <Link href="/learn/sections">
+                <a title={this.lexicon('Learn')}>
+                  <Typography>{this.lexicon('Learn')}</Typography>
                 </a>
               </Link>
             </Grid>
@@ -151,6 +152,14 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
               <Link href="/topics/">
                 <a title={this.lexicon('Topics')}>
                   <Typography>{this.lexicon('Topics')}</Typography>
+                </a>
+              </Link>
+            </Grid>
+
+            <Grid item>
+              <Link href="/technologies/">
+                <a>
+                  <Typography>{this.lexicon('Technologies')}</Typography>
                 </a>
               </Link>
             </Grid>

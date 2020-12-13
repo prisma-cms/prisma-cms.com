@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { ApolloProvider } from '@apollo/client'
 import { ThemeProvider } from 'styled-components'
 import theme from 'src/theme'
+import GlobalStyle from 'src/theme/GlobalStyle'
 import {
   NextPageContextCustom,
   MainApp,
@@ -36,6 +37,7 @@ import Head from 'next/head'
 import UserLink from '../../uikit/Link/User'
 import ProjectLink from '../../uikit/Link/Project'
 import Link from '../../uikit/Link'
+import { LayoutStyled } from './styles'
 // import Editor from '../../uikit/Editor'
 
 // TODO: Проработать локализацию
@@ -46,9 +48,12 @@ const withWs = true
 const App: MainApp = (props) => {
   const { Component, pageProps } = props
 
+  // eslint-disable-next-line no-console
+  // console.log('App props', props);
+
   const apolloClient = useApollo(pageProps.initialApolloState, withWs)
 
-  const { statusCode } = pageProps
+  const { statusCode, layout } = pageProps
 
   const router = useRouter()
 
@@ -187,19 +192,24 @@ const App: MainApp = (props) => {
           typeof global.window === 'undefined' ? new Map() : undefined
         }
       >
+        <GlobalStyle />
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
             <Context.Provider value={contextValue}>
-              <WithUser context={contextValue}>
-                <Auth
-                  open={authOpen}
-                  useMetamask={true}
-                  loginComplete={loginComplete}
-                  loginCanceled={loginCanceled}
-                  showRegForm={true}
-                />
-                <div id="content">{content}</div>
-              </WithUser>
+              <LayoutStyled {...layout}>
+                <WithUser context={contextValue}>
+                  <Auth
+                    open={authOpen}
+                    useMetamask={true}
+                    loginComplete={loginComplete}
+                    loginCanceled={loginCanceled}
+                    showRegForm={true}
+                  />
+                  <div id="wrapper">
+                    <div id="content">{content}</div>
+                  </div>
+                </WithUser>
+              </LayoutStyled>
             </Context.Provider>
           </ApolloProvider>
         </ThemeProvider>
