@@ -1,0 +1,5 @@
+query tag($where: TagWhereUniqueInput!) {
+  object: tag(where: $where) {
+    ...tag_
+  }
+}

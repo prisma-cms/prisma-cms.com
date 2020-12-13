@@ -27,14 +27,23 @@ export const BlogPage: Page = () => {
     onError: console.error,
   })
 
+  const blog = response.data?.object
+
+  if (!blog) {
+    return null
+  }
+
   return (
     <>
       <Head>
-        <title>Блог "{response.data?.object?.name}"</title>
-        <meta name="description" content={response.data?.object?.name || ''} />
+        <title>Блог "{blog?.name}"</title>
+        <meta
+          name="description"
+          content={`Все топики в блоге "${blog.name}"`}
+        />
       </Head>
 
-      <View object={response.data?.object} />
+      <View object={blog} />
     </>
   )
 }

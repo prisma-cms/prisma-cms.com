@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import { BlogViewProps } from './interfaces'
-import { BlogViewStyled } from './styles'
-// import Link from 'next/link'
+import { TagViewProps } from './interfaces'
+import { TagViewStyled } from './styles'
+import Link from 'next/link'
 import Typography from 'material-ui/Typography'
 import {
   TopicsConnectionTopicFragment,
@@ -12,52 +12,41 @@ import { TopicsView } from 'src/pages/Topics/View'
 import { NextRouter, useRouter } from 'next/router'
 import { NextPageContextCustom } from 'src/pages/_App/interfaces'
 
-export const getBlogTopicsVariables = (
+export const getTagTopicsVariables = (
   router: NextRouter | NextPageContextCustom,
-  blogId: string
+  tagId: string
 ) => {
-  if (!blogId) {
+  if (!tagId) {
     return
   }
 
   return {
     ...getTopicsVariables(router, {
-      Blog: {
-        id: blogId,
+      Tags_some: {
+        Tag: {
+          id: tagId,
+        },
       },
     }),
   }
 }
 
-const BlogView: React.FC<BlogViewProps> = (props) => {
-  const blog = props.object
+const TagView: React.FC<TagViewProps> = (props) => {
+  const tag = props.object
 
   const router = useRouter()
 
   const variables = useMemo(() => {
-    return getBlogTopicsVariables(router, blog?.id || '')
-  }, [blog?.id, router])
-
-  // console.log('BlogView variables', variables);
-  // console.log('BlogView page', page);
+    return getTagTopicsVariables(router, tag?.id || '')
+  }, [tag?.id, router])
 
   /**
    * Получаем топики в блоге
    */
   const response = useTopicsConnectionQuery({
-    skip: !blog?.id,
+    skip: !tag?.id,
     variables,
-    // variables: {
-    //   where: {
-    //     type: ResourceType.TOPIC,
-    //     Blog: {
-    //       id: blog.id,
-    //     },
-    //   },
-    // },
   })
-
-  // console.log('BlogView response', response);
 
   const { loading } = response
 
@@ -75,23 +64,27 @@ const BlogView: React.FC<BlogViewProps> = (props) => {
     )
   }, [response.data?.objectsConnection.edges])
 
-  if (!blog) {
+  if (!tag) {
     return null
   }
 
   return (
-    <BlogViewStyled>
-      <Typography variant="title">{blog.name}</Typography>
+    <TagViewStyled>
+      <Typography variant="title">{tag.name}</Typography>
 
       <TopicsView
-        title={`Топики в блоге "${blog.name}"`}
+        title={`Топики с тегом "${tag.name}"`}
         loading={loading}
         objects={objects}
         count={response.data?.objectsConnection.aggregate.count}
         variables={response.variables}
       />
-    </BlogViewStyled>
+
+      <Link href="/tags">
+        <a className="tag--all-tags-link">Все теги</a>
+      </Link>
+    </TagViewStyled>
   )
 }
 
-export default BlogView
+export default TagView
