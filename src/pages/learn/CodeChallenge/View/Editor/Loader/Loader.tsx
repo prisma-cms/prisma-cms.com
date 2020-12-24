@@ -10,11 +10,13 @@ import { LoaderProps } from './interfaces'
 const Loader: React.FC<LoaderProps> = ({ fullScreen, timeout }) => {
   const [showSpinner, setShowSpinner] = useState(!timeout)
   useEffect(() => {
-    let timerId: number | undefined
+    let timerId: NodeJS.Timeout | undefined
     if (!showSpinner) {
       timerId = setTimeout(() => setShowSpinner(true), timeout)
     }
-    return () => clearTimeout(timerId)
+    return () => {
+      timerId && clearTimeout(timerId)
+    }
   }, [setShowSpinner, showSpinner, timeout])
   return (
     <CodeChallengeLoaderStyled
