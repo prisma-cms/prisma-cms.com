@@ -16,3 +16,6 @@ generated
 storybook-static
 /packages
 .github
+
+# cypress
+/cypress
