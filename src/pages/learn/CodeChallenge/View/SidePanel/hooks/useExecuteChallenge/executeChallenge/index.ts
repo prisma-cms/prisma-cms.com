@@ -10,7 +10,10 @@
 
 import jquery from 'jquery'
 import * as chai from 'chai'
-import { CodeChallengeContext } from 'src/pages/learn/CodeChallenge/Context'
+import {
+  CodeChallengeContext,
+  TestResult,
+} from 'src/pages/learn/CodeChallenge/Context'
 import buildJSChallenge from './buildFunctions/buildJSChallenge'
 
 // @ts-ignore
@@ -29,6 +32,8 @@ export default async function* executeCancellableChallengeSaga(
   const challengeData = context.challengeData
 
   const buildData = await buildJSChallenge(challengeData, true)
+
+  // console.log('executeCancellableChallengeSaga buildData', buildData);
 
   /**
    * Code from Editor
@@ -56,12 +61,15 @@ export default async function* executeCancellableChallengeSaga(
           // TODO Fix logic
           await test('e.getUserInput')
         }
-        yield { pass: true }
+        const result: TestResult = { pass: true }
+        yield result
       } catch (err) {
         if (!(err instanceof chai.AssertionError)) {
           console.error(err)
         }
-        yield {
+
+        const result: TestResult = {
+          pass: false,
           err: {
             message: err.message,
             stack: err.stack,
@@ -69,6 +77,8 @@ export default async function* executeCancellableChallengeSaga(
             file: context.challengeData.file,
           },
         }
+
+        yield result
       }
     }
   }

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   useCodeChallengeQuery,
   CodeChallengeDocument,
@@ -12,7 +12,20 @@ import { useRouter, NextRouter } from 'next/router'
 import { Page, NextPageContextCustom } from '../../_App/interfaces'
 import View from './View'
 
-import Context, { CodeChallengeContext } from './Context'
+import Context, {
+  ChallengeData,
+  CodeChallengeContext,
+  TestResult,
+} from './Context'
+
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog'
+
+import Button from 'material-ui/Button'
 
 const getCodeChallengeVariables = (
   router: NextRouter | NextPageContextCustom
@@ -46,23 +59,33 @@ const CodeChallengePage: Page = () => {
 
   const object = response.data?.codeChallenge
 
-  const [file] = useState<CodeChallengeContext['challengeData']['file']>({
-    key: 'indexjs',
-    head: '',
-    tail: '',
-    history: ['index.js'],
-    name: 'index',
-    ext: 'js',
-    path: 'index.js',
-    contents: `
-        // Some comment
-      `,
-    error: null,
-    seed: '',
-  })
+  const initialChallengeData = useMemo<ChallengeData>(
+    () => ({
+      challengeType: object?.challengeType,
+      file: {
+        key: 'indexjs',
+        head: '',
+        tail: '',
+        history: ['index.js'],
+        name: 'index',
+        ext: 'js',
+        path: 'index.js',
+        contents: ``,
+        error: null,
+        seed: '',
+      },
+    }),
+    [object?.challengeType]
+  )
+
+  const [challengeData, setChallengeData] = useState<ChallengeData>(
+    initialChallengeData
+  )
 
   const [output, setOutput] = useState<ReadonlyArray<React.ReactChild>>([
-    'sdfsdferger',
+    `/**
+    * Your test output will go here.
+    */`,
   ])
 
   const addOutput = useCallback(
@@ -76,30 +99,108 @@ const CodeChallengePage: Page = () => {
     [output]
   )
 
+  const [testsResults, setTestResults] = useState<TestResult[]>([])
+
+  /**
+   * Восстанавливаем код и сбрасываем результаты тестов
+   */
+  const resetChallengeData = useCallback(() => {
+    setChallengeData(initialChallengeData)
+    setTestResults([])
+  }, [initialChallengeData])
+
   const context = useMemo<CodeChallengeContext | null>(() => {
     if (!object) {
       return null
     }
 
-    const { challengeType } = object
+    // const { challengeType } = object
 
-    return {
+    const context: CodeChallengeContext = {
       challenge: object,
-      challengeData: {
-        challengeType,
-        file,
-      },
+      challengeData,
       logger: {
         output,
         setOutput,
         addOutput,
       },
+      testsResults,
+      setTestResults,
+      // contents,
+      // setContents,
+      setChallengeData,
+      resetChallengeData,
     }
-  }, [addOutput, file, object, output])
+
+    return context
+  }, [
+    addOutput,
+    challengeData,
+    object,
+    output,
+    resetChallengeData,
+    testsResults,
+  ])
+
+  const [showSuccessModal, setShowSuccessModal] = useState<
+    boolean | undefined
+  >()
+
+  useEffect(() => {
+    /**
+     * Если флаг успешности не был еще задан и есть результаты тестов и все успешные,
+     * то выводим диалог
+     */
+    if (
+      showSuccessModal === undefined &&
+      testsResults.length &&
+      !testsResults.find((n) => n.pass !== true)
+    ) {
+      setShowSuccessModal(true)
+    } else if (showSuccessModal !== undefined && !testsResults.length) {
+      /**
+       * Если успешно было выполнено, но сброшены результаты, то сбрасываем результаты
+       */
+      setShowSuccessModal(undefined)
+    }
+  }, [showSuccessModal, testsResults])
+
+  const closeDialog = useCallback(() => {
+    setShowSuccessModal(false)
+  }, [])
+
+  const successModal = useMemo(() => {
+    if (showSuccessModal === undefined) {
+      return null
+    }
+
+    return (
+      <Dialog
+        open={showSuccessModal}
+        onClose={closeDialog}
+        role="CodeChallengeSuccess"
+      >
+        <DialogTitle>Поздравляю!</DialogTitle>
+        <DialogContent>
+          <DialogContentText role="message">
+            Задание успешно выполнено!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} color="primary" role="close">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }, [closeDialog, showSuccessModal])
 
   if (!object) {
     return null
   }
+
+  // console.log('CodeChallengePage object', object);
+  // console.log('CodeChallengePage context', context);
 
   return (
     <>
@@ -111,6 +212,8 @@ const CodeChallengePage: Page = () => {
       <Context.Provider value={context}>
         <View object={object} />
       </Context.Provider>
+
+      {successModal}
     </>
   )
 }

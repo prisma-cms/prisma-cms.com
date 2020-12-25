@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
 import React, { PureComponent, Suspense } from 'react'
 
 import Loader from './Loader/Loader'
@@ -188,6 +189,10 @@ class FccEditor<
       label: 'Toggle Accessibility Mode',
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.F1],
       run: () => {
+        if (!this.props.setAccessibilityMode) {
+          return false
+        }
+
         const currentAccessibility = this.props.inAccessibilityMode
         // The store needs to be updated first, as onDidChangeConfiguration is
         // called before updateOptions returns
@@ -200,6 +205,10 @@ class FccEditor<
     editor.onDidFocusEditorWidget(() => this.props.setEditorFocusability(true))
     // This is to persist changes caused by the accessibility tooltip.
     editor.onDidChangeConfiguration((event: any) => {
+      if (!this.props.setAccessibilityMode) {
+        return false
+      }
+
       if (
         event.hasChanged(monaco.editor.EditorOption.accessibilitySupport) &&
         editor.getRawOptions().accessibilitySupport === 'on' &&
@@ -209,11 +218,14 @@ class FccEditor<
       }
     })
 
+    // @ts-ignore
     const editableBoundaries =
       challengeFiles &&
       fileKey &&
+      // @ts-ignore
       challengeFiles[fileKey]?.editableRegionBoundaries
-        ? [...challengeFiles[fileKey].editableRegionBoundaries]
+        ? // @ts-ignore
+          [...challengeFiles[fileKey].editableRegionBoundaries]
         : []
 
     if (editableBoundaries.length === 2) {
@@ -404,7 +416,7 @@ class FccEditor<
 
   createDescription() {
     if (this._domNode) return this._domNode
-    const { description } = this.props
+    const { description = '' } = this.props
     const domNode = document.createElement('div')
     const desc = document.createElement('div')
     // const button = document.createElement('button')

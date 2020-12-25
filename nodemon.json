@@ -1,6 +1,6 @@
 {
   "watch": ["packages", "src/next/server"],
-  "exec": "TS_NODE_PROJECT=tsconfig.server.json node --max-old-space-size=2096 -r ts-node/register src/next/server/index.ts",
+  "exec": "TS_NODE_PROJECT=tsconfig.server.json node --max-old-space-size=4096 -r ts-node/register src/next/server/index.ts",
   "ext": "js ts",
   "ignore": [
     "*/src/*",

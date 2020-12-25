@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-bind */
 import React, { useCallback, useContext, useMemo } from 'react'
 import DesktopLayout from './DesktopLayout'
 import Editor from './Editor'
@@ -22,15 +21,19 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
 
   const context = useContext(Context)
 
+  const challengeFile = context?.challengeData.file ?? null
+
+  // const contents = context?.challengeData.file.contents || ""
+
   const output = useMemo(() => context?.logger.output ?? [], [
     context?.logger.output,
   ])
 
-  const getChallengeFile = useCallback(() => {
-    const { files } = object
+  // const getChallengeFile = useCallback((): TestFile | null => {
+  //   const { files } = object
 
-    return files && Array.isArray(files) ? files[0] : null
-  }, [object])
+  //   return files && Array.isArray(files) ? files[0] : null
+  // }, [object])
 
   const hasPreview = useMemo(() => {
     const { challengeType } = object
@@ -41,15 +44,35 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
     )
   }, [object])
 
-  const saveEditorContent = () => {
+  const saveEditorContent = useCallback(() => {
     // eslint-disable-next-line no-console
-    console.log('saveEditorContent')
-  }
+    // console.log('saveEditorContent')
+  }, [])
 
-  const updateFile = () => {
-    // eslint-disable-next-line no-console
-    console.log('updateFile')
-  }
+  const updateFile = useCallback(
+    ({ editorValue }: { key: string; editorValue: string }) => {
+      if (!context) {
+        return
+      }
+
+      const challengeData = context.challengeData
+
+      const file = challengeData.file
+
+      context.setChallengeData({
+        ...challengeData,
+        file: {
+          ...file,
+          contents: editorValue,
+        },
+      })
+
+      // const challengeData = context?.challengeData
+
+      // context?.setContents(editorValue);
+    },
+    [context]
+  )
 
   // const executeChallenge = useCallback((args: any) => {
 
@@ -62,30 +85,30 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
 
   // }, [context?.logger]);
 
-  const setEditorFocusability = (args: any) => {
+  const setEditorFocusability = useCallback((_args: any) => {
     // eslint-disable-next-line no-console
-    console.log('setEditorFocusability args', { ...args })
-  }
+    // console.log('setEditorFocusability args', { ...args })
+  }, [])
 
   const editor = useMemo(() => {
-    const challengeFile = getChallengeFile()
+    // const challengeFile = getChallengeFile()
 
     return (
       challengeFile && (
         <Editor
+          {...challengeFile}
           saveEditorContent={saveEditorContent}
           updateFile={updateFile}
           // containerRef={containerRef}
           // ref={editorRef}
-          {...challengeFile}
           // fileKey={challengeFile.key}
-
+          contents={challengeFile.contents}
           // executeChallenge={executeChallenge}
           setEditorFocusability={setEditorFocusability}
         />
       )
     )
-  }, [getChallengeFile])
+  }, [challengeFile, saveEditorContent, setEditorFocusability, updateFile])
 
   const sidePanel = useMemo(
     () => (
@@ -121,7 +144,8 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
 
   return (
     <DesktopLayout
-      challengeFile={getChallengeFile()}
+      // challengeFile={getChallengeFile()}
+      challengeFile={challengeFile}
       editor={editor}
       hasPreview={hasPreview}
       instructions={sidePanel}

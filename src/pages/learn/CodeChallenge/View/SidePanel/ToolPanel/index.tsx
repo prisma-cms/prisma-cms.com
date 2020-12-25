@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 
 // import { openModal, executeChallenge } from '../redux';
 import { ToolPanelProps } from './interfaces'
@@ -7,6 +7,7 @@ import { ToolPanelStyled, Button, MenuItem } from './styles'
 
 import DropdownButton from './DropdownButton'
 import useExecuteChallenge from '../hooks/useExecuteChallenge'
+import Context from '../../../Context'
 
 // const mapStateToProps = () => ({});
 // const mapDispatchToProps = dispatch =>
@@ -24,7 +25,7 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
   // isMobile,
   // openHelpModal,
   // openVideoModal,
-  openResetModal,
+  // openResetModal,
   guideUrl,
   videoUrl,
 }) => {
@@ -34,10 +35,16 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
 
   const executeChallenge = useExecuteChallenge()
 
+  const context = useContext(Context)
+
+  const resetChallengeData = useCallback(() => {
+    context?.resetChallengeData()
+  }, [context])
+
   return (
     <ToolPanelStyled className={'tool-panel-group button-group'}>
       <Button onClick={executeChallenge}>Запустить тесты</Button>
-      <Button className="btn-invert" onClick={openResetModal}>
+      <Button className="btn-invert" onClick={resetChallengeData}>
         Восстановить код
       </Button>
       <DropdownButton>

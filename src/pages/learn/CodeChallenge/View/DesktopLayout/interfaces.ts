@@ -12,15 +12,18 @@
 //   }),
 //   testOutput: PropTypes.element
 
+import { TestFile } from '../../Context'
+
 // import { ReflexElementProps } from 'react-reflex'
 
 export interface DesktopLayoutProps {
   classes?: Record<string, string>
   // resizeProps: ReflexElementProps
   instructions: React.ReactNode
-  challengeFile: {
-    key: string
-  }
+  // challengeFile: {
+  //   key: string
+  // }
+  challengeFile: TestFile | null
   editor: React.ReactNode
   testOutput: React.ReactNode
   hasPreview: boolean

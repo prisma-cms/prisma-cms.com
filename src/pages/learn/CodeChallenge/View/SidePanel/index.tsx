@@ -8,22 +8,19 @@ import TestSuite from './TestSuite'
 import ToolPanel from './ToolPanel'
 
 const SidePanel: React.FC<SidePanelProps> = ({ object, showToolPanel }) => {
-  // eslint-disable-next-line no-console
-  console.log('SidePanel object', object)
-
   const { forumTopicId, description, instructions, videoUrl } = object
 
   const openHelpModal = useCallback(() => {
     // eslint-disable-next-line no-console
-    console.log('openHelpModal')
+    // console.log('openHelpModal')
   }, [])
-  const openResetModal = useCallback(() => {
-    // eslint-disable-next-line no-console
-    console.log('openResetModal')
-  }, [])
+  // const openResetModal = useCallback(() => {
+  //   // eslint-disable-next-line no-console
+  //   console.log('openResetModal')
+  // }, [])
   const openVideoModal = useCallback(() => {
     // eslint-disable-next-line no-console
-    console.log('openVideoModal')
+    // console.log('openVideoModal')
   }, [])
 
   const title = object.localeTitle || object.name
@@ -45,18 +42,11 @@ const SidePanel: React.FC<SidePanelProps> = ({ object, showToolPanel }) => {
           }
           videoUrl={videoUrl}
           openHelpModal={openHelpModal}
-          openResetModal={openResetModal}
+          // openResetModal={openResetModal}
           openVideoModal={openVideoModal}
         />
       ) : null,
-    [
-      forumTopicId,
-      openHelpModal,
-      openResetModal,
-      openVideoModal,
-      showToolPanel,
-      videoUrl,
-    ]
+    [forumTopicId, openHelpModal, openVideoModal, showToolPanel, videoUrl]
   )
 
   return (

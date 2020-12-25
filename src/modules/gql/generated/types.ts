@@ -24,6 +24,7 @@ export type Scalars = {
   Upload: any;
 };
 
+
 export interface Query {
   __typename?: 'Query';
   /** Client api schema for @prisma-cms/front */
