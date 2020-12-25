@@ -494,6 +494,7 @@ class CoreModule extends PrismaModule {
         importsConnection,
 
         resource,
+        resources,
 
         ...Query
       },
@@ -707,6 +708,7 @@ class CoreModule extends PrismaModule {
       Query: {
         ...Query,
         apiSchema: this.renderApiSchema,
+        resources,
         resource: async (source, args, ctx, info) => {
 
           const {
@@ -717,16 +719,38 @@ class CoreModule extends PrismaModule {
             uri,
           } = where || {};
 
+          if (!uri) {
+            return resource(source, args, ctx, info);
+          }
+
           /**
            * Если указан ури, но не начинается со слеша, то добавляем слеш
            */
-          if (uri && !uri.startsWith("/")) {
-            where.uri = `/${uri}`;
+          // if (uri && !uri.startsWith("/")) {
+          //   where.uri = `/${uri}`;
 
-            Object.assign(args, where);
-          }
+          //   Object.assign(args, where);
+          // }
 
-          return resource(source, args, ctx, info);
+          
+          const trimmed_uri = '/' + uri.trim().replace(/^\/+|\/+$/g, '');
+
+          const result = await resources(source, {
+            ...args,
+            where: {
+              OR: [
+                {
+                  uri: trimmed_uri,
+                },
+                {
+                  uri: trimmed_uri + '/',
+                },
+              ],
+            },
+          }, ctx, info)
+
+          return result ? result[0] : null;
+          // return resource(source, args, ctx, info);
         },
       },
       Mutation: AllowedMutations,
