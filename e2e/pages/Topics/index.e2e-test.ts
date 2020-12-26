@@ -1,8 +1,13 @@
 import { expect } from 'chai'
+import seo from 'e2e/helpers/seo'
 
 describe('Topics', () => {
   before(() => {
     cy.visit('/topics')
+  })
+
+  seo({
+    searchable: true,
   })
 
   it('Load Topics page', () => {

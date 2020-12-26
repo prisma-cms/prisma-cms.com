@@ -1,129 +1,35 @@
 import 'cypress-graphql-mock-network'
 import { expect } from 'chai'
-import {
-  AuthFormUsersConnectionResultFragment,
-  AuthFormUsersConnectionQueryVariables,
-  FragmentAuthPayloadFragment,
-} from 'src/modules/gql/generated'
+// import { checkAuthority, initMockServer } from 'e2e/helpers/mock'
+// import {
+//   AuthFormUsersConnectionResultFragment,
+//   AuthFormUsersConnectionQueryVariables,
+//   FragmentAuthPayloadFragment,
+// } from 'src/modules/gql/generated'
 
 // TODO https://github.com/warrenday/graphql-mock-network/issues/2
 
-import user from './mock/user'
-import codeChallenge from './mock/codeChallenge'
-
-const checkAuth = true
+// import user from './mock/user'
+// import codeChallenge from './mock/codeChallenge'
 
 describe('Run Lesson', () => {
-  beforeEach(() => {
-    cy.readFile('./src/modules/gql/generated/schema.json').then((schema) => {
-      cy.mockNetwork({
-        schema,
-        mocks: {
-          DateTime: (source) => source,
-          Json: (source) => source,
-          Query: () => {
-            return {
-              me: () => null,
-              usersConnection: (): AuthFormUsersConnectionResultFragment => {
-                return {
-                  aggregate: {
-                    count: 0,
-                  },
-                  edges: [],
-                }
-              },
-              codeChallenge: () => codeChallenge,
-            }
-          },
-        },
-      })
-    })
-  })
-
-  // afterEach(() => {
-  //   cy.wait(1000)
-  // })
-
-  it('Load Lesson', () => {
+  it('Load lesson', () => {
     cy.visit('/learn/exercises/bd7123c9c441eddfaeb4bdef')
   })
 
-  if (checkAuth) {
-    describe('Check authority', () => {
-      it('Click login button', () => {
-        cy.get('.MuiButton-label-157 > .MuiTypography-root-132').click()
-      })
-
-      it('Type login', () => {
-        /**
-         * Add mocks
-         */
-
-        cy.mockNetworkAdd({
-          Query: () => ({
-            usersConnection: (
-              _source: null,
-              args: AuthFormUsersConnectionQueryVariables
-            ): AuthFormUsersConnectionResultFragment => {
-              // console.log('usersConnection args', args);
-
-              if (!args.where || args.where.search !== 'Fi1osof') {
-                return {
-                  aggregate: {
-                    count: 0,
-                  },
-                  edges: [],
-                }
-              }
-
-              return {
-                aggregate: {
-                  count: 1,
-                },
-                edges: [
-                  {
-                    node: user,
-                  },
-                ],
-              }
-            },
-          }),
-        })
-
-        cy.wait(1000)
-
-        cy.get('[role=dialog] input[name=search]').click().type('Fi1osof')
-
-        /**
-         * Add auth mock
-         */
-        cy.mockNetworkAdd({
-          Mutation: () => ({
-            signin: (): FragmentAuthPayloadFragment => {
-              return {
-                success: true,
-                errors: [],
-                data: user,
-                token: 'foo-token',
-              }
-            },
-          }),
-          Query: () => ({
-            me: () => user,
-          }),
-        })
-
-        /**
-         * Click auth button
-         */
-        cy.wait(500)
-
-        cy.get('.MuiButton-flatPrimary-158 > .MuiButton-label-157').click()
-      })
-    })
-  }
-
   describe('Run test', () => {
+    // before(() => {
+
+    //   cy.mockNetworkAdd({
+    //     Query: () => {
+    //       return {
+    //         codeChallenge: () => codeChallenge,
+    //       }
+    //     },
+    //   })
+
+    // })
+
     it('Run test', () => {
       cy.wait(200)
 

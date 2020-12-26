@@ -31,7 +31,10 @@ export const TopicPage: Page = () => {
 
   return (
     <>
-      <NextSeo title={name} description={longtitle || name} />
+      <NextSeo
+        title={name}
+        description={`Публикакация "${longtitle || name}"`}
+      />
 
       {object ? <View object={object} mutate={mutate} /> : null}
     </>
