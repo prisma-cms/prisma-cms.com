@@ -59,8 +59,33 @@ const CodeChallengePage: Page = () => {
 
   const object = response.data?.codeChallenge
 
-  const initialChallengeData = useMemo<ChallengeData>(
-    () => ({
+  // const initialChallengeData = useMemo<ChallengeData>(
+  //   () => (),
+  //   [object?.challengeType]
+  // )
+
+  const [challengeData, setChallengeData] = useState<ChallengeData>(() => {
+    const files = object?.files ?? []
+
+    // return {
+    //   challengeType: object?.challengeType,
+    //   file: {
+    //     key: 'indexjs',
+    //     head: '',
+    //     tail: '',
+    //     history: ['index.js'],
+    //     name: 'index',
+    //     ext: 'js',
+    //     path: 'index.js',
+    //     contents: ``,
+    //     error: null,
+    //     seed: '',
+    //   },
+    // };
+
+    const { ...file } = files[0] || {}
+
+    return {
       challengeType: object?.challengeType,
       file: {
         key: 'indexjs',
@@ -73,14 +98,12 @@ const CodeChallengePage: Page = () => {
         contents: ``,
         error: null,
         seed: '',
+        ...file,
       },
-    }),
-    [object?.challengeType]
-  )
+    }
+  })
 
-  const [challengeData, setChallengeData] = useState<ChallengeData>(
-    initialChallengeData
-  )
+  const [initialChallengeData] = useState(challengeData)
 
   const [output, setOutput] = useState<ReadonlyArray<React.ReactChild>>([
     `/**
@@ -113,6 +136,7 @@ const CodeChallengePage: Page = () => {
     if (!object) {
       return null
     }
+    // console.log('object', object);
 
     // const { challengeType } = object
 

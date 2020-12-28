@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import React, { PureComponent, Suspense } from 'react'
+import React, { PureComponent } from 'react'
 
-import Loader from './Loader/Loader'
+// import Loader from './Loader/Loader'
 
 import dynamic from 'next/dynamic'
 import { FccEditorProps, modeMap } from './interfaces'
@@ -9,6 +9,15 @@ import { FccEditorProps, modeMap } from './interfaces'
 export * from './interfaces'
 
 const MonacoEditor = dynamic(import('react-monaco-editor'), { ssr: false })
+
+// declare global {
+//   // eslint-disable-next-line @typescript-eslint/no-namespace
+//   namespace NodeJS {
+//     interface Global {
+//       monaco_editor: import('monaco-editor').editor.ICodeEditor;
+//     }
+//   }
+// }
 
 // import { connect } from 'react-redux';
 // import { createSelector } from 'reselect';
@@ -145,6 +154,8 @@ class FccEditor<
   }
 
   editorDidMount = (editor: any, monaco: any) => {
+    // global.monaco_editor = editor;
+
     this._editor = editor
     const { challengeFiles, fileKey } = this.props
     editor.updateOptions({
@@ -158,15 +169,21 @@ class FccEditor<
     }
     // else this.focusOnHotkeys()
 
-    // editor.addAction({
-    //   id: 'execute-challenge',
-    //   label: 'Run tests',
-    //   keybindings: [
-    //     /* eslint-disable no-bitwise */
-    //     monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter),
-    //   ],
-    //   run: this.props.executeChallenge,
-    // })
+    editor.addAction({
+      id: 'execute-challenge',
+      label: 'Run tests',
+      keybindings: [
+        /* eslint-disable no-bitwise */
+        monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter),
+      ],
+      /**
+       * Надо именно так, потому что executeChallenge - это хук,
+       * который меняется при повторном рендеринге.
+       */
+      run: () => {
+        return this.props.executeChallenge()
+      },
+    })
     editor.addAction({
       id: 'leave-editor',
       label: 'Leave editor',
@@ -511,18 +528,16 @@ class FccEditor<
     const language = modeMap[ext]
 
     return (
-      <Suspense fallback={<Loader timeout={600} />}>
-        <MonacoEditor
-          editorDidMount={this.editorDidMount}
-          editorWillMount={this.editorWillMount}
-          key={`${editorTheme}-${fileKey}`}
-          language={language}
-          onChange={this.onChange}
-          options={this.options}
-          theme={editorTheme}
-          value={contents}
-        />
-      </Suspense>
+      <MonacoEditor
+        editorDidMount={this.editorDidMount}
+        editorWillMount={this.editorWillMount}
+        key={`${editorTheme}-${fileKey}`}
+        language={language}
+        onChange={this.onChange}
+        options={this.options}
+        theme={editorTheme}
+        value={contents}
+      />
     )
   }
 }

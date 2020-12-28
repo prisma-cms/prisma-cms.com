@@ -12,7 +12,12 @@ import { CodeChallengeBlocksBlockFragment } from './codeChallengeBlocksBlock';
 import { gql } from '@apollo/client';
 import { CodeChallengeBlocksBlockFragmentDoc } from './codeChallengeBlocksBlock';
 import * as Apollo from '@apollo/client';
-export type CodeChallengeBlocksQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type CodeChallengeBlocksQueryVariables = Types.Exact<{
+  where?: Types.Maybe<Types.CodeChallengeBlockWhereInput>;
+  orderBy?: Types.Maybe<Types.CodeChallengeBlockOrderByInput>;
+  first?: Types.Maybe<Types.Scalars['Int']>;
+  skip?: Types.Maybe<Types.Scalars['Int']>;
+}>;
 
 
 export type CodeChallengeBlocksQuery = { __typename?: 'Query', codeChallengeBlocks: Array<Types.Maybe<(
@@ -22,8 +27,13 @@ export type CodeChallengeBlocksQuery = { __typename?: 'Query', codeChallengeBloc
 
 
 export const CodeChallengeBlocksDocument = gql`
-    query codeChallengeBlocks {
-  codeChallengeBlocks(where: {Parent: null}, orderBy: rank_ASC) {
+    query codeChallengeBlocks($where: CodeChallengeBlockWhereInput = {Parent: null}, $orderBy: CodeChallengeBlockOrderByInput = rank_ASC, $first: Int, $skip: Int) {
+  codeChallengeBlocks(
+    where: $where
+    orderBy: $orderBy
+    first: $first
+    skip: $skip
+  ) {
     ...codeChallengeBlocksBlock
   }
 }
@@ -41,6 +51,10 @@ export const CodeChallengeBlocksDocument = gql`
  * @example
  * const { data, loading, error } = useCodeChallengeBlocksQuery({
  *   variables: {
+ *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
+ *      first: // value for 'first'
+ *      skip: // value for 'skip'
  *   },
  * });
  */

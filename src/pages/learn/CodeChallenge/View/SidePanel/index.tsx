@@ -7,7 +7,11 @@ import { SidePanelStyled } from './styles'
 import TestSuite from './TestSuite'
 import ToolPanel from './ToolPanel'
 
-const SidePanel: React.FC<SidePanelProps> = ({ object, showToolPanel }) => {
+const SidePanel: React.FC<SidePanelProps> = ({
+  object,
+  showToolPanel,
+  executeChallenge,
+}) => {
   const { forumTopicId, description, instructions, videoUrl } = object
 
   const openHelpModal = useCallback(() => {
@@ -44,9 +48,17 @@ const SidePanel: React.FC<SidePanelProps> = ({ object, showToolPanel }) => {
           openHelpModal={openHelpModal}
           // openResetModal={openResetModal}
           openVideoModal={openVideoModal}
+          executeChallenge={executeChallenge}
         />
       ) : null,
-    [forumTopicId, openHelpModal, openVideoModal, showToolPanel, videoUrl]
+    [
+      executeChallenge,
+      forumTopicId,
+      openHelpModal,
+      openVideoModal,
+      showToolPanel,
+      videoUrl,
+    ]
   )
 
   return (

@@ -6,12 +6,12 @@ import { CodeChallengeBlocksPageChallengeStyled } from './styles'
 const CodeChallengeBlocksPageChallenge: React.FC<CodeChallengeBlocksPageChallengeProps> = ({
   object,
 }) => {
+  const title = object.localeTitle || object.name
+
   return (
     <CodeChallengeBlocksPageChallengeStyled>
       <Link href={`/learn/exercises/${object.id}`}>
-        <a title={`Перейти к выполнению задания "${object.name}"` || ''}>
-          {object.name}
-        </a>
+        <a title={`Перейти к выполнению задания "${title}"` || ''}>{title}</a>
       </Link>
     </CodeChallengeBlocksPageChallengeStyled>
   )

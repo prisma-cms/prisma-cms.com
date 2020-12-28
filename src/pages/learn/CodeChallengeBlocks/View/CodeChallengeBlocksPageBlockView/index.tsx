@@ -3,16 +3,23 @@ import Typography from 'material-ui/Typography'
 import { CodeChallengeBlocksPageBlockViewProps } from './interfaces'
 import { CodeChallengeBlocksPageBlockViewStyled } from './styles'
 import CodeChallengeBlocksPageChallenge from './CodeChallengeBlocksPageChallenge'
+import Link from 'next/link'
 
 export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageBlockViewProps> = ({
   object,
   children,
+  opened: openedProps = false,
 }) => {
-  const [opened, setOpened] = useState(false)
+  const [opened, setOpened] = useState(openedProps)
 
-  const toggleOpened = useCallback(() => {
-    setOpened(!opened)
-  }, [opened])
+  const toggleOpened = useCallback(
+    (event: React.MouseEvent) => {
+      event.preventDefault()
+      event.stopPropagation()
+      setOpened(!opened)
+    },
+    [opened]
+  )
 
   const block = object
 
@@ -22,8 +29,23 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
     }
 
     const children = block.Children
+    const challenges = block.Challenges
 
     let content: React.ReactNode[] = []
+
+    /**
+     * For src/pages/learn/CodeChallengeBlocks/CodeChallengeBlock
+     */
+    if (challenges?.length) {
+      return challenges.map((challenge) => {
+        return (
+          <CodeChallengeBlocksPageChallenge
+            key={challenge.id}
+            object={challenge}
+          />
+        )
+      })
+    }
 
     if (children) {
       content = children.map((n) => {
@@ -53,9 +75,13 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
 
   return (
     <CodeChallengeBlocksPageBlockViewStyled>
-      <Typography onClick={toggleOpened} className="title opener">
-        {!opened ? '↳' : '↴'} {block.name}
-      </Typography>
+      <Link href={`/learn/sections/${block.id}`}>
+        <a onClick={toggleOpened}>
+          <Typography className="title opener">
+            {!opened ? '↳' : '↴'} {block.name}
+          </Typography>
+        </a>
+      </Link>
       {content}
       {opened ? children : null}
     </CodeChallengeBlocksPageBlockViewStyled>

@@ -1,3 +1,5 @@
+import useExecuteChallenge from '../SidePanel/hooks/useExecuteChallenge'
+
 export const modeMap = {
   // css: 'css',
   // html: 'html',
@@ -13,7 +15,7 @@ export interface FccEditorProps {
   // containerRef: any
   contents: string
   dimensions?: object
-  // executeChallenge: Function
+  executeChallenge: ReturnType<typeof useExecuteChallenge>
   ext: CodeChallengeFileExt
   fileKey?: string
   inAccessibilityMode?: boolean

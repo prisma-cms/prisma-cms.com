@@ -12,7 +12,7 @@ import { expect } from 'chai'
 // import user from './mock/user'
 // import codeChallenge from './mock/codeChallenge'
 
-describe('Run Lesson', () => {
+describe('Run Javascript Lesson', () => {
   it('Load lesson', () => {
     cy.visit('/learn/exercises/bd7123c9c441eddfaeb4bdef')
   })

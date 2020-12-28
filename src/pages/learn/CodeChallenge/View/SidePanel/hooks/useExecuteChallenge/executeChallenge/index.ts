@@ -1,14 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 
-// import escape from 'lodash/escape'
-// import { CodeChallenge_Fragment } from 'src/modules/gql/generated';
-// import { CodeChallengeTest } from 'src/pages/learn/CodeChallenge/interfaces';
-// import { buildChallenge } from 'src/pages/learn/CodeChallenge/utils/build'
-
-// import * as Babel from '@babel/standalone';
-
-import jquery from 'jquery'
 import * as chai from 'chai'
 import {
   CodeChallengeContext,
@@ -16,34 +8,52 @@ import {
 } from 'src/pages/learn/CodeChallenge/Context'
 import buildJSChallenge from './buildFunctions/buildJSChallenge'
 
-// @ts-ignore
-global.assert = chai.assert
-// @ts-ignore
-global.$ = jquery
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 // eslint-disable-next-line
 let previewTask: any
 
-export default async function* executeCancellableChallengeSaga(
+export type executeChallengeProps = {
   context: NonNullable<CodeChallengeContext>
-) {
-  const challengeData = context.challengeData
+  jquery: any
+}
 
-  const buildData = await buildJSChallenge(challengeData, true)
-
-  // console.log('executeCancellableChallengeSaga buildData', buildData);
-
-  /**
-   * Code from Editor
-   */
+export default async function* executeCancellableChallengeSaga(
+  props: executeChallengeProps
+): AsyncGenerator<TestResult | Error, void, unknown> {
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const code = buildData.build
+  const assert = chai.assert
 
-  // const tests: CodeChallengeTest[] = challenge.tests?.slice();
-  // const tests = challenge.tests?.slice();
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const $ = props.jquery
+
+  const context = props.context
+
+  const challengeData = context.challengeData
+
+  const buildData = await buildJSChallenge(challengeData, true).catch(
+    (error: Error[]) => {
+      console.error(error)
+
+      // throw new Error ("sdfsdf");
+      return error
+    }
+  )
+
+  // if (buildData instanceof Error) {
+  //   yield buildData;
+  //   return;
+  // }
+  // else
+
+  if (Array.isArray(buildData)) {
+    yield buildData[0]
+    return
+  }
+
+  const code = buildData?.build
 
   const tests = context.challenge.tests?.slice()
 
@@ -53,22 +63,52 @@ export default async function* executeCancellableChallengeSaga(
     if (test) {
       const { testString } = test
 
-      try {
-        // eslint-disable-next-line no-eval
-        const test = eval(testString)
+      let result: TestResult | undefined
 
-        if (typeof test === 'function') {
-          // TODO Fix logic
-          await test('e.getUserInput')
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      let testResult: any
+
+      // eslint-disable-next-line prefer-const
+      let __userCodeWasExecuted = false
+
+      try {
+        /* eslint-disable no-eval */
+        try {
+          const completeCode = `
+            ${code}
+            __userCodeWasExecuted = true;
+            // __utils.toggleProxyLogger(true);
+            ${testString}
+          `
+
+          testResult = eval(completeCode)
+        } catch (err) {
+          console.error(err)
+
+          if (__userCodeWasExecuted) {
+            // rethrow error, since test failed.
+            throw err
+          }
+          // log build errors
+          // __utils.log(err);
+          // the tests may not require working code, so they are evaluated even if
+          // the user code does not get executed.
+          testResult = eval(testString)
         }
-        const result: TestResult = { pass: true }
+
+        if (typeof testResult === 'function') {
+          // TODO Fix logic
+          await testResult('e.getUserInput')
+        }
+
+        result = { pass: true }
         yield result
       } catch (err) {
         if (!(err instanceof chai.AssertionError)) {
           console.error(err)
         }
 
-        const result: TestResult = {
+        result = {
           pass: false,
           err: {
             message: err.message,

@@ -14,7 +14,10 @@ import { gql } from '@apollo/client';
 import { ChallengeBlockNoNestingFragmentDoc } from './challengeBlockNoNesting';
 import { ChallengeFragmentDoc } from './challenge';
 export type CodeChallengeBlocksBlockFragment = (
-  { __typename?: 'CodeChallengeBlock', Children?: Types.Maybe<Array<(
+  { __typename?: 'CodeChallengeBlock', Challenges?: Types.Maybe<Array<(
+    { __typename?: 'CodeChallenge' }
+    & ChallengeFragment
+  )>>, Children?: Types.Maybe<Array<(
     { __typename?: 'CodeChallengeBlock', Challenges?: Types.Maybe<Array<(
       { __typename?: 'CodeChallenge' }
       & ChallengeFragment
@@ -27,6 +30,9 @@ export type CodeChallengeBlocksBlockFragment = (
 export const CodeChallengeBlocksBlockFragmentDoc = gql`
     fragment codeChallengeBlocksBlock on CodeChallengeBlock {
   ...challengeBlockNoNesting
+  Challenges(orderBy: rank_ASC) {
+    ...challenge
+  }
   Children(orderBy: rank_ASC) {
     ...challengeBlockNoNesting
     Challenges(orderBy: rank_ASC) {

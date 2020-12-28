@@ -28,6 +28,7 @@ export * from './chatRoomsConnection';
 export * from './chatRoomsConnectionChatRoom';
 export * from './chatRoomsConnectionUser';
 export * from './codeChallenge';
+export * from './codeChallengeBlock';
 export * from './codeChallengeBlocks';
 export * from './codeChallengeBlocksBlock';
 export * from './codeChallenge_';

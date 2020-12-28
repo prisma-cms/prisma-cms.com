@@ -6,7 +6,7 @@ import { ToolPanelProps } from './interfaces'
 import { ToolPanelStyled, Button, MenuItem } from './styles'
 
 import DropdownButton from './DropdownButton'
-import useExecuteChallenge from '../hooks/useExecuteChallenge'
+// import useExecuteChallenge from '../hooks/useExecuteChallenge'
 import Context from '../../../Context'
 
 // const mapStateToProps = () => ({});
@@ -28,12 +28,13 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
   // openResetModal,
   guideUrl,
   videoUrl,
+  executeChallenge,
 }) => {
   // const openHelpModal = useCallback(() => {
   //   return null;
   // }, []);
 
-  const executeChallenge = useExecuteChallenge()
+  // const executeChallenge = useExecuteChallenge()
 
   const context = useContext(Context)
 
@@ -43,10 +44,12 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
 
   return (
     <ToolPanelStyled className={'tool-panel-group button-group'}>
-      <Button onClick={executeChallenge}>Запустить тесты</Button>
+      <Button onClick={executeChallenge}>Запустить тесты (Ctrl+Enter)</Button>
+
       <Button className="btn-invert" onClick={resetChallengeData}>
         Восстановить код
       </Button>
+
       <DropdownButton>
         {guideUrl ? (
           <MenuItem

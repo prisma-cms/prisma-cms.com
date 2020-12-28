@@ -3,10 +3,11 @@ import DesktopLayout from './DesktopLayout'
 import Editor from './Editor'
 import { challengeTypes } from '../utils/challengeTypes'
 import SidePanel from './SidePanel'
-import Preview from './Preview/Preview'
+import Preview from './Preview'
 import { CodeChallengeViewProps } from './interfaces'
 import CodeChallengeOutputView from './Output'
 import Context from '../Context'
+import useExecuteChallenge from './SidePanel/hooks/useExecuteChallenge'
 
 const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
   const { object } = props
@@ -74,16 +75,7 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
     [context]
   )
 
-  // const executeChallenge = useCallback((args: any) => {
-
-  //   context?.logger.setOutput([]);
-
-  //   // eslint-disable-next-line no-console
-  //   console.log('executeChallenge args', { ...args })
-
-  //   useExecuteChallenge
-
-  // }, [context?.logger]);
+  const executeChallenge = useExecuteChallenge()
 
   const setEditorFocusability = useCallback((_args: any) => {
     // eslint-disable-next-line no-console
@@ -103,12 +95,18 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
           // ref={editorRef}
           // fileKey={challengeFile.key}
           contents={challengeFile.contents}
-          // executeChallenge={executeChallenge}
+          executeChallenge={executeChallenge}
           setEditorFocusability={setEditorFocusability}
         />
       )
     )
-  }, [challengeFile, saveEditorContent, setEditorFocusability, updateFile])
+  }, [
+    challengeFile,
+    executeChallenge,
+    saveEditorContent,
+    setEditorFocusability,
+    updateFile,
+  ])
 
   const sidePanel = useMemo(
     () => (
@@ -122,16 +120,17 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
         // videoUrl={this.getVideoUrl()}
         className="full-height"
         object={object}
+        executeChallenge={executeChallenge}
       />
     ),
-    [object]
+    [executeChallenge, object]
   )
 
   const preview = useMemo(
     () => (
       <Preview
         className="full-height"
-        disableIframe={true}
+        disableIframe={false}
         iframeStatus={true}
       />
     ),

@@ -6,4 +6,8 @@ export const CodeChallengeOutputViewStyled = styled.section`
   > * {
     margin: 10px 0;
   }
+
+  pre {
+    white-space: pre-wrap;
+  }
 `

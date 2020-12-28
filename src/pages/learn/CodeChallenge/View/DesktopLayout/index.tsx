@@ -1,21 +1,8 @@
 import React from 'react'
 
-import { ReflexContainer, ReflexSplitter, ReflexElement } from 'react-reflex'
-
-import withStyles from 'material-ui/styles/withStyles'
 import { DesktopLayoutProps } from './interfaces'
-
-export const styles = {
-  root: {
-    height: '100%',
-    display: 'flex',
-    // border: '1px solid green',
-
-    '&>.vertical.reflex-element': {
-      // border: '1px solid red',
-    },
-  },
-}
+import ReflexContainer from 'src/uikit/ReFlex/ReflexContainer'
+import ReflexElement from 'src/uikit/ReFlex/ReflexElement'
 
 const DesktopLayout: React.FC<DesktopLayoutProps> = (props) => {
   // static displayName = 'DesktopLayout';
@@ -37,7 +24,7 @@ const DesktopLayout: React.FC<DesktopLayoutProps> = (props) => {
   // };
 
   const {
-    classes,
+    // classes,
     // resizeProps,
     instructions,
     challengeFile,
@@ -49,32 +36,27 @@ const DesktopLayout: React.FC<DesktopLayoutProps> = (props) => {
 
   return (
     <ReflexContainer
-      className={[classes?.root, 'desktop-layout'].join(' ')}
-      orientation="vertical"
+      // className={[classes?.root, 'desktop-layout'].join(' ')}
+      // orientation="vertical"
+      flexDirection="row"
     >
       <ReflexElement flex={1}>{instructions}</ReflexElement>
-      <ReflexSplitter propagate={true} />
+      {/* <ReflexSplitter propagate={true} /> */}
       <ReflexElement flex={1}>
         {challengeFile && (
-          <ReflexContainer key={challengeFile.key} orientation="horizontal">
-            <ReflexElement flex={1} propagateDimensions={true}>
+          <ReflexContainer key={challengeFile.key} flexDirection="column">
+            <ReflexElement flex={1} overflow="hidden">
               {editor}
             </ReflexElement>
-            <ReflexSplitter propagate={true} />
-            <ReflexElement flex={0.25} propagateDimensions={true}>
-              {testOutput}
-            </ReflexElement>
+            {/* <ReflexSplitter propagate={true} /> */}
+            <ReflexElement flex={0.25}>{testOutput}</ReflexElement>
           </ReflexContainer>
         )}
       </ReflexElement>
-      {hasPreview && <ReflexSplitter propagate={true} />}
+      {/* {hasPreview && <ReflexSplitter propagate={true} />} */}
       {hasPreview && <ReflexElement flex={0.7}>{preview}</ReflexElement>}
     </ReflexContainer>
   )
 }
 
-DesktopLayout.displayName = 'DesktopLayout'
-
-export default withStyles(styles)((props: DesktopLayoutProps) => (
-  <DesktopLayout {...props} />
-))
+export default DesktopLayout

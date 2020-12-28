@@ -7,7 +7,7 @@ import { CodeChallenge_Fragment } from 'src/modules/gql/generated'
 export type TestError = {
   message: string
   stack: string
-  code: string
+  code: string | undefined
   file: Record<string, any>
 }
 

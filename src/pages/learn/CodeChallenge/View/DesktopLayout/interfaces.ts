@@ -17,7 +17,7 @@ import { TestFile } from '../../Context'
 // import { ReflexElementProps } from 'react-reflex'
 
 export interface DesktopLayoutProps {
-  classes?: Record<string, string>
+  // classes?: Record<string, string>
   // resizeProps: ReflexElementProps
   instructions: React.ReactNode
   // challengeFile: {
