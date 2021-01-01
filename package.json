@@ -215,6 +215,7 @@
     "apollo-cms": "^2.0.0",
     "monaco-editor": "^0.20.0",
     "sha3": "^2.0.7",
+    "sharp": "0.25.0",
     "terser": "3.14.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

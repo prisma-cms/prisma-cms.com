@@ -1,4 +1,4 @@
-import useExecuteChallenge from '../SidePanel/hooks/useExecuteChallenge'
+import useExecuteChallenge from '../../hooks/useExecuteChallenge'
 
 export const modeMap = {
   // css: 'css',

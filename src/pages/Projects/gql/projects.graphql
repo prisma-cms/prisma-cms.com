@@ -68,22 +68,6 @@ fragment projectsConnectionProject on Project {
   }
 }
 
-fragment ProjectNoNesting on Project {
-  id
-  name
-  domain
-  createdAt
-  updatedAt
-  description
-  url
-  sequence
-  content
-  contentText
-  status
-  public
-  oldID
-}
-
 fragment projectsConnectionUser on User {
   id
   createdAt

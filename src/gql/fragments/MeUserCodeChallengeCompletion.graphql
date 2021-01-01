@@ -1,0 +1,10 @@
+fragment MeUserCodeChallengeCompletion on CodeChallengeCompletion {
+  id
+  Task {
+    id
+    status
+  }
+  CodeChallenge {
+    id
+  }
+}

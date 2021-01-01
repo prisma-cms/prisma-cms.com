@@ -8,7 +8,7 @@ import { challengeTypes } from 'src/pages/learn/CodeChallenge/utils/challengeTyp
 import {
   transformersPreview,
   transformers,
-} from '../../../../../../utils/transformers'
+} from '../../../../utils/transformers'
 
 type File = CodeChallengeContext['challengeData']['file']
 

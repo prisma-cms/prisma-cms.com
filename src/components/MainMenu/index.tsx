@@ -14,7 +14,8 @@ import Grid from 'src/uikit/Grid'
 // import UserItem from "@prisma-cms/front/lib/components/App/Renderer/MainMenu/User";
 // import { styles as defaultStyles } from '@prisma-cms/front/lib/components/App/Renderer/MainMenu'
 // import Language from '@prisma-cms/front/lib/components/Language'
-import UserItem from './User'
+// import UserItem from './User'
+import UserLink, { UikitUserLinkAvatarSize } from 'src/uikit/Link/User'
 
 // import { Link } from 'react-router-dom'
 import Link from 'next/link'
@@ -25,6 +26,8 @@ import { MainMenuProps, MainMenuState } from './interfaces'
 // import { CallRequestButtons } from '@prisma-cms/webrtc'
 
 // import { Timer } from '@prisma-cms/cooperation'
+
+import Timer from './Timer'
 
 // export const defaultStyles = theme => {
 
@@ -72,6 +75,10 @@ export const styles = (theme: any) => {
     link: {
       color: paletteType === 'light' ? '#fff' : undefined,
     },
+    iconButton: {
+      height: 36,
+      width: 36,
+    },
   }
 }
 
@@ -116,7 +123,7 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
   render() {
     const { classes, user: currentUser } = this.props
 
-    const { id: userId, Timers } = currentUser || {}
+    const { Timers } = currentUser || {}
 
     const [ActiveTimer] = Timers || []
 
@@ -247,23 +254,33 @@ export class MainMenu extends PrismaCmsComponent<MainMenuProps, MainMenuState> {
 
                 {ActiveTimer ? (
                   <Grid key="timer" item>
-                    {/* <Timer timer={ActiveTimer} iconClassName={classes.link} /> */}
+                    <Timer timer={ActiveTimer} className={classes.iconButton} />
                   </Grid>
                 ) : null}
 
-                <Grid key="notifications" item>
-                  {/* <Notices
-                    key={userId}
-                    user={currentUser}
-                    classes={{
-                      icon: classes.link,
-                    }}
-                  /> */}
-                </Grid>
+                {/* 
+                  <Grid key="notifications" item>
+                    <Notices
+                      key={userId}
+                      user={currentUser}
+                      classes={{
+                        icon: classes.link,
+                      }}
+                    /> 
+                  </Grid>
+                */}
 
-                <Grid key="user" item>
-                  <UserItem key={userId} user={currentUser} classes={classes} />
-                </Grid>
+                {currentUser ? (
+                  <Grid key="user" item>
+                    {/* <UserItem key={userId} user={currentUser} classes={classes} /> */}
+                    <UserLink
+                      // classes={classes}
+                      user={currentUser}
+                      size={UikitUserLinkAvatarSize.small}
+                      showName={false}
+                    />
+                  </Grid>
+                ) : null}
                 <Grid key="logout" item>
                   <a href="#" onClick={this.logout}>
                     {this.lexicon('Signout')}

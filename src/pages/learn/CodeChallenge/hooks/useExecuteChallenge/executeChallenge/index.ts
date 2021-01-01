@@ -74,6 +74,9 @@ export default async function* executeCancellableChallengeSaga(
       try {
         /* eslint-disable no-eval */
         try {
+          /**
+           * // TODO Здесь надо учитывать тип теста, потому что с HTML возникает логичная ошибка
+           */
           const completeCode = `
             ${code}
             __userCodeWasExecuted = true;
@@ -81,9 +84,11 @@ export default async function* executeCancellableChallengeSaga(
             ${testString}
           `
 
+          // console.log('completeCode', completeCode);
+
           testResult = eval(completeCode)
         } catch (err) {
-          console.error(err)
+          // console.error(err)
 
           if (__userCodeWasExecuted) {
             // rethrow error, since test failed.

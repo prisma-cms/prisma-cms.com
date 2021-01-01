@@ -9,24 +9,19 @@
 import * as Types from './types';
 
 import { UserNoNestingFragment } from './UserNoNesting';
-import { TimerNoNestingFragment } from './TimerNoNesting';
-import { TaskNoNestingFragment } from './TaskNoNesting';
-import { ProjectNoNestingFragment } from './ProjectNoNesting';
+import { MeUserCodeChallengeCompletionFragment } from './MeUserCodeChallengeCompletion';
+import { MeUserTimerFragment } from './MeUserTimer';
 import { gql } from '@apollo/client';
 import { UserNoNestingFragmentDoc } from './UserNoNesting';
-import { TimerNoNestingFragmentDoc } from './TimerNoNesting';
-import { TaskNoNestingFragmentDoc } from './TaskNoNesting';
-import { ProjectNoNestingFragmentDoc } from './ProjectNoNesting';
+import { MeUserCodeChallengeCompletionFragmentDoc } from './MeUserCodeChallengeCompletion';
+import { MeUserTimerFragmentDoc } from './MeUserTimer';
 export type MeUserFragment = (
-  { __typename?: 'User', EthAccounts?: Types.Maybe<Array<{ __typename?: 'EthAccount', id: string, address: string, balance?: Types.Maybe<number> }>>, Timers?: Types.Maybe<Array<(
-    { __typename?: 'Timer', Task: (
-      { __typename?: 'Task', TaskProjects?: Types.Maybe<Array<{ __typename?: 'ProjectTask', id: string, createdAt: Date, updatedAt: Date, Project: (
-          { __typename?: 'Project' }
-          & ProjectNoNestingFragment
-        ) }>> }
-      & TaskNoNestingFragment
-    ) }
-    & TimerNoNestingFragment
+  { __typename?: 'User', CodeChallengeCompletions?: Types.Maybe<Array<(
+    { __typename?: 'CodeChallengeCompletion' }
+    & MeUserCodeChallengeCompletionFragment
+  )>>, EthAccounts?: Types.Maybe<Array<{ __typename?: 'EthAccount', id: string, address: string, balance?: Types.Maybe<number> }>>, Timers?: Types.Maybe<Array<(
+    { __typename?: 'Timer' }
+    & MeUserTimerFragment
   )>> }
   & UserNoNestingFragment
 );
@@ -34,27 +29,18 @@ export type MeUserFragment = (
 export const MeUserFragmentDoc = gql`
     fragment MeUser on User {
   ...UserNoNesting
+  CodeChallengeCompletions {
+    ...MeUserCodeChallengeCompletion
+  }
   EthAccounts {
     id
     address
     balance(convert: ether)
   }
   Timers(first: 1, where: {stopedAt: null}) {
-    ...TimerNoNesting
-    Task {
-      ...TaskNoNesting
-      TaskProjects {
-        id
-        createdAt
-        updatedAt
-        Project {
-          ...ProjectNoNesting
-        }
-      }
-    }
+    ...MeUserTimer
   }
 }
     ${UserNoNestingFragmentDoc}
-${TimerNoNestingFragmentDoc}
-${TaskNoNestingFragmentDoc}
-${ProjectNoNestingFragmentDoc}`;
+${MeUserCodeChallengeCompletionFragmentDoc}
+${MeUserTimerFragmentDoc}`;

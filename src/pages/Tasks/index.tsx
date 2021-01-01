@@ -4,7 +4,6 @@ import {
   TasksConnectionDocument,
   TasksConnectionQueryVariables,
   useTasksConnectionQuery,
-  TasksConnectionQuery,
   TasksConnectionTaskFragment,
 } from 'src/modules/gql/generated'
 
@@ -53,11 +52,11 @@ const TasksPage: Page = () => {
     }
   }, [query])
 
-  const queryResult = useTasksConnectionQuery({
+  const response = useTasksConnectionQuery({
     variables: queryVariables,
-    onCompleted: (data) => {
-      setResponse(data)
-    },
+    // onCompleted: (data) => {
+    //   setResponse(data)
+    // },
     onError: console.error,
   })
 
@@ -65,15 +64,15 @@ const TasksPage: Page = () => {
    * useState используем уже после выполнения запроса, так как на стороне setState не имеет эффекта,
    * надо дефолтные данные сразу задать из полученного результата
    */
-  const [response, setResponse] = useState<
-    TasksConnectionQuery | null | undefined
-  >(queryResult.data)
+  // const [response, setResponse] = useState<
+  //   TasksConnectionQuery | null | undefined
+  // >(queryResult.data)
 
   const objects = useMemo(() => {
     const objects: TasksConnectionTaskFragment[] = []
 
     return (
-      response?.objectsConnection.edges.reduce((curr, next) => {
+      response.data?.objectsConnection.edges.reduce((curr, next) => {
         if (next?.node) {
           curr.push(next.node)
         }
@@ -81,9 +80,9 @@ const TasksPage: Page = () => {
         return curr
       }, objects) ?? []
     )
-  }, [response?.objectsConnection.edges])
+  }, [response.data?.objectsConnection.edges])
 
-  const { variables, loading } = queryResult
+  const { variables, loading } = response
 
   const [showAll, setShowAll] = useState(false)
 
@@ -122,7 +121,7 @@ const TasksPage: Page = () => {
         loading={loading}
         // data={response || null}
         objects={objects}
-        count={response?.objectsConnection.aggregate.count}
+        count={response.data?.objectsConnection.aggregate.count}
         variables={variables}
         page={page}
         showAll={showAll}

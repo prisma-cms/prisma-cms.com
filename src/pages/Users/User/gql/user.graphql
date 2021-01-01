@@ -29,29 +29,6 @@ fragment user_ on User {
   }
 }
 
-fragment UserNoNesting on User {
-  id
-  createdAt
-  updatedAt
-  username
-  email
-  phone
-  showEmail
-  showPhone
-  password
-  fullname
-  image
-  address
-  sudo
-  active
-  activated
-  deleted
-  hasEmail
-  hasPhone
-  marketplaceToken
-  hidden
-}
-
 fragment EthAccountNoNesting on EthAccount {
   id
   createdAt

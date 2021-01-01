@@ -6,44 +6,36 @@ query me {
 
 fragment MeUser on User {
   ...UserNoNesting
+  CodeChallengeCompletions {
+    ...MeUserCodeChallengeCompletion
+  }
   EthAccounts {
     id
     address
     balance(convert: ether)
   }
   Timers(first: 1, where: { stopedAt: null }) {
-    ...TimerNoNesting
-    Task {
-      ...TaskNoNesting
-      TaskProjects {
-        id
-        createdAt
-        updatedAt
-        Project {
-          ...ProjectNoNesting
-        }
-      }
-    }
+    ...MeUserTimer
   }
 }
 
-fragment TimerNoNesting on Timer {
+fragment MeUserTimer on Timer {
   id
   createdAt
-  updatedAt
   stopedAt
-}
-
-fragment TaskNoNesting on Task {
-  id
-  createdAt
-  updatedAt
-  name
-  description
-  content
-  status
-  startDatePlaning
-  endDatePlaning
-  startDate
-  endDate
+  Task {
+    id
+    name
+    status
+    TaskProjects {
+      id
+      createdAt
+      updatedAt
+      Project {
+        id
+        type
+        name
+      }
+    }
+  }
 }

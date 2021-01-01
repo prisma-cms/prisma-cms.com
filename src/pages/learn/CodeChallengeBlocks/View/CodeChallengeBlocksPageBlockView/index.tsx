@@ -1,15 +1,18 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import Typography from 'material-ui/Typography'
 import { CodeChallengeBlocksPageBlockViewProps } from './interfaces'
 import { CodeChallengeBlocksPageBlockViewStyled } from './styles'
 import CodeChallengeBlocksPageChallenge from './CodeChallengeBlocksPageChallenge'
 import Link from 'next/link'
+import Context, { PrismaCmsContext } from '@prisma-cms/context'
 
 export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageBlockViewProps> = ({
   object,
-  children,
+  // children,
   opened: openedProps = false,
 }) => {
+  const context = useContext(Context) as PrismaCmsContext
+
   const [opened, setOpened] = useState(openedProps)
 
   const toggleOpened = useCallback(
@@ -23,9 +26,11 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
 
   const block = object
 
-  const content = useMemo(() => {
-    if (!opened || !block) {
-      return null
+  const [content, totalTime] = useMemo(() => {
+    let totalTime = 0
+
+    if (!block) {
+      return []
     }
 
     const children = block.Children
@@ -37,27 +42,51 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
      * For src/pages/learn/CodeChallengeBlocks/CodeChallengeBlock
      */
     if (challenges?.length) {
-      return challenges.map((challenge) => {
+      const challengesContent = challenges.map((challenge) => {
+        const { time } = challenge
+
+        if (time) {
+          const match = time.match(/^([\d,.]+) *hours?/)
+
+          const hours = match && match[0] ? parseFloat(match[0]) : null
+
+          if (hours) {
+            totalTime += hours
+          }
+        }
+
+        const codeChallengeCompletion = context.user?.CodeChallengeCompletions?.find(
+          (n) => n.CodeChallenge.id === challenge.id
+        )
+
         return (
           <CodeChallengeBlocksPageChallenge
             key={challenge.id}
             object={challenge}
+            codeChallengeCompletion={codeChallengeCompletion}
           />
         )
       })
+
+      return [opened ? challengesContent : null, totalTime]
     }
 
-    if (children) {
+    if (children && opened) {
       content = children.map((n) => {
         const challenges = n.Challenges || []
 
         return (
           <CodeChallengeBlocksPageBlockView key={n.id} object={n}>
             {challenges.map((challenge) => {
+              const codeChallengeCompletion = context.user?.CodeChallengeCompletions?.find(
+                (n) => n.CodeChallenge.id === challenge.id
+              )
+
               return (
                 <CodeChallengeBlocksPageChallenge
                   key={challenge.id}
                   object={challenge}
+                  codeChallengeCompletion={codeChallengeCompletion}
                 />
               )
             })}
@@ -66,8 +95,8 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
       })
     }
 
-    return content
-  }, [block, opened])
+    return [content, totalTime]
+  }, [block, context.user?.CodeChallengeCompletions, opened])
 
   if (!block) {
     return null
@@ -75,15 +104,18 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
 
   return (
     <CodeChallengeBlocksPageBlockViewStyled>
-      <Link href={`/learn/sections/${block.id}`}>
-        <a onClick={toggleOpened}>
-          <Typography className="title opener">
-            {!opened ? '↳' : '↴'} {block.name}
-          </Typography>
-        </a>
-      </Link>
+      <div>
+        <Link href={`/learn/sections/${block.id}`}>
+          <a onClick={toggleOpened}>
+            <Typography className="title opener" component="span">
+              {!opened ? '↳' : '↴'} {block.name}
+            </Typography>
+          </a>
+        </Link>{' '}
+        {totalTime ? `${totalTime} hours` : null}
+      </div>
       {content}
-      {opened ? children : null}
+      {/* {opened ? children : null} */}
     </CodeChallengeBlocksPageBlockViewStyled>
   )
 }

@@ -9,6 +9,7 @@ const CodeChallengeBlocksPageBlockViewStyledBase = styled.div`
     text-transform: capitalize;
     font-size: 1.2rem;
     padding: 4px;
+    display: inline-block;
     &.opener {
       cursor: pointer;
       &:hover {

@@ -1,5 +1,11 @@
 import Head from 'next/head'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   useCodeChallengeQuery,
   CodeChallengeDocument,
@@ -26,6 +32,7 @@ import Dialog, {
 } from 'material-ui/Dialog'
 
 import Button from 'material-ui/Button'
+import PrismaContext, { PrismaCmsContext } from '@prisma-cms/context'
 
 const getCodeChallengeVariables = (
   router: NextRouter | NextPageContextCustom
@@ -45,6 +52,8 @@ const getCodeChallengeVariables = (
 }
 
 const CodeChallengePage: Page = () => {
+  const prismaCmsContext = useContext(PrismaContext) as PrismaCmsContext
+
   const router = useRouter()
 
   const variables = useMemo(() => {
@@ -133,12 +142,19 @@ const CodeChallengePage: Page = () => {
   }, [initialChallengeData])
 
   const context = useMemo<CodeChallengeContext | null>(() => {
-    if (!object) {
+    if (!object || !object.id) {
       return null
     }
     // console.log('object', object);
 
     // const { challengeType } = object
+
+    const user = prismaCmsContext.user
+
+    const CodeChallengeCompletions = user?.CodeChallengeCompletions
+    const codeChallengeCompletion = CodeChallengeCompletions?.find(
+      (n) => n.CodeChallenge.id === object.id
+    )
 
     const context: CodeChallengeContext = {
       challenge: object,
@@ -154,6 +170,9 @@ const CodeChallengePage: Page = () => {
       // setContents,
       setChallengeData,
       resetChallengeData,
+      // taskStatus: Task?.status,
+      codeChallengeCompletion,
+      user,
     }
 
     return context
@@ -162,6 +181,7 @@ const CodeChallengePage: Page = () => {
     challengeData,
     object,
     output,
+    prismaCmsContext.user,
     resetChallengeData,
     testsResults,
   ])
@@ -234,7 +254,10 @@ const CodeChallengePage: Page = () => {
       </Head>
 
       <Context.Provider value={context}>
-        <View object={object} />
+        <View
+          object={object}
+          codeChallengeCompletion={context?.codeChallengeCompletion}
+        />
       </Context.Provider>
 
       {successModal}

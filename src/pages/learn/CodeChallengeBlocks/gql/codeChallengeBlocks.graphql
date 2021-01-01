@@ -56,9 +56,11 @@ fragment challenge on CodeChallenge {
   # superOrder
   # challengeOrder
   # required
+  # Нет смысла сейчас использовать, слишком мало записей
   # isRequired
+
   # isPrivate
   # isBeta
-  # time
+  time
   # rank
 }

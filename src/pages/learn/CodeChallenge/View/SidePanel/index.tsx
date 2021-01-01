@@ -11,6 +11,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
   object,
   showToolPanel,
   executeChallenge,
+  codeChallengeCompletion,
 }) => {
   const { forumTopicId, description, instructions, videoUrl } = object
 
@@ -29,7 +30,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
 
   const title = object.localeTitle || object.name
 
-  const isChallengeCompleted = true
+  // const isChallengeCompleted = true
 
   const tests = useMemo(() => (object.tests || []) as CodeChallengeTest[], [
     object.tests,
@@ -61,24 +62,33 @@ const SidePanel: React.FC<SidePanelProps> = ({
     ]
   )
 
-  return (
-    <SidePanelStyled
-      className="instructions-panel"
-      role="complementary"
-      tabIndex={-1}
-    >
-      <ChallengeTitle isCompleted={isChallengeCompleted}>
-        {title}
-      </ChallengeTitle>
-      <ChallengeDescription
-        description={description || ''}
-        instructions={instructions || ''}
-        // section={section}
-      />
-      {toolPanel}
-      <TestSuite tests={tests} />
-    </SidePanelStyled>
-  )
+  return useMemo(() => {
+    return (
+      <SidePanelStyled
+        className="instructions-panel"
+        role="complementary"
+        tabIndex={-1}
+      >
+        <ChallengeTitle codeChallengeCompletion={codeChallengeCompletion}>
+          {title}
+        </ChallengeTitle>
+        <ChallengeDescription
+          description={description || ''}
+          instructions={instructions || ''}
+          // section={section}
+        />
+        {toolPanel}
+        <TestSuite tests={tests} />
+      </SidePanelStyled>
+    )
+  }, [
+    description,
+    instructions,
+    codeChallengeCompletion,
+    tests,
+    title,
+    toolPanel,
+  ])
 }
 
 export default SidePanel

@@ -170,7 +170,7 @@ export type FileFieldPolicy = {
 	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	ImageResource?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'username' | 'email' | 'phone' | 'showEmail' | 'showPhone' | 'password' | 'fullname' | 'image' | 'address' | 'sudo' | 'active' | 'activated' | 'deleted' | 'Groups' | 'CreatedUsers' | 'CreatedBy' | 'LogedIns' | 'Resources' | 'Votes' | 'NotificationTypes' | 'NotificationTypesCreated' | 'Tags' | 'ResourceTags' | 'EthContractSourcesCreated' | 'EthAccounts' | 'Teams' | 'TeamsCreated' | 'Projects' | 'ProjectsCreated' | 'Tasks' | 'Timers' | 'PrismaProjects' | 'hasEmail' | 'hasPhone' | 'marketplaceToken' | 'hidden' | 'EthAccountAuthed' | 'worlds' | 'settings' | UserKeySpecifier)[];
+export type UserKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'username' | 'email' | 'phone' | 'showEmail' | 'showPhone' | 'password' | 'fullname' | 'image' | 'address' | 'sudo' | 'active' | 'activated' | 'deleted' | 'Groups' | 'CreatedUsers' | 'CreatedBy' | 'LogedIns' | 'Resources' | 'Votes' | 'NotificationTypes' | 'NotificationTypesCreated' | 'Tags' | 'ResourceTags' | 'EthContractSourcesCreated' | 'EthAccounts' | 'Teams' | 'TeamsCreated' | 'Projects' | 'ProjectsCreated' | 'Tasks' | 'Timers' | 'PrismaProjects' | 'CodeChallengeCompletions' | 'hasEmail' | 'hasPhone' | 'marketplaceToken' | 'hidden' | 'EthAccountAuthed' | 'worlds' | 'settings' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -207,6 +207,7 @@ export type UserFieldPolicy = {
 	Tasks?: FieldPolicy<any> | FieldReadFunction<any>,
 	Timers?: FieldPolicy<any> | FieldReadFunction<any>,
 	PrismaProjects?: FieldPolicy<any> | FieldReadFunction<any>,
+	CodeChallengeCompletions?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasEmail?: FieldPolicy<any> | FieldReadFunction<any>,
 	hasPhone?: FieldPolicy<any> | FieldReadFunction<any>,
 	marketplaceToken?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -330,7 +331,7 @@ export type ProjectMemberFieldPolicy = {
 	Services?: FieldPolicy<any> | FieldReadFunction<any>,
 	status?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProjectKeySpecifier = ('id' | 'name' | 'domain' | 'PrismaTemplates' | 'PrismaUsers' | 'PrismaResources' | 'createdAt' | 'updatedAt' | 'description' | 'url' | 'Members' | 'CreatedBy' | 'ProjectTasks' | 'Team' | 'Customers' | 'ChatRoom' | 'sequence' | 'content' | 'contentText' | 'status' | 'public' | 'oldID' | 'Image' | 'Resource' | 'EthAccounts' | ProjectKeySpecifier)[];
+export type ProjectKeySpecifier = ('id' | 'name' | 'domain' | 'PrismaTemplates' | 'PrismaUsers' | 'PrismaResources' | 'createdAt' | 'updatedAt' | 'description' | 'url' | 'Members' | 'CreatedBy' | 'ProjectTasks' | 'Team' | 'Customers' | 'ChatRoom' | 'sequence' | 'content' | 'contentText' | 'status' | 'public' | 'oldID' | 'Image' | 'Resource' | 'type' | 'EthAccounts' | ProjectKeySpecifier)[];
 export type ProjectFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -356,6 +357,7 @@ export type ProjectFieldPolicy = {
 	oldID?: FieldPolicy<any> | FieldReadFunction<any>,
 	Image?: FieldPolicy<any> | FieldReadFunction<any>,
 	Resource?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>,
 	EthAccounts?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TemplateKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'externalKey' | 'name' | 'description' | 'component' | 'props' | 'components' | 'vars' | 'rank' | 'Parent' | 'CreatedBy' | 'Project' | 'PrismaProject' | TemplateKeySpecifier)[];
@@ -385,7 +387,7 @@ export type ProjectTaskFieldPolicy = {
 	Project?: FieldPolicy<any> | FieldReadFunction<any>,
 	Task?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type TaskKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'name' | 'description' | 'content' | 'status' | 'TaskProjects' | 'CreatedBy' | 'Members' | 'Parent' | 'Childs' | 'RelatedFrom' | 'RelatedTo' | 'startDatePlaning' | 'endDatePlaning' | 'startDate' | 'endDate' | 'Timers' | 'Reactions' | 'ChatRoom' | TaskKeySpecifier)[];
+export type TaskKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'name' | 'description' | 'content' | 'status' | 'TaskProjects' | 'CreatedBy' | 'Members' | 'Parent' | 'Childs' | 'RelatedFrom' | 'RelatedTo' | 'startDatePlaning' | 'endDatePlaning' | 'startDate' | 'endDate' | 'Timers' | 'Reactions' | 'ChatRoom' | 'CodeChallengeCompletion' | TaskKeySpecifier)[];
 export type TaskFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -407,7 +409,8 @@ export type TaskFieldPolicy = {
 	endDate?: FieldPolicy<any> | FieldReadFunction<any>,
 	Timers?: FieldPolicy<any> | FieldReadFunction<any>,
 	Reactions?: FieldPolicy<any> | FieldReadFunction<any>,
-	ChatRoom?: FieldPolicy<any> | FieldReadFunction<any>
+	ChatRoom?: FieldPolicy<any> | FieldReadFunction<any>,
+	CodeChallengeCompletion?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TaskMemberKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'CreatedBy' | 'Task' | 'User' | 'status' | TaskMemberKeySpecifier)[];
 export type TaskMemberFieldPolicy = {
@@ -510,6 +513,62 @@ export type CallRequestFieldPolicy = {
 	Called?: FieldPolicy<any> | FieldReadFunction<any>,
 	Caller?: FieldPolicy<any> | FieldReadFunction<any>,
 	Room?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'CreatedBy' | 'CodeChallenge' | 'Task' | 'content' | 'success' | CodeChallengeCompletionKeySpecifier)[];
+export type CodeChallengeCompletionFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
+	CodeChallenge?: FieldPolicy<any> | FieldReadFunction<any>,
+	Task?: FieldPolicy<any> | FieldReadFunction<any>,
+	content?: FieldPolicy<any> | FieldReadFunction<any>,
+	success?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeKeySpecifier = ('id' | 'externalKey' | 'createdAt' | 'updatedAt' | 'name' | 'dashedName' | 'localeTitle' | 'description' | 'challengeType' | 'forumTopicId' | 'translations' | 'tests' | 'solutions' | 'instructions' | 'files' | 'videoUrl' | 'order' | 'superOrder' | 'challengeOrder' | 'required' | 'isRequired' | 'isPrivate' | 'isBeta' | 'template' | 'time' | 'CreatedBy' | 'rank' | 'Block' | 'Completions' | CodeChallengeKeySpecifier)[];
+export type CodeChallengeFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	externalKey?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	dashedName?: FieldPolicy<any> | FieldReadFunction<any>,
+	localeTitle?: FieldPolicy<any> | FieldReadFunction<any>,
+	description?: FieldPolicy<any> | FieldReadFunction<any>,
+	challengeType?: FieldPolicy<any> | FieldReadFunction<any>,
+	forumTopicId?: FieldPolicy<any> | FieldReadFunction<any>,
+	translations?: FieldPolicy<any> | FieldReadFunction<any>,
+	tests?: FieldPolicy<any> | FieldReadFunction<any>,
+	solutions?: FieldPolicy<any> | FieldReadFunction<any>,
+	instructions?: FieldPolicy<any> | FieldReadFunction<any>,
+	files?: FieldPolicy<any> | FieldReadFunction<any>,
+	videoUrl?: FieldPolicy<any> | FieldReadFunction<any>,
+	order?: FieldPolicy<any> | FieldReadFunction<any>,
+	superOrder?: FieldPolicy<any> | FieldReadFunction<any>,
+	challengeOrder?: FieldPolicy<any> | FieldReadFunction<any>,
+	required?: FieldPolicy<any> | FieldReadFunction<any>,
+	isRequired?: FieldPolicy<any> | FieldReadFunction<any>,
+	isPrivate?: FieldPolicy<any> | FieldReadFunction<any>,
+	isBeta?: FieldPolicy<any> | FieldReadFunction<any>,
+	template?: FieldPolicy<any> | FieldReadFunction<any>,
+	time?: FieldPolicy<any> | FieldReadFunction<any>,
+	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
+	rank?: FieldPolicy<any> | FieldReadFunction<any>,
+	Block?: FieldPolicy<any> | FieldReadFunction<any>,
+	Completions?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeBlockKeySpecifier = ('id' | 'externalKey' | 'createdAt' | 'updatedAt' | 'name' | 'rank' | 'Parent' | 'Children' | 'CreatedBy' | 'Challenges' | CodeChallengeBlockKeySpecifier)[];
+export type CodeChallengeBlockFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	externalKey?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	name?: FieldPolicy<any> | FieldReadFunction<any>,
+	rank?: FieldPolicy<any> | FieldReadFunction<any>,
+	Parent?: FieldPolicy<any> | FieldReadFunction<any>,
+	Children?: FieldPolicy<any> | FieldReadFunction<any>,
+	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
+	Challenges?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TeamKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'name' | 'Parent' | 'Childs' | 'CreatedBy' | 'Members' | 'Projects' | 'OrderedProjects' | 'status' | 'oldID' | 'address' | 'website' | 'email' | 'phone' | 'Resource' | TeamKeySpecifier)[];
 export type TeamFieldPolicy = {
@@ -801,50 +860,6 @@ export type RouteFieldPolicy = {
 	Parent?: FieldPolicy<any> | FieldReadFunction<any>,
 	Childs?: FieldPolicy<any> | FieldReadFunction<any>,
 	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type CodeChallengeKeySpecifier = ('id' | 'externalKey' | 'createdAt' | 'updatedAt' | 'name' | 'dashedName' | 'localeTitle' | 'description' | 'challengeType' | 'forumTopicId' | 'translations' | 'tests' | 'solutions' | 'instructions' | 'files' | 'videoUrl' | 'order' | 'superOrder' | 'challengeOrder' | 'required' | 'isRequired' | 'isPrivate' | 'isBeta' | 'template' | 'time' | 'CreatedBy' | 'rank' | 'Block' | CodeChallengeKeySpecifier)[];
-export type CodeChallengeFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	externalKey?: FieldPolicy<any> | FieldReadFunction<any>,
-	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	dashedName?: FieldPolicy<any> | FieldReadFunction<any>,
-	localeTitle?: FieldPolicy<any> | FieldReadFunction<any>,
-	description?: FieldPolicy<any> | FieldReadFunction<any>,
-	challengeType?: FieldPolicy<any> | FieldReadFunction<any>,
-	forumTopicId?: FieldPolicy<any> | FieldReadFunction<any>,
-	translations?: FieldPolicy<any> | FieldReadFunction<any>,
-	tests?: FieldPolicy<any> | FieldReadFunction<any>,
-	solutions?: FieldPolicy<any> | FieldReadFunction<any>,
-	instructions?: FieldPolicy<any> | FieldReadFunction<any>,
-	files?: FieldPolicy<any> | FieldReadFunction<any>,
-	videoUrl?: FieldPolicy<any> | FieldReadFunction<any>,
-	order?: FieldPolicy<any> | FieldReadFunction<any>,
-	superOrder?: FieldPolicy<any> | FieldReadFunction<any>,
-	challengeOrder?: FieldPolicy<any> | FieldReadFunction<any>,
-	required?: FieldPolicy<any> | FieldReadFunction<any>,
-	isRequired?: FieldPolicy<any> | FieldReadFunction<any>,
-	isPrivate?: FieldPolicy<any> | FieldReadFunction<any>,
-	isBeta?: FieldPolicy<any> | FieldReadFunction<any>,
-	template?: FieldPolicy<any> | FieldReadFunction<any>,
-	time?: FieldPolicy<any> | FieldReadFunction<any>,
-	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
-	rank?: FieldPolicy<any> | FieldReadFunction<any>,
-	Block?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type CodeChallengeBlockKeySpecifier = ('id' | 'externalKey' | 'createdAt' | 'updatedAt' | 'name' | 'rank' | 'Parent' | 'Children' | 'CreatedBy' | 'Challenges' | CodeChallengeBlockKeySpecifier)[];
-export type CodeChallengeBlockFieldPolicy = {
-	id?: FieldPolicy<any> | FieldReadFunction<any>,
-	externalKey?: FieldPolicy<any> | FieldReadFunction<any>,
-	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
-	name?: FieldPolicy<any> | FieldReadFunction<any>,
-	rank?: FieldPolicy<any> | FieldReadFunction<any>,
-	Parent?: FieldPolicy<any> | FieldReadFunction<any>,
-	Children?: FieldPolicy<any> | FieldReadFunction<any>,
-	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
-	Challenges?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CommentKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'components' | 'contentText' | 'CreatedBy' | 'TechnologyLesson' | CommentKeySpecifier)[];
 export type CommentFieldPolicy = {
@@ -1564,7 +1579,7 @@ export type ethSyncStateFieldPolicy = {
 	knownStates?: FieldPolicy<any> | FieldReadFunction<any>,
 	pulledStates?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type MutationKeySpecifier = ('createBlogProcessor' | 'updateBlogProcessor' | 'createTopicProcessor' | 'updateTopicProcessor' | 'createCommentProcessor' | 'updateCommentProcessor' | 'createTestProcessor' | 'updateTestProcessor' | 'ethSigninOrSignup' | 'ethConnectAuthAccount' | 'fccImportChallengs' | 'createCareerProcessor' | 'updateCareerProcessor' | 'createUserTechnologyProcessor' | 'updateUserTechnologyProcessor' | 'createTechnologyLessonProcessor' | 'updateTechnologyLessonProcessor' | 'createTechnologyProcessor' | 'updateTechnologyProcessor' | 'createTechnologyLessonCommentProcessor' | 'updateTechnologyLessonCommentProcessor' | 'createTechnologyLessonUserProcessor' | 'updateTechnologyLessonUserProcessor' | 'createPlayer' | 'createWorld' | 'createSettings' | 'createCallRequest' | 'createUser' | 'updatePlayer' | 'updateWorld' | 'updateSettings' | 'updateCallRequest' | 'updateUser' | 'deleteGallery' | 'deleteWorld' | 'deleteNotice' | 'deleteGame' | 'deleteGameResult' | 'deleteTournament' | 'deleteTournamentGroup' | 'deleteTourney' | 'deleteProjectMember' | 'deleteTaskReaction' | 'deleteTeamMember' | 'deleteRoute' | 'deleteCodeChallenge' | 'deleteCodeChallengeBlock' | 'deleteTechnologyLesson' | 'deleteCareer' | 'deleteTechnologyLessonUser' | 'deleteUserTechnology' | 'deleteTest' | 'deleteFile' | 'deleteTechnology' | 'deleteTemplate' | 'deleteResource' | 'deleteUser' | 'deleteManyNotices' | 'deleteManyRoutes' | 'deleteManyTests' | 'runCommand' | 'login' | 'createFileProcessor' | 'updateFileProcessor' | 'singleUpload' | 'multipleUpload' | 'createSmsMessageProcessor' | 'createSmsProviderProcessor' | 'updateSmsProviderProcessor' | 'signup' | 'signin' | 'createUserProcessor' | 'updateUserProcessor' | 'resetPasswordProcessor' | 'createResetPasswordProcessor' | 'createTemplateProcessor' | 'updateTemplateProcessor' | 'createGalleryProcessor' | 'updateGalleryProcessor' | 'createResourceProcessor' | 'updateResourceProcessor' | 'createGameProcessor' | 'updateGameProcessor' | 'createGameResultProcessor' | 'updateGameResultProcessor' | 'createTournamentProcessor' | 'updateTournamentProcessor' | 'createTournamentGroupProcessor' | 'updateTournamentGroupProcessor' | 'createTourneyProcessor' | 'updateTourneyProcessor' | 'createChatRoomProcessor' | 'updateChatRoomProcessor' | 'inviteChatRoomProcessor' | 'joinChatRoom' | 'leaveChatRoom' | 'createChatMessageReadedProcessor' | 'createChatMessageProcessor' | 'updateChatMessageProcessor' | 'markAsReadedChatMessage' | 'createEthContractSourceProcessor' | 'updateEthContractSourceProcessor' | 'ethUnlockPersonalAccount' | 'createEthAccountProcessor' | 'updateEthAccountProcessor' | 'createEthTransactionProcessor' | 'ethRecoverPersonalSignature' | 'createCallRequestProcessor' | 'createProjectProcessor' | 'updateProjectProcessor' | 'createProjectMemberProcessor' | 'updateProjectMemberProcessor' | 'createTaskProcessor' | 'updateTaskProcessor' | 'createTaskReactionProcessor' | 'updateTaskReactionProcessor' | 'createTimerProcessor' | 'updateTimerProcessor' | 'createTeamProcessor' | 'updateTeamProcessor' | 'createTeamMemberProcessor' | 'updateTeamMemberProcessor' | 'createServiceProcessor' | 'updateServiceProcessor' | 'createPositionProcessor' | 'updatePositionProcessor' | 'createRouteProcessor' | 'updateRouteProcessor' | MutationKeySpecifier)[];
+export type MutationKeySpecifier = ('createBlogProcessor' | 'updateBlogProcessor' | 'createTopicProcessor' | 'updateTopicProcessor' | 'createCommentProcessor' | 'updateCommentProcessor' | 'createTestProcessor' | 'updateTestProcessor' | 'ethSigninOrSignup' | 'ethConnectAuthAccount' | 'createCodeChallengeCompletionProcessor' | 'updateCodeChallengeCompletionProcessor' | 'fccImportChallengs' | 'createCareerProcessor' | 'updateCareerProcessor' | 'createUserTechnologyProcessor' | 'updateUserTechnologyProcessor' | 'createTechnologyLessonProcessor' | 'updateTechnologyLessonProcessor' | 'createTechnologyProcessor' | 'updateTechnologyProcessor' | 'createTechnologyLessonCommentProcessor' | 'updateTechnologyLessonCommentProcessor' | 'createTechnologyLessonUserProcessor' | 'updateTechnologyLessonUserProcessor' | 'createPlayer' | 'createWorld' | 'createSettings' | 'createCallRequest' | 'createUser' | 'updatePlayer' | 'updateWorld' | 'updateSettings' | 'updateCallRequest' | 'updateUser' | 'deleteGallery' | 'deleteWorld' | 'deleteNotice' | 'deleteGame' | 'deleteGameResult' | 'deleteTournament' | 'deleteTournamentGroup' | 'deleteTourney' | 'deleteProjectMember' | 'deleteTaskReaction' | 'deleteTeamMember' | 'deleteRoute' | 'deleteCodeChallenge' | 'deleteCodeChallengeBlock' | 'deleteTechnologyLesson' | 'deleteCareer' | 'deleteTechnologyLessonUser' | 'deleteUserTechnology' | 'deleteTest' | 'deleteFile' | 'deleteTechnology' | 'deleteTemplate' | 'deleteResource' | 'deleteUser' | 'deleteManyNotices' | 'deleteManyRoutes' | 'deleteManyTests' | 'runCommand' | 'login' | 'createFileProcessor' | 'updateFileProcessor' | 'singleUpload' | 'multipleUpload' | 'createSmsMessageProcessor' | 'createSmsProviderProcessor' | 'updateSmsProviderProcessor' | 'signup' | 'signin' | 'createUserProcessor' | 'updateUserProcessor' | 'resetPasswordProcessor' | 'createResetPasswordProcessor' | 'createTemplateProcessor' | 'updateTemplateProcessor' | 'createGalleryProcessor' | 'updateGalleryProcessor' | 'createResourceProcessor' | 'updateResourceProcessor' | 'createGameProcessor' | 'updateGameProcessor' | 'createGameResultProcessor' | 'updateGameResultProcessor' | 'createTournamentProcessor' | 'updateTournamentProcessor' | 'createTournamentGroupProcessor' | 'updateTournamentGroupProcessor' | 'createTourneyProcessor' | 'updateTourneyProcessor' | 'createChatRoomProcessor' | 'updateChatRoomProcessor' | 'inviteChatRoomProcessor' | 'joinChatRoom' | 'leaveChatRoom' | 'createChatMessageReadedProcessor' | 'createChatMessageProcessor' | 'updateChatMessageProcessor' | 'markAsReadedChatMessage' | 'createEthContractSourceProcessor' | 'updateEthContractSourceProcessor' | 'ethUnlockPersonalAccount' | 'createEthAccountProcessor' | 'updateEthAccountProcessor' | 'createEthTransactionProcessor' | 'ethRecoverPersonalSignature' | 'createCallRequestProcessor' | 'createProjectProcessor' | 'updateProjectProcessor' | 'createProjectMemberProcessor' | 'updateProjectMemberProcessor' | 'createTaskProcessor' | 'updateTaskProcessor' | 'createTaskReactionProcessor' | 'updateTaskReactionProcessor' | 'createTimerProcessor' | 'updateTimerProcessor' | 'createTeamProcessor' | 'updateTeamProcessor' | 'createTeamMemberProcessor' | 'updateTeamMemberProcessor' | 'createServiceProcessor' | 'updateServiceProcessor' | 'createPositionProcessor' | 'updatePositionProcessor' | 'createRouteProcessor' | 'updateRouteProcessor' | MutationKeySpecifier)[];
 export type MutationFieldPolicy = {
 	createBlogProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateBlogProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1576,6 +1591,8 @@ export type MutationFieldPolicy = {
 	updateTestProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	ethSigninOrSignup?: FieldPolicy<any> | FieldReadFunction<any>,
 	ethConnectAuthAccount?: FieldPolicy<any> | FieldReadFunction<any>,
+	createCodeChallengeCompletionProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
+	updateCodeChallengeCompletionProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	fccImportChallengs?: FieldPolicy<any> | FieldReadFunction<any>,
 	createCareerProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
 	updateCareerProcessor?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1724,6 +1741,13 @@ export type AuthPayloadFieldPolicy = {
 };
 export type EthAccountResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | EthAccountResponseKeySpecifier)[];
 export type EthAccountResponseFieldPolicy = {
+	success?: FieldPolicy<any> | FieldReadFunction<any>,
+	message?: FieldPolicy<any> | FieldReadFunction<any>,
+	errors?: FieldPolicy<any> | FieldReadFunction<any>,
+	data?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionResponseKeySpecifier = ('success' | 'message' | 'errors' | 'data' | CodeChallengeCompletionResponseKeySpecifier)[];
+export type CodeChallengeCompletionResponseFieldPolicy = {
 	success?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2583,7 +2607,7 @@ export type ProjectSubscriptionPayloadFieldPolicy = {
 	updatedFields?: FieldPolicy<any> | FieldReadFunction<any>,
 	previousValues?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProjectPreviousValuesKeySpecifier = ('id' | 'name' | 'domain' | 'createdAt' | 'updatedAt' | 'description' | 'url' | 'sequence' | 'content' | 'contentText' | 'status' | 'public' | 'oldID' | ProjectPreviousValuesKeySpecifier)[];
+export type ProjectPreviousValuesKeySpecifier = ('id' | 'name' | 'domain' | 'createdAt' | 'updatedAt' | 'description' | 'url' | 'sequence' | 'content' | 'contentText' | 'status' | 'public' | 'oldID' | 'type' | ProjectPreviousValuesKeySpecifier)[];
 export type ProjectPreviousValuesFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -2597,7 +2621,8 @@ export type ProjectPreviousValuesFieldPolicy = {
 	contentText?: FieldPolicy<any> | FieldReadFunction<any>,
 	status?: FieldPolicy<any> | FieldReadFunction<any>,
 	public?: FieldPolicy<any> | FieldReadFunction<any>,
-	oldID?: FieldPolicy<any> | FieldReadFunction<any>
+	oldID?: FieldPolicy<any> | FieldReadFunction<any>,
+	type?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type TemplateSubscriptionPayloadKeySpecifier = ('mutation' | 'node' | 'updatedFields' | 'previousValues' | TemplateSubscriptionPayloadKeySpecifier)[];
 export type TemplateSubscriptionPayloadFieldPolicy = {
@@ -2742,6 +2767,10 @@ export type AggregateChatRoomInvitationKeySpecifier = ('count' | AggregateChatRo
 export type AggregateChatRoomInvitationFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type AggregateCodeChallengeCompletionKeySpecifier = ('count' | AggregateCodeChallengeCompletionKeySpecifier)[];
+export type AggregateCodeChallengeCompletionFieldPolicy = {
+	count?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type AggregateFileKeySpecifier = ('count' | AggregateFileKeySpecifier)[];
 export type AggregateFileFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
@@ -2875,6 +2904,32 @@ export type ChatRoomInvitationPreviousValuesFieldPolicy = {
 };
 export type ChatRoomInvitationSubscriptionPayloadKeySpecifier = ('mutation' | 'node' | 'updatedFields' | 'previousValues' | ChatRoomInvitationSubscriptionPayloadKeySpecifier)[];
 export type ChatRoomInvitationSubscriptionPayloadFieldPolicy = {
+	mutation?: FieldPolicy<any> | FieldReadFunction<any>,
+	node?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedFields?: FieldPolicy<any> | FieldReadFunction<any>,
+	previousValues?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionConnectionKeySpecifier = ('pageInfo' | 'edges' | 'aggregate' | CodeChallengeCompletionConnectionKeySpecifier)[];
+export type CodeChallengeCompletionConnectionFieldPolicy = {
+	pageInfo?: FieldPolicy<any> | FieldReadFunction<any>,
+	edges?: FieldPolicy<any> | FieldReadFunction<any>,
+	aggregate?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionEdgeKeySpecifier = ('node' | 'cursor' | CodeChallengeCompletionEdgeKeySpecifier)[];
+export type CodeChallengeCompletionEdgeFieldPolicy = {
+	node?: FieldPolicy<any> | FieldReadFunction<any>,
+	cursor?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionPreviousValuesKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'content' | 'success' | CodeChallengeCompletionPreviousValuesKeySpecifier)[];
+export type CodeChallengeCompletionPreviousValuesFieldPolicy = {
+	id?: FieldPolicy<any> | FieldReadFunction<any>,
+	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	content?: FieldPolicy<any> | FieldReadFunction<any>,
+	success?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionSubscriptionPayloadKeySpecifier = ('mutation' | 'node' | 'updatedFields' | 'previousValues' | CodeChallengeCompletionSubscriptionPayloadKeySpecifier)[];
+export type CodeChallengeCompletionSubscriptionPayloadFieldPolicy = {
 	mutation?: FieldPolicy<any> | FieldReadFunction<any>,
 	node?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedFields?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3661,6 +3716,18 @@ export type TypedTypePolicies = TypePolicies & {
 		keyFields?: false | CallRequestKeySpecifier | (() => undefined | CallRequestKeySpecifier),
 		fields?: CallRequestFieldPolicy,
 	},
+	CodeChallengeCompletion?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionKeySpecifier | (() => undefined | CodeChallengeCompletionKeySpecifier),
+		fields?: CodeChallengeCompletionFieldPolicy,
+	},
+	CodeChallenge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeKeySpecifier | (() => undefined | CodeChallengeKeySpecifier),
+		fields?: CodeChallengeFieldPolicy,
+	},
+	CodeChallengeBlock?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeBlockKeySpecifier | (() => undefined | CodeChallengeBlockKeySpecifier),
+		fields?: CodeChallengeBlockFieldPolicy,
+	},
 	Team?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | TeamKeySpecifier | (() => undefined | TeamKeySpecifier),
 		fields?: TeamFieldPolicy,
@@ -3748,14 +3815,6 @@ export type TypedTypePolicies = TypePolicies & {
 	Route?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | RouteKeySpecifier | (() => undefined | RouteKeySpecifier),
 		fields?: RouteFieldPolicy,
-	},
-	CodeChallenge?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CodeChallengeKeySpecifier | (() => undefined | CodeChallengeKeySpecifier),
-		fields?: CodeChallengeFieldPolicy,
-	},
-	CodeChallengeBlock?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CodeChallengeBlockKeySpecifier | (() => undefined | CodeChallengeBlockKeySpecifier),
-		fields?: CodeChallengeBlockFieldPolicy,
 	},
 	Comment?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CommentKeySpecifier | (() => undefined | CommentKeySpecifier),
@@ -4317,6 +4376,10 @@ export type TypedTypePolicies = TypePolicies & {
 		keyFields?: false | EthAccountResponseKeySpecifier | (() => undefined | EthAccountResponseKeySpecifier),
 		fields?: EthAccountResponseFieldPolicy,
 	},
+	CodeChallengeCompletionResponse?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionResponseKeySpecifier | (() => undefined | CodeChallengeCompletionResponseKeySpecifier),
+		fields?: CodeChallengeCompletionResponseFieldPolicy,
+	},
 	CareerResponse?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CareerResponseKeySpecifier | (() => undefined | CareerResponseKeySpecifier),
 		fields?: CareerResponseFieldPolicy,
@@ -4793,6 +4856,10 @@ export type TypedTypePolicies = TypePolicies & {
 		keyFields?: false | AggregateChatRoomInvitationKeySpecifier | (() => undefined | AggregateChatRoomInvitationKeySpecifier),
 		fields?: AggregateChatRoomInvitationFieldPolicy,
 	},
+	AggregateCodeChallengeCompletion?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AggregateCodeChallengeCompletionKeySpecifier | (() => undefined | AggregateCodeChallengeCompletionKeySpecifier),
+		fields?: AggregateCodeChallengeCompletionFieldPolicy,
+	},
 	AggregateFile?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AggregateFileKeySpecifier | (() => undefined | AggregateFileKeySpecifier),
 		fields?: AggregateFileFieldPolicy,
@@ -4908,6 +4975,22 @@ export type TypedTypePolicies = TypePolicies & {
 	ChatRoomInvitationSubscriptionPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ChatRoomInvitationSubscriptionPayloadKeySpecifier | (() => undefined | ChatRoomInvitationSubscriptionPayloadKeySpecifier),
 		fields?: ChatRoomInvitationSubscriptionPayloadFieldPolicy,
+	},
+	CodeChallengeCompletionConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionConnectionKeySpecifier | (() => undefined | CodeChallengeCompletionConnectionKeySpecifier),
+		fields?: CodeChallengeCompletionConnectionFieldPolicy,
+	},
+	CodeChallengeCompletionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionEdgeKeySpecifier | (() => undefined | CodeChallengeCompletionEdgeKeySpecifier),
+		fields?: CodeChallengeCompletionEdgeFieldPolicy,
+	},
+	CodeChallengeCompletionPreviousValues?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionPreviousValuesKeySpecifier | (() => undefined | CodeChallengeCompletionPreviousValuesKeySpecifier),
+		fields?: CodeChallengeCompletionPreviousValuesFieldPolicy,
+	},
+	CodeChallengeCompletionSubscriptionPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionSubscriptionPayloadKeySpecifier | (() => undefined | CodeChallengeCompletionSubscriptionPayloadKeySpecifier),
+		fields?: CodeChallengeCompletionSubscriptionPayloadFieldPolicy,
 	},
 	EthAccountPreviousValues?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | EthAccountPreviousValuesKeySpecifier | (() => undefined | EthAccountPreviousValuesKeySpecifier),

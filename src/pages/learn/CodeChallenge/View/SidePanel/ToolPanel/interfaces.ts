@@ -1,4 +1,4 @@
-import useExecuteChallenge from '../hooks/useExecuteChallenge'
+import useExecuteChallenge from '../../../hooks/useExecuteChallenge'
 
 export interface ToolPanelProps {
   // isMobile?: boolean,

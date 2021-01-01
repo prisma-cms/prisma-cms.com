@@ -2,7 +2,11 @@ import React from 'react'
 
 import { CodeChallengeFileExt } from 'src/pages/learn/CodeChallenge/View/Editor'
 
-import { CodeChallenge_Fragment } from 'src/modules/gql/generated'
+import {
+  CodeChallenge_Fragment,
+  MeUserCodeChallengeCompletionFragment,
+} from 'src/modules/gql/generated'
+import { PrismaCmsContext } from '@prisma-cms/context'
 
 export type TestError = {
   message: string
@@ -70,6 +74,14 @@ export interface CodeChallengeContext {
 
   // contents: string;
   // setContents: React.Dispatch<React.SetStateAction<string>>
+  // taskStatus: TaskStatus | null | undefined
+
+  codeChallengeCompletion:
+    | MeUserCodeChallengeCompletionFragment
+    | null
+    | undefined
+
+  user: PrismaCmsContext['user']
 }
 
 export default React.createContext<CodeChallengeContext | null>(null)

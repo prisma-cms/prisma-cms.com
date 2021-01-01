@@ -7,10 +7,10 @@ import Preview from './Preview'
 import { CodeChallengeViewProps } from './interfaces'
 import CodeChallengeOutputView from './Output'
 import Context from '../Context'
-import useExecuteChallenge from './SidePanel/hooks/useExecuteChallenge'
+import useExecuteChallenge from '../hooks/useExecuteChallenge'
 
 const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
-  const { object } = props
+  const { object, codeChallengeCompletion } = props
 
   // const onResize = () => {
   //   this.setState({ resizing: true })
@@ -121,9 +121,10 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
         className="full-height"
         object={object}
         executeChallenge={executeChallenge}
+        codeChallengeCompletion={codeChallengeCompletion}
       />
     ),
-    [executeChallenge, object]
+    [executeChallenge, object, codeChallengeCompletion]
   )
 
   const preview = useMemo(

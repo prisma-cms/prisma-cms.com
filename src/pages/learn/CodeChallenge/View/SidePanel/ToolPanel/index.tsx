@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useMemo } from 'react'
 
 // import { openModal, executeChallenge } from '../redux';
 import { ToolPanelProps } from './interfaces'
@@ -42,42 +42,60 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
     context?.resetChallengeData()
   }, [context])
 
-  return (
-    <ToolPanelStyled className={'tool-panel-group button-group'}>
-      <Button onClick={executeChallenge}>Запустить тесты (Ctrl+Enter)</Button>
+  return useMemo(() => {
+    const codeChallengeCompletion = context?.codeChallengeCompletion
 
-      <Button className="btn-invert" onClick={resetChallengeData}>
-        Восстановить код
-      </Button>
+    const user = context?.user
 
-      <DropdownButton>
-        {guideUrl ? (
-          <MenuItem
-            href={guideUrl}
-            target="_blank"
-            rel="nofollow noindex noreferrer"
-          >
-            Подсказка
-          </MenuItem>
-        ) : null}
-        {videoUrl ? (
-          <MenuItem
-            // onClick={openVideoModal}
-            href={videoUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Смотреть видео
-          </MenuItem>
-        ) : null}
-        {/* <MenuItem
-          onClick={openHelpModal}
-        >
-          Обсудить на форуме
-        </MenuItem> */}
-      </DropdownButton>
-    </ToolPanelStyled>
-  )
+    return (
+      <ToolPanelStyled className={'tool-panel-group button-group'}>
+        <Button onClick={executeChallenge}>
+          {user && !codeChallengeCompletion
+            ? 'Приступить к выполнению'
+            : 'Запустить тесты'}{' '}
+          (Ctrl+Enter)
+        </Button>
+
+        <Button className="btn-invert" onClick={resetChallengeData}>
+          Восстановить код
+        </Button>
+
+        <DropdownButton>
+          {guideUrl ? (
+            <MenuItem
+              href={guideUrl}
+              target="_blank"
+              rel="nofollow noindex noreferrer"
+            >
+              Подсказка
+            </MenuItem>
+          ) : null}
+          {videoUrl ? (
+            <MenuItem
+              // onClick={openVideoModal}
+              href={videoUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Смотреть видео
+            </MenuItem>
+          ) : null}
+          {/* <MenuItem
+        onClick={openHelpModal}
+      >
+        Обсудить на форуме
+      </MenuItem> */}
+        </DropdownButton>
+      </ToolPanelStyled>
+    )
+  }, [
+    context?.codeChallengeCompletion,
+    context?.user,
+    executeChallenge,
+    guideUrl,
+    resetChallengeData,
+    videoUrl,
+  ])
 }
 
 ToolPanel.displayName = 'ToolPanel'
