@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useMemo, useState } from 'react'
+import React, { useContext, useMemo } from 'react'
 import Typography from 'material-ui/Typography'
 import { CodeChallengeBlocksPageBlockViewProps } from './interfaces'
 import { CodeChallengeBlocksPageBlockViewStyled } from './styles'
@@ -9,20 +9,20 @@ import Context, { PrismaCmsContext } from '@prisma-cms/context'
 export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageBlockViewProps> = ({
   object,
   // children,
-  opened: openedProps = false,
+  opened = false,
 }) => {
   const context = useContext(Context) as PrismaCmsContext
 
-  const [opened, setOpened] = useState(openedProps)
+  // const [opened, setOpened] = useState(openedProps)
 
-  const toggleOpened = useCallback(
-    (event: React.MouseEvent) => {
-      event.preventDefault()
-      event.stopPropagation()
-      setOpened(!opened)
-    },
-    [opened]
-  )
+  // const toggleOpened = useCallback(
+  //   (event: React.MouseEvent) => {
+  //     event.preventDefault()
+  //     event.stopPropagation()
+  //     setOpened(!opened)
+  //   },
+  //   [opened]
+  // )
 
   const block = object
 
@@ -106,7 +106,7 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
     <CodeChallengeBlocksPageBlockViewStyled>
       <div>
         <Link href={`/learn/sections/${block.id}`}>
-          <a onClick={toggleOpened}>
+          <a title={block.name || ''}>
             <Typography className="title opener" component="span">
               {!opened ? '↳' : '↴'} {block.name}
             </Typography>

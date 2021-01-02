@@ -4,7 +4,6 @@ import executeChallenge from './executeChallenge'
 import Context, { TestResult } from '../../Context'
 import { ChallengeTestIFrameElement } from '../../View/Preview'
 import jquery from 'jquery'
-import { useApolloClient } from '@apollo/client'
 import {
   CreateCodeChallengeCompletionProcessorDocument,
   CreateCodeChallengeCompletionProcessorMutation,
@@ -22,7 +21,7 @@ function useExecuteChallenge() {
   const context = useContext(Context)
   const prismaContext = useContext(PrismaContext) as PrismaCmsContext
 
-  const client = useApolloClient()
+  const client = prismaContext.client
 
   const callback = useCallback(async () => {
     if (!context) {
