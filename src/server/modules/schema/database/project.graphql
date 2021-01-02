@@ -2,4 +2,20 @@ type Project{
   oldID: Int @unique
   Image: File
   Resource: Resource @relation(name: "ProjectResource")
+
+  """
+    Тип проекта
+  """
+  type: ProjectType
+}
+
+"""
+  Тип проекта
+"""
+enum ProjectType {
+
+  """
+    Обучение
+  """
+  Education
 }

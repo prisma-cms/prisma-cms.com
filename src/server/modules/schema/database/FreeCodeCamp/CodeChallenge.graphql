@@ -57,4 +57,9 @@ type CodeChallenge {
   rank: Int @default(value: 0)
 
   Block: CodeChallengeBlock! @relation(name: "CodeChallengeBlock")
+
+  """
+    Результаты выполнения
+  """
+  Completions: [CodeChallengeCompletion!]! @relation(name: "CodeChallengeCompletions")
 }

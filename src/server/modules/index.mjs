@@ -37,6 +37,7 @@ import Comment from "./Comment";
 // import Gallery from "./Gallery";
 // import GalleryFile from "./GalleryFile";
 import FreeModeCampModule from "./FreeModeCamp";
+import CodeChallengeCompletionModule from "./FreeModeCamp/CodeChallengeCompletion";
 
 
 import chalk from 'chalk';
@@ -96,6 +97,7 @@ class CoreModule extends PrismaModule {
       // Gallery,
       // GalleryFile,
       FreeModeCampModule,
+      CodeChallengeCompletionModule,
     ]
       .concat(
         EthereumModules,
@@ -228,6 +230,9 @@ class CoreModule extends PrismaModule {
 
         "CommentCreateInput",
         "CommentUpdateInput",
+
+        "CodeChallengeCompletionCreateInput",
+        "CodeChallengeCompletionUpdateInput",
 
         /**
          * prisma-3.14

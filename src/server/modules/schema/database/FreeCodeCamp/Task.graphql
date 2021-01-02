@@ -1,0 +1,8 @@
+
+type Task {
+
+  """
+    Если таска выполняется в рамках урока
+  """
+  CodeChallengeCompletion: CodeChallengeCompletion @relation(name: "CodeChallengeCompletionTask" onDelete: CASCADE)
+}

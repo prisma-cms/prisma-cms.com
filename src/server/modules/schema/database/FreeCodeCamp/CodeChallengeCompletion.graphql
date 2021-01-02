@@ -1,0 +1,23 @@
+
+"""
+  Результат выполнения задания
+"""
+type CodeChallengeCompletion {
+  id: ID! @id @unique
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+  CreatedBy: User @relation(name: "CodeChallengeCompletionsCreatedBy" link: INLINE)
+
+  CodeChallenge: CodeChallenge! @relation(name: "CodeChallengeCompletions" link: INLINE)
+
+  Task: Task! @relation(name: "CodeChallengeCompletionTask" link: INLINE onDelete: CASCADE)
+
+  """
+    Пользовательский код
+  """
+  content: String
+
+  success: Boolean @default(value: false)
+}
