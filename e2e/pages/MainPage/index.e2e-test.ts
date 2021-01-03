@@ -9,7 +9,7 @@ describe('MainPage', () => {
 
   describe('Load MainPage', () => {
     it('Check content', () => {
-      cy.contains('.MuiTypography-root-132 > a', 'PrismaCMS')
+      cy.contains('.MuiTypography-root-133 > a', 'PrismaCMS')
     })
   })
 })

@@ -53,7 +53,8 @@ export default async function* executeCancellableChallengeSaga(
     return
   }
 
-  const code = buildData?.build
+  // const code = buildData?.build
+  const code = challengeData.file.contents
 
   const tests = context.challenge.tests?.slice()
 
@@ -83,8 +84,6 @@ export default async function* executeCancellableChallengeSaga(
             // __utils.toggleProxyLogger(true);
             ${testString}
           `
-
-          // console.log('completeCode', completeCode);
 
           testResult = eval(completeCode)
         } catch (err) {

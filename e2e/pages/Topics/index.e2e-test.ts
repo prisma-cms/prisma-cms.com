@@ -11,17 +11,15 @@ describe('Topics', () => {
   })
 
   it('Load Topics page', () => {
-    expect(cy.$$('.Component-table-191 > tbody > tr').length).equal(10)
+    expect(cy.$$('table > tbody > tr').length).equal(10)
   })
 
   it('Load first topic', () => {
-    cy.get(
-      '.Component-table-191 > tbody > tr:first-child > td:first-child a'
-    ).click()
+    cy.get('table > tbody > tr:first-child > td:first-child a').click()
   })
 
   it('Check topic content', () => {
-    expect(cy.get('.MuiGrid-grid-xs-67 > .MuiTypography-root-132')).not.false
+    expect(cy.get('#content .header h1')).not.false
   })
 })
 
