@@ -33,6 +33,8 @@ export default async function* executeCancellableChallengeSaga(
 
   const challengeData = context.challengeData
 
+  // console.log('challengeData', challengeData);
+
   const buildData = await buildJSChallenge(challengeData, true).catch(
     (error: Error[]) => {
       console.error(error)
@@ -41,6 +43,8 @@ export default async function* executeCancellableChallengeSaga(
       return error
     }
   )
+
+  // console.log('buildData', buildData);
 
   // if (buildData instanceof Error) {
   //   yield buildData;
@@ -53,8 +57,12 @@ export default async function* executeCancellableChallengeSaga(
     return
   }
 
-  // const code = buildData?.build
   const code = challengeData.file.contents
+  const build = buildData?.build
+  // const code = challengeData.file.contents;
+
+  // console.log('code', code);
+  // console.log('build', build);
 
   const tests = context.challenge.tests?.slice()
 
@@ -79,11 +87,13 @@ export default async function* executeCancellableChallengeSaga(
            * // TODO Здесь надо учитывать тип теста, потому что с HTML возникает логичная ошибка
            */
           const completeCode = `
-            ${code}
+            ${build}
             __userCodeWasExecuted = true;
             // __utils.toggleProxyLogger(true);
             ${testString}
           `
+
+          // console.log('completeCode', completeCode);
 
           testResult = eval(completeCode)
         } catch (err) {
