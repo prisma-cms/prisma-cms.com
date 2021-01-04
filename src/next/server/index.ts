@@ -5,6 +5,8 @@ import { endpoint } from '../../config'
 
 import Sitemap from './sitemap/prisma-cms.com'
 
+const cwd = process.cwd()
+
 const port = (process.env.PORT && parseInt(process.env.PORT, 10)) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -49,6 +51,8 @@ const apiProxy = createProxy({
 
 app.prepare().then(() => {
   const server = express()
+
+  server.use(express.static(cwd + '/shared'))
 
   server.use(
     '/images/',
