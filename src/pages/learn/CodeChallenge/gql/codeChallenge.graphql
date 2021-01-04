@@ -33,6 +33,5 @@ fragment codeChallenge_ on CodeChallenge {
   isPrivate
   isBeta
   template
-  time
   rank
 }

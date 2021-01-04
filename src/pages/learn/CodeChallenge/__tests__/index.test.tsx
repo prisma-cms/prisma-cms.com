@@ -87,7 +87,7 @@ jest.mock('@apollo/client/react/hooks', () => {
               isPrivate: null,
               isBeta: false,
               template: null,
-              time: '10 hours',
+              // time: '10 hours',
               rank: 0,
             }
 

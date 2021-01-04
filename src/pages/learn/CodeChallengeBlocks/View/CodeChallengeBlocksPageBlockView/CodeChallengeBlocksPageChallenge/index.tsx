@@ -8,7 +8,7 @@ const CodeChallengeBlocksPageChallenge: React.FC<CodeChallengeBlocksPageChalleng
   object,
   codeChallengeCompletion,
 }) => {
-  const { name, localeTitle, time } = object
+  const { name, localeTitle } = object
 
   const title = localeTitle || name
 
@@ -20,7 +20,6 @@ const CodeChallengeBlocksPageChallenge: React.FC<CodeChallengeBlocksPageChalleng
       <Link href={`/learn/exercises/${object.id}`}>
         <a title={`Перейти к выполнению задания "${title}"` || ''}>{title}</a>
       </Link>{' '}
-      {time}
     </CodeChallengeBlocksPageChallengeStyled>
   )
 }

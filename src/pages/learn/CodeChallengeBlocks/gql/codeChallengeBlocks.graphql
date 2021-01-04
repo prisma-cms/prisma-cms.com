@@ -61,6 +61,6 @@ fragment challenge on CodeChallenge {
 
   # isPrivate
   # isBeta
-  time
+  # time
   # rank
 }

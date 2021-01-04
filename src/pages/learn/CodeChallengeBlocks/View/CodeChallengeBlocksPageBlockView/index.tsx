@@ -26,9 +26,7 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
 
   const block = object
 
-  const [content, totalTime] = useMemo(() => {
-    let totalTime = 0
-
+  const [content] = useMemo(() => {
     if (!block) {
       return []
     }
@@ -43,18 +41,6 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
      */
     if (challenges?.length) {
       const challengesContent = challenges.map((challenge) => {
-        const { time } = challenge
-
-        if (time) {
-          const match = time.match(/^([\d,.]+) *hours?/)
-
-          const hours = match && match[0] ? parseFloat(match[0]) : null
-
-          if (hours) {
-            totalTime += hours
-          }
-        }
-
         const codeChallengeCompletion = context.user?.CodeChallengeCompletions?.find(
           (n) => n.CodeChallenge.id === challenge.id
         )
@@ -68,7 +54,7 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
         )
       })
 
-      return [opened ? challengesContent : null, totalTime]
+      return [opened ? challengesContent : null]
     }
 
     if (children && opened) {
@@ -95,7 +81,7 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
       })
     }
 
-    return [content, totalTime]
+    return [content]
   }, [block, context.user?.CodeChallengeCompletions, opened])
 
   if (!block) {
@@ -112,7 +98,6 @@ export const CodeChallengeBlocksPageBlockView: React.FC<CodeChallengeBlocksPageB
             </Typography>
           </a>
         </Link>{' '}
-        {totalTime ? `${totalTime} hours` : null}
       </div>
       {content}
       {/* {opened ? children : null} */}

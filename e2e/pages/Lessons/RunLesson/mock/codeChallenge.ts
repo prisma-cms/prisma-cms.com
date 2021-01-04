@@ -64,7 +64,7 @@ const codeChallenge: CodeChallenge_Fragment = {
   isPrivate: null,
   isBeta: false,
   template: null,
-  time: '10 hours',
+  // time: '10 hours',
   rank: 0,
   __typename: 'CodeChallenge',
 }
