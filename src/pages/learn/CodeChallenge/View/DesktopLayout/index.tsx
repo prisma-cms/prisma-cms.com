@@ -54,7 +54,7 @@ const DesktopLayout: React.FC<DesktopLayoutProps> = (props) => {
           // orientation="vertical"
           flexDirection="row"
         >
-          <ReflexElement flex={1}>{instructions}</ReflexElement>
+          <ReflexElement flex={0.7}>{instructions}</ReflexElement>
           {/* <ReflexSplitter propagate={true} /> */}
           <ReflexElement flex={1}>
             {challengeFile && (

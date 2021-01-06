@@ -16,6 +16,7 @@ let previewTask: any
 export type executeChallengeProps = {
   context: NonNullable<CodeChallengeContext>
   jquery: any
+  document: HTMLDocument | null
 }
 
 export default async function* executeCancellableChallengeSaga(
@@ -23,13 +24,41 @@ export default async function* executeCancellableChallengeSaga(
 ): AsyncGenerator<TestResult | Error, void, unknown> {
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const React = this?.React
+  // const { default: React } = await import('react');
+
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const ReactDOM = this?.ReactDOM
+  // const { default: ReactDOM } = await import('react-dom');
+
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const assert = chai.assert
+
+  const { default: Enzyme } = await import('enzyme')
+  // if (e.loadEnzyme) {
+  const { default: Adapter16 } = await import('enzyme-adapter-react-16')
+  /* eslint-disable no-inline-comments */
+
+  // [{ default: Enzyme }, { default: Adapter16 }] = await Promise.all([
+  //   import(/* webpackChunkName: "enzyme" */ 'enzyme'),
+  //   import(/* webpackChunkName: "enzyme-adapter" */ 'enzyme-adapter-react-16')
+  // ]);
+  /* eslint-enable no-inline-comments */
+
+  Enzyme.configure({ adapter: new Adapter16() })
+  // }
 
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const $ = props.jquery
 
   const context = props.context
+
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const document = props.document
 
   const challengeData = context.challengeData
 
@@ -45,6 +74,8 @@ export default async function* executeCancellableChallengeSaga(
   )
 
   // console.log('buildData', buildData);
+
+  // eval('console.log("eval React", this.React);')
 
   // if (buildData instanceof Error) {
   //   yield buildData;
@@ -65,6 +96,8 @@ export default async function* executeCancellableChallengeSaga(
   // console.log('build', build);
 
   const tests = context.challenge.tests?.slice()
+
+  eval('console.log("document", document)')
 
   while (tests && tests.length) {
     const test = tests.shift()
@@ -97,7 +130,8 @@ export default async function* executeCancellableChallengeSaga(
 
           testResult = eval(completeCode)
         } catch (err) {
-          // console.error(err)
+          // For debug
+          console.error(err)
 
           if (__userCodeWasExecuted) {
             // rethrow error, since test failed.

@@ -11,11 +11,11 @@ export const CodeChallengePreviewStyled = styled.div`
     background-color: white;
   }
 
-  &.enable-iframe {
+  /* &.enable-iframe {
     pointer-events: auto;
   }
 
   &.disable-iframe {
     pointer-events: none;
-  }
+  } */
 `

@@ -2,7 +2,7 @@
 import { useCallback, useContext } from 'react'
 import executeChallenge from './executeChallenge'
 import Context, { TestResult } from '../../Context'
-import { ChallengeTestIFrameElement } from '../../View/Preview'
+import { ChallengeTestIFrameElement } from '../../View/Preview/interfaces'
 import jquery from 'jquery'
 import {
   CreateCodeChallengeCompletionProcessorDocument,
@@ -122,11 +122,13 @@ function useExecuteChallenge() {
       range = executeChallenge?.call(frame.contentWindow, {
         context,
         jquery: frame.contentWindow?.$,
+        document: frame.contentDocument,
       })
     } else {
       range = executeChallenge({
         context,
         jquery,
+        document: global.document,
       })
     }
 

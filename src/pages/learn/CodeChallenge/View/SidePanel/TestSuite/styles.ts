@@ -47,6 +47,7 @@ export const TestSuiteStyled = styled.div`
 
   .test-status-icon {
     display: flex;
+    flex: none;
     align-items: center;
     justify-content: center;
     width: 30px;

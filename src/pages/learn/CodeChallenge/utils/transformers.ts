@@ -49,10 +49,23 @@ import * as vinyl from './polyvinyl.js'
 //   presets: [presetEnv, presetReact]
 // };
 
+const babelOptionsJSX = {
+  presets: [
+    [Babel.availablePresets['env'], {}],
+    [Babel.availablePresets['react'], {}],
+  ],
+  plugins: [],
+}
+
 // const babelOptionsJS = {
 //   plugins: ['testLoopProtection'],
 //   presets: [presetEnv]
 // };
+
+// const babelOptionsJS = {
+//   plugins: [],
+//   presets: [],
+// }
 
 const babelOptionsJS = {
   plugins: [],
@@ -124,16 +137,16 @@ const babelTransformer = (preview = false) => {
         )
       ),
     ],
-    // [
-    //   testJSX,
-    //   flow(
-    //     partial(
-    //       vinyl.transformHeadTailAndContents,
-    //       tryTransform(babelTransformCode(babelOptionsJSX))
-    //     ),
-    //     partial(vinyl.setExt, 'js')
-    //   )
-    // ],
+    [
+      testJSX,
+      flow(
+        partial(
+          vinyl.transformHeadTailAndContents,
+          tryTransform(babelTransformCode(babelOptionsJSX))
+        ),
+        partial(vinyl.setExt, 'js')
+      ),
+    ],
     [stubTrue, identity],
   ])
 }

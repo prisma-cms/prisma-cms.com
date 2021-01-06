@@ -1,13 +1,20 @@
 import React, { useCallback, useContext, useMemo } from 'react'
+import dynamic from 'next/dynamic'
 import DesktopLayout from './DesktopLayout'
 import Editor from './Editor'
 import { challengeTypes } from '../utils/challengeTypes'
 import SidePanel from './SidePanel'
-import Preview from './Preview'
 import { CodeChallengeViewProps } from './interfaces'
 import CodeChallengeOutputView from './Output'
 import Context from '../Context'
 import useExecuteChallenge from '../hooks/useExecuteChallenge'
+
+// import Preview from './Preview'
+
+/**
+ * Не рендерим на сервере, потому что фрейм не срабатывает событие onLoad
+ */
+const Preview = dynamic(import('./Preview'), { ssr: false })
 
 const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
   const { object, codeChallengeCompletion } = props
@@ -82,31 +89,19 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
     // console.log('setEditorFocusability args', { ...args })
   }, [])
 
-  const editor = useMemo(() => {
-    // const challengeFile = getChallengeFile()
-
-    return (
-      challengeFile && (
-        <Editor
-          {...challengeFile}
-          saveEditorContent={saveEditorContent}
-          updateFile={updateFile}
-          // containerRef={containerRef}
-          // ref={editorRef}
-          // fileKey={challengeFile.key}
-          contents={challengeFile.contents}
-          executeChallenge={executeChallenge}
-          setEditorFocusability={setEditorFocusability}
-        />
-      )
-    )
-  }, [
-    challengeFile,
-    executeChallenge,
-    saveEditorContent,
-    setEditorFocusability,
-    updateFile,
-  ])
+  const editor = challengeFile && (
+    <Editor
+      {...challengeFile}
+      saveEditorContent={saveEditorContent}
+      updateFile={updateFile}
+      // containerRef={containerRef}
+      // ref={editorRef}
+      // fileKey={challengeFile.key}
+      contents={challengeFile.contents}
+      executeChallenge={executeChallenge}
+      setEditorFocusability={setEditorFocusability}
+    />
+  )
 
   const sidePanel = useMemo(
     () => (

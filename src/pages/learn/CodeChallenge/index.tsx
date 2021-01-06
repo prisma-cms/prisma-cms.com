@@ -145,7 +145,6 @@ const CodeChallengePage: Page = () => {
     if (!object || !object.id) {
       return null
     }
-    // console.log('object', object);
 
     // const { challengeType } = object
 

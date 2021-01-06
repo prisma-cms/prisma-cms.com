@@ -1,10 +1,10 @@
 import useExecuteChallenge from '../../hooks/useExecuteChallenge'
 
 export const modeMap = {
-  // css: 'css',
-  // html: 'html',
+  css: 'css',
+  html: 'html',
   js: 'javascript',
-  // jsx: 'javascript'
+  jsx: 'javascript',
 }
 
 export type CodeChallengeFileExt = keyof typeof modeMap
