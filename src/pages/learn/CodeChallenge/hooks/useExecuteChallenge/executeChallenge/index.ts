@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-namespace */
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 
@@ -95,9 +96,11 @@ export default async function* executeCancellableChallengeSaga(
   // console.log('code', code);
   // console.log('build', build);
 
-  const tests = context.challenge.tests?.slice()
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  var getUserInput = () => code
 
-  eval('console.log("document", document)')
+  const tests = context.challenge.tests?.slice()
 
   while (tests && tests.length) {
     const test = tests.shift()
@@ -145,8 +148,7 @@ export default async function* executeCancellableChallengeSaga(
         }
 
         if (typeof testResult === 'function') {
-          // TODO Fix logic
-          await testResult('e.getUserInput')
+          await testResult(getUserInput)
         }
 
         result = { pass: true }

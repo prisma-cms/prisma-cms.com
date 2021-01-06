@@ -125,6 +125,7 @@ class FccEditor<
     }
 
     this.options = {
+      tabSize: 2,
       fontSize: '18px',
       scrollBeyondLastLine: false,
       selectionHighlight: false,
