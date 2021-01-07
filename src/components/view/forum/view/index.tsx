@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 // import PropTypes from 'prop-types'
 
 import withStyles from 'material-ui/styles/withStyles'
@@ -37,6 +37,7 @@ import {
 
 import { ColumnConfig } from 'apollo-cms/dist/DataView/List/Table'
 import { UikitUserLinkAvatarSize } from 'src/uikit/Link/User/interfaces'
+import { useRouter } from 'next/router'
 
 const customStyles = (theme: Theme) => {
   // const {
@@ -259,5 +260,14 @@ export class ForumView<
 export { customStyles as styles, ForumView as TableView }
 
 export default withStyles(customStyles)((props: ForumViewProps) => {
-  return <ForumView {...props} />
+  const router = useRouter()
+
+  const addObject = useCallback(() => {
+    router.push('/add-topic.html')
+  }, [router])
+
+  return useMemo(() => <ForumView {...props} addObject={addObject} />, [
+    addObject,
+    props,
+  ])
 })

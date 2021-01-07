@@ -1,6 +1,9 @@
 import React from 'react'
 
-import FrontEditor, { FrontEditorProps } from '@prisma-cms/front-editor'
+import FrontEditor, {
+  FrontEditorProps,
+  registerComponents,
+} from '@prisma-cms/front-editor'
 import FrontEditorComponents from '@prisma-cms/front-editor/dist/preset/all'
 
 // // import OldPageHeader from './components/OldPageHeader'
@@ -64,6 +67,11 @@ const Components = CustomComponents.reduce((curr, next) => {
 
   return curr
 }, FrontEditorComponents)
+
+/**
+ * Хелпер для инициализации JSON объекта для редактора
+ */
+export const initEditorObject = registerComponents(Components)
 
 const RootPage: React.FC<RootPageProps> = (props) => {
   return <FrontEditor Components={Components} {...props} />

@@ -16,4 +16,6 @@ export interface BlogLinkProps {
     root: string
     text: string
   }
+
+  target?: string
 }

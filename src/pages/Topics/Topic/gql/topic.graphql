@@ -4,6 +4,20 @@
 #   }
 # }
 
+mutation createTopicProcessor($data: TopicCreateInput!) {
+  response: createTopicProcessor(data: $data) {
+    success
+    message
+    errors {
+      key
+      message
+    }
+    data {
+      ...resource_
+    }
+  }
+}
+
 mutation updateTopicProcessor(
   $data: TopicUpdateInput!
   $where: ResourceWhereUniqueInput!

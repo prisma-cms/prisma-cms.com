@@ -40,6 +40,7 @@ export * from './commentsConnectionCommentUser';
 export * from './createCodeChallengeCompletionProcessor';
 export * from './createCommentProcessor';
 export * from './createTimerProcessor';
+export * from './createTopicProcessor';
 export * from './fChatRoom';
 export * from './me';
 export * from './project';

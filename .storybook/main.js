@@ -1,10 +1,9 @@
 
 module.exports = {
   stories: [
-    // TODO TypeScript 'declare' fields must first be transformed by @babel/plugin-transform-typescript for packages
-    '../**/stories/**/*.stories.@(ts|tsx|js|jsx|mdx)',
+    // '../**/stories/**/*.stories.@(ts|tsx|js|jsx|mdx)',
     '../src/**/stories/**/*.stories.@(ts|tsx|js|jsx|mdx)',
-    '../stories/**/*.stories.@(ts|tsx|js|jsx|mdx)'
+    // '../stories/**/*.stories.@(ts|tsx|js|jsx|mdx)'
   ],
   addons: [
     '@storybook/addon-actions',
@@ -12,4 +11,11 @@ module.exports = {
     '@storybook/addon-docs',
   ],
   // presets: [path.resolve(__dirname, "./next-preset.js")],
+
+  // ! Taken from Storybook issue workaround
+  // ! See: https://github.com/storybookjs/storybook/issues/12952#issuecomment-719871776
+  babel: async (options) => ({
+    ...options,
+    plugins: [...options.plugins, '@babel/plugin-transform-react-jsx'],
+  }),
 };

@@ -47,6 +47,33 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
 
     const user = context?.user
 
+    const items: JSX.Element[] = []
+
+    if (guideUrl) {
+      items.push(
+        <MenuItem
+          href={guideUrl}
+          target="_blank"
+          rel="nofollow noindex noreferrer"
+        >
+          Подсказка
+        </MenuItem>
+      )
+    }
+
+    if (videoUrl) {
+      items.push(
+        <MenuItem
+          // onClick={openVideoModal}
+          href={videoUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Смотреть видео
+        </MenuItem>
+      )
+    }
+
     return (
       <ToolPanelStyled className={'tool-panel-group button-group'}>
         <Button onClick={executeChallenge}>
@@ -60,32 +87,16 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
           Восстановить код
         </Button>
 
-        <DropdownButton>
-          {guideUrl ? (
-            <MenuItem
-              href={guideUrl}
-              target="_blank"
-              rel="nofollow noindex noreferrer"
-            >
-              Подсказка
-            </MenuItem>
-          ) : null}
-          {videoUrl ? (
-            <MenuItem
-              // onClick={openVideoModal}
-              href={videoUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Смотреть видео
-            </MenuItem>
-          ) : null}
-          {/* <MenuItem
+        {items.length ? (
+          <DropdownButton>
+            {/* <MenuItem
         onClick={openHelpModal}
       >
         Обсудить на форуме
       </MenuItem> */}
-        </DropdownButton>
+            {items}
+          </DropdownButton>
+        ) : null}
       </ToolPanelStyled>
     )
   }, [
