@@ -52,6 +52,7 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
     if (guideUrl) {
       items.push(
         <MenuItem
+          key="guideUrl"
           href={guideUrl}
           target="_blank"
           rel="nofollow noindex noreferrer"
@@ -65,6 +66,7 @@ const ToolPanel: React.FC<ToolPanelProps> = ({
       items.push(
         <MenuItem
           // onClick={openVideoModal}
+          key="videoUrl"
           href={videoUrl}
           target="_blank"
           rel="noreferrer"
