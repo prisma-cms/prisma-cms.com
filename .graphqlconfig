@@ -1,4 +1,5 @@
 {
   "name": "GraphQL Schema",
-  "schemaPath": "./src/modules/gql/generated/schema.json"
+  "schemaPath": "./src/modules/gql/generated/schema.json",
+  "documents": ["src/**/*.{graphql}"]
 }

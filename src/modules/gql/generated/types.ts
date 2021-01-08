@@ -57,6 +57,7 @@ export interface Query {
   routes: Array<Maybe<Route>>;
   codeChallenges: Array<Maybe<CodeChallenge>>;
   codeChallengeBlocks: Array<Maybe<CodeChallengeBlock>>;
+  codeChallengeCompletions: Array<Maybe<CodeChallengeCompletion>>;
   comments: Array<Maybe<Comment>>;
   technologyLessons: Array<Maybe<TechnologyLesson>>;
   careers: Array<Maybe<Career>>;
@@ -97,6 +98,7 @@ export interface Query {
   route?: Maybe<Route>;
   codeChallenge?: Maybe<CodeChallenge>;
   codeChallengeBlock?: Maybe<CodeChallengeBlock>;
+  codeChallengeCompletion?: Maybe<CodeChallengeCompletion>;
   comment?: Maybe<Comment>;
   technologyLesson?: Maybe<TechnologyLesson>;
   career?: Maybe<Career>;
@@ -139,6 +141,7 @@ export interface Query {
   routesConnection: RouteConnection;
   codeChallengesConnection: CodeChallengeConnection;
   codeChallengeBlocksConnection: CodeChallengeBlockConnection;
+  codeChallengeCompletionsConnection: CodeChallengeCompletionConnection;
   commentsConnection: CommentConnection;
   technologyLessonsConnection: TechnologyLessonConnection;
   careersConnection: CareerConnection;
@@ -476,6 +479,17 @@ export type QueryCodeChallengeBlocksArgs = {
 };
 
 
+export type QueryCodeChallengeCompletionsArgs = {
+  where?: Maybe<CodeChallengeCompletionWhereInput>;
+  orderBy?: Maybe<CodeChallengeCompletionOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
 export type QueryCommentsArgs = {
   where?: Maybe<CommentWhereInput>;
   orderBy?: Maybe<CommentOrderByInput>;
@@ -757,6 +771,11 @@ export type QueryCodeChallengeArgs = {
 
 export type QueryCodeChallengeBlockArgs = {
   where: CodeChallengeBlockWhereUniqueInput;
+};
+
+
+export type QueryCodeChallengeCompletionArgs = {
+  where: CodeChallengeCompletionWhereUniqueInput;
 };
 
 
@@ -1124,6 +1143,17 @@ export type QueryCodeChallengesConnectionArgs = {
 export type QueryCodeChallengeBlocksConnectionArgs = {
   where?: Maybe<CodeChallengeBlockWhereInput>;
   orderBy?: Maybe<CodeChallengeBlockOrderByInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryCodeChallengeCompletionsConnectionArgs = {
+  where?: Maybe<CodeChallengeCompletionWhereInput>;
+  orderBy?: Maybe<CodeChallengeCompletionOrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -13211,6 +13241,10 @@ export interface CodeChallengeBlockWhereUniqueInput {
   externalKey?: Maybe<Scalars['String']>;
 }
 
+export interface CodeChallengeCompletionWhereUniqueInput {
+  id?: Maybe<Scalars['ID']>;
+}
+
 export interface CommentWhereUniqueInput {
   id?: Maybe<Scalars['ID']>;
 }
@@ -13944,6 +13978,30 @@ export interface CodeChallengeBlockEdge {
 
 export interface AggregateCodeChallengeBlock {
   __typename?: 'AggregateCodeChallengeBlock';
+  count: Scalars['Int'];
+}
+
+/** A connection to a list of items. */
+export interface CodeChallengeCompletionConnection {
+  __typename?: 'CodeChallengeCompletionConnection';
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** A list of edges. */
+  edges: Array<Maybe<CodeChallengeCompletionEdge>>;
+  aggregate: AggregateCodeChallengeCompletion;
+}
+
+/** An edge in a connection. */
+export interface CodeChallengeCompletionEdge {
+  __typename?: 'CodeChallengeCompletionEdge';
+  /** The item at the end of the edge. */
+  node: CodeChallengeCompletion;
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+}
+
+export interface AggregateCodeChallengeCompletion {
+  __typename?: 'AggregateCodeChallengeCompletion';
   count: Scalars['Int'];
 }
 
@@ -15285,10 +15343,6 @@ export interface CodeChallengeCompletionResponse {
 export interface CodeChallengeCompletionUpdateInput {
   content?: Maybe<Scalars['String']>;
   success?: Maybe<Scalars['Boolean']>;
-}
-
-export interface CodeChallengeCompletionWhereUniqueInput {
-  id?: Maybe<Scalars['ID']>;
 }
 
 export interface CareerCreateInput {
@@ -24578,11 +24632,6 @@ export interface AggregateChatRoomInvitation {
   count: Scalars['Int'];
 }
 
-export interface AggregateCodeChallengeCompletion {
-  __typename?: 'AggregateCodeChallengeCompletion';
-  count: Scalars['Int'];
-}
-
 export interface AggregateFile {
   __typename?: 'AggregateFile';
   count: Scalars['Int'];
@@ -26811,25 +26860,6 @@ export interface CodeChallengeBlockUpdateWithWhereUniqueWithoutParentInput {
 
 export interface CodeChallengeBlockUpsertWithWhereUniqueWithoutParentInput {
   where: CodeChallengeBlockWhereUniqueInput;
-}
-
-/** A connection to a list of items. */
-export interface CodeChallengeCompletionConnection {
-  __typename?: 'CodeChallengeCompletionConnection';
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** A list of edges. */
-  edges: Array<Maybe<CodeChallengeCompletionEdge>>;
-  aggregate: AggregateCodeChallengeCompletion;
-}
-
-/** An edge in a connection. */
-export interface CodeChallengeCompletionEdge {
-  __typename?: 'CodeChallengeCompletionEdge';
-  /** The item at the end of the edge. */
-  node: CodeChallengeCompletion;
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String'];
 }
 
 export interface CodeChallengeCompletionCreateManyWithoutCodeChallengeInput {

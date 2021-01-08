@@ -32,11 +32,12 @@ function useExecuteChallenge() {
     let codeChallengeCompletion = context.codeChallengeCompletion
     const challenge = context.challenge
 
+    const cacheKey = context.challengeData.file.cacheKey
+
     /**
      * Если пользователь авторизован и статус отсутствует,
      * сначала регистрируем таску
      */
-
     if (user) {
       if (!codeChallengeCompletion) {
         const result = await client.mutate<
@@ -186,6 +187,13 @@ function useExecuteChallenge() {
       if (result.data?.response.success === true && success) {
         await prismaContext.apiClientResetStore()
       }
+    }
+
+    /**
+     * Если выполнено успешно, то удаляем кеш из стора
+     */
+    if (success && cacheKey && global.localStorage) {
+      global.localStorage.removeItem(cacheKey)
     }
 
     context.setTestResults(testsResults)

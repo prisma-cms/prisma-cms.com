@@ -32,6 +32,7 @@ export type TestFile = {
   path: string
   seed: string
   tail: string
+  cacheKey: string | null
 }
 
 export type ChallengeData = {
@@ -56,7 +57,7 @@ export type ChallengeData = {
 export interface CodeChallengeContext {
   challenge: CodeChallenge_Fragment
   challengeData: ChallengeData
-  setChallengeData: React.Dispatch<React.SetStateAction<ChallengeData>>
+  setChallengeData: (value: ChallengeData) => void
   resetChallengeData: () => void
   /**
    * Вывод технических сообщений при выполнении тестов

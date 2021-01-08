@@ -8,9 +8,9 @@
 
 import * as Types from './types';
 
-import { MeUserCodeChallengeCompletionFragment } from './MeUserCodeChallengeCompletion';
+import { CodeChallengeCompletion_Fragment } from './codeChallengeCompletion_';
 import { gql } from '@apollo/client';
-import { MeUserCodeChallengeCompletionFragmentDoc } from './MeUserCodeChallengeCompletion';
+import { CodeChallengeCompletion_FragmentDoc } from './codeChallengeCompletion_';
 import * as Apollo from '@apollo/client';
 export type UpdateCodeChallengeCompletionProcessorMutationVariables = Types.Exact<{
   data: Types.CodeChallengeCompletionUpdateInput;
@@ -20,7 +20,7 @@ export type UpdateCodeChallengeCompletionProcessorMutationVariables = Types.Exac
 
 export type UpdateCodeChallengeCompletionProcessorMutation = { __typename?: 'Mutation', response: { __typename?: 'CodeChallengeCompletionResponse', success: boolean, message?: Types.Maybe<string>, errors: Array<{ __typename?: 'Error', key: string, message: string }>, data?: Types.Maybe<(
       { __typename?: 'CodeChallengeCompletion' }
-      & MeUserCodeChallengeCompletionFragment
+      & CodeChallengeCompletion_Fragment
     )> } };
 
 
@@ -34,11 +34,11 @@ export const UpdateCodeChallengeCompletionProcessorDocument = gql`
       message
     }
     data {
-      ...MeUserCodeChallengeCompletion
+      ...codeChallengeCompletion_
     }
   }
 }
-    ${MeUserCodeChallengeCompletionFragmentDoc}`;
+    ${CodeChallengeCompletion_FragmentDoc}`;
 export type UpdateCodeChallengeCompletionProcessorMutationFn = Apollo.MutationFunction<UpdateCodeChallengeCompletionProcessorMutation, UpdateCodeChallengeCompletionProcessorMutationVariables>;
 
 /**

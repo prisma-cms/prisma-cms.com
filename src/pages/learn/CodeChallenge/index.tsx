@@ -11,6 +11,8 @@ import {
   CodeChallengeDocument,
   CodeChallengeQuery,
   CodeChallengeQueryVariables,
+  useCodeChallengeCompletionQuery,
+  CodeChallengeCompletionQuery,
 } from 'src/modules/gql/generated'
 
 import { useRouter, NextRouter } from 'next/router'
@@ -21,6 +23,7 @@ import View from './View'
 import Context, {
   ChallengeData,
   CodeChallengeContext,
+  TestFile,
   TestResult,
 } from './Context'
 
@@ -53,6 +56,7 @@ const getCodeChallengeVariables = (
 
 const CodeChallengePage: Page = () => {
   const prismaCmsContext = useContext(PrismaContext) as PrismaCmsContext
+  const user = prismaCmsContext.user
 
   const router = useRouter()
 
@@ -68,51 +72,156 @@ const CodeChallengePage: Page = () => {
 
   const object = response.data?.codeChallenge
 
+  const cacheKey =
+    global.localStorage && object ? `lesson_${object.id}_file_content` : null
+
+  // const codeChallengeCompletion = useMemo(() => {
+
+  //   if (!object || !user) {
+  //     return null;
+  //   }
+
+  //   return user.CodeChallengeCompletions?.find(
+  //     (n) => n.CodeChallenge.id === object.id
+  //   )
+
+  // }, [object, user]);
+
   // const initialChallengeData = useMemo<ChallengeData>(
   //   () => (),
   //   [object?.challengeType]
   // )
 
-  const [challengeData, setChallengeData] = useState<ChallengeData>(() => {
-    const files = object?.files ?? []
+  /**
+   * Готовим файл, добавляя данные из сессии
+   */
+  const prepareFile = useCallback(
+    (file) => {
+      if (cacheKey) {
+        const contents = global.localStorage?.getItem(cacheKey)
 
-    // return {
-    //   challengeType: object?.challengeType,
-    //   file: {
-    //     key: 'indexjs',
-    //     head: '',
-    //     tail: '',
-    //     history: ['index.js'],
-    //     name: 'index',
-    //     ext: 'js',
-    //     path: 'index.js',
-    //     contents: ``,
-    //     error: null,
-    //     seed: '',
-    //   },
-    // };
+        if (contents !== null) {
+          file = {
+            ...file,
+            contents,
+          }
+        }
+      }
 
-    const { ...file } = files[0] || {}
+      return file
+    },
+    [cacheKey]
+  )
+
+  const [initialChallengeData] = useState<ChallengeData>(() => {
+    const files: Array<Partial<TestFile>> =
+      object?.files && Array.isArray(object.files) ? object?.files : []
+
+    const { ...firstFile } = files[0] || {}
+
+    const file: TestFile = {
+      key: 'indexjs',
+      head: '',
+      tail: '',
+      history: ['index.js'],
+      name: 'index',
+      ext: 'js',
+      path: 'index.js',
+      contents: ``,
+      error: null,
+      seed: '',
+      cacheKey,
+      ...firstFile,
+    }
 
     return {
       challengeType: object?.challengeType,
-      file: {
-        key: 'indexjs',
-        head: '',
-        tail: '',
-        history: ['index.js'],
-        name: 'index',
-        ext: 'js',
-        path: 'index.js',
-        contents: ``,
-        error: null,
-        seed: '',
-        ...file,
-      },
+      file,
     }
   })
 
-  const [initialChallengeData] = useState(challengeData)
+  const [challengeData, setChallengeDataToState] = useState<ChallengeData>(
+    () => {
+      const file = initialChallengeData.file
+
+      return {
+        ...initialChallengeData,
+        file: prepareFile(file),
+      }
+    }
+  )
+
+  /**
+   * @writeCache Если да, то записываем в хранилище
+   */
+  const setChallengeData = useCallback(
+    (value: ChallengeData, writeCache = true) => {
+      if (cacheKey && writeCache) {
+        if (value.file.contents) {
+          global.localStorage?.setItem(cacheKey, value.file.contents)
+        } else {
+          global.localStorage?.removeItem(cacheKey)
+        }
+      }
+
+      setChallengeDataToState(value)
+    },
+    [cacheKey]
+  )
+
+  const codeChallengeCompletionId = useMemo(() => {
+    if (!object || !user) {
+      return null
+    }
+
+    return user.CodeChallengeCompletions?.find(
+      (n) => n.CodeChallenge.id === object.id
+    )?.id
+  }, [object, user])
+
+  /**
+   * Если пользовательское решение было загружено и нет кеша,
+   * устанавливаем этот в качестве текущего
+   */
+  const codeChallengeCompletionQueryCompleted = useCallback(
+    (data: CodeChallengeCompletionQuery) => {
+      const cachedData = cacheKey
+        ? global.localStorage?.getItem(cacheKey)
+        : null
+
+      if (cachedData !== null) {
+        return
+      }
+
+      const content = data.codeChallengeCompletion?.content
+
+      if (content) {
+        const file = challengeData.file
+
+        setChallengeData(
+          {
+            ...challengeData,
+            file: {
+              ...file,
+              contents: content,
+            },
+          },
+          false
+        )
+      }
+    },
+    [cacheKey, challengeData, setChallengeData]
+  )
+
+  const codeChallengeCompletion = useCodeChallengeCompletionQuery({
+    skip: !codeChallengeCompletionId,
+    variables: {
+      where: {
+        id: codeChallengeCompletionId,
+      },
+    },
+    onCompleted: codeChallengeCompletionQueryCompleted,
+  }).data?.codeChallengeCompletion
 
   const [output, setOutput] = useState<ReadonlyArray<React.ReactChild>>([
     `/**
@@ -139,7 +248,7 @@ const CodeChallengePage: Page = () => {
   const resetChallengeData = useCallback(() => {
     setChallengeData(initialChallengeData)
     setTestResults([])
-  }, [initialChallengeData])
+  }, [initialChallengeData, setChallengeData])
 
   const context = useMemo<CodeChallengeContext | null>(() => {
     if (!object || !object.id) {
@@ -147,13 +256,6 @@ const CodeChallengePage: Page = () => {
     }
 
     // const { challengeType } = object
-
-    const user = prismaCmsContext.user
-
-    const CodeChallengeCompletions = user?.CodeChallengeCompletions
-    const codeChallengeCompletion = CodeChallengeCompletions?.find(
-      (n) => n.CodeChallenge.id === object.id
-    )
 
     const context: CodeChallengeContext = {
       challenge: object,
@@ -178,11 +280,13 @@ const CodeChallengePage: Page = () => {
   }, [
     addOutput,
     challengeData,
+    codeChallengeCompletion,
     object,
     output,
-    prismaCmsContext.user,
     resetChallengeData,
+    setChallengeData,
     testsResults,
+    user,
   ])
 
   const [showSuccessModal, setShowSuccessModal] = useState<

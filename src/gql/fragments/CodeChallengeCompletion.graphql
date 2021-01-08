@@ -1,0 +1,14 @@
+fragment codeChallengeCompletion_ on CodeChallengeCompletion {
+  id
+  createdAt
+  updatedAt
+  success
+  content
+  Task {
+    id
+    status
+  }
+  CodeChallenge {
+    id
+  }
+}

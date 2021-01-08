@@ -1,0 +1,40 @@
+query codeChallengeCompletion(
+  $where: CodeChallengeCompletionWhereUniqueInput!
+) {
+  codeChallengeCompletion(where: $where) {
+    ...codeChallengeCompletion_
+  }
+}
+
+mutation createCodeChallengeCompletionProcessor(
+  $data: CodeChallengeCompletionCreateInput!
+) {
+  response: createCodeChallengeCompletionProcessor(data: $data) {
+    success
+    message
+    errors {
+      key
+      message
+    }
+    data {
+      ...codeChallengeCompletion_
+    }
+  }
+}
+
+mutation updateCodeChallengeCompletionProcessor(
+  $data: CodeChallengeCompletionUpdateInput!
+  $where: CodeChallengeCompletionWhereUniqueInput!
+) {
+  response: updateCodeChallengeCompletionProcessor(data: $data, where: $where) {
+    success
+    message
+    errors {
+      key
+      message
+    }
+    data {
+      ...codeChallengeCompletion_
+    }
+  }
+}

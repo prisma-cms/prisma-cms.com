@@ -1,5 +1,5 @@
 import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
-export type QueryKeySpecifier = ('apiSchema' | 'galleries' | 'userGroups' | 'worlds' | 'notices' | 'notificationTypes' | 'resourceTags' | 'tags' | 'votes' | 'chatRooms' | 'games' | 'gameResults' | 'tournaments' | 'tournamentGroups' | 'tourneys' | 'ethAccounts' | 'ethContractSources' | 'ethTransactions' | 'callRequests' | 'positions' | 'projectMembers' | 'services' | 'tasks' | 'taskReactions' | 'teamMembers' | 'timers' | 'routes' | 'codeChallenges' | 'codeChallengeBlocks' | 'comments' | 'technologyLessons' | 'careers' | 'technologyLessonUsers' | 'userTechnologies' | 'tests' | 'technologies' | 'ethBlocks' | 'teams' | 'projects' | 'templates' | 'resources' | 'chatMessages' | 'users' | 'gallery' | 'world' | 'notice' | 'notificationType' | 'resourceTag' | 'tag' | 'vote' | 'chatRoom' | 'game' | 'gameResult' | 'tournament' | 'tournamentGroup' | 'tourney' | 'ethAccount' | 'ethContractSource' | 'ethTransaction' | 'position' | 'projectMember' | 'service' | 'task' | 'taskReaction' | 'teamMember' | 'timer' | 'route' | 'codeChallenge' | 'codeChallengeBlock' | 'comment' | 'technologyLesson' | 'career' | 'technologyLessonUser' | 'userTechnology' | 'test' | 'file' | 'technology' | 'ethBlock' | 'team' | 'project' | 'template' | 'resource' | 'chatMessage' | 'user' | 'galleriesConnection' | 'worldsConnection' | 'noticesConnection' | 'notificationTypesConnection' | 'resourceTagsConnection' | 'tagsConnection' | 'votesConnection' | 'chatRoomsConnection' | 'gamesConnection' | 'gameResultsConnection' | 'tournamentsConnection' | 'tournamentGroupsConnection' | 'tourneysConnection' | 'ethAccountsConnection' | 'ethContractSourcesConnection' | 'ethTransactionsConnection' | 'callRequestsConnection' | 'positionsConnection' | 'projectMembersConnection' | 'servicesConnection' | 'tasksConnection' | 'taskReactionsConnection' | 'teamMembersConnection' | 'timersConnection' | 'routesConnection' | 'codeChallengesConnection' | 'codeChallengeBlocksConnection' | 'commentsConnection' | 'technologyLessonsConnection' | 'careersConnection' | 'technologyLessonUsersConnection' | 'userTechnologiesConnection' | 'testsConnection' | 'technologiesConnection' | 'ethBlocksConnection' | 'teamsConnection' | 'projectsConnection' | 'templatesConnection' | 'resourcesConnection' | 'chatMessagesConnection' | 'usersConnection' | 'myWorlds' | 'me' | 'ethNet' | 'ethCoinbase' | 'ethPersonalAccounts' | 'ethBalance' | 'ethTransactionCount' | 'ethSyncState' | 'ethGetBlockNumber' | 'ethGetBlock' | 'ethGetBlockTransactionCount' | 'ethGetTransaction' | QueryKeySpecifier)[];
+export type QueryKeySpecifier = ('apiSchema' | 'galleries' | 'userGroups' | 'worlds' | 'notices' | 'notificationTypes' | 'resourceTags' | 'tags' | 'votes' | 'chatRooms' | 'games' | 'gameResults' | 'tournaments' | 'tournamentGroups' | 'tourneys' | 'ethAccounts' | 'ethContractSources' | 'ethTransactions' | 'callRequests' | 'positions' | 'projectMembers' | 'services' | 'tasks' | 'taskReactions' | 'teamMembers' | 'timers' | 'routes' | 'codeChallenges' | 'codeChallengeBlocks' | 'codeChallengeCompletions' | 'comments' | 'technologyLessons' | 'careers' | 'technologyLessonUsers' | 'userTechnologies' | 'tests' | 'technologies' | 'ethBlocks' | 'teams' | 'projects' | 'templates' | 'resources' | 'chatMessages' | 'users' | 'gallery' | 'world' | 'notice' | 'notificationType' | 'resourceTag' | 'tag' | 'vote' | 'chatRoom' | 'game' | 'gameResult' | 'tournament' | 'tournamentGroup' | 'tourney' | 'ethAccount' | 'ethContractSource' | 'ethTransaction' | 'position' | 'projectMember' | 'service' | 'task' | 'taskReaction' | 'teamMember' | 'timer' | 'route' | 'codeChallenge' | 'codeChallengeBlock' | 'codeChallengeCompletion' | 'comment' | 'technologyLesson' | 'career' | 'technologyLessonUser' | 'userTechnology' | 'test' | 'file' | 'technology' | 'ethBlock' | 'team' | 'project' | 'template' | 'resource' | 'chatMessage' | 'user' | 'galleriesConnection' | 'worldsConnection' | 'noticesConnection' | 'notificationTypesConnection' | 'resourceTagsConnection' | 'tagsConnection' | 'votesConnection' | 'chatRoomsConnection' | 'gamesConnection' | 'gameResultsConnection' | 'tournamentsConnection' | 'tournamentGroupsConnection' | 'tourneysConnection' | 'ethAccountsConnection' | 'ethContractSourcesConnection' | 'ethTransactionsConnection' | 'callRequestsConnection' | 'positionsConnection' | 'projectMembersConnection' | 'servicesConnection' | 'tasksConnection' | 'taskReactionsConnection' | 'teamMembersConnection' | 'timersConnection' | 'routesConnection' | 'codeChallengesConnection' | 'codeChallengeBlocksConnection' | 'codeChallengeCompletionsConnection' | 'commentsConnection' | 'technologyLessonsConnection' | 'careersConnection' | 'technologyLessonUsersConnection' | 'userTechnologiesConnection' | 'testsConnection' | 'technologiesConnection' | 'ethBlocksConnection' | 'teamsConnection' | 'projectsConnection' | 'templatesConnection' | 'resourcesConnection' | 'chatMessagesConnection' | 'usersConnection' | 'myWorlds' | 'me' | 'ethNet' | 'ethCoinbase' | 'ethPersonalAccounts' | 'ethBalance' | 'ethTransactionCount' | 'ethSyncState' | 'ethGetBlockNumber' | 'ethGetBlock' | 'ethGetBlockTransactionCount' | 'ethGetTransaction' | QueryKeySpecifier)[];
 export type QueryFieldPolicy = {
 	apiSchema?: FieldPolicy<any> | FieldReadFunction<any>,
 	galleries?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -30,6 +30,7 @@ export type QueryFieldPolicy = {
 	routes?: FieldPolicy<any> | FieldReadFunction<any>,
 	codeChallenges?: FieldPolicy<any> | FieldReadFunction<any>,
 	codeChallengeBlocks?: FieldPolicy<any> | FieldReadFunction<any>,
+	codeChallengeCompletions?: FieldPolicy<any> | FieldReadFunction<any>,
 	comments?: FieldPolicy<any> | FieldReadFunction<any>,
 	technologyLessons?: FieldPolicy<any> | FieldReadFunction<any>,
 	careers?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -70,6 +71,7 @@ export type QueryFieldPolicy = {
 	route?: FieldPolicy<any> | FieldReadFunction<any>,
 	codeChallenge?: FieldPolicy<any> | FieldReadFunction<any>,
 	codeChallengeBlock?: FieldPolicy<any> | FieldReadFunction<any>,
+	codeChallengeCompletion?: FieldPolicy<any> | FieldReadFunction<any>,
 	comment?: FieldPolicy<any> | FieldReadFunction<any>,
 	technologyLesson?: FieldPolicy<any> | FieldReadFunction<any>,
 	career?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -112,6 +114,7 @@ export type QueryFieldPolicy = {
 	routesConnection?: FieldPolicy<any> | FieldReadFunction<any>,
 	codeChallengesConnection?: FieldPolicy<any> | FieldReadFunction<any>,
 	codeChallengeBlocksConnection?: FieldPolicy<any> | FieldReadFunction<any>,
+	codeChallengeCompletionsConnection?: FieldPolicy<any> | FieldReadFunction<any>,
 	commentsConnection?: FieldPolicy<any> | FieldReadFunction<any>,
 	technologyLessonsConnection?: FieldPolicy<any> | FieldReadFunction<any>,
 	careersConnection?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -1347,6 +1350,21 @@ export type CodeChallengeBlockEdgeFieldPolicy = {
 };
 export type AggregateCodeChallengeBlockKeySpecifier = ('count' | AggregateCodeChallengeBlockKeySpecifier)[];
 export type AggregateCodeChallengeBlockFieldPolicy = {
+	count?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionConnectionKeySpecifier = ('pageInfo' | 'edges' | 'aggregate' | CodeChallengeCompletionConnectionKeySpecifier)[];
+export type CodeChallengeCompletionConnectionFieldPolicy = {
+	pageInfo?: FieldPolicy<any> | FieldReadFunction<any>,
+	edges?: FieldPolicy<any> | FieldReadFunction<any>,
+	aggregate?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type CodeChallengeCompletionEdgeKeySpecifier = ('node' | 'cursor' | CodeChallengeCompletionEdgeKeySpecifier)[];
+export type CodeChallengeCompletionEdgeFieldPolicy = {
+	node?: FieldPolicy<any> | FieldReadFunction<any>,
+	cursor?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type AggregateCodeChallengeCompletionKeySpecifier = ('count' | AggregateCodeChallengeCompletionKeySpecifier)[];
+export type AggregateCodeChallengeCompletionFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CommentConnectionKeySpecifier = ('pageInfo' | 'edges' | 'aggregate' | CommentConnectionKeySpecifier)[];
@@ -2767,10 +2785,6 @@ export type AggregateChatRoomInvitationKeySpecifier = ('count' | AggregateChatRo
 export type AggregateChatRoomInvitationFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type AggregateCodeChallengeCompletionKeySpecifier = ('count' | AggregateCodeChallengeCompletionKeySpecifier)[];
-export type AggregateCodeChallengeCompletionFieldPolicy = {
-	count?: FieldPolicy<any> | FieldReadFunction<any>
-};
 export type AggregateFileKeySpecifier = ('count' | AggregateFileKeySpecifier)[];
 export type AggregateFileFieldPolicy = {
 	count?: FieldPolicy<any> | FieldReadFunction<any>
@@ -2908,17 +2922,6 @@ export type ChatRoomInvitationSubscriptionPayloadFieldPolicy = {
 	node?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedFields?: FieldPolicy<any> | FieldReadFunction<any>,
 	previousValues?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type CodeChallengeCompletionConnectionKeySpecifier = ('pageInfo' | 'edges' | 'aggregate' | CodeChallengeCompletionConnectionKeySpecifier)[];
-export type CodeChallengeCompletionConnectionFieldPolicy = {
-	pageInfo?: FieldPolicy<any> | FieldReadFunction<any>,
-	edges?: FieldPolicy<any> | FieldReadFunction<any>,
-	aggregate?: FieldPolicy<any> | FieldReadFunction<any>
-};
-export type CodeChallengeCompletionEdgeKeySpecifier = ('node' | 'cursor' | CodeChallengeCompletionEdgeKeySpecifier)[];
-export type CodeChallengeCompletionEdgeFieldPolicy = {
-	node?: FieldPolicy<any> | FieldReadFunction<any>,
-	cursor?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CodeChallengeCompletionPreviousValuesKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'content' | 'success' | CodeChallengeCompletionPreviousValuesKeySpecifier)[];
 export type CodeChallengeCompletionPreviousValuesFieldPolicy = {
@@ -4172,6 +4175,18 @@ export type TypedTypePolicies = TypePolicies & {
 		keyFields?: false | AggregateCodeChallengeBlockKeySpecifier | (() => undefined | AggregateCodeChallengeBlockKeySpecifier),
 		fields?: AggregateCodeChallengeBlockFieldPolicy,
 	},
+	CodeChallengeCompletionConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionConnectionKeySpecifier | (() => undefined | CodeChallengeCompletionConnectionKeySpecifier),
+		fields?: CodeChallengeCompletionConnectionFieldPolicy,
+	},
+	CodeChallengeCompletionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | CodeChallengeCompletionEdgeKeySpecifier | (() => undefined | CodeChallengeCompletionEdgeKeySpecifier),
+		fields?: CodeChallengeCompletionEdgeFieldPolicy,
+	},
+	AggregateCodeChallengeCompletion?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | AggregateCodeChallengeCompletionKeySpecifier | (() => undefined | AggregateCodeChallengeCompletionKeySpecifier),
+		fields?: AggregateCodeChallengeCompletionFieldPolicy,
+	},
 	CommentConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CommentConnectionKeySpecifier | (() => undefined | CommentConnectionKeySpecifier),
 		fields?: CommentConnectionFieldPolicy,
@@ -4856,10 +4871,6 @@ export type TypedTypePolicies = TypePolicies & {
 		keyFields?: false | AggregateChatRoomInvitationKeySpecifier | (() => undefined | AggregateChatRoomInvitationKeySpecifier),
 		fields?: AggregateChatRoomInvitationFieldPolicy,
 	},
-	AggregateCodeChallengeCompletion?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | AggregateCodeChallengeCompletionKeySpecifier | (() => undefined | AggregateCodeChallengeCompletionKeySpecifier),
-		fields?: AggregateCodeChallengeCompletionFieldPolicy,
-	},
 	AggregateFile?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AggregateFileKeySpecifier | (() => undefined | AggregateFileKeySpecifier),
 		fields?: AggregateFileFieldPolicy,
@@ -4975,14 +4986,6 @@ export type TypedTypePolicies = TypePolicies & {
 	ChatRoomInvitationSubscriptionPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | ChatRoomInvitationSubscriptionPayloadKeySpecifier | (() => undefined | ChatRoomInvitationSubscriptionPayloadKeySpecifier),
 		fields?: ChatRoomInvitationSubscriptionPayloadFieldPolicy,
-	},
-	CodeChallengeCompletionConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CodeChallengeCompletionConnectionKeySpecifier | (() => undefined | CodeChallengeCompletionConnectionKeySpecifier),
-		fields?: CodeChallengeCompletionConnectionFieldPolicy,
-	},
-	CodeChallengeCompletionEdge?: Omit<TypePolicy, "fields" | "keyFields"> & {
-		keyFields?: false | CodeChallengeCompletionEdgeKeySpecifier | (() => undefined | CodeChallengeCompletionEdgeKeySpecifier),
-		fields?: CodeChallengeCompletionEdgeFieldPolicy,
 	},
 	CodeChallengeCompletionPreviousValues?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | CodeChallengeCompletionPreviousValuesKeySpecifier | (() => undefined | CodeChallengeCompletionPreviousValuesKeySpecifier),
