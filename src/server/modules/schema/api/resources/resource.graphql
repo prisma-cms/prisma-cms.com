@@ -50,6 +50,7 @@ type Resource implements Node {
   template: Int
   mockUpdate: DateTime
   Galleries(where: GalleryWhereInput, orderBy: GalleryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Gallery!]
+  CodeChallenge: CodeChallenge
 }
 
 # type Resource {

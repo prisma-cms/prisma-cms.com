@@ -62,4 +62,9 @@ type CodeChallenge {
     Результаты выполнения
   """
   Completions: [CodeChallengeCompletion!]! @relation(name: "CodeChallengeCompletions")
+
+  """
+    Обсуждение
+  """
+  Topic: Resource @unique @relation(name: "CodeChallengeTopic" link: INLINE)
 }

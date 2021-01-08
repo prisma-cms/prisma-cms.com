@@ -1,5 +1,6 @@
 
 input TopicCreateInput {
+  id: ID
   name: String = ""
   longtitle: String
   content: Json
@@ -7,6 +8,16 @@ input TopicCreateInput {
   published: Boolean
   topic_tags: [String!]
   blogID: ID
+
+  """
+    Урок, для которого создается топик
+  """
+  CodeChallenge: CodeChallengeCreateOneWithoutTopicInput
+
+  """
+    УРЛ страницы
+  """
+  uri: String
 }
 
 input TopicUpdateInput {

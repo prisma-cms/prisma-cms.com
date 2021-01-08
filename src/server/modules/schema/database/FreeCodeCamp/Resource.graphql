@@ -1,0 +1,6 @@
+type Resource {
+  """
+    Обсуждение
+  """
+  CodeChallenge: CodeChallenge @relation(name: "CodeChallengeTopic")
+}

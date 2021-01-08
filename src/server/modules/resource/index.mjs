@@ -97,7 +97,7 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
             // return;
           }
 
-          const uri = `/topics/${name}`;
+          const uri = args.data.uri || `/topics/${name}`;
 
           // let connect;
 
