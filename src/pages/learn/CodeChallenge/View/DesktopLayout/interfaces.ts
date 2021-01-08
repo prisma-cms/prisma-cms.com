@@ -12,9 +12,16 @@
 //   }),
 //   testOutput: PropTypes.element
 
+import { CodeChallenge_Fragment } from 'src/modules/gql/generated'
 import { TestFile } from '../../Context'
+import { CodeChallengeDiscussProps } from './Discuss/interfacse'
 
 // import { ReflexElementProps } from 'react-reflex'
+
+export enum DesktopLayoutTabIndex {
+  Root = '',
+  Discuss = 'discuss',
+}
 
 export interface DesktopLayoutProps {
   // classes?: Record<string, string>
@@ -28,4 +35,7 @@ export interface DesktopLayoutProps {
   testOutput: React.ReactNode
   hasPreview: boolean
   preview: React.ReactNode
+  tabIndex: DesktopLayoutTabIndex
+  challenge: CodeChallenge_Fragment
+  topicId: CodeChallengeDiscussProps['topicId']
 }

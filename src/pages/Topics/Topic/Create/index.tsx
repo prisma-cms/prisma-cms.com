@@ -60,6 +60,7 @@ const CreatTopicPage: Page = () => {
           }}
           cacheKey="new_topic"
           mutate={mutate}
+          canChangeBlog={true}
         />
       </>
     ),

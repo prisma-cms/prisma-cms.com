@@ -17,7 +17,7 @@ import useExecuteChallenge from '../hooks/useExecuteChallenge'
 const Preview = dynamic(import('./Preview'), { ssr: false })
 
 const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
-  const { object, codeChallengeCompletion } = props
+  const { object, codeChallengeCompletion, tabIndex, topicId } = props
 
   // const onResize = () => {
   //   this.setState({ resizing: true })
@@ -30,6 +30,7 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
   const context = useContext(Context)
 
   const challengeFile = context?.challengeData.file ?? null
+  const challenge = context?.challenge
 
   // const contents = context?.challengeData.file.contents || ""
 
@@ -137,6 +138,10 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
     return <CodeChallengeOutputView output={output} />
   }, [output])
 
+  if (!challenge?.id) {
+    return null
+  }
+
   return (
     <DesktopLayout
       // challengeFile={getChallengeFile()}
@@ -147,6 +152,9 @@ const CodeChallengeView: React.FC<CodeChallengeViewProps> = (props) => {
       preview={preview}
       // resizeProps={this.resizeProps}
       testOutput={testOutput}
+      tabIndex={tabIndex}
+      topicId={topicId}
+      challenge={challenge}
     />
   )
 }

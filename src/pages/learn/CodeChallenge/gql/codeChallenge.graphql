@@ -3,35 +3,3 @@ query codeChallenge($where: CodeChallengeWhereUniqueInput!) {
     ...codeChallenge_
   }
 }
-
-fragment codeChallenge_ on CodeChallenge {
-  id
-  CreatedBy {
-    ...UserNoNesting
-  }
-  id
-  externalKey
-  createdAt
-  updatedAt
-  name
-  dashedName
-  localeTitle
-  description
-  challengeType
-  forumTopicId
-  translations
-  tests
-  solutions
-  instructions
-  files
-  videoUrl
-  order
-  superOrder
-  challengeOrder
-  required
-  isRequired
-  isPrivate
-  isBeta
-  template
-  rank
-}

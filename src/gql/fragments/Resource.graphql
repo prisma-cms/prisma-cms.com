@@ -1,0 +1,56 @@
+fragment resource_ on Resource {
+  id
+  createdAt
+  updatedAt
+  type
+  name
+  longtitle
+  content
+  components
+  published
+  deleted
+  hidemenu
+  uri
+  isfolder
+  rating
+  positiveVotesCount
+  negativeVotesCount
+  neutralVotesCount
+  CreatedBy {
+    ...UserNoNesting
+  }
+  Comments(orderBy: id_ASC) {
+    id
+    uri
+    createdAt
+    updatedAt
+    content
+    CreatedBy {
+      ...UserNoNesting
+    }
+  }
+  Blog {
+    id
+    name
+    longtitle
+    uri
+  }
+  Tags {
+    Tag {
+      id
+      name
+    }
+  }
+  CodeChallenge {
+    id
+    name
+  }
+}
+
+# fragment topic_ on Resource{
+#   ...resource_
+#   CodeChallenge {
+#     id
+#     name
+#   }
+# }

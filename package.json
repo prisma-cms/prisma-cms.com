@@ -110,6 +110,7 @@
     "react-number-format": "^4.0.6",
     "slick-carousel": "1.8.1",
     "styled-components": "^5.2.0",
+    "uid": "^2.0.0",
     "urijs": "^1.19.1",
     "xml-writer": "^1.7.0"
   },

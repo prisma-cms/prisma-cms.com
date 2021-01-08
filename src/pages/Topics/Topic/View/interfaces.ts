@@ -7,4 +7,9 @@ export interface TopicViewProps extends EditableObjectProps {
   object: Resource_Fragment | undefined
 
   // classes?: any;
+
+  /**
+   * Разрешено ли редактировать блог топика
+   */
+  canChangeBlog: boolean
 }

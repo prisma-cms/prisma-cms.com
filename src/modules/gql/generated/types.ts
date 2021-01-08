@@ -3421,6 +3421,7 @@ export interface ResourceWhereInput {
   Tags_some?: Maybe<ResourceTagWhereInput>;
   Tags_none?: Maybe<ResourceTagWhereInput>;
   Blog?: Maybe<ResourceWhereInput>;
+  CodeChallenge?: Maybe<CodeChallengeWhereInput>;
   Galleries_every?: Maybe<GalleryWhereInput>;
   Galleries_some?: Maybe<GalleryWhereInput>;
   Galleries_none?: Maybe<GalleryWhereInput>;
@@ -6039,6 +6040,7 @@ export interface CodeChallengeWhereInput {
   Completions_every?: Maybe<CodeChallengeCompletionWhereInput>;
   Completions_some?: Maybe<CodeChallengeCompletionWhereInput>;
   Completions_none?: Maybe<CodeChallengeCompletionWhereInput>;
+  Topic?: Maybe<ResourceWhereInput>;
 }
 
 export interface CodeChallengeBlockWhereInput {
@@ -9297,6 +9299,7 @@ export interface Resource extends Node {
   template?: Maybe<Scalars['Int']>;
   mockUpdate?: Maybe<Scalars['DateTime']>;
   Galleries?: Maybe<Array<Gallery>>;
+  CodeChallenge?: Maybe<CodeChallenge>;
 }
 
 
@@ -10130,6 +10133,7 @@ export interface CodeChallenge extends Node {
   rank?: Maybe<Scalars['Int']>;
   Block: CodeChallengeBlock;
   Completions?: Maybe<Array<CodeChallengeCompletion>>;
+  Topic?: Maybe<Resource>;
 }
 
 
@@ -15239,6 +15243,7 @@ export interface BlogUpdateInput {
 }
 
 export interface TopicCreateInput {
+  id?: Maybe<Scalars['ID']>;
   name?: Maybe<Scalars['String']>;
   longtitle?: Maybe<Scalars['String']>;
   content?: Maybe<Scalars['Json']>;
@@ -15246,6 +15251,14 @@ export interface TopicCreateInput {
   published?: Maybe<Scalars['Boolean']>;
   topic_tags?: Maybe<Array<Scalars['String']>>;
   blogID?: Maybe<Scalars['ID']>;
+  /** Урок, для которого создается топик */
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
+  /** УРЛ страницы */
+  uri?: Maybe<Scalars['String']>;
+}
+
+export interface CodeChallengeCreateOneWithoutTopicInput {
+  connect?: Maybe<CodeChallengeWhereUniqueInput>;
 }
 
 export interface TopicUpdateInput {
@@ -17910,6 +17923,7 @@ export interface ResourceCreateInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -18011,6 +18025,7 @@ export interface ResourceUpdateInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -18645,6 +18660,11 @@ export interface ResourceTagUpdateManyDataInput {
 
 export interface ResourceUpdateOneInput {
   connect?: Maybe<ResourceWhereUniqueInput>;
+  disconnect?: Maybe<Scalars['Boolean']>;
+}
+
+export interface CodeChallengeUpdateOneWithoutTopicInput {
+  connect?: Maybe<CodeChallengeWhereUniqueInput>;
   disconnect?: Maybe<Scalars['Boolean']>;
 }
 
@@ -27144,6 +27164,11 @@ export interface CodeChallengeCreateInput {
   CreatedBy?: Maybe<UserCreateOneInput>;
   Block: CodeChallengeBlockCreateOneWithoutChallengesInput;
   Completions?: Maybe<CodeChallengeCompletionCreateManyWithoutCodeChallengeInput>;
+  Topic?: Maybe<ResourceCreateOneWithoutCodeChallengeInput>;
+}
+
+export interface ResourceCreateOneWithoutCodeChallengeInput {
+  connect?: Maybe<ResourceWhereUniqueInput>;
 }
 
 export interface CodeChallengeCreateWithoutBlockInput {
@@ -27173,6 +27198,7 @@ export interface CodeChallengeCreateWithoutBlockInput {
   rank?: Maybe<Scalars['Int']>;
   CreatedBy?: Maybe<UserCreateOneInput>;
   Completions?: Maybe<CodeChallengeCompletionCreateManyWithoutCodeChallengeInput>;
+  Topic?: Maybe<ResourceCreateOneWithoutCodeChallengeInput>;
 }
 
 export interface CodeChallengeCreateWithoutCompletionsInput {
@@ -27202,6 +27228,37 @@ export interface CodeChallengeCreateWithoutCompletionsInput {
   rank?: Maybe<Scalars['Int']>;
   CreatedBy?: Maybe<UserCreateOneInput>;
   Block: CodeChallengeBlockCreateOneWithoutChallengesInput;
+  Topic?: Maybe<ResourceCreateOneWithoutCodeChallengeInput>;
+}
+
+export interface CodeChallengeCreateWithoutTopicInput {
+  id?: Maybe<Scalars['ID']>;
+  externalKey?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  dashedName?: Maybe<Scalars['String']>;
+  localeTitle?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  challengeType?: Maybe<Scalars['Int']>;
+  forumTopicId?: Maybe<Scalars['Int']>;
+  translations?: Maybe<Scalars['Json']>;
+  tests?: Maybe<Scalars['Json']>;
+  solutions?: Maybe<Scalars['Json']>;
+  instructions?: Maybe<Scalars['String']>;
+  files?: Maybe<Scalars['Json']>;
+  videoUrl?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
+  superOrder?: Maybe<Scalars['Int']>;
+  challengeOrder?: Maybe<Scalars['Int']>;
+  required?: Maybe<Scalars['Json']>;
+  isRequired?: Maybe<Scalars['Boolean']>;
+  isPrivate?: Maybe<Scalars['Boolean']>;
+  isBeta?: Maybe<Scalars['Boolean']>;
+  template?: Maybe<Scalars['String']>;
+  time?: Maybe<Scalars['String']>;
+  rank?: Maybe<Scalars['Int']>;
+  CreatedBy?: Maybe<UserCreateOneInput>;
+  Block: CodeChallengeBlockCreateOneWithoutChallengesInput;
+  Completions?: Maybe<CodeChallengeCompletionCreateManyWithoutCodeChallengeInput>;
 }
 
 export interface CodeChallengeUpdateInput {
@@ -27231,6 +27288,12 @@ export interface CodeChallengeUpdateInput {
   CreatedBy?: Maybe<UserUpdateOneInput>;
   Block?: Maybe<CodeChallengeBlockUpdateOneRequiredWithoutChallengesInput>;
   Completions?: Maybe<CodeChallengeCompletionUpdateManyWithoutCodeChallengeInput>;
+  Topic?: Maybe<ResourceUpdateOneWithoutCodeChallengeInput>;
+}
+
+export interface ResourceUpdateOneWithoutCodeChallengeInput {
+  connect?: Maybe<ResourceWhereUniqueInput>;
+  disconnect?: Maybe<Scalars['Boolean']>;
 }
 
 export interface CodeChallengeUpdateManyMutationInput {
@@ -27285,6 +27348,7 @@ export interface CodeChallengeUpdateWithoutBlockDataInput {
   rank?: Maybe<Scalars['Int']>;
   CreatedBy?: Maybe<UserUpdateOneInput>;
   Completions?: Maybe<CodeChallengeCompletionUpdateManyWithoutCodeChallengeInput>;
+  Topic?: Maybe<ResourceUpdateOneWithoutCodeChallengeInput>;
 }
 
 export interface CodeChallengeUpdateWithoutCompletionsDataInput {
@@ -27313,6 +27377,36 @@ export interface CodeChallengeUpdateWithoutCompletionsDataInput {
   rank?: Maybe<Scalars['Int']>;
   CreatedBy?: Maybe<UserUpdateOneInput>;
   Block?: Maybe<CodeChallengeBlockUpdateOneRequiredWithoutChallengesInput>;
+  Topic?: Maybe<ResourceUpdateOneWithoutCodeChallengeInput>;
+}
+
+export interface CodeChallengeUpdateWithoutTopicDataInput {
+  externalKey?: Maybe<Scalars['ID']>;
+  name?: Maybe<Scalars['String']>;
+  dashedName?: Maybe<Scalars['String']>;
+  localeTitle?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  challengeType?: Maybe<Scalars['Int']>;
+  forumTopicId?: Maybe<Scalars['Int']>;
+  translations?: Maybe<Scalars['Json']>;
+  tests?: Maybe<Scalars['Json']>;
+  solutions?: Maybe<Scalars['Json']>;
+  instructions?: Maybe<Scalars['String']>;
+  files?: Maybe<Scalars['Json']>;
+  videoUrl?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Int']>;
+  superOrder?: Maybe<Scalars['Int']>;
+  challengeOrder?: Maybe<Scalars['Int']>;
+  required?: Maybe<Scalars['Json']>;
+  isRequired?: Maybe<Scalars['Boolean']>;
+  isPrivate?: Maybe<Scalars['Boolean']>;
+  isBeta?: Maybe<Scalars['Boolean']>;
+  template?: Maybe<Scalars['String']>;
+  time?: Maybe<Scalars['String']>;
+  rank?: Maybe<Scalars['Int']>;
+  CreatedBy?: Maybe<UserUpdateOneInput>;
+  Block?: Maybe<CodeChallengeBlockUpdateOneRequiredWithoutChallengesInput>;
+  Completions?: Maybe<CodeChallengeCompletionUpdateManyWithoutCodeChallengeInput>;
 }
 
 export interface CodeChallengeUpdateWithWhereUniqueWithoutBlockInput {
@@ -33190,6 +33284,48 @@ export interface ResourceCreateWithoutChildsInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
+  Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
+  EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
+  Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
+  Service?: Maybe<ServiceCreateOneWithoutResourceInput>;
+  Team?: Maybe<TeamCreateOneWithoutResourceInput>;
+  Project?: Maybe<ProjectCreateOneWithoutResourceInput>;
+}
+
+export interface ResourceCreateWithoutCodeChallengeInput {
+  id?: Maybe<Scalars['ID']>;
+  code?: Maybe<Scalars['ID']>;
+  type?: Maybe<ResourceType>;
+  name?: Maybe<Scalars['String']>;
+  longtitle?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['Json']>;
+  contentText?: Maybe<Scalars['String']>;
+  published?: Maybe<Scalars['Boolean']>;
+  deleted?: Maybe<Scalars['Boolean']>;
+  hidemenu?: Maybe<Scalars['Boolean']>;
+  searchable?: Maybe<Scalars['Boolean']>;
+  uri?: Maybe<Scalars['String']>;
+  isfolder?: Maybe<Scalars['Boolean']>;
+  rating?: Maybe<Scalars['Float']>;
+  positiveVotesCount?: Maybe<Scalars['Int']>;
+  negativeVotesCount?: Maybe<Scalars['Int']>;
+  neutralVotesCount?: Maybe<Scalars['Int']>;
+  oldID?: Maybe<Scalars['Int']>;
+  mockUpdate?: Maybe<Scalars['DateTime']>;
+  components?: Maybe<Scalars['Json']>;
+  commentOldID?: Maybe<Scalars['Int']>;
+  class_key?: Maybe<Scalars['String']>;
+  template?: Maybe<Scalars['Int']>;
+  CreatedBy?: Maybe<UserCreateOneWithoutResourcesInput>;
+  Parent?: Maybe<ResourceCreateOneWithoutChildsInput>;
+  Childs?: Maybe<ResourceCreateManyWithoutParentInput>;
+  PrismaProject?: Maybe<ProjectCreateOneWithoutPrismaResourcesInput>;
+  Topic?: Maybe<ResourceCreateOneWithoutCommentsInput>;
+  Comments?: Maybe<ResourceCreateManyWithoutTopicInput>;
+  Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
+  Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
+  Blog?: Maybe<ResourceCreateOneInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33230,6 +33366,7 @@ export interface ResourceCreateWithoutCommentsInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33270,6 +33407,7 @@ export interface ResourceCreateWithoutCreatedByInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33311,6 +33449,7 @@ export interface ResourceCreateWithoutEthAccountInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
   Service?: Maybe<ServiceCreateOneWithoutResourceInput>;
@@ -33351,6 +33490,7 @@ export interface ResourceCreateWithoutGalleriesInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
   Service?: Maybe<ServiceCreateOneWithoutResourceInput>;
@@ -33391,6 +33531,7 @@ export interface ResourceCreateWithoutImageInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Service?: Maybe<ServiceCreateOneWithoutResourceInput>;
@@ -33430,6 +33571,7 @@ export interface ResourceCreateWithoutParentInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33470,6 +33612,7 @@ export interface ResourceCreateWithoutPrismaProjectInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33511,6 +33654,7 @@ export interface ResourceCreateWithoutProjectInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33551,6 +33695,7 @@ export interface ResourceCreateWithoutServiceInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33590,6 +33735,7 @@ export interface ResourceCreateWithoutTagsInput {
   Comments?: Maybe<ResourceCreateManyWithoutTopicInput>;
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33631,6 +33777,7 @@ export interface ResourceCreateWithoutTeamInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33670,6 +33817,7 @@ export interface ResourceCreateWithoutTopicInput {
   Votes?: Maybe<VoteCreateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33710,6 +33858,7 @@ export interface ResourceCreateWithoutVotesInput {
   Comments?: Maybe<ResourceCreateManyWithoutTopicInput>;
   Tags?: Maybe<ResourceTagCreateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceCreateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeCreateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryCreateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountCreateOneWithoutResourcesInput>;
   Image?: Maybe<FileCreateOneWithoutImageResourceInput>;
@@ -33913,6 +34062,7 @@ export interface ResourceUpdateDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -33989,6 +34139,47 @@ export interface ResourceUpdateWithoutChildsDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
+  Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
+  EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
+  Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
+  Service?: Maybe<ServiceUpdateOneWithoutResourceInput>;
+  Team?: Maybe<TeamUpdateOneWithoutResourceInput>;
+  Project?: Maybe<ProjectUpdateOneWithoutResourceInput>;
+}
+
+export interface ResourceUpdateWithoutCodeChallengeDataInput {
+  code?: Maybe<Scalars['ID']>;
+  type?: Maybe<ResourceType>;
+  name?: Maybe<Scalars['String']>;
+  longtitle?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['Json']>;
+  contentText?: Maybe<Scalars['String']>;
+  published?: Maybe<Scalars['Boolean']>;
+  deleted?: Maybe<Scalars['Boolean']>;
+  hidemenu?: Maybe<Scalars['Boolean']>;
+  searchable?: Maybe<Scalars['Boolean']>;
+  uri?: Maybe<Scalars['String']>;
+  isfolder?: Maybe<Scalars['Boolean']>;
+  rating?: Maybe<Scalars['Float']>;
+  positiveVotesCount?: Maybe<Scalars['Int']>;
+  negativeVotesCount?: Maybe<Scalars['Int']>;
+  neutralVotesCount?: Maybe<Scalars['Int']>;
+  oldID?: Maybe<Scalars['Int']>;
+  mockUpdate?: Maybe<Scalars['DateTime']>;
+  components?: Maybe<Scalars['Json']>;
+  commentOldID?: Maybe<Scalars['Int']>;
+  class_key?: Maybe<Scalars['String']>;
+  template?: Maybe<Scalars['Int']>;
+  CreatedBy?: Maybe<UserUpdateOneWithoutResourcesInput>;
+  Parent?: Maybe<ResourceUpdateOneWithoutChildsInput>;
+  Childs?: Maybe<ResourceUpdateManyWithoutParentInput>;
+  PrismaProject?: Maybe<ProjectUpdateOneWithoutPrismaResourcesInput>;
+  Topic?: Maybe<ResourceUpdateOneWithoutCommentsInput>;
+  Comments?: Maybe<ResourceUpdateManyWithoutTopicInput>;
+  Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
+  Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
+  Blog?: Maybe<ResourceUpdateOneInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34028,6 +34219,7 @@ export interface ResourceUpdateWithoutCommentsDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34067,6 +34259,7 @@ export interface ResourceUpdateWithoutCreatedByDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34107,6 +34300,7 @@ export interface ResourceUpdateWithoutEthAccountDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
   Service?: Maybe<ServiceUpdateOneWithoutResourceInput>;
@@ -34146,6 +34340,7 @@ export interface ResourceUpdateWithoutGalleriesDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
   Service?: Maybe<ServiceUpdateOneWithoutResourceInput>;
@@ -34185,6 +34380,7 @@ export interface ResourceUpdateWithoutImageDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Service?: Maybe<ServiceUpdateOneWithoutResourceInput>;
@@ -34223,6 +34419,7 @@ export interface ResourceUpdateWithoutParentDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34262,6 +34459,7 @@ export interface ResourceUpdateWithoutPrismaProjectDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34302,6 +34500,7 @@ export interface ResourceUpdateWithoutProjectDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34341,6 +34540,7 @@ export interface ResourceUpdateWithoutServiceDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34379,6 +34579,7 @@ export interface ResourceUpdateWithoutTagsDataInput {
   Comments?: Maybe<ResourceUpdateManyWithoutTopicInput>;
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34419,6 +34620,7 @@ export interface ResourceUpdateWithoutTeamDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34457,6 +34659,7 @@ export interface ResourceUpdateWithoutTopicDataInput {
   Votes?: Maybe<VoteUpdateManyWithoutResourceInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;
@@ -34496,6 +34699,7 @@ export interface ResourceUpdateWithoutVotesDataInput {
   Comments?: Maybe<ResourceUpdateManyWithoutTopicInput>;
   Tags?: Maybe<ResourceTagUpdateManyWithoutResourceInput>;
   Blog?: Maybe<ResourceUpdateOneInput>;
+  CodeChallenge?: Maybe<CodeChallengeUpdateOneWithoutTopicInput>;
   Galleries?: Maybe<GalleryUpdateManyWithoutResourceInput>;
   EthAccount?: Maybe<EthAccountUpdateOneWithoutResourcesInput>;
   Image?: Maybe<FileUpdateOneWithoutImageResourceInput>;

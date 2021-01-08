@@ -74,6 +74,8 @@ class TopicView extends EditableView<TopicViewProps> {
 
     const inEditMode = this.inEditMode()
 
+    const { canChangeBlog } = this.props
+
     return (
       <div className={'header'}>
         <Grid container spacing={16}>
@@ -117,13 +119,15 @@ class TopicView extends EditableView<TopicViewProps> {
                 )}
               </Grid>
 
-              <Grid item>
-                <Blog
-                  Topic={object}
-                  updateObject={this.updateObject}
-                  inEditMode={inEditMode}
-                />
-              </Grid>
+              {canChangeBlog ? (
+                <Grid item>
+                  <Blog
+                    Topic={object}
+                    updateObject={this.updateObject}
+                    inEditMode={inEditMode}
+                  />
+                </Grid>
+              ) : null}
 
               <Grid item>{this.getButtons()}</Grid>
             </Grid>

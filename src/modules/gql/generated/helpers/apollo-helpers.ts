@@ -235,7 +235,7 @@ export type LogedInFieldPolicy = {
 	User?: FieldPolicy<any> | FieldReadFunction<any>,
 	updatedAt?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ResourceKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'type' | 'name' | 'longtitle' | 'content' | 'components' | 'contentText' | 'published' | 'deleted' | 'hidemenu' | 'searchable' | 'uri' | 'isfolder' | 'CreatedBy' | 'Parent' | 'Childs' | 'Image' | 'rating' | 'positiveVotesCount' | 'negativeVotesCount' | 'neutralVotesCount' | 'CommentTarget' | 'Topic' | 'Comments' | 'Votes' | 'Tags' | 'oldID' | 'commentOldID' | 'Topics' | 'Blog' | 'Service' | 'Project' | 'Team' | 'class_key' | 'template' | 'mockUpdate' | 'Galleries' | ResourceKeySpecifier)[];
+export type ResourceKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'type' | 'name' | 'longtitle' | 'content' | 'components' | 'contentText' | 'published' | 'deleted' | 'hidemenu' | 'searchable' | 'uri' | 'isfolder' | 'CreatedBy' | 'Parent' | 'Childs' | 'Image' | 'rating' | 'positiveVotesCount' | 'negativeVotesCount' | 'neutralVotesCount' | 'CommentTarget' | 'Topic' | 'Comments' | 'Votes' | 'Tags' | 'oldID' | 'commentOldID' | 'Topics' | 'Blog' | 'Service' | 'Project' | 'Team' | 'class_key' | 'template' | 'mockUpdate' | 'Galleries' | 'CodeChallenge' | ResourceKeySpecifier)[];
 export type ResourceFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	createdAt?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -275,7 +275,8 @@ export type ResourceFieldPolicy = {
 	class_key?: FieldPolicy<any> | FieldReadFunction<any>,
 	template?: FieldPolicy<any> | FieldReadFunction<any>,
 	mockUpdate?: FieldPolicy<any> | FieldReadFunction<any>,
-	Galleries?: FieldPolicy<any> | FieldReadFunction<any>
+	Galleries?: FieldPolicy<any> | FieldReadFunction<any>,
+	CodeChallenge?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type VoteKeySpecifier = ('id' | 'createdAt' | 'updatedAt' | 'Resource' | 'User' | 'value' | VoteKeySpecifier)[];
 export type VoteFieldPolicy = {
@@ -528,7 +529,7 @@ export type CodeChallengeCompletionFieldPolicy = {
 	content?: FieldPolicy<any> | FieldReadFunction<any>,
 	success?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type CodeChallengeKeySpecifier = ('id' | 'externalKey' | 'createdAt' | 'updatedAt' | 'name' | 'dashedName' | 'localeTitle' | 'description' | 'challengeType' | 'forumTopicId' | 'translations' | 'tests' | 'solutions' | 'instructions' | 'files' | 'videoUrl' | 'order' | 'superOrder' | 'challengeOrder' | 'required' | 'isRequired' | 'isPrivate' | 'isBeta' | 'template' | 'time' | 'CreatedBy' | 'rank' | 'Block' | 'Completions' | CodeChallengeKeySpecifier)[];
+export type CodeChallengeKeySpecifier = ('id' | 'externalKey' | 'createdAt' | 'updatedAt' | 'name' | 'dashedName' | 'localeTitle' | 'description' | 'challengeType' | 'forumTopicId' | 'translations' | 'tests' | 'solutions' | 'instructions' | 'files' | 'videoUrl' | 'order' | 'superOrder' | 'challengeOrder' | 'required' | 'isRequired' | 'isPrivate' | 'isBeta' | 'template' | 'time' | 'CreatedBy' | 'rank' | 'Block' | 'Completions' | 'Topic' | CodeChallengeKeySpecifier)[];
 export type CodeChallengeFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	externalKey?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -558,7 +559,8 @@ export type CodeChallengeFieldPolicy = {
 	CreatedBy?: FieldPolicy<any> | FieldReadFunction<any>,
 	rank?: FieldPolicy<any> | FieldReadFunction<any>,
 	Block?: FieldPolicy<any> | FieldReadFunction<any>,
-	Completions?: FieldPolicy<any> | FieldReadFunction<any>
+	Completions?: FieldPolicy<any> | FieldReadFunction<any>,
+	Topic?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type CodeChallengeBlockKeySpecifier = ('id' | 'externalKey' | 'createdAt' | 'updatedAt' | 'name' | 'rank' | 'Parent' | 'Children' | 'CreatedBy' | 'Challenges' | CodeChallengeBlockKeySpecifier)[];
 export type CodeChallengeBlockFieldPolicy = {
