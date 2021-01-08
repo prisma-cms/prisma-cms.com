@@ -320,15 +320,15 @@ export default class CodeChallengeCompletionModule extends PrismaModule {
       ...other,
       Query: {
         ...Query,
-        // codeChallengeCompletion: (source, args, ctx, info) => {
-        //   return ctx.db.query.codeChallengeCompletion(args, info);
-        // },
-        // codeChallengeCompletions: (source, args, ctx, info) => {
-        //   return ctx.db.query.codeChallengeCompletions(args, info);
-        // },
-        // codeChallengeCompletionsConnection: (source, args, ctx, info) => {
-        //   return ctx.db.query.codeChallengeCompletionsConnection(args, info);
-        // },
+        codeChallengeCompletion: (source, args, ctx, info) => {
+          return ctx.db.query.codeChallengeCompletion(args, info);
+        },
+        codeChallengeCompletions: (source, args, ctx, info) => {
+          return ctx.db.query.codeChallengeCompletions(args, info);
+        },
+        codeChallengeCompletionsConnection: (source, args, ctx, info) => {
+          return ctx.db.query.codeChallengeCompletionsConnection(args, info);
+        },
       },
       Mutation: {
         ...Mutation,
