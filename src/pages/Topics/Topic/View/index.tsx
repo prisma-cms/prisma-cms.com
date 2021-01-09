@@ -50,7 +50,7 @@ class TopicView extends EditableView<TopicViewProps> {
 
     const { id: currentUserId, sudo } = currentUser || {}
 
-    const { id, CreatedBy } = this.getObjectWithMutations() || {}
+    const { id, CreatedBy } = this.getObject() || {}
 
     const { id: createdById } = CreatedBy || {}
 
@@ -168,13 +168,14 @@ class TopicView extends EditableView<TopicViewProps> {
   }
 
   renderDefaultView() {
-    const object = this.getObjectWithMutations()
+    const object = this.getObject()
+    const objectMutated = this.getObjectWithMutations()
 
-    if (!object) {
+    if (!objectMutated) {
       return null
     }
 
-    const { content, components } = object
+    const { content, components } = objectMutated
 
     const inEditMode = this.inEditMode()
 
@@ -215,7 +216,7 @@ class TopicView extends EditableView<TopicViewProps> {
       <div className={'root'}>
         {output}
 
-        <CommentsView topic={object} />
+        {object?.id ? <CommentsView topic={object} /> : null}
       </div>
     )
   }
