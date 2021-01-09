@@ -2,9 +2,10 @@ query commentsConnection(
   $first: Int = 10
   $skip: Int = 0
   $orderBy: ResourceOrderByInput = createdAt_DESC
+  $where: ResourceWhereInput = { type: Comment }
 ) {
-  commentsConnection: resourcesConnection(
-    where: { type: Comment }
+  objectsConnection: resourcesConnection(
+    where: $where
     first: $first
     skip: $skip
     orderBy: $orderBy

@@ -16,19 +16,20 @@ export type CommentsConnectionQueryVariables = Types.Exact<{
   first?: Types.Maybe<Types.Scalars['Int']>;
   skip?: Types.Maybe<Types.Scalars['Int']>;
   orderBy?: Types.Maybe<Types.ResourceOrderByInput>;
+  where?: Types.Maybe<Types.ResourceWhereInput>;
 }>;
 
 
-export type CommentsConnectionQuery = { __typename?: 'Query', commentsConnection: { __typename?: 'ResourceConnection', edges: Array<Types.Maybe<{ __typename?: 'ResourceEdge', node: (
+export type CommentsConnectionQuery = { __typename?: 'Query', objectsConnection: { __typename?: 'ResourceConnection', edges: Array<Types.Maybe<{ __typename?: 'ResourceEdge', node: (
         { __typename?: 'Resource' }
         & CommentsConnectionCommentFragment
       ) }>>, aggregate: { __typename?: 'AggregateResource', count: number } } };
 
 
 export const CommentsConnectionDocument = gql`
-    query commentsConnection($first: Int = 10, $skip: Int = 0, $orderBy: ResourceOrderByInput = createdAt_DESC) {
-  commentsConnection: resourcesConnection(
-    where: {type: Comment}
+    query commentsConnection($first: Int = 10, $skip: Int = 0, $orderBy: ResourceOrderByInput = createdAt_DESC, $where: ResourceWhereInput = {type: Comment}) {
+  objectsConnection: resourcesConnection(
+    where: $where
     first: $first
     skip: $skip
     orderBy: $orderBy
@@ -60,6 +61,7 @@ export const CommentsConnectionDocument = gql`
  *      first: // value for 'first'
  *      skip: // value for 'skip'
  *      orderBy: // value for 'orderBy'
+ *      where: // value for 'where'
  *   },
  * });
  */

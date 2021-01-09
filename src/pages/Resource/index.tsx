@@ -22,6 +22,7 @@ import { useRouter, NextRouter } from 'next/router'
 import { TopicPage } from '../Topics/Topic'
 
 import { blogGetInitialProps, BlogPage } from '../Blogs/Blog'
+import CommentPage from '../Comments/Comment'
 
 export const getResourceVariables = (
   router: NextRouter | NextPageContextCustom
@@ -33,7 +34,7 @@ export const getResourceVariables = (
 
   const variables: ResourceQueryVariables = {
     where: {
-      uri: uri.pathname,
+      uri: decodeURI(uri.pathname),
     },
   }
 
@@ -79,6 +80,9 @@ const ResourcePage: Page = (props) => {
     case ResourceType.TOPIC:
       return <TopicPage {...props} />
 
+    case ResourceType.COMMENT:
+      return <CommentPage {...props} />
+
     case ResourceType.BLOG:
     case ResourceType.PERSONALBLOG:
       return <BlogPage {...props} />
@@ -91,6 +95,10 @@ const ResourcePage: Page = (props) => {
 ResourcePage.getInitialProps = async (context) => {
   const { apolloClient } = context
 
+  const variables = getResourceVariables(context)
+
+  // console.log('ResourcePage variables', variables);
+
   const queryResult = await apolloClient.query<ResourceQuery>({
     query: ResourceDocument,
 
@@ -98,29 +106,28 @@ ResourcePage.getInitialProps = async (context) => {
      * Важно, чтобы все переменные запроса серверные и фронтовые совпадали,
      * иначе при рендеринге не будут получены данные из кеша и рендер будет пустой.
      */
-    variables: getResourceVariables(context),
+    variables,
   })
 
   const object = queryResult.data.object
 
-  switch (object?.type) {
-    // case ResourceType.TOPIC:
+  // console.log('ResourcePage object', object);
 
-    //   return <TopicPage
-    //     {...props}
-    //   />
+  switch (object?.type) {
+    case ResourceType.TOPIC:
+    case ResourceType.COMMENT:
+      break
 
     case ResourceType.BLOG:
     case ResourceType.PERSONALBLOG:
-      //   return <BlogPage
-      //     {...props}
-      //   />
-
       await blogGetInitialProps(context, object)
 
       break
 
-    // default: throw new Error("Unknown Resource type")
+    default:
+      return {
+        statusCode: 404,
+      }
   }
 
   return {

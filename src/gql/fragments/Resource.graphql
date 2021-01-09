@@ -35,6 +35,12 @@ fragment resource_ on Resource {
     longtitle
     uri
   }
+  Topic {
+    id
+    name
+    longtitle
+    uri
+  }
   Tags {
     Tag {
       id
