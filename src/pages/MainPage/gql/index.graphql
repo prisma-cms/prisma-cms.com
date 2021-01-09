@@ -1,0 +1,35 @@
+query mainPage {
+  students: users(
+    first: 3
+    orderBy: updatedAt_DESC
+    where: { ProjectsCreated_some: { type: Education } }
+  ) {
+    ...UserNoNesting
+  }
+
+  codeChallengeCompletions(
+    orderBy: createdAt_DESC
+    first: 3
+    where: { Task: { status: Completed } }
+  ) {
+    ...mainPageCodeChallengeCompletion
+  }
+}
+
+fragment mainPageCodeChallengeCompletion on CodeChallengeCompletion {
+  id
+  CreatedBy {
+    ...UserNoNesting
+  }
+  Task {
+    id
+    status
+  }
+  CodeChallenge {
+    id
+    name
+    localeTitle
+    description
+    instructions
+  }
+}

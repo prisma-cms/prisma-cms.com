@@ -44,6 +44,8 @@ export * from './createCommentProcessor';
 export * from './createTimerProcessor';
 export * from './createTopicProcessor';
 export * from './fChatRoom';
+export * from './mainPage';
+export * from './mainPageCodeChallengeCompletion';
 export * from './me';
 export * from './project';
 export * from './project_';

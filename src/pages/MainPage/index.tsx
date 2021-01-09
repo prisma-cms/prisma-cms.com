@@ -1,42 +1,45 @@
-import { NextSeo } from 'next-seo'
-import React from 'react'
-// import { useRouter } from 'next/router'
+/**
+ * Blog and MainPage resources have same url mask like "/blog/..."
+ * so we need load resource and switch like type
+ */
+
+import React, { useMemo } from 'react'
+import {
+  useMainPageQuery,
+  MainPageDocument,
+  MainPageQuery,
+} from 'src/modules/gql/generated'
 
 import { Page } from '../_App/interfaces'
+import MainPageView from './View'
+import { NextSeo } from 'next-seo'
 
-export const MainPage: Page = () => {
-  // const router = useRouter()
+const MainPage: Page = () => {
+  const response = useMainPageQuery({
+    onError: console.error,
+  })
 
-  // const {
-  //   query: { skip, first },
-  // } = router
+  return useMemo(
+    () => (
+      <>
+        <NextSeo
+          title="PrismaCMS"
+          description="Бесплатный JavaScript-фреймворк на базе NextJS + GraphQL"
+        />
 
-  return (
-    <>
-      <NextSeo title="PrismaCMS" description="PrismaCMS community" />
-    </>
+        <MainPageView data={response.data} />
+      </>
+    ),
+    [response.data]
   )
 }
 
-MainPage.getInitialProps = async () => {
-  // const { skip, first } = context.query
+MainPage.getInitialProps = async (context) => {
+  const { apolloClient } = context
 
-  // const { apolloClient } = context
-
-  // await apolloClient.query({
-  //   query: allCommentsQueryDocument,
-  //   variables: {
-  //     ...allPostsQueryVars,
-  //     skip:
-  //       skip && typeof skip === 'string'
-  //         ? parseInt(skip)
-  //         : allPostsQueryVars.skip,
-  //     first:
-  //       first && typeof first === 'string'
-  //         ? parseInt(first)
-  //         : allPostsQueryVars.first,
-  //   },
-  // })
+  await apolloClient.query<MainPageQuery>({
+    query: MainPageDocument,
+  })
 
   return {}
 }
