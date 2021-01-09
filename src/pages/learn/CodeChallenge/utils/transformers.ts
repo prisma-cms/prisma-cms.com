@@ -51,6 +51,7 @@ import * as vinyl from './polyvinyl.js'
 
 const babelOptionsJSX = {
   presets: [
+    'es2015',
     [Babel.availablePresets['env'], {}],
     [Babel.availablePresets['react'], {}],
   ],
@@ -69,7 +70,7 @@ const babelOptionsJSX = {
 
 const babelOptionsJS = {
   plugins: [],
-  presets: [],
+  presets: ['es2015'],
 }
 
 // const babelOptionsJSPreview = {

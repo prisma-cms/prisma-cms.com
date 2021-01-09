@@ -74,7 +74,7 @@ export default async function* executeCancellableChallengeSaga(
     }
   )
 
-  // console.log('buildData', buildData);
+  // console.log('buildData', buildData)
 
   // eval('console.log("eval React", this.React);')
 
