@@ -4,6 +4,23 @@ query user($where: UserWhereUniqueInput!) {
   }
 }
 
+mutation updateUserProcessor(
+  $where: UserWhereUniqueInput!
+  $data: UserUpdateInput!
+) {
+  updateUserProcessor(where: $where, data: $data) {
+    success
+    message
+    errors {
+      key
+      message
+    }
+    data {
+      ...user_
+    }
+  }
+}
+
 fragment user_ on User {
   ...UserNoNesting
   EthAccounts {

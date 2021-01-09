@@ -2,18 +2,17 @@ import { useMemo } from 'react'
 import {
   ApolloClient,
   ApolloLink,
-  HttpLink,
   InMemoryCache,
   NormalizedCacheObject,
   // concat,
   from,
   split,
 } from '@apollo/client'
+import { createUploadLink } from 'apollo-upload-client'
 import { onError } from '@apollo/client/link/error'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 import URI from 'urijs'
-import fetch from 'cross-fetch'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { OperationDefinitionNode } from 'graphql'
 
@@ -146,11 +145,11 @@ function createApolloClient(withWs: boolean) {
     }
   })
 
-  const httpLink = new HttpLink({
-    fetch,
-    uri: endpoint, // Server URL (must be absolute)
-    credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
+  const uploadLink = createUploadLink({
+    uri: endpoint,
   })
+
+  const httpLink = uploadLink
 
   const authMiddleware = new ApolloLink((operation, forward) => {
     // add the authorization to the headers
@@ -194,21 +193,16 @@ function createApolloClient(withWs: boolean) {
 
   const client = new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    // link: errorLink.concat(link),
-
-    link: from([authMiddleware, link]),
+    link: from([
+      authMiddleware,
+      link,
+      // uploadLink,
+    ]),
     cache: new InMemoryCache({
       /**
        * Здесь можно прописать логику для отдельных полей объектов,
        * к примеру, объединение данных при выполнении подгрузки.
        */
-      // typePolicies: {
-      //   Query: {
-      //     fields: {
-      //       allPosts: concatPagination(),
-      //     },
-      //   },
-      // },
       typePolicies,
     }),
   })
