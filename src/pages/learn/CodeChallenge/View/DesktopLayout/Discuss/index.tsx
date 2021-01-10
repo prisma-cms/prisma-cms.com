@@ -43,8 +43,8 @@ const CodeChallengeDiscuss: React.FC<CodeChallengeDiscussProps> = (props) => {
       const newTopicId = uid(25)
 
       const defaultObject = initEditorObject({
-        name: 'ContentEditor',
-        component: 'ContentEditor',
+        name: 'RichText',
+        component: 'RichText',
         components: [],
         props: {},
       })

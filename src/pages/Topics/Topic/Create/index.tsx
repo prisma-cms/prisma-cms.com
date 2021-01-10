@@ -15,8 +15,8 @@ const CreatTopicPage: Page = () => {
   const defaultObject = useMemo(
     () =>
       initEditorObject({
-        name: 'ContentEditor',
-        component: 'ContentEditor',
+        name: 'RichText',
+        component: 'RichText',
         components: [],
         props: {},
       }),
