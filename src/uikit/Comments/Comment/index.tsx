@@ -4,7 +4,6 @@ import Editor from 'src/uikit/Editor'
 
 import EditableView from 'apollo-cms/dist/DataView/Object/Editable'
 
-// import withStyles from "material-ui/styles/withStyles";
 import Typography from 'material-ui/Typography'
 import SendIcon from 'material-ui-icons/Send'
 
@@ -24,6 +23,7 @@ import {
 
 export * from './interfaces'
 
+// TODO Add Topic link
 class UikitComment extends EditableView<UikitCommentProps> {
   static defaultProps = {
     ...EditableView.defaultProps,
@@ -83,8 +83,6 @@ class UikitComment extends EditableView<UikitCommentProps> {
       CreatedBy,
       // createdAt,
     } = object || {}
-
-    // const inEditMode = this.inditMode();
 
     if (!commentId) {
       return (
@@ -182,27 +180,6 @@ class UikitComment extends EditableView<UikitCommentProps> {
 
   renderEditableView() {
     return this.renderDefaultView()
-
-    // return <Grid
-    //   container
-    // >
-
-    //   <Grid
-    //     item
-    //     xs
-    //   >
-    //     {this.renderDefaultView()}
-    //   </Grid>
-
-    //   <Grid
-    //     item
-    //   >
-
-    //     {this.getButtons()}
-
-    //   </Grid>
-
-    // </Grid>
   }
 
   renderResetButton() {
@@ -229,7 +206,3 @@ class UikitComment extends EditableView<UikitCommentProps> {
 }
 
 export default UikitComment
-
-// export default withStyles(styles)(props => <UikitComment
-//   {...props}
-// />);

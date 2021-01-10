@@ -40,6 +40,7 @@ fragment resource_ on Resource {
     name
     longtitle
     uri
+    type
   }
   Tags {
     Tag {

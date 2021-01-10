@@ -31,6 +31,12 @@ fragment commentsConnectionComment on Resource {
   CreatedBy {
     ...commentsConnectionCommentUser
   }
+  Topic {
+    id
+    name
+    uri
+    type
+  }
 }
 
 fragment commentsConnectionCommentUser on User {

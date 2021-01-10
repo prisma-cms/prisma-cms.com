@@ -10,9 +10,11 @@ import * as Types from './types';
 
 import { UserNoNestingFragment } from './UserNoNesting';
 import { MainPageCodeChallengeCompletionFragment } from './mainPageCodeChallengeCompletion';
+import { Resource_Fragment } from './resource_';
 import { gql } from '@apollo/client';
 import { UserNoNestingFragmentDoc } from './UserNoNesting';
 import { MainPageCodeChallengeCompletionFragmentDoc } from './mainPageCodeChallengeCompletion';
+import { Resource_FragmentDoc } from './resource_';
 import * as Apollo from '@apollo/client';
 export type MainPageQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
@@ -23,13 +25,16 @@ export type MainPageQuery = { __typename?: 'Query', students: Array<Types.Maybe<
   )>>, codeChallengeCompletions: Array<Types.Maybe<(
     { __typename?: 'CodeChallengeCompletion' }
     & MainPageCodeChallengeCompletionFragment
+  )>>, comments: Array<Types.Maybe<(
+    { __typename?: 'Resource' }
+    & Resource_Fragment
   )>> };
 
 
 export const MainPageDocument = gql`
     query mainPage {
   students: users(
-    first: 3
+    first: 4
     orderBy: updatedAt_DESC
     where: {ProjectsCreated_some: {type: Education}}
   ) {
@@ -42,9 +47,13 @@ export const MainPageDocument = gql`
   ) {
     ...mainPageCodeChallengeCompletion
   }
+  comments: resources(first: 5, orderBy: createdAt_DESC, where: {type: Comment}) {
+    ...resource_
+  }
 }
     ${UserNoNestingFragmentDoc}
-${MainPageCodeChallengeCompletionFragmentDoc}`;
+${MainPageCodeChallengeCompletionFragmentDoc}
+${Resource_FragmentDoc}`;
 
 /**
  * __useMainPageQuery__

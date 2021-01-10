@@ -9,7 +9,7 @@ const CommentsView: React.FC<CommentsViewProps> = (props) => {
   return (
     <>
       {objects.map((comment) => {
-        return <Comment key={comment.id} object={comment} />
+        return <Comment key={comment.id} object={comment} linkType="target" />
       })}
 
       <Pagination limit={limit} page={page} total={total} />

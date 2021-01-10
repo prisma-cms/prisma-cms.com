@@ -18,7 +18,9 @@ export class UikitCommentLink extends Component<UikitCommentLinkProps> {
       return null
     }
 
-    const { uri, createdAt, CommentTarget: Topic } = object
+    const { uri, createdAt } = object
+
+    const Topic = object.Topic || object.CommentTarget
 
     if (!uri) {
       return null

@@ -17,7 +17,7 @@ export type Resource_Fragment = { __typename?: 'Resource', id: string, createdAt
   ), Comments?: Types.Maybe<Array<{ __typename?: 'Resource', id: string, uri: string, createdAt: Date, updatedAt: Date, content?: Types.Maybe<Record<string, any> | Array<any>>, CreatedBy: (
       { __typename?: 'User' }
       & UserNoNestingFragment
-    ) }>>, Blog?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, longtitle?: Types.Maybe<string>, uri: string }>, Topic?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, longtitle?: Types.Maybe<string>, uri: string }>, Tags?: Types.Maybe<Array<{ __typename?: 'ResourceTag', Tag: { __typename?: 'Tag', id: string, name: string } }>>, CodeChallenge?: Types.Maybe<{ __typename?: 'CodeChallenge', id: string, name?: Types.Maybe<string> }> };
+    ) }>>, Blog?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, longtitle?: Types.Maybe<string>, uri: string }>, Topic?: Types.Maybe<{ __typename?: 'Resource', id: string, name: string, longtitle?: Types.Maybe<string>, uri: string, type?: Types.Maybe<Types.ResourceType> }>, Tags?: Types.Maybe<Array<{ __typename?: 'ResourceTag', Tag: { __typename?: 'Tag', id: string, name: string } }>>, CodeChallenge?: Types.Maybe<{ __typename?: 'CodeChallenge', id: string, name?: Types.Maybe<string> }> };
 
 export const Resource_FragmentDoc = gql`
     fragment resource_ on Resource {
@@ -62,6 +62,7 @@ export const Resource_FragmentDoc = gql`
     name
     longtitle
     uri
+    type
   }
   Tags {
     Tag {

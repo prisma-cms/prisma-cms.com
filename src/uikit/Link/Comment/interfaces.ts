@@ -9,9 +9,16 @@ export interface UikitCommentLinkObjectResource {
 }
 
 export interface UikitCommentLinkObject extends UikitCommentLinkObjectResource {
-  CommentTarget?: UikitCommentLinkObjectResource & {
-    __typename?: 'Resource'
-  }
+  CommentTarget?:
+    | (UikitCommentLinkObjectResource & {
+        __typename?: 'Resource'
+      })
+    | null
+  Topic?:
+    | (UikitCommentLinkObjectResource & {
+        __typename?: 'Resource'
+      })
+    | null
 }
 
 export interface UikitCommentLinkProps {

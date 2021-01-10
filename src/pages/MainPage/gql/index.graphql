@@ -1,6 +1,6 @@
 query mainPage {
   students: users(
-    first: 3
+    first: 4
     orderBy: updatedAt_DESC
     where: { ProjectsCreated_some: { type: Education } }
   ) {
@@ -13,6 +13,14 @@ query mainPage {
     where: { Task: { status: Completed } }
   ) {
     ...mainPageCodeChallengeCompletion
+  }
+
+  comments: resources(
+    first: 5
+    orderBy: createdAt_DESC
+    where: { type: Comment }
+  ) {
+    ...resource_
   }
 }
 
