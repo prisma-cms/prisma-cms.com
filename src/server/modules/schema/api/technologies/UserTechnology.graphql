@@ -14,6 +14,54 @@ type Mutation {
 }
 
 
+"""
+  UserTechnologyLevel from 0 to 5
+"""
+scalar UserTechnologyLevel
+
+
+type UserTechnology {
+
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  CreatedBy: User
+  Technology: Technology!
+  components: Json
+  date_from: DateTime
+  date_till: DateTime
+  status: UserTechnologyStatus
+
+  """
+    Уровень знания технологии
+  """
+  level: UserTechnologyLevel
+}
+
+
+input UserTechnologyCreateInput {
+  id: ID
+  components: Json
+  date_from: DateTime
+  date_till: DateTime
+  status: UserTechnologyStatus
+  level: UserTechnologyLevel
+  CreatedBy: UserCreateOneInput
+  Technology: TechnologyCreateOneWithoutUserTechnologiesInput!
+}
+
+
+input UserTechnologyUpdateInput {
+  components: Json
+  date_from: DateTime
+  date_till: DateTime
+  status: UserTechnologyStatus
+  level: UserTechnologyLevel
+  CreatedBy: UserUpdateOneInput
+  Technology: TechnologyUpdateOneRequiredWithoutUserTechnologiesInput
+}
+
+
 type TechnologyResponse{
   success: Boolean!
   message: String

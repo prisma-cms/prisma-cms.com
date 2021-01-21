@@ -66,6 +66,7 @@ export class UserTechnologyProcessor extends PrismaProcessor {
         Technology,
         date_from,
         date_till,
+        level,
         ...data
       } = args.data;
 
@@ -80,6 +81,18 @@ export class UserTechnologyProcessor extends PrismaProcessor {
       }) : null;
 
       // console.log("userTechnology_old", userTechnology_old);
+
+      if(level !== undefined && level !== null) {
+        if(typeof level !== "number") {
+          throw new Error ("Should be Int from 0 to 5");
+        }
+        else if(level < 0) {
+          throw new Error ("Should be not less that 0");
+        }
+        else if(level > 5) {
+          throw new Error ("Should be not great that 5");
+        }
+      }
 
       if (Technology !== undefined) {
 
@@ -161,6 +174,7 @@ export class UserTechnologyProcessor extends PrismaProcessor {
         Technology,
         date_from,
         date_till,
+        level,
       });
 
       args.data = data;

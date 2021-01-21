@@ -234,6 +234,10 @@ class CoreModule extends PrismaModule {
         "CodeChallengeCompletionCreateInput",
         "CodeChallengeCompletionUpdateInput",
 
+        "UserTechnology",
+        "UserTechnologyCreateInput",
+        "UserTechnologyUpdateInput",
+
         /**
          * prisma-3.14
          */

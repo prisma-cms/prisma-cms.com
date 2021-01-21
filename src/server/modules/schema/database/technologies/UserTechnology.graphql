@@ -19,6 +19,11 @@ type UserTechnology {
 
   """Статус использования технологии"""
   status: UserTechnologyStatus
+
+  """
+    Уровень знания технологии
+  """
+  level: Int
 }
 
 
