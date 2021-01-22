@@ -21,4 +21,9 @@ type Technology {
 
   """Пользователи, использующие данную технологию"""
   UserTechnologies: [UserTechnology!]!
+
+  """
+    Связка Технология-Задача
+  """
+  TaskTechnologies: [TaskTechnology!]! @relation(name: "TaskTechnologyTechnology")
 }

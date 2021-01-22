@@ -84,10 +84,10 @@ export class UserTechnologyProcessor extends PrismaProcessor {
 
       if(level !== undefined && level !== null) {
         if(typeof level !== "number") {
-          throw new Error ("Should be Int from 0 to 5");
+          throw new Error ("Should be Int from 1 to 5");
         }
-        else if(level < 0) {
-          throw new Error ("Should be not less that 0");
+        else if(level < 1) {
+          throw new Error ("Should be not less that 1");
         }
         else if(level > 5) {
           throw new Error ("Should be not great that 5");

@@ -1,0 +1,14 @@
+
+type Task {
+
+  """
+    Флаг того, что нужна помощь
+  """
+  needHelp: Boolean
+
+  """
+    Технологии, необходимые для выполнения задачи
+  """
+  TaskTechnologies: [TaskTechnology!]! @relation(name: "TaskTechnologyTask")
+  
+}

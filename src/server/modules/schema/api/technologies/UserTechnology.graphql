@@ -15,7 +15,7 @@ type Mutation {
 
 
 """
-  UserTechnologyLevel from 0 to 5
+  UserTechnologyLevel from 1 to 5
 """
 scalar UserTechnologyLevel
 

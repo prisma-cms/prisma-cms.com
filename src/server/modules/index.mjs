@@ -33,6 +33,7 @@ import UserTechnology from "./technologies/UserTechnology";
 import TechnologyLesson from "./technologies/TechnologyLesson";
 import Career from "./technologies/Career";
 import TechnologyLessonUser from "./technologies/TechnologyLessonUser";
+import TaskTechnologyModule from "./technologies/TaskTechnology";
 import Comment from "./Comment";
 // import Gallery from "./Gallery";
 // import GalleryFile from "./GalleryFile";
@@ -86,6 +87,7 @@ class CoreModule extends PrismaModule {
       TechnologyLesson,
       UserTechnology,
       TechnologyLessonUser,
+      TaskTechnologyModule,
       Career,
 
       /**
@@ -237,6 +239,10 @@ class CoreModule extends PrismaModule {
         "UserTechnology",
         "UserTechnologyCreateInput",
         "UserTechnologyUpdateInput",
+
+        "TaskTechnology",
+        "TaskTechnologyCreateInput",
+        "TaskTechnologyUpdateInput",
 
         /**
          * prisma-3.14

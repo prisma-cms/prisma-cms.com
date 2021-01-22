@@ -1,0 +1,54 @@
+
+
+type Mutation {
+ 
+  createTaskTechnologyProcessor(
+    data: TaskTechnologyCreateInput!
+  ): TaskTechnologyResponse!
+
+  updateTaskTechnologyProcessor(
+    data: TaskTechnologyUpdateInput!
+    where: TaskTechnologyWhereUniqueInput!
+  ): TaskTechnologyResponse!
+
+}
+
+
+type TaskTechnology implements Node {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  Task: Task!
+  Technology: Technology!
+  CreatedBy: User
+
+  """
+    Уровень знания технологии
+  """
+  level: UserTechnologyLevel
+}
+
+
+input TaskTechnologyCreateInput {
+  id: ID
+  level: UserTechnologyLevel
+  Task: TaskCreateOneWithoutTaskTechnologiesInput!
+  Technology: TechnologyCreateOneWithoutTaskTechnologiesInput!
+  CreatedBy: UserCreateOneInput
+}
+
+
+input TaskTechnologyUpdateInput {
+  level: UserTechnologyLevel
+  Task: TaskUpdateOneRequiredWithoutTaskTechnologiesInput
+  Technology: TechnologyUpdateOneRequiredWithoutTaskTechnologiesInput
+  CreatedBy: UserUpdateOneInput
+}
+
+
+type TaskTechnologyResponse{
+  success: Boolean!
+  message: String
+  errors: [Error!]!
+  data: TaskTechnology
+}

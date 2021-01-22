@@ -1,0 +1,29 @@
+
+"""
+  Связка Задача-Технология
+"""
+type TaskTechnology {
+  id: ID! @unique @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+  """
+    Необходимый уровень специалиста
+  """
+  level: Int
+
+  """
+    Задача
+  """
+  Task: Task! @relation(name: "TaskTechnologyTask")
+
+  """
+    Технология
+  """
+  Technology: Technology! @relation(name: "TaskTechnologyTechnology")
+
+  """
+    Кто создал
+  """
+  CreatedBy: User
+}
