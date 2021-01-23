@@ -5,7 +5,7 @@ type UserTechnology {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-  CreatedBy: User
+  CreatedBy: User @relation(name: "UserTechnologyCreatedBy")
   Technology: Technology!
 
   """Описание"""

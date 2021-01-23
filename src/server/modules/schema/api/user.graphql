@@ -42,6 +42,7 @@ type User implements Node {
   # LettersCreated(where: LetterWhereInput, orderBy: LetterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Letter!]
   PrismaProjects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
   CodeChallengeCompletions(where: CodeChallengeCompletionWhereInput, orderBy: CodeChallengeCompletionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CodeChallengeCompletion!]
+  UserTechnologies(where: UserTechnologyWhereInput, orderBy: UserTechnologyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserTechnology!]
 }
 
 # Custom

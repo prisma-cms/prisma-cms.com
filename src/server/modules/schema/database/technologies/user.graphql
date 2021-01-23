@@ -1,0 +1,4 @@
+
+type User {
+  UserTechnologies: [UserTechnology!]! @relation(name: "UserTechnologyCreatedBy")
+}
