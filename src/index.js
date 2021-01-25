@@ -29,7 +29,6 @@ if (node) {
       ReactDOM.render(<PrismaCms
         App={App}
         apolloOptions={{
-          // endpoint: "https://api.prisma-cms.com/",
           apiQuery: `{
             user:me{
               ...UserNoNesting
@@ -64,7 +63,6 @@ if (node) {
           ${ProjectNoNestingFragment}
           `,
         }}
-      // queryFragments={queryFragments}
       />, node);
 
       // If you want your app to work offline and load faster, you can change

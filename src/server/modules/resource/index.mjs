@@ -128,86 +128,87 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
           });
 
 
-          const result = await super.create(method, args, info);
+          // const result = await super.create(method, args, info);
 
 
-          const {
-            id: topicID,
-            name: topicName,
-            uri: topicUri,
-          } = result || {};
+          // const {
+          //   id: topicID,
+          //   name: topicName,
+          //   uri: topicUri,
+          // } = result || {};
 
 
-          /**
-           * Если был создан топик, отправляем уведомления
-           */
-          if (topicID) {
+          // /**
+          //  * Если был создан топик, отправляем уведомления
+          //  */
+          // if (topicID) {
 
-            let content;
+          //   let content;
 
-            const siteUrl = "https://prisma-cms.com";
+          //   const siteUrl = "https://freecode.academy";
 
-            if (contentText) {
+          //   if (contentText) {
 
-              content = `
-              <div>
-                ${contentText.substr(0, 3000)}
-              </div>
-              `;
-            }
+          //     content = `
+          //     <div>
+          //       ${contentText.substr(0, 3000)}
+          //     </div>
+          //     `;
+          //   }
 
-            let subject = `Новый топик ${topicName}`;
-            let message = `<p>
-              <a href="${siteUrl}${topicUri}">${topicName}</a>.
-            </p>
-              ${content}
-            `;
+          //   let subject = `Новый топик ${topicName}`;
+          //   let message = `<p>
+          //     <a href="${siteUrl}${topicUri}">${topicName}</a>.
+          //   </p>
+          //     ${content}
+          //   `;
 
-            const usersWhere = {
-              id_not: currentUserId,
-              NotificationTypes_some: {
-                name: "new_topic",
-              },
-            }
+          //   const usersWhere = {
+          //     id_not: currentUserId,
+          //     NotificationTypes_some: {
+          //       name: "new_topic",
+          //     },
+          //   }
 
-            this.sendNotifications({ message, subject }, usersWhere);
+          //   this.sendNotifications({ message, subject }, usersWhere);
 
-          }
+          // }
 
-          return result;
+          // return result;
         }
 
         break;
 
 
       case "Comment":
+        {
 
-        /**
-         * Пока что комментарии есть к топикам.
-         * И топик и комментарий - это тип Resource.
-         * Связь проходит через тип Thread.
-         * Если для указанного топика нет еще Thread, значит создаем его.
-         */
+          Object.assign(data, {
+            isfolder: false,
+          });
 
+          const {
+            contentText,
+          } = this.prepareContent(args, data, method) || {};
 
-        const {
-          contentText,
-        } = this.prepareContent(args, data, method) || {};
+          if (!contentText) {
+            // this.addFieldError("content", "Не заполнен текст");
+            this.addError("Не заполнен текст");
+            return;
+          }
 
-        if (!contentText) {
-          // this.addFieldError("content", "Не заполнен текст");
-          this.addError("Не заполнен текст");
-          return;
-        }
-        else {
+          // else 
 
           let name = contentText.substr(0, 50) || "";
 
 
-          if (!topicID) {
-            return this.addError("Не был указан ID топика");
-          }
-          else {
+          // if (!topicID) {
+          //   return this.addError("Не был указан ID топика");
+          // }
+          // else {
+
+
+          if (topicID) {
 
             // Проверяем есть ли такой топик
             // const exists = await db.exists.Resource({
@@ -229,7 +230,7 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
 
               const {
                 uri: TopicUri,
-                name: topicName,
+                // name: topicName,
               } = Topic;
 
               Object.assign(data, {
@@ -246,92 +247,93 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
                 },
               });
 
-
-              Object.assign(args, {
-                data,
-              });
-
-              const result = await super.create(method, args, info);
-
-              const {
-                id: commentId,
-              } = result || {};
-
-
-
-              /**
-               * Если был создан комментарий, 
-               */
-              if (commentId) {
-
-                /**
-                 * Обновляем дату топика, чтобы сортировку актуализировать
-                 */
-                await db.mutation.updateResource({
-                  data: {
-                    mockUpdate: new Date(),
-                  },
-                  where: {
-                    id: topicID,
-                  },
-                })
-                  .catch(error => {
-                    /**
-                     * Не обламываем процесс, если не получилось обновить дату топика
-                     */
-                    this.error(error);
-                    console.error(chalk.red("Update Topic error"), error);
-                  });
-
-                /**
-                 * отправляем уведомления
-                 */
-
-                const siteUrl = "https://prisma-cms.com";
-
-                let subject = `Новый комментарий в топике ${topicName}`;
-                let message = `<p>
-                  В топике <a href="${siteUrl}${TopicUri}">${topicName}</a> создан новый комментарий.
-                </p>
-                  <div>
-                    ${contentText.substr(0, 1000)}
-                  </div>
-                `;
-
-                const usersWhere = {
-                  id_not: currentUserId,
-                  Resources_some: {
-                    OR: [
-                      {
-                        id: topicID,
-                      },
-                      {
-                        Topic: {
-                          id: topicID,
-                        },
-                      },
-                    ],
-                  },
-                  NotificationTypes_some: {
-                    name_in: ["new_comment", "new_reply", "new_comments_in_my_topics"],
-                  },
-                }
-
-                this.sendNotifications({
-                  message,
-                  subject,
-                  rank: 100,
-                }, usersWhere);
-
-              }
-
-              return result;
             }
 
           }
 
-        }
 
+
+          Object.assign(args, {
+            data,
+          });
+
+          // const result = await super.create(method, args, info);
+
+          // const {
+          //   id: commentId,
+          // } = result || {};
+
+
+
+          // /**
+          //  * Если был создан комментарий, 
+          //  */
+          // if (commentId) {
+
+          //   /**
+          //    * Обновляем дату топика, чтобы сортировку актуализировать
+          //    */
+          //   await db.mutation.updateResource({
+          //     data: {
+          //       mockUpdate: new Date(),
+          //     },
+          //     where: {
+          //       id: topicID,
+          //     },
+          //   })
+          //     .catch(error => {
+          //       /**
+          //        * Не обламываем процесс, если не получилось обновить дату топика
+          //        */
+          //       this.error(error);
+          //       console.error(chalk.red("Update Topic error"), error);
+          //     });
+
+          //   /**
+          //    * отправляем уведомления
+          //    */
+
+          //   const siteUrl = "https://prisma-cms.com";
+
+          //   let subject = `Новый комментарий в топике ${topicName}`;
+          //   let message = `<p>
+          //     В топике <a href="${siteUrl}${TopicUri}">${topicName}</a> создан новый комментарий.
+          //   </p>
+          //     <div>
+          //       ${contentText.substr(0, 1000)}
+          //     </div>
+          //   `;
+
+          //   const usersWhere = {
+          //     id_not: currentUserId,
+          //     Resources_some: {
+          //       OR: [
+          //         {
+          //           id: topicID,
+          //         },
+          //         {
+          //           Topic: {
+          //             id: topicID,
+          //           },
+          //         },
+          //       ],
+          //     },
+          //     NotificationTypes_some: {
+          //       name_in: ["new_comment", "new_reply", "new_comments_in_my_topics"],
+          //     },
+          //   }
+
+          //   this.sendNotifications({
+          //     message,
+          //     subject,
+          //     rank: 100,
+          //   }, usersWhere);
+
+          // }
+
+          // return result;
+
+        }
 
         break;
 
@@ -352,7 +354,186 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
 
     // return this.addFieldError("test", "error");
 
-    return super.create(method, args, info);
+    /**
+     * Создаем объект
+     */
+    const result = await super.create(method, args, info);
+
+
+    /**
+     * Отправляем уведомления
+     */
+    this.createNotifications(result);
+
+
+    return result;
+  }
+
+  /**
+   * Создаем и отправляем уведомления
+   * @result: Resource
+   */
+  async createNotifications(result) {
+
+    console.log('createNotifications result', result);
+
+    const {
+      currentUser,
+    } = this.ctx;
+
+    const {
+      id: currentUserId,
+    } = currentUser;
+
+    if (!currentUserId) {
+      return;
+    }
+
+    /**
+     * Получаем данные созданного объекта
+     */
+    const Resource = await this.ctx.db.query.resource({
+      where: {
+        id: result.id,
+      },
+    }, `{
+      id
+      type
+      name
+      uri
+      contentText,
+      CreatedBy {
+        id
+        username
+      }
+      Topic {
+        id
+        name
+        uri
+      }
+    }`);
+
+    console.log('createNotifications Resource', Resource);
+
+    if (Resource) {
+
+      /**
+       * отправляем уведомления
+       */
+
+      const siteUrl = "https://freecode.academy";
+
+      const {
+        // id: resourceId,
+        uri: resourceUri,
+        name: resourceName,
+        contentText,
+        type,
+        Topic,
+      } = Resource
+
+
+      switch (type) {
+
+        case "Comment":
+
+          if (Topic) {
+
+            const {
+              id: topicID,
+              name: topicName,
+              uri: TopicUri,
+            } = Topic;
+
+            let subject = `Новый комментарий в топике ${topicName}`;
+            let message = `<p>
+              В топике <a href="${siteUrl}${TopicUri}">${topicName}</a> создан новый комментарий.
+            </p>
+              <div>
+                ${contentText.substr(0, 1000)}
+              </div>
+            `;
+
+            /**
+             * Получаем всех пользователей, которые написали топик
+             * или комментарий в топике
+             */
+            const usersWhere = {
+              id_not: currentUserId,
+              Resources_some: {
+                OR: [
+                  {
+                    id: topicID,
+                  },
+                  {
+                    Topic: {
+                      id: topicID,
+                    },
+                  },
+                ],
+              },
+              NotificationTypes_some: {
+                name_in: ["new_comment", "new_reply", "new_comments_in_my_topics"],
+              },
+            }
+
+            this.sendNotifications({
+              message,
+              subject,
+              rank: 100,
+            }, usersWhere);
+
+            return;
+          }
+
+          break;
+
+
+        case "Topic":
+
+          {
+
+            let content;
+
+
+            if (contentText) {
+
+              content = `
+              <div>
+                ${contentText.substr(0, 3000)}
+              </div>
+              `;
+            }
+
+            let subject = `Новый топик ${resourceName}`;
+            let message = `<p>
+              <a href="${siteUrl}${resourceUri}">${resourceName}</a>.
+            </p>
+              ${content}
+            `;
+
+            /**
+             * Получаем всех пользователей, кроме текущего
+             */
+            const usersWhere = {
+              id_not: currentUserId,
+              NotificationTypes_some: {
+                name: "new_topic",
+              },
+            }
+
+            this.sendNotifications({ message, subject }, usersWhere);
+
+          }
+
+          break;
+
+        default: ;
+      }
+
+    }
+
+
   }
 
 
