@@ -15,7 +15,7 @@ type Resource implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   type: ResourceType
-  name: String!
+  name: String
   longtitle: String
   content: Json
   components: Json
@@ -51,6 +51,7 @@ type Resource implements Node {
   mockUpdate: DateTime
   Galleries(where: GalleryWhereInput, orderBy: GalleryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Gallery!]
   CodeChallenge: CodeChallenge
+  Task: Task
 }
 
 # type Resource {

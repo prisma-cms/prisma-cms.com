@@ -43,6 +43,7 @@ type User implements Node {
   PrismaProjects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
   CodeChallengeCompletions(where: CodeChallengeCompletionWhereInput, orderBy: CodeChallengeCompletionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CodeChallengeCompletion!]
   UserTechnologies(where: UserTechnologyWhereInput, orderBy: UserTechnologyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserTechnology!]
+  TasksCreated(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
 }
 
 # Custom

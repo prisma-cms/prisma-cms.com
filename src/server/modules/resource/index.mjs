@@ -8,6 +8,9 @@ import ResourceModule, {
 } from "@prisma-cms/resource-module";
 
 import chalk from "chalk";
+import UID from 'uid'
+const uid = UID.uid;
+
 
 export class PrismaCmsResourceProcessor extends ResourceProcessor {
 
@@ -44,9 +47,14 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
 
 
     let {
+      id: newResourceId = uid(25),
       type,
       name,
     } = data;
+
+    Object.assign(data, {
+      id: newResourceId,
+    });
 
 
     switch (type) {
@@ -184,6 +192,8 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
         {
 
           Object.assign(data, {
+            // УРИ создаваемого комментария по-умолчанию (может быть переопределен ниже)
+            uri: `/comments/${newResourceId}`,
             isfolder: false,
           });
 
@@ -193,13 +203,13 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
 
           if (!contentText) {
             // this.addFieldError("content", "Не заполнен текст");
-            this.addError("Не заполнен текст");
-            return;
+            // this.addError("Не заполнен текст");
+            // return;
           }
 
           // else 
 
-          let name = contentText.substr(0, 50) || "";
+          let name = (contentText && contentText.substr(0, 50)) || undefined;
 
 
           // if (!topicID) {
@@ -230,12 +240,17 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
 
               const {
                 uri: TopicUri,
-                // name: topicName,
+                name: topicName,
               } = Topic;
+
+
+              if (!name) {
+                name = `Комментарий к топику ${topicName}`;
+              }
 
               Object.assign(data, {
 
-                name,
+                // name,
                 // uri: `${TopicUri}/comments/${name}`,
                 uri: `/comments/${TopicUri}/${name}`,
                 isfolder: false,
@@ -250,7 +265,36 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
             }
 
           }
+          else if (data.Task && data.Task.connect && data.Task.connect.id) {
+            {
+              const Task = await db.query.task({
+                where: data.Task.connect,
+              });
 
+              if (!Task) {
+                return this.addError("Не была получена задача");
+              }
+
+              const {
+                name: taskName,
+              } = Task;
+
+
+              if (!name) {
+                name = `Комментарий к задаче ${taskName}`;
+              }
+            }
+          }
+          // else {
+          //   throw new Error ("Не указан родительский объект для комментария");
+          // }
+
+
+          if (name) {
+            Object.assign(data, {
+              name,
+            });
+          }
 
 
           Object.assign(args, {
@@ -369,13 +413,110 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
     return result;
   }
 
+
+
+  prepareContent(args, data, method) {
+
+    let {
+      data: {
+        // content,
+        components,
+      },
+    } = args;
+
+
+    if (components !== undefined) {
+
+      let resourceBlocks = [];
+      let entityMap = {};
+
+
+      this.reduceBlocks(components, resourceBlocks, entityMap);
+
+
+      let newContent = null;
+
+
+      if (resourceBlocks.length) {
+
+        newContent = {
+          blocks: resourceBlocks,
+          entityMap,
+        }
+
+      }
+
+
+      Object.assign(data, {
+        content: newContent,
+        // contentText,
+      });
+
+      Object.assign(args.data, {
+        ...data,
+      });
+
+    }
+
+
+    return super.prepareContent(args, data, method);
+  }
+
+
+  reduceBlocks(components, resourceBlocks, entityMap, textLength = 0) {
+
+    if (components && components.length) {
+
+
+      components.map(n => {
+
+        const {
+          components: itemComponents,
+          props,
+        } = n || {};
+
+        const {
+          content,
+        } = props || {};
+
+        const {
+          blocks,
+          // entityMap: contentEntityMap,
+        } = content || {};
+
+        if (blocks && blocks.length) {
+
+          // resourceBlocks = resourceBlocks.concat(blocks);
+
+          blocks.map(block => {
+
+            const {
+              text,
+            } = block;
+
+            textLength += text ? text.length : 0;
+
+            resourceBlocks.push(block);
+
+            return null;
+          });
+
+        }
+
+        this.reduceBlocks(itemComponents, resourceBlocks, entityMap, textLength);
+
+        return null;
+      });
+
+    }
+
+  }
+
   /**
    * Создаем и отправляем уведомления
    * @result: Resource
    */
   async createNotifications(result) {
-
-    console.log('createNotifications result', result);
 
     const {
       currentUser,
@@ -411,9 +552,12 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
         name
         uri
       }
-    }`);
-
-    console.log('createNotifications Resource', Resource);
+      Task {
+        id
+        name
+      }
+    }`)
+      .catch(console.error);
 
     if (Resource) {
 
@@ -430,8 +574,8 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
         contentText,
         type,
         Topic,
+        Task,
       } = Resource
-
 
       switch (type) {
 
@@ -472,6 +616,96 @@ export class PrismaCmsResourceProcessor extends ResourceProcessor {
                   },
                 ],
               },
+              NotificationTypes_some: {
+                name_in: ["new_comment", "new_reply", "new_comments_in_my_topics"],
+              },
+            }
+
+            this.sendNotifications({
+              message,
+              subject,
+              rank: 100,
+            }, usersWhere);
+
+            return;
+          }
+
+          else if (Task) {
+
+            const {
+              id: taskId,
+              name: taskName,
+            } = Task;
+
+            let subject = `Новый комментарий в задаче ${taskName}`;
+            let message = `<p>
+              В задаче <a href="${siteUrl}/tasks/${taskId}">${taskName}</a> создан новый <a href="${siteUrl}${resourceUri}">комментарий</a>.
+            </p>
+              <div>
+                ${contentText.substr(0, 1000)}
+              </div>
+            `;
+
+            const usersWhere = {
+              id_not: currentUserId,
+              OR: [
+                {
+                  // Админы
+                  sudo: true,
+                },
+                {
+                  // Кто создал проект для задачи
+                  ProjectsCreated_some: {
+                    ProjectTasks_some: {
+                      Task: {
+                        id: taskId
+                      },
+                    },
+                  },
+                },
+                {
+                  // Кто участвует в проекте задачи
+                  Projects_some: {
+                    Project: {
+                      ProjectTasks_some: {
+                        Task: {
+                          id: taskId
+                        },
+                      },
+                    },
+                  },
+                },
+                {
+                  // Кто создал задачу
+                  TasksCreated_some: {
+                    id: taskId
+                  }
+                },
+                {
+                  // Кто участвует в задаче
+                  Tasks_some: {
+                    Task: {
+                      id: taskId
+                    },
+                  }
+                },
+                {
+                  // Кто работал по задаче
+                  Timers_some: {
+                    Task: {
+                      id: taskId
+                    }
+                  }
+                },
+                {
+                  // Кто создавал какие-либо публикации к задаче (в том числе и комментарии)
+                  Resources_some: {
+                    Task: {
+                      id: taskId
+                    }
+                  },
+                },
+              ],
               NotificationTypes_some: {
                 name_in: ["new_comment", "new_reply", "new_comments_in_my_topics"],
               },
@@ -757,8 +991,6 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
 
     if (components && components.length) {
 
-      // console.log(chalk.green("components"), JSON.stringify(components, true, 2));
-
 
       components.map(n => {
 
@@ -807,9 +1039,6 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
           }
         }
 
-
-        // console.log(chalk.green("textLength"), textLength);
-
         this.reduceBlocks(itemComponents, resourceBlocks, entityMap, textLength);
 
         return null;
@@ -846,8 +1075,6 @@ export class TopicProcessor extends PrismaCmsResourceProcessor {
     Object.assign(args, {
       data,
     });
-
-    // console.log('Topic mutate data', JSON.stringify(data, true, 2));
 
     return super.mutate(method, args, info);
   }

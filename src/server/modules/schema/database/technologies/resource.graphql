@@ -1,0 +1,9 @@
+
+type Resource {
+
+  """
+    Задача. Ссылаться на задачу следует только комментариям
+  """
+  Task: Task @relation(name: "TaskComments")
+}
+

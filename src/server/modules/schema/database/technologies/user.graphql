@@ -1,4 +1,6 @@
 
 type User {
   UserTechnologies: [UserTechnology!]! @relation(name: "UserTechnologyCreatedBy")
+
+  TasksCreated: [Task!]! @relation(name: "UserCreatedTasks")
 }

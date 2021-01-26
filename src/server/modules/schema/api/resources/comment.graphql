@@ -3,10 +3,13 @@ input CommentCreateInput {
   # name: String!
   # longtitle: String
   text: Json
-  content: Json!
+  content: Json
+  components: Json
   # published: Boolean
-  topicID: ID!
+  topicID: ID
   # parent: ID
+
+  Task: TaskCreateOneWithoutCommentsInput
 }
 
 input CommentUpdateInput {

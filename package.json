@@ -79,6 +79,7 @@
     "react-number-format": "^4.0.6",
     "react-reflex": "^3.0.20",
     "sharp": "0.25.0",
+    "uid": "^2.0.0",
     "urijs": "^1.19.1",
     "xml-writer": "^1.7.0"
   },

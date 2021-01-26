@@ -11,4 +11,8 @@ type Task {
   """
   TaskTechnologies: [TaskTechnology!]! @relation(name: "TaskTechnologyTask")
   
+  """
+    Комментарии
+  """
+  Comments: [Resource!]! @relation(name: "TaskComments")
 }
