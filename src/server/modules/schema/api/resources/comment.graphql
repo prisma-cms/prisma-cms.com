@@ -16,6 +16,7 @@ input CommentUpdateInput {
   # name: String
   # longtitle: String
   content: Json
+  components: Json
   # published: Boolean
   # hidemenu: Boolean
   # deleted: Boolean
