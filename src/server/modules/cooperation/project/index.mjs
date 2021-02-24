@@ -15,115 +15,115 @@ import {
 export class ModxclubProjectProcessor extends ProjectProcessor {
 
 
-  async create(method, args, info) {
+  // async create(method, args, info) {
 
-    const {
-      ctx,
-    } = this;
+  //   const {
+  //     ctx,
+  //   } = this;
 
-    let {
-      data: {
-        name,
-        ...data
-      },
-    } = args;
+  //   let {
+  //     data: {
+  //       name,
+  //       ...data
+  //     },
+  //   } = args;
 
-    name = name && name.trim() || "";
-
-
-    const resourceProcessor = new ResourceProcessor(ctx);
-
-    let resourceUriData = await resourceProcessor.prepareUri({
-      data: {
-        type: "Project",
-        name,
-        uri: `/projects/${name}`,
-      },
-    });
+  //   name = name && name.trim() || "";
 
 
+  //   const resourceProcessor = new ResourceProcessor(ctx);
 
-
-    const Resource = {
-      create: {
-        ...resourceUriData,
-        name,
-        ...this.getCreatedBy(),
-      },
-    }
-
-
-    Object.assign(data, {
-      name,
-      Resource,
-      resourceData: Resource.create,
-    });
+  //   let resourceUriData = await resourceProcessor.prepareUri({
+  //     data: {
+  //       type: "Project",
+  //       name,
+  //       uri: `/projects/${name}`,
+  //     },
+  //   });
 
 
 
 
-    Object.assign(args, {
-      data,
-    });
+  //   const Resource = {
+  //     create: {
+  //       ...resourceUriData,
+  //       name,
+  //       ...this.getCreatedBy(),
+  //     },
+  //   }
 
 
-    return super.create(method, args, info);
-  }
-
-
-  async update(method, args, info) {
-
-    const {
-      ctx,
-    } = this;
-
-    let {
-      data: {
-        name,
-        ...data
-      },
-    } = args;
-
-
-    let Resource = {
-      update: {
-      },
-    };
-
-    let resourceData = Resource.update;
-
-    if (name !== undefined) {
-
-      name = name && name.trim() || "";
-
-      if (!name) {
-        name = undefined;
-      }
-      else {
-        Object.assign(resourceData, {
-          name,
-        });
-      }
-
-    }
+  //   Object.assign(data, {
+  //     name,
+  //     Resource,
+  //     resourceData: Resource.create,
+  //   });
 
 
 
 
-    Object.assign(data, {
-      name,
-      Resource,
-      resourceData,
-    });
+  //   Object.assign(args, {
+  //     data,
+  //   });
 
 
-    Object.assign(args, {
-      data,
-    });
+  //   return super.create(method, args, info);
+  // }
 
 
-    return super.update(method, args, info);
-  }
+  // async update(method, args, info) {
+
+  //   const {
+  //     ctx,
+  //   } = this;
+
+  //   let {
+  //     data: {
+  //       name,
+  //       ...data
+  //     },
+  //   } = args;
+
+
+  //   let Resource = {
+  //     update: {
+  //     },
+  //   };
+
+  //   let resourceData = Resource.update;
+
+  //   if (name !== undefined) {
+
+  //     name = name && name.trim() || "";
+
+  //     if (!name) {
+  //       name = undefined;
+  //     }
+  //     else {
+  //       Object.assign(resourceData, {
+  //         name,
+  //       });
+  //     }
+
+  //   }
+
+
+
+
+  //   Object.assign(data, {
+  //     name,
+  //     Resource,
+  //     resourceData,
+  //   });
+
+
+  //   Object.assign(args, {
+  //     data,
+  //   });
+
+
+  //   return super.update(method, args, info);
+  // }
 
 
   async mutate(method, args, info) {
