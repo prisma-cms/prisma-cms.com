@@ -2,6 +2,7 @@
 import CooperationModule from "@prisma-cms/cooperation-module";
 
 import ProjectModule from "./project";
+import TimerModule from "./timer";
 
 
 export default class CooperationModuleCustom extends CooperationModule {
@@ -12,6 +13,7 @@ export default class CooperationModuleCustom extends CooperationModule {
 
     this.mergeModules([
       ProjectModule,
+      TimerModule,
     ]);
 
   }
